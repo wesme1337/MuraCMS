@@ -2,7 +2,6 @@
 body.MuraFileBrowserWindow{
   background-color: #fff;
 }
-
 /* also see jquery-ui-override where breadcrumb is styled for ui-dialog */
 body.MuraFileBrowserWindow .mura-header ul.breadcrumb{
   background-color: #FAFAFA;
@@ -10,7 +9,6 @@ body.MuraFileBrowserWindow .mura-header ul.breadcrumb{
   border: 1px solid #eaeaea;
   padding: 4px 12px;
 }
-
 #spinner {
   position: absolute;
   z-index: 10000;
@@ -47,6 +45,7 @@ body.MuraFileBrowserWindow .mura-header ul.breadcrumb{
 
 .fileviewer-wrapper {
   display: block;
+  /* position: relative; */
 }
 
 .fileviewer-wrapper:after {
@@ -61,8 +60,9 @@ body.MuraFileBrowserWindow .mura-header ul.breadcrumb{
   display: block;
   clear: both;
   height: 52px;
-  padding: 7px 0 0 7px;
   margin: 0;
+  min-width: 520px;
+  padding: 7px 0 0 7px;
 }
 
 .filewindow-navmenu {
@@ -156,16 +156,23 @@ body.MuraFileBrowserWindow .mura-header ul.breadcrumb{
 }
 
 #actionwindow-wrapper {
+  display: block;
   position: absolute;
-  margin: 60px 30%;
-  background-color: #ffffff;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   z-index: 100000;
 }
-
+#actionwindow-wrapper.editwindow {
+  transform: translate(-50%, -50%);
+  margin-left: -15%;
+  margin-top: -200px;
+}
 .actionwindow-formwrapper {
   height: auto;
   min-height: 205px;
   min-width: 450px;
+  width: auto;
 }
 
 .actionwindow-formwrapper .editwindow {
@@ -197,13 +204,17 @@ input.filebrowser-filter {
   border-radius: 3px;
 }
 
+input.filebrowser-filter {
+  margin-left: 5px;
+  min-width: 130px;
+  max-width: 280px;
+  width: calc(100% - 240px);
+}
+
 .ui-dialog .CodeMirror{
   clear:both;
 }
 
-input.filebrowser-filter {
-  width: calc(100% - 240px);
-}
 #renamewindow-wrapper p {
   position: relative;
 }

@@ -591,8 +591,14 @@ component
 
 			var baseFilePath = getBaseFileDir( arguments.siteid,arguments.resourcePath );
 			var filePath = baseFilePath  & m.globalConfig().getFileDelim() & rereplace(arguments.directory,"\.{1,}","\.","all");
+			var expandedFilePath = expandPath(filePath);
 
-// move to getBaseResourcePath() --> getFileAssetPath()
+			if(!directoryExists(expandedFilePath)){
+				expandedFilePath=expandPath(baseFilePath);
+				arguments.directory='';
+			}
+
+			// move to getBaseResourcePath() --> getFileAssetPath()
 			var assetPath = getBaseResourcePath(arguments.siteid,arguments.resourcePath) & replace(arguments.directory,"\","/","all");
 
 			var frow = {};
@@ -606,7 +612,7 @@ component
 			response['directory'] = rereplace(response['directory'],"\\","\/","all");
 			response['directory'] = rereplace(response['directory'],"$\\","");
 
-			var rsDirectory = directoryList(expandPath(filePath),false,"query");
+			var rsDirectory = directoryList(expandedFilePath,false,"query");
 
 			response['startindex'] = 1 + response['itemsperpage'] * pageIndex - response['itemsperpage'];
 			response['endindex'] = response['startindex'] + response['itemsperpage'] - 1;

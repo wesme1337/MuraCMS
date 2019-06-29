@@ -22,7 +22,7 @@ config: {
 	var folderState=Mura.readCookie( 'mura_fbfolder');
 	if(folderState){
 		try{
-			folderState=JSON.parse(stfolderStateate);
+			folderState=JSON.parse(folderState);
 			if(folderState.resourcepath != MuraFileBrowser.config.resourcepath){
 				Mura.createCookie( 'mura_fbfolder','');
 			}

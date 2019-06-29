@@ -636,7 +636,7 @@ component
 
 			response['endindex'] = response['endindex'] > rsFiles.recordCount ? rsFiles.recordCount : response['endindex'];
 
-			response['res'] = rsFiles;
+			//response['res'] = rsFiles;
 			response['totalpages'] = ceiling(rsFiles.recordCount / response['itemsperpage']);
 			response['totalitems'] = 1;
 			response['pageindex'] = arguments.pageindex;

@@ -366,7 +366,7 @@ component
 							ArrayAppend(response.saved,item);
 						}
 						catch( any e ) {
-							ArrayAppend(e.message,item);
+							ArrayAppend("Unable to move file",item);
 						}
 				}
 				else {
@@ -402,8 +402,7 @@ component
 				var fileContent = fileRead(path);
 			}
 			catch( any e ) {
-				response['error'] = e;
-				return( e );
+				throw( message = "Unable to edit file",type="customExp");
 			}
 
 			response['content'] = fileContent;
@@ -434,8 +433,7 @@ component
 				fileWrite(path,arguments.content);
 			}
 			catch( any e ) {
-				response['error'] = e;
-				return( e );
+				throw( message = "Unable to update file",type="customExp");
 			}
 
 			response.success = 1;
@@ -482,12 +480,10 @@ component
 
 			}
 			catch( customExp e ) {
-				throw( message = response.message,object=response,type="customExp");
-				return response;
+				throw( message = response.message,type="customExp");
 			}
 			catch( any e ) {
-				rethrow;
-				return response;
+				throw( message = "Unable to delete file",type="customExp");
 			}
 
 			response.success = 1;
@@ -516,7 +512,7 @@ component
 				var fileContent = filemove(expandpath(filePath) & application.configBean.getFileDelim() & arguments.filename,expandpath(filePath) & application.configBean.getFileDelim() & arguments.name & ext);
 			}
 			catch( any e ) {
-				return( e );
+				throw( message = "Unable to rename file",type="customExp");
 			}
 			response.success = 1;
 			return response;
@@ -543,7 +539,7 @@ component
 				var fileContent = directorycreate(expandpath(filePath) & application.configBean.getFileDelim() & arguments.name);
 			}
 			catch( any e ) {
-				return( e );
+				throw( message = "Unable to add directory",type="customExp");
 			}
 
 			return true;

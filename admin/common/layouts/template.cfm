@@ -368,7 +368,7 @@
 				$('##sidebar .nav-main li ul li a.active').parents('li').parents('ul').parents('li').addClass('open');
 
 				//nice-select
-				$('.mura__edit__controls .mura-control-group select').niceSelect();
+				$('.mura__edit__controls .mura-control-group select:not(.multiSelect)').niceSelect();
 
 				// header-search
 				$('##mura-header-search-reveal').click(

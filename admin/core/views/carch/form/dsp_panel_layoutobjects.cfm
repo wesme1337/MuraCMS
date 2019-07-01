@@ -123,7 +123,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
     	          </select>
             </div>
           </div>
-          
+
           <div class="mura-control-group">
             <label>
               <span data-toggle="popover" title="" data-placement="right"
@@ -156,6 +156,33 @@ version 2 without this exception.  You may, if you choose, apply this exception 
             #application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.donotinheritcascade')#
             </label>
           </div>
+					<div id="inheritanceRegionOptin" class="mura-control-group" style="display:none">
+						<label>Only inherit certain regions?</label>
+						<select multiple="multiple" class="multiSelect"  name="inheritObjects" size="5" style="display:block">
+							<option value="">All</option>
+							<cfloop from="1" to="#application.settingsManager.getSite(rc.siteid).getcolumnCount()#" index="r">
+								<cfif listlen(application.settingsManager.getSite(rc.siteid).getcolumnNames(),"^") gte r>
+									<option value="#r#">#listgetat(application.settingsManager.getSite(rc.siteid).getcolumnNames(),r,"^")#</option>
+								<cfelse>
+									<option value="#r#">Region #r#</option>
+								</cfif>
+							</cfloop>
+						</select>
+					</div>
+					<script>
+						jQuery(function($){
+							$('input[name="inheritObjects"]').on(
+								'click',
+								function(){
+									if($('input[name="inheritObjects"][value="Inherit"]').is(":checked")){
+										$('##inheritanceRegionOptin').show();
+									} else {
+										$('##inheritanceRegionOptin').hide();
+									}
+								}
+							);
+						});
+					</script>
 
             <cfif rc.$.getContentRenderer().useLayoutManager()>
               <div class="mura-control-group">
@@ -172,7 +199,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
                 <!--- todo: resource bundle key for 'manage objects' --->
                 <div class="bigui" id="bigui__layoutobjects" data-label="#esapiEncode('html_attr', 'Manage Objects')#">
                   <div class="bigui__title">#esapiEncode('html_attr',application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.contentobjects'))#</div>
-                  
+
                   <div class="bigui__controls">
 
                         <div id="editObjects">
@@ -258,15 +285,15 @@ version 2 without this exception.  You may, if you choose, apply this exception 
         <cfif rc.moduleid eq '00000000000000000000000000000000000' and (not rc.$.getContentRenderer().useLayoutManager() and listFindNoCase('Page,Folder,Gallery,Calender',rc.type) and (not len(tabAssignments) or listFindNocase(tabAssignments,'List Display Options')))>
 
           <cfset displayList=rc.contentBean.getDisplayList()>
-          <cfset availableList=rc.contentBean.getAvailableDisplayList()>  
+          <cfset availableList=rc.contentBean.getAvailableDisplayList()>
           <cfset imageSizes=application.settingsManager.getSite(rc.siteid).getCustomImageSizeIterator()>
-          
+
           <div class="mura-control-group">
               <label>#application.rbFactory.getKeyValue(session.rb,'collections.imagesize')#</label>
             <select name="imageSize" data-displayobjectparam="imageSize" onchange="if(this.value=='custom'){jQuery('##feedCustomImageOptions').fadeIn('fast')}else{jQuery('##feedCustomImageOptions').hide();jQuery('##feedCustomImageOptions').find(':input').val('AUTO');}">
               <cfloop list="Small,Medium,Large" index="i">
                 <option value="#lcase(i)#"<cfif i eq rc.contentBean.getImageSize()> selected</cfif>>#I#</option>
-              </cfloop>                   
+              </cfloop>
               <cfloop condition="imageSizes.hasNext()">
                 <cfset image=imageSizes.next()>
                 <option value="#lcase(image.getName())#"<cfif image.getName() eq rc.contentBean.getImageSize()> selected</cfif>>#esapiEncode('html',image.getName())#</option>
@@ -285,17 +312,17 @@ version 2 without this exception.  You may, if you choose, apply this exception 
               <input name="imageHeight" data-displayobjectparam="imageHeight" type="text" value="#rc.contentBean.getImageHeight()#" />
             </span>
           </div>
-      
+
           <div class="mura-control-group" id="availableFields">
             <label>
               <span class="half">Available Fields</span> <span class="half">Selected Fields</span>
             </label>
-          
+
             <div id="sortableFields">
               <p class="dragMsg">
                 <span class="dragFrom half">Drag Fields from Here&hellip;</span><span class="half">&hellip;and Drop Them Here.</span>
-              </p>              
-            
+              </p>
+
               <ul id="contentAvailableListSort" class="contentDisplayListSortOptions">
                 <cfloop list="#availableList#" index="i">
                   <li class="ui-state-default">#trim(i)#</li>
@@ -306,7 +333,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
                   <li class="ui-state-highlight">#trim(i)#</li>
                 </cfloop>
               </ul>
-              <input type="hidden" id="contentDisplayList" value="#displayList#" name="displayList"/>     
+              <input type="hidden" id="contentDisplayList" value="#displayList#" name="displayList"/>
               <script>
                 //Removed from jQuery(document).ready() because it would not fire in ie7 frontend editing.
                 siteManager.setContentDisplayListSort();
@@ -315,7 +342,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
             </div>
 
           <div class="mura-control-group">
-            <label>#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.recordsperpage')#</label> 
+            <label>#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.recordsperpage')#</label>
             <select name="nextN" class="dropdown">
               <cfloop list="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,25,50,100" index="r">
                 <option value="#r#" <cfif r eq rc.contentBean.getNextN()>selected</cfif>>#r#</option>
@@ -334,6 +361,6 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 
     </div>
   </div>
-</div> 
+</div>
   <cfinclude template="../dsp_configuratorJS.cfm">
 </cfoutput>

@@ -131,11 +131,11 @@
 					var newBlockH = origBlockH - statusH;
 					var newTabH = origTabH - statusH + 90;
 					var newControlsH = origControlsH - statusH + 12;
-				
+
 					$('##mura-content-body-block').css('height',newBlockH);
 					$(tabContent).css('height',newTabH);
 					$(controls).css('height',newControlsH);
-				}	
+				}
 
 			}
 
@@ -166,7 +166,7 @@
 
 
 				//nice-select
-				$('.mura__edit__controls .mura-control-group select').niceSelect();
+				$('.mura__edit__controls .mura-control-group select:not(.multiSelect)').niceSelect();
 
 				// tabdrop: trigger on page load w/ slight delay
 				if ( $( '.mura-tabs').length ) {

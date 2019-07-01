@@ -150,7 +150,7 @@
 								if(parameters["params"].hasOwnProperty(p)){
 									item=$('[name="' + p + '"]');
 									if(item.length){
-										$('[name="' + p + '"]').val(parameters["params"][p]).trigger('change');
+										$('.objectParam[name="' + p + '"],.objectparam[name="' + p + '"]').val(parameters["params"][p]).trigger('change');
 									}
 
 								}

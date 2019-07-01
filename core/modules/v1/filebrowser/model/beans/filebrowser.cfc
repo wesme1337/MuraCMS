@@ -106,7 +106,12 @@ component
 			var tempDir = m.globalConfig().getTempDir();
 			var timage = replace(createUUID(),"-","","all");
 			var delim = rereplace(baseFilePath,".*\/","");
-			var filePath = baseFilePath & rereplace(arguments.file.url,".*?#delim#","")
+			var filePath = baseFilePath & rereplace(arguments.file.url,".*?#delim#","");
+
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath,filepath)){
+				throw(message="Illegal file path",code="invalidParameters");
+			}
+
 			var sourceImage = ImageNew(filePath);
 			var response = {};
 
@@ -177,10 +182,19 @@ component
 			var tempDir = m.globalConfig().getTempDir();
 			var timage = replace(createUUID(),"-","","all");
 			var delim = rereplace(baseFilePath,".*\/","");
-			var filePath = baseFilePath & rereplace(arguments.file.url,".*?#delim#","")
+			var filePath = baseFilePath & rereplace(arguments.file.url,".*?#delim#","");
+
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath,filepath)){
+				throw(message="Illegal file path",code="invalidParameters");
+			}
+
 			var sourceImage = ImageNew(filePath);
 			var destination = replace(filePath,".#arguments.file.ext#","-copy1.#arguments.file.ext#");
 			var version = 1;
+
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath,destination)){
+				throw(message="Illegal file path",code="invalidParameters");
+			}
 
 			while(fileExists(destination)) {
 				version++;
@@ -214,7 +228,12 @@ component
 			var tempDir = m.globalConfig().getTempDir();
 			var timage = replace(createUUID(),"-","","all");
 			var delim = rereplace(baseFilePath,".*\/","");
-			var filePath = baseFilePath & rereplace(arguments.file.url,".*?#delim#","")
+			var filePath = baseFilePath & rereplace(arguments.file.url,".*?#delim#","");
+
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath,filepath)){
+				throw(message="Illegal file path",code="invalidParameters");
+			}
+
 			var sourceImage = ImageNew(filePath);
 			var response = {};
 
@@ -264,7 +283,11 @@ component
 			}
 
 			var delim = rereplace(baseFilePath,".*\/","");
-			var filePath = baseFilePath & rereplace(arguments.file.url,".*?#delim#","")
+			var filePath = baseFilePath & rereplace(arguments.file.url,".*?#delim#","");
+
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath,filepath)){
+				throw(message="Illegal file path",code="invalidParameters");
+			}
 
 			var sourceImage = ImageNew(filePath);
 
@@ -354,6 +377,10 @@ component
 			var baseFilePath = getBaseFileDir( arguments.siteid,arguments.resourcePath );
 			var filePath = baseFilePath  & m.globalConfig().getFileDelim() & rereplace(arguments.directory,"\.{1,}","\.","all");
 
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath,filepath)){
+				throw(message="Illegal file path",code="invalidParameters");
+			}
+
 			response.uploaded = fileUploadAll(destination=tempDir,nameconflict="unique");
 			response.allowedExtensions = allowedExtensions;
 
@@ -397,6 +424,9 @@ component
 			var filePath = baseFilePath  & m.globalConfig().getFileDelim() & rereplace(arguments.directory,"\.{1,}","\.","all");
 			var path = expandpath(filePath) & application.configBean.getFileDelim() & arguments.filename;
 
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath,path)){
+				throw(message="Illegal file path",code="invalidParameters");
+			}
 
 			try {
 				var fileContent = fileRead(path);
@@ -429,6 +459,10 @@ component
 			var filePath = baseFilePath  & m.globalConfig().getFileDelim() & rereplace(arguments.directory,"\.{1,}","\.","all");
 			var path = expandpath(filePath) & application.configBean.getFileDelim() & arguments.filename;
 
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath,path)){
+				throw(message="Illegal file path",code="invalidParameters");
+			}
+
 			try {
 				fileWrite(path,arguments.content);
 			}
@@ -457,6 +491,10 @@ component
 			var baseFilePath = getBaseFileDir( arguments.siteid,arguments.resourcePath );
 			var filePath = baseFilePath  & m.globalConfig().getFileDelim() & rereplace(arguments.directory,"\.{1,}","\.","all");
 			var path = expandpath(filePath) & application.configBean.getFileDelim() & arguments.filename;
+
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath,path)){
+				throw(message="Illegal file path",code="invalidParameters");
+			}
 
 			try {
 
@@ -508,6 +546,15 @@ component
 			var filePath = baseFilePath  & m.globalConfig().getFileDelim() & rereplace(arguments.directory,"\.{1,}","\.","all");
 			var ext = rereplacenocase(arguments.filename,".[^\.]*","");
 
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath,expandpath(filePath) & application.configBean.getFileDelim() & arguments.filename)){
+				throw(message="Illegal file path",code="invalidParameters");
+			}
+
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath,expandpath(filePath) & application.configBean.getFileDelim() & arguments.name & ext)){
+				throw(message="Illegal file path",code="invalidParameters");
+			}
+
+
 			try {
 				var fileContent = filemove(expandpath(filePath) & application.configBean.getFileDelim() & arguments.filename,expandpath(filePath) & application.configBean.getFileDelim() & arguments.name & ext);
 			}
@@ -534,6 +581,10 @@ component
 			var m = application.serviceFactory.getBean('m').init(arguments.siteid);
 			var baseFilePath = getBaseFileDir( arguments.siteid,arguments.resourcePath );
 			var filePath = baseFilePath  & m.globalConfig().getFileDelim() & rereplace(arguments.directory,"\.{1,}","\.","all");
+
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath,expandpath(filePath) & application.configBean.getFileDelim() & arguments.name)){
+				throw(message="Illegal file path",code="invalidParameters");
+			}
 
 			try {
 				var fileContent = directorycreate(expandpath(filePath) & application.configBean.getFileDelim() & arguments.name);
@@ -588,6 +639,10 @@ component
 			var baseFilePath = getBaseFileDir( arguments.siteid,arguments.resourcePath );
 			var filePath = baseFilePath  & m.globalConfig().getFileDelim() & rereplace(arguments.directory,"\.{1,}","\.","all");
 			var expandedFilePath = expandPath(filePath);
+
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath,filepath)){
+				throw(message="Illegal file path",code="invalidParameters");
+			}
 
 			if(!directoryExists(expandedFilePath)){
 				expandedFilePath=expandPath(baseFilePath);
@@ -693,5 +748,16 @@ component
 
 		}
 
+	function isPathLegal(siteid,resourcePath, path){
+		var sessionData=getSession();
+		if(!(arguments.resourcepath == 'User_Assets' || listFind(sessionData.mura.memberships,'S2'))){
+			return false;
+		}
+		var rootPath=replace(expandPath(getBaseFileDir( arguments.siteid,arguments.resourcePath )), "\", "/", "ALL");
+		arguments.path=replace(expandPath(arguments.path), "\", "/", "ALL");
+		return (
+			len(arguments.path) >= len(rootPath) && left(arguments.path,len(rootPath)) == rootPath
+		)
+	}
 
 }

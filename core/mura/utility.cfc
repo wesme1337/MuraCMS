@@ -1308,6 +1308,7 @@ Blog: www.codfusion.com--->
 	function isPathLegal(path){
 		var rootPath=replace(variables.configBean.getWebRoot(), "\", "/", "ALL");
 		var pluginPath=replace(variables.configBean.getPluginDir(), "\", "/", "ALL");
+		var assetPath=replace(variables.configBean.getAssetDir(), "\", "/", "ALL");
 		arguments.path=replace(expandPath(arguments.path), "\", "/", "ALL");
 		return (
 			len(arguments.path) >= len(rootPath) && left(arguments.path,len(rootPath)) == rootPath

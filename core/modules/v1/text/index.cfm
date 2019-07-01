@@ -55,7 +55,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 <cfelseif objectParams.sourcetype eq 'custom'>
 	#objectParams.source#
 <cfelse>
-	<p>#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.objectnotconfigured')#</p>
+	<p></p>
 </cfif>
 </cfoutput>
 <cfelse>

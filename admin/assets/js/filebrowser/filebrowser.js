@@ -1429,7 +1429,7 @@ config: {
         </div>
         <appbar v-if="response.links" :settings="settings" :location=1 :links="response.links" :itemsper="itemsper" :response="response"></appbar>
         <filewindow :settings="settings" :currentFile="currentFile" :isDisplayContext="isDisplayContext" :foldertree="foldertree" :files="files" :folders="folders" :displaymode="displaymode"></filewindow>
-        <appbar v-if="response.links" :settings="settings" :location=0 :links="response.links" :itemsper="itemsper" :response="response"></appbar>
+        <appbar v-if="response.totalpages != '1'" :settings="settings" :location=0 :links="response.links" :itemsper="itemsper" :response="response"></appbar>
       </div>`
     ,
     data: {
@@ -1751,13 +1751,19 @@ config: {
         if(cFolder) {
           var cFolderJSON = JSON.parse(cFolder);
 
-          if(cFolderJSON.foldertree) {
+          if(cFolderJSON.context != self.config.resourcepath) {
+            var fdata = {
+              foldertree: [],
+              context: self.config.resourcepath
+            }
+            Mura.createCookie( 'fbFolderTree',JSON.stringify(fdata),1);
+          }
+          else if(cFolderJSON.foldertree) {
             this.$root.foldertree = cFolderJSON.foldertree;
 
             for(var i=0;i<this.foldertree.length;i++) {
               dir = dir + "/" + this.foldertree[i];
             }
-
           }
         }
 

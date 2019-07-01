@@ -19,6 +19,16 @@ config: {
   var self = this;
   var target =  "_" + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
+	var folderState=Mura.readCookie( 'mura_fbfolder');
+	if(folderState){
+		try{
+			folderState=JSON.parse(folderState);
+			if(folderState.resourcepath != MuraFileBrowser.config.resourcepath){
+				Mura.createCookie( 'mura_fbfolder','');
+			}
+		}catch(e){}
+	}
+
   this.config=Mura.extend(config,this.config);
   this.endpoint =  Mura.apiEndpoint + "filebrowser/";
   this.container = Mura("#MuraFileBrowserContainer");
@@ -1021,7 +1031,7 @@ config: {
           displaymode: JSON.parse(JSON.stringify(mode))
         }
 
-        Mura.createCookie( 'fbDisplayMode',JSON.stringify(fdata),1000);
+        Mura.createCookie('mura_fbdisplaymode',JSON.stringify(fdata),1000);
 
         this.$root.displaymode = this.viewmode = mode;
       }
@@ -1235,9 +1245,9 @@ config: {
         var offsetLeft = 33;
         var offsetTop = 10;
         if (document.getElementById('alertDialog')){
-          offsetLeft += Math.floor(document.getElementById('alertDialog').getBoundingClientRect().left); 
-          offsetTop += Math.floor(document.getElementById('alertDialog').getBoundingClientRect().top); 
-        } 
+          offsetLeft += Math.floor(document.getElementById('alertDialog').getBoundingClientRect().left);
+          offsetTop += Math.floor(document.getElementById('alertDialog').getBoundingClientRect().top);
+        }
 
         var left = Math.floor(document.getElementById('fileitem-'+index).getBoundingClientRect().left) - offsetLeft;
         var top =  Math.floor(document.getElementById('fileitem-'+index).getBoundingClientRect().top) - offsetTop;
@@ -1333,12 +1343,12 @@ config: {
         // gridmode
         var offsetLeft = 0;
         if (document.getElementById('alertDialog')){
-          offsetLeft = Math.floor(document.getElementById('alertDialog').getBoundingClientRect().left); 
-        } 
+          offsetLeft = Math.floor(document.getElementById('alertDialog').getBoundingClientRect().left);
+        }
 
         this.menux = Math.floor(document.getElementById('fileitem-'+index).getBoundingClientRect().left) - 28 - offsetLeft;
         this.menuy =  Math.floor(document.getElementById('fileitem-'+index).getBoundingClientRect().top);
- 
+
         this.$root.currentFile = file;
         this.$root.currentIndex = index;
 
@@ -1424,7 +1434,7 @@ config: {
         </div>
         <appbar v-if="response.links" :settings="settings" :location=1 :links="response.links" :itemsper="itemsper" :response="response"></appbar>
         <filewindow :settings="settings" :currentFile="currentFile" :isDisplayContext="isDisplayContext" :foldertree="foldertree" :files="files" :folders="folders" :displaymode="displaymode"></filewindow>
-        <appbar v-if="response.links" :settings="settings" :location=0 :links="response.links" :itemsper="itemsper" :response="response"></appbar>
+        <appbar v-if="response.totalpages != '1'" :settings="settings" :location=0 :links="response.links" :itemsper="itemsper" :response="response"></appbar>
       </div>`
     ,
     data: {
@@ -1631,10 +1641,11 @@ config: {
         this.spinnermodal = 1;
 
         var fdata = {
-          foldertree: JSON.parse(JSON.stringify(this.foldertree))
+          foldertree: JSON.parse(JSON.stringify(this.foldertree)),
+					resourcepath: MuraFileBrowser.config.resourcepath
         }
 
-        Mura.createCookie( 'fbFolderTree',JSON.stringify(fdata),1);
+        Mura.createCookie( 'mura_fbfolder',JSON.stringify(fdata));
 
         self.loadDirectory(dir,pageindex,this.displayResults,this.displayError,this.filterResults,this.sortOn,this.sortDir,this.itemsper,displaywindow);
       }
@@ -1741,22 +1752,28 @@ config: {
 
         var dir = "";
 
-        var cFolder = Mura.readCookie( 'fbFolderTree');
+        var cFolder = Mura.readCookie( 'mura_fbfolder');
         if(cFolder) {
           var cFolderJSON = JSON.parse(cFolder);
 
-          if(cFolderJSON.foldertree) {
+          if(cFolderJSON.context != self.config.resourcepath) {
+            var fdata = {
+              foldertree: [],
+              context: self.config.resourcepath
+            }
+            Mura.createCookie( 'fbFolderTree',JSON.stringify(fdata),1);
+          }
+          else if(cFolderJSON.foldertree) {
             this.$root.foldertree = cFolderJSON.foldertree;
 
             for(var i=0;i<this.foldertree.length;i++) {
               dir = dir + "/" + this.foldertree[i];
             }
-
           }
         }
 
 // displaymode cookie
-        var cDisplay = Mura.readCookie( 'fbDisplayMode' );
+        var cDisplay = Mura.readCookie( 'mura_fbdisplaymode' );
 
         if(cDisplay) {
           var fbDisplayJSON = JSON.parse(cDisplay);

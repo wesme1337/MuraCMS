@@ -264,8 +264,12 @@
 
 						MuraInlineEditor.isDirty=true;
 					}
-
+					var perm=item.data('perm');
 					Mura.resetAsyncObject(item.node,false);
+					if(perm){
+						item.data('perm',perm);
+					}
+
 					item.addClass('mura-active');
 					Mura.processAsyncObject(item.node,false).then(function(){
 						closeFrontEndToolsModal();
@@ -401,6 +405,8 @@
 
 			//If the it's a form of component that's not configurable then go straight to edit it
 			if((lcaseObject=='form' || lcaseObject=='component') && editableObj.data('notconfigurable')){
+				MuraInlineEditor.sidebarAction('showobjects');
+
 				if(Mura.isUUID(editableObj.data('objectid'))){
 						src=adminLoc + '?muraAction=cArch.editLive&compactDisplay=true&contentid=' + encodeURIComponent(editableObj.data('objectid')) + '&type='+ encodeURIComponent(editableObj.data('object')) + '&siteid='+  Mura.siteid + '&instanceid=' + encodeURIComponent(editableObj.data('instanceid'));
 				} else {
@@ -2282,6 +2288,7 @@
 				Mura.currentObjectInstanceID='';
 				MuraInlineEditor.resetEditableAttributes();
 				Mura('.mura-object-selected').removeClass('mura-object-selected');
+				Mura('.mura-editable-attribute.mura-active').removeClass('mura-active');
 				Mura('#mura-sidebar-configurator').hide();
 				Mura('#mura-sidebar-objects-legacy').hide();
 				Mura('#mura-sidebar-objects').show();

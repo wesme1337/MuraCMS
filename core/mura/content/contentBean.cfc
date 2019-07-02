@@ -454,6 +454,12 @@ component extends="mura.bean.beanExtendable" entityName="content" table="tconten
 			variables.instance.errors.filemissing=variables.settingsManager.getSite(variables.instance.siteID).getRBFactory().getKey("sitemanager.filemissing");
 		}
 
+		if(not application.configBean.getValue(property='keepMetaKeywords',defaultValue=false)
+			&& len(getCanonicalURL())
+			&& !isValid('url',getCanonicalURL())){
+			variables.instance.errors.canonicalurl=variables.settingsManager.getSite(variables.instance.siteID).getRBFactory().getKey("sitemanager.canonicalurlinvalid");
+		}
+
 		var site=application.settingsManager.getSite(variables.instance.siteID);
 
 		if (!site.getContentRenderer().siteidinurls && len(getValue('filename')) && variables.settingsManager.siteExists(listFirst(getValue('filename'),"/"))) {
@@ -1501,7 +1507,7 @@ component extends="mura.bean.beanExtendable" entityName="content" table="tconten
 	}
 
 	function setCanonicalURL(CanonicalURL){
-		if(isValid('URL',arguments.canonicalURL)){
+		if(isValid('URL',arguments.canonicalURL) || !len(arguments.canonicalURL)){
 			variables.instance.metakeywords=arguments.canonicalURL;
 		}
 

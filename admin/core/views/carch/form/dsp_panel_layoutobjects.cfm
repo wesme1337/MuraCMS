@@ -157,30 +157,39 @@ version 2 without this exception.  You may, if you choose, apply this exception 
             </label>
           </div>
 					<div id="inheritanceRegionOptin" class="mura-control-group" style="display:none">
-						<label>Only inherit certain regions?</label>
+						<label>
+						<span data-toggle="popover" title="" data-placement="right"
+						data-content="Hold shift to select muiltiple options"
+						data-original-title="Region Selector">
+						Select regions to inherit?
+						<i class="mi-question-circle"></i></label>
 						<select multiple="multiple" class="multiSelect"  name="inheritObjects" size="5" style="display:block">
-							<option value="">All</option>
+							<option value=""<cfif listLen(rc.contentBean.getinheritObjects()) eq 1> selected</cfif>>All</option>
 							<cfloop from="1" to="#application.settingsManager.getSite(rc.siteid).getcolumnCount()#" index="r">
 								<cfif listlen(application.settingsManager.getSite(rc.siteid).getcolumnNames(),"^") gte r>
-									<option value="#r#">#listgetat(application.settingsManager.getSite(rc.siteid).getcolumnNames(),r,"^")#</option>
+									<option value="#r#"<cfif listfind(rc.contentBean.getinheritObjects(),r)> selected</cfif>>#listgetat(application.settingsManager.getSite(rc.siteid).getcolumnNames(),r,"^")#</option>
 								<cfelse>
-									<option value="#r#">Region #r#</option>
+									<option value="#r#"<cfif listfind(rc.contentBean.getinheritObjects(),r)> selected</cfif>>Region #r#</option>
 								</cfif>
 							</cfloop>
 						</select>
 					</div>
 					<script>
 						jQuery(function($){
+							function handleClick(){
+								if($('input[name="inheritObjects"][value="Inherit"]').is(":checked")){
+									$('##inheritanceRegionOptin').show();
+								} else {
+									$('##inheritanceRegionOptin').hide();
+								}
+							}
+
 							$('input[name="inheritObjects"]').on(
 								'click',
-								function(){
-									if($('input[name="inheritObjects"][value="Inherit"]').is(":checked")){
-										$('##inheritanceRegionOptin').show();
-									} else {
-										$('##inheritanceRegionOptin').hide();
-									}
-								}
+								handleClick
 							);
+
+							handleClick();
 						});
 					</script>
 

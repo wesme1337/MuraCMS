@@ -118,7 +118,8 @@ $(function(){
 		 instanceid:'#esapiEncode("javascript",rc.instanceid)#',
 		 params:{
 			 fileid:$(this).data('fileid')
-			 }
+		 },
+		 complete:false
 		 });
  });
 

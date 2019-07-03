@@ -1951,7 +1951,7 @@ var Mura=(function(){
 	}
 
 	var layoutmanagertoolbar =
-			'<div class="frontEndToolsModal mura"><span class="mura-edit-label">Collection</span><span class="mura-edit-icon"></span></div>';
+			'<div class="frontEndToolsModal mura"><span class="mura-edit-icon"></span></div>';
 
 	function processMarkup(scope) {
 

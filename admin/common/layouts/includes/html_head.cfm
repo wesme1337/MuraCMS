@@ -67,9 +67,8 @@
 	<script src="#application.configBean.getContext()##application.configBean.getAdminDir()#/assets/js/jquery/jquery.collapsibleCheckboxTree.js?coreversion=#application.coreversion#" type="text/javascript"></script>
 	<script src="#application.configBean.getContext()##application.configBean.getAdminDir()#/assets/js/jquery/jquery.spin.js" type="text/javascript"></script>
 
-	<!--- todo change back to min --->
 	<!-- Mura js -->
-	<script src="#application.configBean.getContext()##application.configBean.getAdminDir()#/assets/js/mura.js?coreversion=#application.coreversion#" type="text/javascript"></script>
+	<script src="#application.configBean.getContext()##application.configBean.getAdminDir()#/assets/js/mura.min.js?coreversion=#application.coreversion#" type="text/javascript"></script>
 
 	<!-- Mura Admin JS -->
 	<script src="#application.configBean.getContext()##application.configBean.getAdminDir()#/assets/js/admin.min.js?coreversion=#application.coreversion#" type="text/javascript"></script>

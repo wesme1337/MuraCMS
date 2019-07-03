@@ -1950,7 +1950,6 @@ var Mura=(function(){
 		return Mura.ljs;
 	}
 
-
 	var layoutmanagertoolbar =
 			'<div class="frontEndToolsModal mura"><span class="mura-edit-icon"></span><span class="mura-edit-label"></span><span class="mura-edit-handle"></span></div>';
 

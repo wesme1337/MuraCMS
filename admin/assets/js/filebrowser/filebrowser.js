@@ -567,8 +567,10 @@ config: {
   Vue.component('actionwindow', {
     props: ["isDisplayWindow","currentFile","currentIndex","error"],
     template: `
-      <div id="actionwindow-wrapper">
+      <div id="actionwindow-wrapper" class="editwindow" v-if="isDisplayWindow=='EDIT'">
         <editwindow v-if="isDisplayWindow=='EDIT'" :currentFile="currentFile"></editwindow>
+      </div>
+      <div v-else id="actionwindow-wrapper">
         <renamewindow v-if="isDisplayWindow=='RENAME'" :currentFile="currentFile"></renamewindow>
         <addfolderwindow v-if="isDisplayWindow=='ADDFOLDER'" :currentFile="currentFile"></addfolderwindow>
         <downloadwindow v-if="isDisplayWindow=='DOWNLOAD'" :currentFile="currentFile"></downloadwindow>
@@ -893,6 +895,9 @@ config: {
     }
   });
 
+
+// mark this is the edit file modal
+
   Vue.component('editwindow', {
     props: ["currentFile"],
     template: `
@@ -1050,7 +1055,7 @@ config: {
     template: `
         <div class="filewindow-navmenu">
           <p v-if="isbottomnav">
-          {{response.pageindex}} of {{response.totalpages}} <!-- ({{response.totalitems}}) includes folders -->
+          {{response.pageindex}} of {{response.totalpages}}
           </p>
         <ul class="pagination" v-if="response.totalitems>=25">
           <li class="paging" v-if="links.previous || links.next">

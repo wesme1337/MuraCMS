@@ -3453,7 +3453,13 @@ component extends="mura.cfobject" hint="This provides JSON/REST API functionalit
 		if(!isDefined('variables.images')){
 			variables.images=getBean('settingsManager').getSite(arguments.siteid).getCustomImageSizeIterator();
 		}
-		return duplicate(variables.images);
+		if(!isdefined('request.muracustomimageiterator')){
+			request.muraCustomImageIterator=duplicate(variables.images);
+		}
+
+		request.muraCustomImageIterator.reset();
+		
+		return request.muraCustomImageIterator;
 	}
 
 	function setImageURLs(entity,attr="fileid",$){

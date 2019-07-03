@@ -1508,4 +1508,8 @@ component extends="mura.cfobject" output="false" hint="This provides core bean f
 		return result;
 	}
 
+	function toBundle(){
+		return this;
+	}
+
 }

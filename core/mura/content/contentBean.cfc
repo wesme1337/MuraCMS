@@ -134,6 +134,8 @@ component extends="mura.bean.beanExtendable" entityName="content" table="tconten
 	property name="approvalGroupID" type="string" default="" comparable="false" persistent="false";
 	property name="approvalChainOverride" type="boolean" default="false" comparable="false" persistent="false";
 	property name="relatedContentSetData" type="any" persistent="false";
+	property name="canonicalURL" type="string" default="";
+
 	variables.primaryKey = 'contentid';
 	variables.entityName = 'content';
 	variables.instanceName= 'title';
@@ -1506,24 +1508,34 @@ component extends="mura.bean.beanExtendable" entityName="content" table="tconten
 		return ListLen(variables.instance.path) - 1;
 	}
 
-	function setCanonicalURL(CanonicalURL){
-		if(isValid('URL',arguments.canonicalURL) || !len(arguments.canonicalURL)){
-			variables.instance.metakeywords=arguments.canonicalURL;
+	function setMetaKeywords(metaKeyWords){
+		if(isValid('URL',arguments.metaKeyWords)){
+			variables.instance.canonicalURL=arguments.metaKeyWords;
+			variables.instance.metaKeyWords='';
+		} else {
+			variables.instance.metaKeyWords=arguments.metaKeyWords;
 		}
+
+		return this;
+	}
+
+	function setCanonicalURL(CanonicalURL){
+		variables.instance.canonicalURL=arguments.canonicalURL;
 
 		return this;
 	}
 
 	function getCanonicalURL(CanonicalURL){
 		if(isValid('URL',variables.instance.metakeywords)){
-			return variables.instance.metakeywords;
-		} else {
-			return '';
+			variables.canonicalURL=variables.metakeywords;
+			variables.metakeywords='';
 		}
+
+		return variables.instance.canonicalURL;
 	}
 
-	function getMetaKeywords(conditional=true){
-		if(!arguments.conditional || !isValid('URL',variables.instance.metakeywords)){
+	function getMetaKeywords(){
+		if(!isValid('URL',variables.instance.metakeywords)){
 			return variables.instance.metakeywords;
 		} else {
 			return '';

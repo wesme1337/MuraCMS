@@ -680,6 +680,9 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 					<cfif isdefined("rstContent.objectParams")>
 					,objectParams
 					</cfif>
+					<cfif isdefined("rstContent.canonicalURL")>
+					,canonicalURL
+					</cfif>
 					)
 					values
 					(
@@ -773,6 +776,10 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 					<cfif isdefined("rstContent.objectParams")>
 						,
 						<cfqueryparam cfsqltype="cf_sql_VARCHAR" null="#iif(rstContent.objectParams neq '',de('no'),de('yes'))#" value="#translateObjectParams(rstContent.objectParams,keys)#">
+					</cfif>
+					<cfif isdefined("rstContent.canonicalURL")>
+						,
+						<cfqueryparam cfsqltype="cf_sql_VARCHAR" null="#iif(rstContent.canonicalURL neq '',de('no'),de('yes'))#" value="#rstContent.canonicalURL#">
 					</cfif>
 					)
 				</cfquery>

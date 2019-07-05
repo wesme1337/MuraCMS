@@ -242,6 +242,7 @@ component extends="mura.bean.beanExtendable" entityName="content" table="tconten
 		variables.instance.approvingChainRequest = false;
 		variables.instance.relatedContentSetData = "";
 		variables.instance.objectParams={};
+		variables.instance.canonicalURL='';
 		variables.displayRegions = structNew();
 		return this;
 	}

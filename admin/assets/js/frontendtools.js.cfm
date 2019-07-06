@@ -1484,6 +1484,7 @@
 						attribute.find('.mura-object').each(function(){
 							Mura.initDraggableObject(this);
 							Mura(this).addClass('mura-active')
+							Mura(this).on('click',Mura.handleObjectClick);
 						});
 
 						attribute.find('h1, h2, h3, h4, p, div, img, table, form, article').each(function(){

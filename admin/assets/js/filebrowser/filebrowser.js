@@ -970,7 +970,6 @@ config: {
     `,
     data: function() {
       return {
-
       }
     },
     computed: {
@@ -1105,6 +1104,7 @@ config: {
       </div>
     `,
     data() {
+			return {}
     },
     methods: {
       applyPage: function(goto) {
@@ -1513,7 +1513,8 @@ config: {
           self.updateEdit(currentFile);
       }
       , displayResults: function(response) {
-        this.response = response.data;
+
+        this.response = response.data
         this.files = response.data.items;
         this.folders = response.data.folders;
 

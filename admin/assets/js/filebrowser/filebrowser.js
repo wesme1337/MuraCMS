@@ -613,10 +613,12 @@ config: {
   Vue.component('actionwindow', {
     props: ["isDisplayWindow","currentFile","currentIndex","error"],
     template: `
-      <div id="actionwindow-wrapper">
+      <div id="actionwindow-wrapper" class="editwindow" v-if="isDisplayWindow=='EDIT'">
         <editwindow v-if="isDisplayWindow=='EDIT'" :currentFile="currentFile"></editwindow>
-        <movewindow v-if="isDisplayWindow=='MOVE'" :currentFile="currentFile"></movewindow>
+      </div>
+      <div v-else id="actionwindow-wrapper">
         <renamewindow v-if="isDisplayWindow=='RENAME'" :currentFile="currentFile"></renamewindow>
+        <movewindow v-if="isDisplayWindow=='MOVE'" :currentFile="currentFile"></movewindow>
         <addfolderwindow v-if="isDisplayWindow=='ADDFOLDER'" :currentFile="currentFile"></addfolderwindow>
         <downloadwindow v-if="isDisplayWindow=='DOWNLOAD'" :currentFile="currentFile"></downloadwindow>
         <deletewindow v-if="isDisplayWindow=='DELETE'" :currentFile="currentFile"></deletewindow>
@@ -1043,6 +1045,9 @@ config: {
     }
   });
 
+
+// mark this is the edit file modal
+
   Vue.component('editwindow', {
     props: ["currentFile"],
     template: `
@@ -1115,7 +1120,6 @@ config: {
     `,
     data: function() {
       return {
-
       }
     },
     computed: {
@@ -1200,7 +1204,7 @@ config: {
     template: `
         <div class="filewindow-navmenu">
           <p v-if="isbottomnav">
-          {{response.pageindex}} of {{response.totalpages}} <!-- ({{response.totalitems}}) includes folders -->
+          {{response.pageindex}} of {{response.totalpages}}
           </p>
         <ul class="pagination" v-if="response.totalitems>=25">
           <li class="paging" v-if="links.previous || links.next">
@@ -1250,6 +1254,7 @@ config: {
       </div>
     `,
     data() {
+			return {}
     },
     methods: {
       applyPage: function(goto) {
@@ -1659,7 +1664,8 @@ config: {
           self.updateEdit(currentFile);
       }
       , displayResults: function(response) {
-        this.response = response.data;
+
+        this.response = response.data
         this.files = response.data.items;
         this.folders = response.data.folders;
 

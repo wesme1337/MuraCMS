@@ -476,6 +476,8 @@
     		})
 
         </cfif>
+
+				window.configuratorInited=true;
     });
 </script>
 </cfoutput>

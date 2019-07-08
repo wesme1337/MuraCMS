@@ -85,3 +85,4 @@ node_modules/
 # ignore directories beginning with 'demo-' or 'temp-'
 demo-*/
 temp-*/
+config.codekit3

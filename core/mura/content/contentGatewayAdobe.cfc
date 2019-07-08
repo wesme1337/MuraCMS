@@ -114,7 +114,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 
 		<cfif arguments.setInheritance>
 			<cfloop from="1" to="#arrayLen(crumbdata)#" index="I">
-				<cfif crumbdata[I].inheritObjects eq 'cascade'>
+				<cfif listFindNoCase(crumbdata[I].inheritObjects,'cascade')>
 					<cfset request.inheritedObjects=crumbdata[I].contenthistid>
 					<cfbreak>
 				</cfif>

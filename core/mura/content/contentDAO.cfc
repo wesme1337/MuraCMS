@@ -54,7 +54,7 @@ tcontent.responseDisplayFields,tcontent.responseMessage,tcontent.responseSendTo,
 tcontent.searchExclude,tcontent.SiteID,tcontent.sortBy,tcontent.sortDirection,tcontent.Summary,tcontent.Target,
 tcontent.TargetParams,tcontent.Template,tcontent.Title,tcontent.Type,tcontent.subType,tcontent.Path,tcontent.tags,
 tcontent.doCache,tcontent.created,tcontent.urltitle,tcontent.htmltitle,tcontent.mobileExclude,tcontent.changesetID,
-tcontent.imageSize,tcontent.imageHeight,tcontent.imageWidth,tcontent.childTemplate,tcontent.majorVersion,tcontent.minorVersion,tcontent.expires,tcontent.displayInterval,tcontent.objectParams
+tcontent.imageSize,tcontent.imageHeight,tcontent.imageWidth,tcontent.childTemplate,tcontent.majorVersion,tcontent.minorVersion,tcontent.expires,tcontent.displayInterval,tcontent.objectParams,tcontent.canonicalURL
 </cfoutput></cfsavecontent>
 
 <cffunction name="init" output="false">
@@ -563,8 +563,9 @@ tcontent.imageSize,tcontent.imageHeight,tcontent.imageWidth,tcontent.childTempla
 	  majorVersion,
 	  minorVersion,
 	  expires,
-	  displayInterval
-	  ,objectParams)
+	  displayInterval,
+	  objectParams,
+		canonicalURL)
       VALUES (
 	  	 <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.contentBean.getContentHistID()#">,
          <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.contentBean.getContentID()#">,
@@ -590,7 +591,7 @@ tcontent.imageSize,tcontent.imageHeight,tcontent.imageWidth,tcontent.childTempla
 			null
 		</cfif>,
 		<cfqueryparam cfsqltype="cf_sql_longvarchar" null="#iif(arguments.contentBean.getMetaDesc() neq '',de('no'),de('yes'))#" value="#arguments.contentBean.getMetaDesc()#">,
-		<cfqueryparam cfsqltype="cf_sql_longvarchar" null="#iif(arguments.contentBean.getMetaKeyWords(conditional=false) neq '',de('no'),de('yes'))#" value="#arguments.contentBean.getMetaKeywords(conditional=false)#">,
+		<cfqueryparam cfsqltype="cf_sql_longvarchar" null="#iif(arguments.contentBean.getMetaKeyWords() neq '',de('no'),de('yes'))#" value="#arguments.contentBean.getMetaKeywords()#">,
 		<cfqueryparam cfsqltype="cf_sql_longvarchar" null="#iif(arguments.contentBean.getBody() neq '',de('no'),de('yes'))#" value="#arguments.contentBean.getBody()#"> ,
 		<cfqueryparam cfsqltype="cf_sql_longvarchar" null="#iif(arguments.contentBean.getSummary() neq '',de('no'),de('yes'))#" value="#arguments.contentBean.getSummary()#">,
 		<cfqueryparam cfsqltype="cf_sql_longvarchar" null="#iif(arguments.contentBean.getPath() neq '',de('no'),de('yes'))#" value="#arguments.contentBean.getPath()#">,
@@ -697,7 +698,8 @@ tcontent.imageSize,tcontent.imageHeight,tcontent.imageWidth,tcontent.childTempla
 			null
 		</cfif>,
 		<cfqueryparam cfsqltype="cf_sql_varchar" null="#iif(arguments.contentBean.getDisplayInterval(serialize=true) neq '',de('no'),de('yes'))#" value="#arguments.contentBean.getDisplayInterval(serialize=true)#">,
-		<cfqueryparam cfsqltype="cf_sql_longvarchar" null="#iif(arguments.contentBean.getObjectParams(serialize=true) neq '',de('no'),de('yes'))#" value="#arguments.contentBean.getObjectParams(serialize=true)#">
+		<cfqueryparam cfsqltype="cf_sql_longvarchar" null="#iif(arguments.contentBean.getObjectParams(serialize=true) neq '',de('no'),de('yes'))#" value="#arguments.contentBean.getObjectParams(serialize=true)#">,
+		<cfqueryparam cfsqltype="cf_sql_varchar" null="#iif(arguments.contentBean.getCanonicalURL() neq '',de('no'),de('yes'))#" value="#arguments.contentBean.getCanonicalURL()#">
 
 		)
  </CFQUERY>

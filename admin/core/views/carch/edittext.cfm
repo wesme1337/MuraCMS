@@ -35,7 +35,8 @@ $(function(){
 				render:'client',
 				async:false,
 				sourcetype:'custom'
-				}
+			},
+			complete:false
 			});
 	});
 

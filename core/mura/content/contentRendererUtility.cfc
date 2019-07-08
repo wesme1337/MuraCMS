@@ -126,16 +126,14 @@
 						cssClass=cssClass & "mura-inactive mura-editable-attribute#inline#";
 
 						return '<div class="mura-region mura-region-loose mura-editable mura-inactive#inline#">
-							<label class="mura-editable-label" style="display:none;">#ucase(arguments.label)#</label>
-							<div id="mura-editable-attribute-#arguments.attribute#" class="#cssClass#" #dataString#>#arguments.value#</div>
+								<div id="mura-editable-attribute-#arguments.attribute#" class="#cssClass#" #dataString#>#arguments.value#</div>
 							</div>';
 					} else {
 
 						cssClass=cssClass & "mura-inactive mura-editable-attribute#inline#";
 
 						return '<div class="mura-editable mura-inactive#inline#">
-							<label class="mura-editable-label" style="display:none;">#ucase(arguments.label)#</label>
-							<div id="mura-editable-attribute-#arguments.attribute#" class="#cssClass#" #dataString#>#arguments.value#</div>
+								<div id="mura-editable-attribute-#arguments.attribute#" class="#cssClass#" #dataString#>#arguments.value#</div>
 							</div>';
 
 					}
@@ -144,7 +142,6 @@
 					cssClass=cssClass & "mura-inactive mura-editable-attribute#inline#";
 
 					return '<div class="mura-editable mura-inactive#inline#">
-						<label class="mura-editable-label" style="display:none">#ucase(arguments.label)#</label>
 						<div contenteditable="false" id="mura-editable-attribute-#arguments.attribute#" class="#cssClass#" #dataString#>#arguments.value#</div>
 						</div>';
 
@@ -1464,7 +1461,7 @@
 			<cfset theRegion.header='<div class="mura-region">'>
 			<cfset theRegion.footer='</div>'>
 
-			<cfset theRegion.local.header='<div class="mura-editable mura-inactive"><div class="mura-region-local mura-inactive mura-editable-attribute" data-loose="false" data-regionid="#arguments.columnid#" data-inited="false" data-perm="#perm#"><label class="mura-editable-label" style="display:none" >DISPLAY REGION : #regionLabel#</label>'>
+			<cfset theRegion.local.header='<div class="mura-editable mura-inactive"><div class="mura-region-local mura-inactive mura-editable-attribute" data-loose="false" data-regionid="#arguments.columnid#" data-inited="false" data-perm="#perm#">'>
 			<cfset theRegion.local.footer='</div></div>'>
 
 			<cfset theRegion.inherited.header='<div class="mura-region-inherited">'>
@@ -1486,7 +1483,13 @@
 					or (event.getValue('r').restrict and event.getValue('r').allow)))
 						and not (listFindNoCase('search,editprofile,login',event.getValue('display')) and arguments.renderer.getSite().getPrimaryColumn() eq arguments.columnid)>
 
-			<cfif arguments.allowInheritance and event.getValue('contentBean').getinheritObjects() eq 'inherit'
+			<cfset var doInheritance=listFindNoCase(event.getValue('contentBean').getinheritObjects(),'inherit')>
+
+			<cfif doInheritance and listLen(event.getValue('contentBean').getinheritObjects()) gt 1>
+				<cfset doInheritance=listFindNoCase(event.getValue('contentBean').getinheritObjects(),arguments.columnid)>
+			</cfif>
+
+			<cfif arguments.allowInheritance and doInheritance
 				and event.getValue('inheritedObjects') neq ''
 				and event.getValue('contentBean').getcontenthistid() eq arguments.contentHistID>
 					<cfset rsObjects=getBean('contentGateway').getObjectInheritance(arguments.columnID,event.getValue('inheritedObjects'),event.getValue('siteID'))>

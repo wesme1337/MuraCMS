@@ -48,7 +48,7 @@
 
 }
 
-/* /.mura__layout-manager__controls */
+//.mura__layout-manager__controls 
 .btn.active.focus,
 .btn.active:focus,
 .btn.focus,
@@ -69,7 +69,7 @@
 .btn-primary,
 .mura-primary {
 	color: #ffffff !important;
-	background-color: @mura-blue;
+	background-color: @mura-red;
 	border-color: #4882cc;
 	background-image: none !important;
 
@@ -90,7 +90,7 @@
 	padding: 50px 0;
 }
 
-/* sidebar icons */
+// sidebar icons 
 *[class^="mi-"],
 *[class*=" mi-"] {
 	font-family: FontAwesome, @sansFontFamily !important;
@@ -170,7 +170,7 @@ body.configurator-wrapper #mura-content {
 	padding: 10px 15px;
 }
 
-/* legacy, initial set */
+// legacy, initial set 
 .mura-sidebar__object-group-items,
 .mura-sidebar__objects-list__object-group-items {
 	padding: 0;
@@ -244,11 +244,10 @@ select + .mura-sidebar__objects-list__object-item {
 
 .mura-sidebar__objects-list__object-item:hover {
 	background: #6f6f6f;
-	color: #f5f5f5;	/* cursor: pointer; */
+	color: #f5f5f5;	// cursor: pointer; 
 }
 
-/* iframe
-===================================== */
+// iframe
 #configurator #sortableFields #displayListSort,
 #configurator #sortableFields #availableListSort {
 	width: 100%;
@@ -273,7 +272,7 @@ select + .mura-sidebar__objects-list__object-item {
 	margin-top: 1em;
 }
 
-/* compact view / configurators */
+// compact view / configurators 
 body.configurator-wrapper {
 	background-color: #454545;
 	.regular-font;
@@ -467,26 +466,24 @@ body.configurator-wrapper {
 					color: #F5F5F5 !important;
 				}
 
-			}
+				// nested panels 
+				.mura-panel-group {
+					margin: 0 !important;
 
-			/* /mura-panel*/
+					.mura-panel-body {
+						padding: 2px 0 !important;
 
-			/* nested panels */
-			.mura-panel-group {
-				margin: 0 !important;
+						.mura-control-group:last-child {
+							margin-bottom: 0 !important;
+							padding-bottom: 0 !important;
+						}
 
-				.mura-panel-body {
-					padding: 2px 0 !important;
-
-					.mura-control-group:last-child {
-						margin-bottom: 0 !important;
-						padding-bottom: 0 !important;
 					}
 
-				}
+				}//nested mura-panel-group 
 
-				/* third level e.g. style panels */
-				.mura-panel-group {
+				// third level style panels 
+				.mura-panel-group .mura-panel-group {
 					margin-top: 6px !important;
 
 					.mura-panel-body {
@@ -499,11 +496,28 @@ body.configurator-wrapper {
 						color: #BDBDBD;
 					}
 
-				}
+				} // end third-level 
 
+
+			} // end mura-panel
+
+			#panel-basic .mura-panel-group{
+					margin-top: 6px !important;
+					margin-bottom: 18px !important;
+
+					.mura-panel-body {
+						padding: 16px 16px 12px 16px !important;
+						background-color: #4e4e4e;
+					}
+
+					.mura-panel-title {
+						font-size: 13px;
+						color: #BDBDBD;
+					}				
 			}
 
-			/* /nested panels */
+
+			// ...  continue mura-panel
 			&.no-header {
 				&> .mura-panel > .mura-panel-heading {
 					display: none !important;
@@ -542,7 +556,7 @@ body.configurator-wrapper {
 
 		}
 
-		/* /mura-panel-group */
+		//mura-panel-group 
 		.mura-ui-inset {
 			background-color: #545454;
 			margin: 12px 0;
@@ -639,7 +653,7 @@ body.configurator-wrapper {
 				}
 
 			}
-			/* /label */
+			//label 
 
 			.mura-ui-link {
 				font-size: 12px;
@@ -672,7 +686,7 @@ body.configurator-wrapper {
 
 			}
 
-			/* .mura-input-group */
+			// .mura-input-group 
 			.center {
 				text-align: center;
 
@@ -713,7 +727,7 @@ body.configurator-wrapper {
 
 		}
 
-		/* /.mura-ui-row */
+		//.mura-ui-row 
 		.css-bg-option {
 			.mura-ui-row {
 				padding-top: 4px;
@@ -726,7 +740,7 @@ body.configurator-wrapper {
 
 		}
 
-		/* /.css-bg-option */
+		//.css-bg-option 
 		.mura-control-group {
 			margin-bottom: 8px;
 
@@ -766,7 +780,7 @@ body.configurator-wrapper {
 
 		}
 
-		/* .mura-control-group */
+		// .mura-control-group 
 		label,
 		.control-label,
 		.mura-control-label {
@@ -817,7 +831,7 @@ body.configurator-wrapper {
 
 		}
 
-		/* custom styles for date inputs */
+		// custom styles for date inputs 
 		input[type=date],
 		input[type=datetime],
 		input[type=datetime-local],
@@ -829,7 +843,7 @@ body.configurator-wrapper {
 			visibility: visible !important;
 		}
 
-		/* hide the clear button from date inputs */
+		// hide the clear button from date inputs 
 		input[type=date]::-webkit-clear-button,
 		input[type=datetime]::-webkit-clear-button,
 		input[type=datetime-local]::-webkit-clear-button,
@@ -838,7 +852,7 @@ body.configurator-wrapper {
 			display: none;
 		}
 
-		/* hide the spin button */
+		// hide the spin button 
 		input[type=date]::-webkit-inner-spin-button,
 		input[type=datetime]::-webkit-inner-spin-button,
 		input[type=datetime-local]::-webkit-inner-spin-button,
@@ -847,7 +861,7 @@ body.configurator-wrapper {
 			display: none;
 		}
 
-		/* always display the drop down caret */
+		// always display the drop down caret 
 		input[type=date]::-webkit-calendar-picker-indicator,
 		input[type=datetime]::-webkit-calendar-picker-indicator,
 		input[type=datetime-local]::-webkit-calendar-picker-indicator,
@@ -903,7 +917,7 @@ body.configurator-wrapper {
 				padding: 2px 12px;
 
 				&.mura-primary {
-					background-color: @mura-blue !important;
+					background-color: @mura-red !important;
 					float: right !important;
 					margin: 36px -15px 0 26px;
 					padding: 6px 12px;
@@ -959,12 +973,12 @@ body.configurator-wrapper {
 
 		}
 
-		/* /.configurator-options */
+		//.configurator-options 
 	}
 
-	/* /#configuratorContainer */
+	//#configuratorContainer 
 
-	/* colorpicker is appended to body, outside form container */
+	// colorpicker is appended to body, outside form container 
 	div.colorpicker.dropdown-menu {
 		min-width: 130px;
 		padding: 4px;
@@ -980,7 +994,7 @@ body.configurator-wrapper {
 
 }
 
-/* body.configurator-wrapper */
+// body.configurator-wrapper 
 .mura__layout-manager__display-regions {
 	padding-right: 300px;
 	position: fixed;
@@ -1025,7 +1039,7 @@ body.configurator-wrapper {
 
 }
 
-/* todo: set some sort of class somewhere to trigger the flyout - at the moment it uses 'mura-regions-state__pushed--right' */
+// todo: set some sort of class somewhere to trigger the flyout - at the moment it uses 'mura-regions-state__pushed--right' 
 .mura__layout-manager__display-regions__X {
 	margin-top: 32px;
 	padding: 18px;

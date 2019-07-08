@@ -332,7 +332,6 @@
 		<cflocation addtoken="no" url="#arguments.event.getValue('contentRenderer').getCurrentURL(complete=true)#">
 	</cfif>
 
-	<cflocation url="#arguments.event.getValue('contentRenderer').getCurrentURL(complete=true)#" addtoken="false" statuscode="301">
 </cffunction>
 
 <cffunction name="standardLinkTranslationHandler" output="false">

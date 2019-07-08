@@ -1267,6 +1267,11 @@
 						objectParams=item.data();
 						item.children('.frontEndToolsModal').remove();
 						item.prepend(window.Mura.layoutmanagertoolbar );
+						if(item.data('objectname')){
+							item.children('.frontEndToolsModal').children('.mura-edit-label').html(item.data('objectname'));
+						} else {
+							item.children('.frontEndToolsModal').children('.mura-edit-label').html(Mura.firstToUpperCase(item.data('object')));
+						}
 
 						item.off("click",openToolbar)
 							.on("click",openToolbar);
@@ -1288,6 +1293,12 @@
 								if(window.MuraInlineEditor.objectHasConfigurator(item) || (!window.Mura.layoutmanager && window.MuraInlineEditor.objectHasEditor(objectParams)) ){
 									item.children('.frontEndToolsModal').remove();
 									item.prepend(window.Mura.layoutmanagertoolbar);
+
+									if(item.data('objectname')){
+										item.children('.frontEndToolsModal').children('.mura-edit-label').html(item.data('objectname'));
+									} else {
+										item.children('.frontEndToolsModal').children('.mura-edit-label').html(Mura.firstToUpperCase(item.data('object')));
+									}
 
 									item.off("click",openToolbar)
 										.on("click",openToolbar);
@@ -1311,6 +1322,11 @@
 									item.data('notconfigurable',true);
 									item.children('.frontEndToolsModal').remove();
 									item.prepend(window.Mura.layoutmanagertoolbar);
+									if(item.data('objectname')){
+										item.children('.frontEndToolsModal').children('.mura-edit-label').html(item.data('objectname'));
+									} else {
+										item.children('.frontEndToolsModal').children('.mura-edit-label').html(Mura.firstToUpperCase(item.data('object')));
+									}
 
 									item.off("click",openToolbar)
 										.on("click",openToolbar);
@@ -1333,6 +1349,11 @@
 					item.addClass("mura-active");
 					item.children('.frontEndToolsModal').remove();
 					item.prepend(window.Mura.layoutmanagertoolbar);
+					if(item.data('objectname')){
+						item.children('.frontEndToolsModal').children('.mura-edit-label').html(item.data('objectname'));
+					} else {
+						item.children('.frontEndToolsModal').children('.mura-edit-label').html(Mura.firstToUpperCase(item.data('object')));
+					}
 					item.off("click",openToolbar)
 						.on("click",openToolbar);
 				});
@@ -1463,6 +1484,7 @@
 						attribute.find('.mura-object').each(function(){
 							Mura.initDraggableObject(this);
 							Mura(this).addClass('mura-active')
+							Mura(this).on('click',Mura.handleObjectClick);
 						});
 
 						attribute.find('h1, h2, h3, h4, p, div, img, table, form, article').each(function(){
@@ -1630,7 +1652,6 @@
 									var objectid='';
 
 									delete params['instanceid'];
-									//delete params['objectname'];
 									delete params['objectid'];
 									delete params['isconfigurator'];
 									delete params['perm'];
@@ -1640,7 +1661,7 @@
 									delete params['runtime'];
 
 									if(!item.data('objectname')){
-										item.data('objectname',item.data('object'));
+										item.data('objectname',Mura.firstToUpperCase(item.data('object')));
 									}
 
 									objectid=item.data('objectid') || 'NA';

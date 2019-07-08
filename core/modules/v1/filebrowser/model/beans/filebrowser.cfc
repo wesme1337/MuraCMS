@@ -353,6 +353,94 @@ component
 			});
 		}
 
+		remote any function move( siteid,directory,destination,filename,resourcePath )  {
+
+			arguments.siteid == "" ? "default" : arguments.siteid;
+			arguments.directory = arguments.directory == "" ? "" : arguments.directory;
+			arguments.directory = rereplace(arguments.directory,"\\",application.configBean.getFileDelim(),"all");
+			response.success = 0;
+
+			var permission = checkPerms(arguments.siteid,'move',resourcePath);
+			var response = { success: 0};
+
+			response.args = arguments;
+
+			if(!permission.success) {
+				response.permission = permission;
+				response.message = permission.message;
+				return response;
+			}
+
+			var m = application.serviceFactory.getBean('m').init(arguments.siteid);
+
+			var baseFilePath = getBaseFileDir( arguments.siteid,arguments.resourcePath );
+			var filePath = baseFilePath  & m.globalConfig().getFileDelim() & rereplace(arguments.directory,"\.{1,}","\.","all");
+			var destinationPath = baseFilePath  & m.globalConfig().getFileDelim() & rereplace(arguments.destination,"\.{1,}","\.","all");
+			var tempDir = m.globalConfig().getTempDir();
+
+			if(!DirectoryExists(filePath) || !DirectoryExists(destinationPath)) {
+				response.message = "File does not exist, or destination does not exist";
+				return response;
+			}
+
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath,filepath)){
+				throw(message="Illegal file path",code="invalidParameters");
+			}
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath,destinationPath)){
+				throw(message="Illegal file path",code="invalidParameters");
+			}
+
+			fileMove(filePath & m.globalConfig().getFileDelim() & filename,tempDir & arguments.filename);
+			fileMove(tempDir & m.globalConfig().getFileDelim() & filename,destinationPath & m.globalConfig().getFileDelim() & arguments.filename);
+
+			return response;
+		}
+
+		remote any function childdir( siteid,directory,resourcePath )  {
+
+			arguments.siteid == "" ? "default" : arguments.siteid;
+			arguments.directory = arguments.directory == "" ? "" : arguments.directory;
+			arguments.directory = rereplace(arguments.directory,"\\",application.configBean.getFileDelim(),"all");
+
+			// hasrestrictedfiles
+
+			var permission = checkPerms(arguments.siteid,'edit',resourcePath);
+			var response = { success: 0,failed: [],saved: []};
+
+			if(!permission.success) {
+				response.permission = permission;
+				response.message = permission.message;
+				return response;
+			}
+
+			response.valid = 0;
+			response.folders = [];
+
+			var m = application.serviceFactory.getBean('m').init(arguments.siteid);
+
+			var baseFilePath = getBaseFileDir( arguments.siteid,arguments.resourcePath );
+			var filePath = baseFilePath  & m.globalConfig().getFileDelim() & rereplace(arguments.directory,"\.{1,}","\.","all");
+
+			response.success = 1;
+
+			if(!DirectoryExists(filePath)) {
+				return response;
+			}
+
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath,filepath)){
+				throw(message="Illegal file path",code="invalidParameters");
+			}
+
+			var dirlist = directoryList(path=filePath,listinfo='name',type="dir");
+
+			if(ArrayLen(dirlist)) {
+				response.folders = dirlist;
+			}
+
+			response.valid = 1;
+			return response;
+		}
+
 		remote any function upload( siteid,directory,formData,resourcePath )  {
 
 			arguments.siteid == "" ? "default" : arguments.siteid;

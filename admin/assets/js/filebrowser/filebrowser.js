@@ -73,8 +73,6 @@ config: {
 
 , moveFile: function( currentFile,source,destination,onSuccess ) {
 
-console.log(arguments);
-
   var baseurl = this.endpoint + "/move?directory=" + source + "&destination=" + destination + "&resourcepath=" + this.config.resourcepath + "&filename=" + currentFile.fullname;
 
   if(!this.validate()) {
@@ -672,13 +670,11 @@ console.log(arguments);
           var tf = this.destinationFolder;
 
           if(val == tf && this.folderPath != '')
-            console.log('b called');
             MuraFileBrowser.getChildDirectory(this.destinationFolder,this.updateDirectory,fileViewer);
           }, 1000);
       }
       , folderPath: function(val) {
         if(this.folderPath != '') {
-          console.log('a called');
           this.destinationFolder += "/" + this.folderPath;
           this.folderPath = '';
           MuraFileBrowser.getChildDirectory(this.destinationFolder,this.updateDirectory,fileViewer);
@@ -687,7 +683,6 @@ console.log(arguments);
     },
     methods: {
       moveFile: function() {
-        console.log("moving!");
         var source = "";
 
         for(i in fileViewer.foldertree) {

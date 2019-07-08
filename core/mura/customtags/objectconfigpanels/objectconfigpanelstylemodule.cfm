@@ -1,5 +1,5 @@
 <!--- todo: document nested configurator panel syntax --->
-<!--- 
+<!---
 <div class="mura-panel-group" id="panels-style-object">
 
 		<!--- panel 1: layout --->
@@ -10,11 +10,11 @@
                 </a>
             </h4>
         </div> <!--- /.mura-panel-heading --->
-        <div id="panel-style-object-1" class="panel-collapse collapse in">
+        <div id="panel-style-object-1" class="panel-collapse collapse">
             <div class="mura-panel-body">
             <!--- panel contents --->
-            
-            <!--- /end panel contents --->      
+
+            <!--- /end panel contents --->
             </div> <!--- /.mura-panel-body --->
         </div> <!--- /.panel-collapse --->
     </div> <!--- /.mura-panel --->
@@ -34,27 +34,17 @@
                 </a>
             </h4>
         </div> <!--- /.mura-panel-heading --->
-        <div id="panel-style-object-1" class="panel-collapse collapse in">
+        <div id="panel-style-object-1" class="panel-collapse collapse">
             <div class="mura-panel-body">
-            	<!--- panel contents --->	
-
+            	<!--- panel contents --->
 							<cfif request.haspositionoptions>
-								<div class="mura-control-group">
-									<label>Target Device</label>
-									<select name="breakpoint" class="classtoggle">
-									<option value="">--</option>
-									<option value="mura-sm"<cfif listFind(attributes.params.class,'mura-sm',' ')> selected</cfif>>Tablet (768px+)</option>
-									<option value="mura-md"<cfif listFind(attributes.params.class,'mura-md',' ')> selected</cfif>>Laptop (992px+)</option>
-									<option value="mura-lg"<cfif listFind(attributes.params.class,'mura-lg',' ')> selected</cfif>> Desktop (1200px+)</option>
-									</select>
-								</div>
 
 								<div class="mura-control-group">
 									<label>#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.alignment')#</label>
 									<select name="alignment" class="classtoggle">
 									<option value="">--</option>
 									<option value="mura-left"<cfif listFind(attributes.params.class,'mura-left',' ')> selected</cfif>>#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.left')#</option>
-									<option value="mura-center"<cfif listFind(attributes.params.class,'mura-center',' ')> selected</cfif>>#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.center')#</option>
+									<!---<option value="mura-center"<cfif listFind(attributes.params.class,'mura-center',' ')> selected</cfif>>#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.center')#</option>--->
 									<option value="mura-right"<cfif listFind(attributes.params.class,'mura-right',' ')> selected</cfif>>#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.right')#</option>
 									</select>
 								</div>
@@ -75,6 +65,16 @@
 									</select>
 								</div>
 
+								<div class="mura-control-group">
+									<!--- todo: rbkeys for label and options --->
+									<label>Full-Width Breakpoint</label>
+									<select name="breakpoint" class="classtoggle">
+									<option value=""> (Phone)</option>
+									<option value="mura-sm"<cfif listFind(attributes.params.class,'mura-sm',' ')> selected</cfif>>768px (Tablet)</option>
+									<option value="mura-md"<cfif listFind(attributes.params.class,'mura-md',' ')> selected</cfif>>992px (Laptop)</option>
+									<option value="mura-lg"<cfif listFind(attributes.params.class,'mura-lg',' ')> selected</cfif>> 1200px (Desktop)</option>
+									</select>
+								</div>
 								<!--- todo: bootstrap slider --->
 								<!--- 						<input
 									type="text"
@@ -125,29 +125,26 @@
 								<label>Margin</label>
 
 								<div class="row mura-ui-row">
-									<div class="col-xs-8 center">
+									<div class="col-xs-12 center">
 										<div class="mura-input-group">
 											<label class="mura-serial">
-												<input type="text" name="margin" id="objectmarginall" placeholder="All" class="numeric serial" value="<cfif len(trim(attributes.params.stylesupport.objectstyles.marginall))>#val(esapiEncode('html_attr',attributes.params.stylesupport.objectstyles.marginall))#</cfif>">
+												<input type="text" name="margin" id="objectmarginall" class="numeric serial" value="<cfif len(trim(attributes.params.stylesupport.objectstyles.marginall))>#val(esapiEncode('html_attr',attributes.params.stylesupport.objectstyles.marginall))#</cfif>">
 											</label>
 											<select id="objectmarginuom" name="objectmarginuom" class="styleSupport">
 												<cfloop list="px,%,em,rem" index="u">
 													<option value="#u#"<cfif attributes.params.stylesupport.objectmarginuom eq u> selected</cfif>>#u#</option>
 												</cfloop>
 											</select>
+										<a class="btn ui-advanced mura-ui-link" data-reveal="objectmarginadvanced" href="##"><i class="mi-arrows"></i></a>
 										</div>
 									</div>
-									<div class="col-xs-4">
-										<a class="mura-ui-link" data-reveal="objectmarginadvanced" href="##">Advanced</a>
-									</div>
 								</div>
-
 								<div id="objectmarginadvanced" class="mura-ui-inset" style="display: none;">
 									<div class="row mura-ui-row">
 										<div class="col-xs-3"></div>
 										<div class="col-xs-6">
 											<label class="mura-serial">
-												<input type="text" name="objectMarginTop" id="objectmargintop" placeholder="Top" class="numeric serial" value="<cfif len(trim(attributes.params.stylesupport.objectstyles.margintop))>#val(esapiEncode('html_attr',attributes.params.stylesupport.objectstyles.margintop))#</cfif>">
+												<input type="text" name="objectMarginTop" id="objectmargintop" class="numeric serial" value="<cfif len(trim(attributes.params.stylesupport.objectstyles.margintop))>#val(esapiEncode('html_attr',attributes.params.stylesupport.objectstyles.margintop))#</cfif>">
 											</label>
 											<input type="hidden" name="marginTop" id="objectmargintopval" class="objectStyle" value="#esapiEncode('html_attr',attributes.params.stylesupport.objectstyles.margintop)#">
 										</div>
@@ -155,16 +152,25 @@
 									</div>
 
 									<div class="row mura-ui-row">
-										<div class="col-xs-6">
-											<label class="mura-serial">
-												<input type="text" name="objectMarginLeft" id="objectmarginleft" placeholder="Left" class="numeric serial" value="<cfif len(trim(attributes.params.stylesupport.objectstyles.marginleft))>#val(esapiEncode('html_attr',attributes.params.stylesupport.objectstyles.marginleft))#</cfif>">
-											</label>
+										<div class="col-xs-5">
+												<div class="mura-input-group">
+													<label class="mura-serial">
+														<input type="text" name="objectMarginLeft" id="objectmarginleft" class="numeric serial pull-right" value="<cfif  attributes.params.stylesupport.objectstyles.marginleft eq 'auto'>auto<cfelseif len(trim(attributes.params.stylesupport.objectstyles.marginleft))>#val(esapiEncode('html_attr',attributes.params.stylesupport.objectstyles.marginleft))#</cfif>">
+															<!---<a class="btn pull-right input-auto" data-auto-input="objectmarginleft" href="##"><span>a</span></a>--->
+														</label>
+												</div>
 											<input type="hidden" name="marginLeft" id="objectmarginleftval" class="objectStyle" value="#esapiEncode('html_attr',attributes.params.stylesupport.objectstyles.marginleft)#">
 										</div>
-										<div class="col-xs-6">
-											<label class="mura-serial">
-												<input type="text" name="objectMarginRight" id="objectmarginright" placeholder="Right" class="numeric serial" value="<cfif len(trim(attributes.params.stylesupport.objectstyles.marginright))>#val(esapiEncode('html_attr',attributes.params.stylesupport.objectstyles.marginright))#</cfif>">
-											</label>
+										<div class="col-xs-2">
+											<i class="mi-arrows ui-inset-icon"></i>
+										</div>
+										<div class="col-xs-5">
+											<div class="mura-input-group">
+												<label class="mura-serial">
+													<input type="text" name="objectMarginRight" id="objectmarginright" class="numeric serial pull-left" value="<cfif  attributes.params.stylesupport.objectstyles.marginright eq 'auto'>auto<cfelseif len(trim(attributes.params.stylesupport.objectstyles.marginright))>#val(esapiEncode('html_attr',attributes.params.stylesupport.objectstyles.marginright))#</cfif>">
+													<!---<a class="btn pull-left input-auto" data-auto-input="objectmarginright" href="##"><span>a</span></a>--->
+												</label>
+											</div>
 											<input type="hidden" name="marginRight" id="objectmarginrightval" class="objectStyle" value="#esapiEncode('html_attr',attributes.params.stylesupport.objectstyles.marginright)#">
 										</div>
 									</div>
@@ -173,7 +179,7 @@
 										<div class="col-xs-3"></div>
 										<div class="col-xs-6">
 											<label class="mura-serial">
-												<input type="text" name="objectMarginBottom" id="objectmarginbottom" placeholder="Bottom" class="numeric serial" value="<cfif len(trim(attributes.params.stylesupport.objectstyles.marginbottom))>#val(esapiEncode('html_attr',attributes.params.stylesupport.objectstyles.marginbottom))#</cfif>">
+												<input type="text" name="objectMarginBottom" id="objectmarginbottom" class="numeric serial" value="<cfif len(trim(attributes.params.stylesupport.objectstyles.marginbottom))>#val(esapiEncode('html_attr',attributes.params.stylesupport.objectstyles.marginbottom))#</cfif>">
 											</label>
 											<input type="hidden" name="marginBottom" id="objectmarginbottomval" class="objectStyle" value="#esapiEncode('html_attr',attributes.params.stylesupport.objectstyles.marginbottom)#">
 										</div>
@@ -189,10 +195,10 @@
 								<label>Padding</label>
 
 								<div class="row mura-ui-row">
-									<div class="col-xs-8 center">
+									<div class="col-xs-12 center">
 										<div class="mura-input-group">
 											<label class="mura-serial">
-												<input type="text" name="padding" id="objectpaddingall" placeholder="All" class="numeric serial" value="<cfif len(trim(attributes.params.stylesupport.objectstyles.paddingall))>#val(esapiEncode('html_attr',attributes.params.stylesupport.objectstyles.paddingall))#</cfif>">
+												<input type="text" name="padding" id="objectpaddingall" class="numeric serial" value="<cfif len(trim(attributes.params.stylesupport.objectstyles.paddingall))>#val(esapiEncode('html_attr',attributes.params.stylesupport.objectstyles.paddingall))#</cfif>">
 											</label>
 											<select id="objectpaddinguom" name="objectpaddinguom" class="styleSupport">
 												<cfloop list="px,%,em,rem" index="u">
@@ -200,9 +206,7 @@
 												</cfloop>
 											</select>
 										</div>
-									</div>
-									<div class="col-xs-4">
-										<a class="mura-ui-link" data-reveal="objectpaddingadvanced" href="##">Advanced</a>
+										<a class="btn ui-advanced mura-ui-link" data-reveal="objectpaddingadvanced" href="##"><i class="mi-arrows"></i></a>
 									</div>
 								</div>
 
@@ -211,7 +215,7 @@
 										<div class="col-xs-3"></div>
 										<div class="col-xs-6">
 											<label class="mura-serial">
-												<input type="text" name="objectPaddingTop" id="objectpaddingtop" placeholder="Top" class="numeric serial" value="<cfif len(trim(attributes.params.stylesupport.objectstyles.paddingtop))>#val(esapiEncode('html_attr',attributes.params.stylesupport.objectstyles.paddingtop))#</cfif>">
+												<input type="text" name="objectPaddingTop" id="objectpaddingtop" class="numeric serial" value="<cfif len(trim(attributes.params.stylesupport.objectstyles.paddingtop))>#val(esapiEncode('html_attr',attributes.params.stylesupport.objectstyles.paddingtop))#</cfif>">
 											</label>
 											<input type="hidden" name="paddingTop" id="objectpaddingtopval" class="objectStyle" value="#esapiEncode('html_attr',attributes.params.stylesupport.objectstyles.paddingtop)#">
 										</div>
@@ -219,25 +223,30 @@
 									</div>
 
 									<div class="row mura-ui-row">
-										<div class="col-xs-6">
+										<div class="col-xs-1"></div>
+										<div class="col-xs-4">
 											<label class="mura-serial">
-												<input type="text" name="objectPaddingLeft" id="objectpaddingleft" placeholder="Left" class="numeric serial" value="<cfif len(trim(attributes.params.stylesupport.objectstyles.paddingleft))>#val(esapiEncode('html_attr',attributes.params.stylesupport.objectstyles.paddingleft))#</cfif>">
+												<input type="text" name="objectPaddingLeft" id="objectpaddingleft" class="numeric serial pull-right" value="<cfif len(trim(attributes.params.stylesupport.objectstyles.paddingleft))>#val(esapiEncode('html_attr',attributes.params.stylesupport.objectstyles.paddingleft))#</cfif>">
 											</label>
 											<input type="hidden" name="paddingLeft" id="objectpaddingleftval" class="objectStyle" value="#esapiEncode('html_attr',attributes.params.stylesupport.objectstyles.paddingleft)#">
 										</div>
-										<div class="col-xs-6">
+										<div class="col-xs-2">
+											<i class="mi-arrows ui-inset-icon"></i>
+										</div>
+										<div class="col-xs-4">
 											<label class="mura-serial">
-												<input type="text" name="objectPaddingRight" id="objectpaddingright" placeholder="Right" class="numeric serial" value="<cfif len(trim(attributes.params.stylesupport.objectstyles.paddingright))>#val(esapiEncode('html_attr',attributes.params.stylesupport.objectstyles.paddingright))#</cfif>">
+												<input type="text" name="objectPaddingRight" id="objectpaddingright" class="numeric serial pull-left" value="<cfif len(trim(attributes.params.stylesupport.objectstyles.paddingright))>#val(esapiEncode('html_attr',attributes.params.stylesupport.objectstyles.paddingright))#</cfif>">
 											</label>
 											<input type="hidden" name="paddingRight" id="objectpaddingrightval" class="objectStyle" value="#esapiEncode('html_attr',attributes.params.stylesupport.objectstyles.paddingright)#">
 										</div>
+										<div class="col-xs-1"></div>
 									</div>
 
 									<div class="row mura-ui-row">
 										<div class="col-xs-3"></div>
 										<div class="col-xs-6">
 											<label class="mura-serial">
-												<input type="text" name="objectPaddingBottom" id="objectpaddingbottom" placeholder="Bottom" class="numeric serial" value="<cfif len(trim(attributes.params.stylesupport.objectstyles.paddingbottom))>#val(esapiEncode('html_attr',attributes.params.stylesupport.objectstyles.paddingbottom))#</cfif>">
+												<input type="text" name="objectPaddingBottom" id="objectpaddingbottom" class="numeric serial" value="<cfif len(trim(attributes.params.stylesupport.objectstyles.paddingbottom))>#val(esapiEncode('html_attr',attributes.params.stylesupport.objectstyles.paddingbottom))#</cfif>">
 											</label>
 											<input type="hidden" name="paddingBottom" id="objectpaddingbottomval" class="objectStyle" value="#esapiEncode('html_attr',attributes.params.stylesupport.objectstyles.paddingbottom)#">
 										</div>
@@ -260,9 +269,9 @@
                 </a>
             </h4>
         </div> <!--- /.mura-panel-heading --->
-        <div id="panel-style-object-2" class="panel-collapse collapse in">
+        <div id="panel-style-object-2" class="panel-collapse collapse">
             <div class="mura-panel-body">
-         		<!--- panel contents --->	
+         		<!--- panel contents --->
 
          				<!--- theme --->
 								<cfif arrayLen(request.modulethemeoptions)>
@@ -300,7 +309,7 @@
                 </a>
             </h4>
         </div> <!--- /.mura-panel-heading --->
-        <div id="panel-style-object-3" class="panel-collapse collapse in">
+        <div id="panel-style-object-3" class="panel-collapse collapse">
             <div class="mura-panel-body">
             <!--- panel contents --->
 						<!--- background --->
@@ -320,39 +329,10 @@
 							<button type="button" class="btn mura-ckfinder" data-target="objectbackgroundimageurl" data-completepath="false"><i class="mi-image"></i> Select Image</button>
 						</div>
 
-						<div class="mura-control-group object-css-bg-option" style="display:none;">
-							<label>Background Size</label>
-							<select id="objectbackgroundsize" name="backgroundSize" class="objectStyle">
-								<option value="auto"<cfif attributes.params.stylesupport.objectstyles.backgroundsize eq 'auto'>
-								selected</cfif>>Auto</option>
-								<option value="contain"<cfif attributes.params.stylesupport.objectstyles.backgroundsize eq 'contain'> selected</cfif>>Contain</option>
-								<option value="cover"<cfif attributes.params.stylesupport.objectstyles.backgroundsize eq 'cover'> selected</cfif>>Cover</option>
-							</select>
-						</div>
-
-						<div class="mura-control-group object-css-bg-option" style="display:none;">
-							<label>Background Repeat</label>
-							<select id="objectbackgroundrepeat" name="backgroundRepeat" class="objectStyle">
-								<option value="no-repeat"<cfif attributes.params.stylesupport.objectstyles.backgroundrepeat eq 'norepeat'> selected</cfif>>No-repeat</option>
-								<option value="repeat"<cfif attributes.params.stylesupport.objectstyles.backgroundrepeat eq 'repeat'> selected</cfif>>Repeat</option>
-								<option value="repeat-x"<cfif attributes.params.stylesupport.objectstyles.backgroundrepeat eq 'repeatx'> selected</cfif>>Repeat-X</option>
-								<option value="repeat-y"<cfif attributes.params.stylesupport.objectstyles.backgroundrepeat eq 'repeaty'> selected</cfif>>Repeat-Y</option>
-							</select>
-						</div>
-
-						<div class="mura-control-group object-css-bg-option" style="display:none;">
-							<label>Background Attachment</label>
-							<select name="backgroundAttachment" class="objectStyle">
-								<option value="scroll"<cfif attributes.params.stylesupport.objectstyles.backgroundAttachment eq 'scroll'>
-								selected</cfif>>Scroll</option>
-								<option value="Fixed"<cfif attributes.params.stylesupport.objectstyles.backgroundAttachment eq 'fixed'> selected</cfif>>Fixed</option>
-							</select>
-						</div>
-
-						<div class="mura-control-group mura-ui-grid object-css-bg-option" style="display:none;">
+						<div class="mura-control-group mura-ui-grid object-css-bg-option bg-position" style="display:none;">
 							<label>Background Position</label>
 
-							<div class="mura-ui-row">
+							<div class="row mura-ui-row">
 								<div class="col-xs-4"><label class="right ui-nested">Vertical</label></div>
 								<div class="col-xs-8">
 									<div class="mura-input-group">
@@ -391,8 +371,38 @@
 									</div>
 								</div>
 							</div>
-						</div>            
-            <!--- /end panel contents --->      
+						</div>
+
+						<div class="mura-control-group object-css-bg-option" style="display:none;">
+							<label>Background Repeat</label>
+							<select id="objectbackgroundrepeat" name="backgroundRepeat" class="objectStyle">
+								<option value="no-repeat"<cfif attributes.params.stylesupport.objectstyles.backgroundrepeat eq 'norepeat'> selected</cfif>>No-repeat</option>
+								<option value="repeat"<cfif attributes.params.stylesupport.objectstyles.backgroundrepeat eq 'repeat'> selected</cfif>>Repeat</option>
+								<option value="repeat-x"<cfif attributes.params.stylesupport.objectstyles.backgroundrepeat eq 'repeatx'> selected</cfif>>Repeat-X</option>
+								<option value="repeat-y"<cfif attributes.params.stylesupport.objectstyles.backgroundrepeat eq 'repeaty'> selected</cfif>>Repeat-Y</option>
+							</select>
+						</div>
+
+						<div class="mura-control-group object-css-bg-option" style="display:none;">
+							<label>Background Size</label>
+							<select id="objectbackgroundsize" name="backgroundSize" class="objectStyle">
+								<option value="auto"<cfif attributes.params.stylesupport.objectstyles.backgroundsize eq 'auto'>
+								selected</cfif>>Auto</option>
+								<option value="contain"<cfif attributes.params.stylesupport.objectstyles.backgroundsize eq 'contain'> selected</cfif>>Contain</option>
+								<option value="cover"<cfif attributes.params.stylesupport.objectstyles.backgroundsize eq 'cover'> selected</cfif>>Cover</option>
+							</select>
+						</div>
+
+						<div class="mura-control-group object-css-bg-option" style="display:none;">
+							<label>Background Attachment</label>
+							<select name="backgroundAttachment" class="objectStyle">
+								<option value="scroll"<cfif attributes.params.stylesupport.objectstyles.backgroundAttachment eq 'scroll'>
+								selected</cfif>>Scroll</option>
+								<option value="Fixed"<cfif attributes.params.stylesupport.objectstyles.backgroundAttachment eq 'fixed'> selected</cfif>>Fixed</option>
+							</select>
+						</div>
+
+            <!--- /end panel contents --->
             </div> <!--- /.mura-panel-body --->
         </div> <!--- /.panel-collapse --->
     </div> <!--- /.mura-panel --->
@@ -405,10 +415,10 @@
                 </a>
             </h4>
         </div> <!--- /.mura-panel-heading --->
-        <div id="panel-style-object-4" class="panel-collapse collapse in">
+        <div id="panel-style-object-4" class="panel-collapse collapse">
             <div class="mura-panel-body">
             <!--- panel contents --->
-						            
+
 							<div class="mura-control-group">
 								<label>
 								Z-Index
@@ -426,16 +436,17 @@
 									Custom CSS Styles
 								</label>
 								<cfoutput>
-								<textarea id="customstylesedit" style="min-height: 250px">#esapiEncode('html',attributes.params.stylesupport.css)#</textarea>
+								<textarea class="textarea-lg" id="customstylesedit">#esapiEncode('html',attributes.params.stylesupport.css)#</textarea>
 								</cfoutput>
-								<button class="btn" id="applystyles">Apply</button>
+								<!--- todo: rb key --->
+								<a class="btn" id="applystyles"><i class="mi-check"></i>Apply Custom Styles</a>
 								<script>
 									Mura('##applystyles').click(function(){
 										jQuery('##csscustom').val(Mura('##customstylesedit').val()).trigger('change');
 									})
 								</script>
 							</div>
-            <!--- /end panel contents --->      
+            <!--- /end panel contents --->
             </div> <!--- /.mura-panel-body --->
         </div> <!--- /.panel-collapse --->
     </div> <!--- /.mura-panel --->

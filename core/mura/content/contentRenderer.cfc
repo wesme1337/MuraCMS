@@ -1791,23 +1791,6 @@ Display Objects
 					</cfcase>
 				</cfswitch>
 			<cfelse>
-				<!---
-					Render crumblist and title if required which is beind phazed out
-					infavor of handling that within a content_type include
-				--->
-				 <cfoutput>
-				 	<cfif structKeyExists(arguments,'titleAttribute')>
-				 		<#getHeaderTag('headline')# class="pageTitle">#renderEditableAttribute(attribute=arguments.titleAttribute,required=true)#</#getHeaderTag('headline')#>
-					<cfelseif arguments.pageTitle neq ''>
-						<#getHeaderTag('headline')# class="pageTitle"><cfif arguments.pageTitle eq $.content('title')>#renderEditableAttribute(attribute='title',required=true)#<cfelse>#arguments.pageTitle#</cfif></#getHeaderTag('headline')#>
-					</cfif>
-					<cfif arguments.crumblist>
-						#dspCrumbListLinks("crumblist",arguments.crumbseparator)#
-					</cfif>
-					<cfif $.hasParent() and $.getParent().getType() eq 'Calendar' and len(arguments.displayIntervalDesc)>
-						<p<cfif len(arguments.displayIntervalClass)> class="#arguments.displayIntervalClass#"</cfif>>#arguments.displayIntervalDesc#</p>
-					</cfif>
-				</cfoutput>
 
 				<!---
 					Look for custom overrides via events or content types includes.  Preferred for future development
@@ -1826,6 +1809,25 @@ Display Objects
 					wth content_type includes for all base content types. So this will eventually be phased out
 				 --->
 				<cfelse>
+
+					<!---
+						Render crumblist and title if required which is beind phazed out
+						infavor of handling that within a content_type include
+					--->
+					 <cfoutput>
+						<cfif structKeyExists(arguments,'titleAttribute')>
+							<#getHeaderTag('headline')# class="pageTitle">#renderEditableAttribute(attribute=arguments.titleAttribute,required=true)#</#getHeaderTag('headline')#>
+						<cfelseif arguments.pageTitle neq ''>
+							<#getHeaderTag('headline')# class="pageTitle"><cfif arguments.pageTitle eq $.content('title')>#renderEditableAttribute(attribute='title',required=true)#<cfelse>#arguments.pageTitle#</cfif></#getHeaderTag('headline')#>
+						</cfif>
+						<cfif arguments.crumblist>
+							#dspCrumbListLinks("crumblist",arguments.crumbseparator)#
+						</cfif>
+						<cfif $.hasParent() and $.getParent().getType() eq 'Calendar' and len(arguments.displayIntervalDesc)>
+							<p<cfif len(arguments.displayIntervalClass)> class="#arguments.displayIntervalClass#"</cfif>>#arguments.displayIntervalDesc#</p>
+						</cfif>
+					</cfoutput>
+
 					<cfswitch expression="#$.content('type')#">
 					<cfcase value="File">
 						<cfif variables.event.getValue('contentBean').getContentType() eq "Image"
@@ -2815,7 +2817,7 @@ Display Objects
 							(getBean('permUtility').getModulePerm("00000000000000000000000000000000000",variables.event.getValue('siteID')))
 							or listFind(sessionData.mura.memberships,'S2')
 						)
-					) 
+					)
 				) and getShowAdminToolBar()
 			) and not request.muraExportHTML />
 		</cfif>
@@ -3039,6 +3041,71 @@ Display Objects
 	<cfreturn variables.contentRendererUtility.renderEditableAttribute(argumentCollection=arguments)>
 </cffunction>
 
+<cffunction name="renderMinJSFile" output="true">
+	<cfargument name="filepath">
+	<cfargument name="siteid" default="">
+	<cfargument name="attrs" type="struct" default="#structNew()#">
+
+	<cfset var processedFilepath = this.getMinifiedFile(filepath=arguments.filepath, siteid=arguments.siteid) />
+	<cfset var attr = "" />
+
+	<cfoutput>
+		<script src="#processedFilepath#"
+			<cfloop collection="#arguments.attrs#" item=attr>
+				#attr#=#arguments.attrs[attr]#
+			</cfloop>
+		>
+		</script>
+	</cfoutput>
+</cffunction>
+
+<cffunction name="renderMinCSSFile" output="true">
+	<cfargument name="filepath">
+	<cfargument name="siteid" default="">
+	<cfargument name="attrs" type="struct" default="#structNew()#">
+	<cfset var processedFilepath = this.getMinifiedFile(filepath=arguments.filepath, siteid=arguments.siteid) />
+	<cfset var attr = "" />
+
+	<cfoutput>
+		<link href="#processedFilepath#"
+			<cfloop collection="#arguments.attrs#" item=attr>
+				#attr#=#arguments.attrs[attr]#
+			</cfloop>
+		>
+	</cfoutput>
+</cffunction>
+
+<cffunction name="getMinifiedFile" output="true">
+	<cfargument name="filepath">
+	<cfargument name="siteid" default="">
+
+	<cfset var dir = GetDirectoryFromPath(arguments.filepath) />
+	<cfset var filename = getFileFromPath(arguments.filepath) />
+	<cfset var filenameArray = filename.listToArray(".") />
+	<cfset var fileExtension = filenameArray[2] />
+	<cfset var minifiedFilepath = dir & "dist/" & "#filenameArray[1]#.min.#fileExtension#" />
+
+	<cfset var site = application.settingsManager.getSite(arguments.siteid)/>
+	<cfset var cacheFactory = site.getCacheFactory(name="jsAndCssFileLookup")>
+
+	<cfset var filepathArray = arguments.filepath.listToArray(".")/>
+
+	<cfset var processedFilepath = "" />
+	<!--- If key is in cache --->
+	<cfif cacheFactory.has(arguments.filepath)>
+		<cfset processedFilepath = cacheFactory.get(arguments.filepath) />
+	<!--- Else if minified file exists --->
+	<cfelseif fileExists(server.coldfusion.rootdir & minifiedFilepath)>
+		<!--- Add record to cache --->
+		<cfset cacheFactory.set(arguments.filepath, minifiedFilepath) />
+		<cfset processedFilepath = cacheFactory.get(arguments.filepath) />
+	<!--- Else use the original unminified file --->
+	<cfelse>
+		<cfset processedFilepath = arguments.filepath />
+	</cfif>
+	<cfreturn processedFilepath />
+</cffunction>
+
 <cffunction name="renderClassOption" output="false">
 	<cfargument name="object">
 	<cfargument name="objectid" default="">
@@ -3210,6 +3277,27 @@ Display Objects
 
 		return returnString;
 	}
+
+	function getColorOptions(){
+		if(isdefined('this.colorArray') && isArray(this.colorArray)){
+			return this.colorArray;
+		} else if (isdefined('this.colorOptions') && isArray(this.colorOptions)){
+			return this.colorOptions;
+		} else {
+			return [];
+		}
+	}
+
+	function getModuleThemeOptions(){
+		if(isdefined('this.modulethemeArray') && isArray(this.modulethemeArray)){
+			return this.colorArray;
+		} else if (isdefined('this.modulethemeOptions') && isArray(this.modulethemeOptions)){
+			return this.modulethemeOptions;
+		} else {
+			return [];
+		}
+	}
+
 </cfscript>
 
 

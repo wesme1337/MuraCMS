@@ -2076,18 +2076,12 @@ var Mura=(function(){
 
 				function() {
 
-					if (typeof openFrontEndToolsModal == 'function') {
-						find(".frontEndToolsModal").on('click',
-							function(event) {
-								event.preventDefault();
-								openFrontEndToolsModal(this);
-							}
-						);
+					if (Mura.handleObjectClick == 'function') {
+						find('.mura-object, .frontEndToolsModal').on('click',Mura.handleObjectClick);
 					}
 
-
-					if (typeof window !='undefined' && typeof window.document != 'undefined'	&& window.MuraInlineEditor && window.MuraInlineEditor
-							.checkforImageCroppers) {
+					if (typeof window !='undefined' && typeof window.document != 'undefined'	&& window.MuraInlineEditor
+							&& window.MuraInlineEditor.checkforImageCroppers) {
 							find("img").each(function() {
 									window.muraInlineEditor.checkforImageCroppers(
 											this);
@@ -2277,6 +2271,14 @@ var Mura=(function(){
 		self.removeAttr('data-runtime');
 		self.removeAttr('draggable');
 		self.removeAttr('style');
+
+		var data=self.data();
+
+		for(var p in data){
+			if(data.hasOwnProperty(p) && (typeof p == 'undefined') || data[p] == ''){
+				self.removeAttr('data-' + p);
+			}
+		}
 
 		if (self.data('object') == 'container') {
 			self.find('.mura-object:not([data-object="container"])').html('');
@@ -2564,14 +2566,7 @@ var Mura=(function(){
 								obj.children('.frontEndToolsModal').remove();
 								obj.prepend(window.Mura.layoutmanagertoolbar);
 
-								var openToolbar=function(event){
-									event.preventDefault();
-									openFrontEndToolsModal(this);
-								};
-
-								obj.find(".frontEndToolsModal").each(function(){
-									Mura(this).off('click',openToolbar).on('click',openToolbar);
-								})
+								obj.off('click',Mura.handleObjectClick).on('click',Mura.handleObjectClick);
 
 								obj.find("img").each(function(){MuraInlineEditor.checkforImageCroppers(this);});
 
@@ -3295,7 +3290,6 @@ var Mura=(function(){
 
 		config.formdata=(typeof FormData != 'undefined') ? true : false;
 
-		Mura.editing;
 
 		var initForDataOnly=false;
 
@@ -18315,51 +18309,51 @@ Mura.DOMSelection = Mura.Core.extend(
 			}
 
 			var width='100%';
-			var adjust=false;
-
 
 			if(obj.is('.mura-one')){
-				width='8.33%';adjust=true;
+				width='8.33%';
 			} else if(obj.is('.mura-two')){
-				width='16.66%';adjust=true;
+				width='16.66%';
 			} else if(obj.is('.mura-three')){
-				width='25%';adjust=true;
+				width='25%';
 			} else if(obj.is('.mura-four')){
-				width='33.33%';adjust=true;
+				width='33.33%';
 			} else if(obj.is('.mura-five')){
-				width='41.66%';adjust=true;
+				width='41.66%';
 			} else if(obj.is('.mura-six')){
-				width='50%';adjust=true;
+				width='50%';
 			} else if(obj.is('.mura-seven')){
-				width='58.33';adjust=true;
+				width='58.33';
 			} else if(obj.is('.mura-eigth')){
-				width='66.66%';adjust=true;
+				width='66.66%';
 			} else if(obj.is('.mura-nine')){
-				width='75%';adjust=true;
+				width='75%';
 			} else if(obj.is('.mura-ten')){
-				width='83.33%';adjust=true;
+				width='83.33%';
 			} else if(obj.is('.mura-eleven')){
-				width='91.66%';adjust=true;
+				width='91.66%';
 			} else if(obj.is('.mura-twelve')){
-				width='100%';adjust=true;
+				width='100%';
 			} else if(obj.is('.mura-one-third')){
-				width='33.33%';adjust=true;
+				width='33.33%';
 			} else if(obj.is('.mura-two-thirds')){
-				width='66.66%';adjust=true;
+				width='66.66%';
 			} else if(obj.is('.mura-one-half')){
-				width='50%';adjust=true;
+				width='50%';
+			} else {
+				width='100%';
 			}
 
-			if(adjust){
-				var left=obj.css('marginLeft');
-				var right=obj.css('marginRight')
-				if(!(left=='0px' && right=='0px') && left.charAt(0) != "-" && right.charAt(0) != "-"){
-					if(fullsize){
-						obj.css('width','calc(' + width + ' - (' + left + ' + ' + right + '))');
-					}
-					Mura.windowResponsiveModules[obj.data('instanceid')]=true;
+			var left=obj.css('marginLeft');
+			var right=obj.css('marginRight')
+
+			if(!obj.is('.mura-center') && !(left=='0px' && right=='0px') && !(left=='auto' || right=='auto') && left.charAt(0) != "-" && right.charAt(0) != "-"){
+				if(fullsize){
+					obj.css('width','calc(' + width + ' - (' + left + ' + ' + right + '))');
 				}
+				Mura.windowResponsiveModules[obj.data('instanceid')]=true;
 			}
+
 
 			if(obj.css('paddingTop').replace(/[^0-9]/g,'') != '0' || obj.css('paddingLeft').replace(/[^0-9]/g,'') != '0'){
 				obj.addClass('mura-object-pin-tools');
@@ -20880,7 +20874,7 @@ Mura.templates['meta']=function(context){
 	}
 }
 Mura.templates['content']=function(context){
-	context.html=context.html || context.content || context.source || '';
+	context.html=context.html || context.content || context.source || '<p></p>';
 	return '<div class="mura-object-content">' + context.html + '</div>';
 }
 Mura.templates['text']=function(context){
@@ -20888,7 +20882,7 @@ Mura.templates['text']=function(context){
 	if(context.label){
 		context.source=context.source || '';
 	} else {
-		context.source=context.source || '<p>This object has not been configured.</p>';
+		context.source=context.source || '<p></p>';
 	}
 	return context.source;
 }
@@ -20897,7 +20891,7 @@ Mura.templates['embed']=function(context){
 	if(context.label){
 		context.source=context.source || '';
 	} else {
-		context.source=context.source || '<p>This object has not been configured.</p>';
+		context.source=context.source || '<p></p>';
 	}
 	return context.source;
 }

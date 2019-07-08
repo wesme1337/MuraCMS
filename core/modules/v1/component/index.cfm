@@ -100,7 +100,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 		<cfset request.cacheItem=variables.rsTemplate.doCache/>
 	</cfif>
 <cfelseif listFindNoCase('author,editor',variables.$.event('r').perm)>
-	<cfoutput><p>#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.objectnotconfigured')#</p></cfoutput>
+	<p></p>
 <cfelse>
 	<cfset request.muraValidObject=false>
 </cfif>

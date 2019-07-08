@@ -264,8 +264,12 @@
 
 						MuraInlineEditor.isDirty=true;
 					}
-
+					var perm=item.data('perm');
 					Mura.resetAsyncObject(item.node,false);
+					if(perm){
+						item.data('perm',perm);
+					}
+
 					item.addClass('mura-active');
 					Mura.processAsyncObject(item.node,false).then(function(){
 						closeFrontEndToolsModal();
@@ -357,38 +361,63 @@
 		return initFrontendUI(a,isnew);
 	};
 
+	var openToolbar=function(event){
+		if(!window.Mura.editing){
+			return;
+		}
+		var source = Mura(event.target || event.srcElement);
+
+		if(source.is('.frontEndToolsModal') ){
+			event.preventDefault();
+			event.stopPropagation();
+			openFrontEndToolsModal(this);
+		} else if(source.is('.mura-object') ){
+			event.preventDefault();
+			event.stopPropagation();
+			openFrontEndToolsModal(source.node);
+		} else if (!source.is('a, button, input, select, textarea')) {
+			var parentObj=source.closest('.mura-object');
+			if(parentObj.length){
+				event.preventDefault();
+				event.stopPropagation();
+				openFrontEndToolsModal(parentObj.children('.frontEndToolsModal').node);
+			}
+		}
+	};
+
 	var initFrontendUI=function(a,isnew){
 		var src=a.href;
 		var editableObj=utility(a);
 		var targetFrame='modal';
 
 		//This is an advance look at the protential configurable object to see if it's a non-configurable component for form
-		if(utility(a).hasClass("mura-object")){
-			var tempCheck=utility(a);
-		} else {
-			var tempCheck=utility(a).closest(".mura-object,.mura-async-object");
-		}
-
-		var lcaseObject=tempCheck.data('object');
-		if(typeof lcaseObject=='string'){
-			lcaseObject=lcaseObject.toLowerCase();
-		}
-
-		//If the it's a form of component that's not configurable then go straight to edit it
-		if((lcaseObject=='form' || lcaseObject=='component') && tempCheck.data('notconfigurable')){
-			if(Mura.isUUID(tempCheck.data('objectid'))){
-					src=adminLoc + '?muraAction=cArch.editLive&compactDisplay=true&contentid=' + encodeURIComponent(tempCheck.data('objectid')) + '&type='+ encodeURIComponent(tempCheck.data('object')) + '&siteid='+  Mura.siteid + '&instanceid=' + encodeURIComponent(tempCheck.data('instanceid'));
+		if(!src)
+			if(editableObj.hasClass("mura-object")){
+				var editableObj=editableObj;
 			} else {
-					src=adminLoc + '?muraAction=cArch.editLive&compactDisplay=true&title=' + encodeURIComponent(tempCheck.data('objectid')) + '&type='+ encodeURIComponent(tempCheck.data('object')) + '&siteid=' + Mura.siteid + '&instanceid=' + encodeURIComponent(tempCheck.data('instanceid'));
+				var editableObj=editableObj.closest(".mura-object,.mura-async-object");
 			}
 
-		}
+			var lcaseObject=editableObj.data('object');
+			if(typeof lcaseObject=='string'){
+				lcaseObject=lcaseObject.toLowerCase();
+			}
+
+			//If the it's a form of component that's not configurable then go straight to edit it
+			if((lcaseObject=='form' || lcaseObject=='component') && editableObj.data('notconfigurable')){
+				MuraInlineEditor.sidebarAction('showobjects');
+
+				if(Mura.isUUID(editableObj.data('objectid'))){
+						src=adminLoc + '?muraAction=cArch.editLive&compactDisplay=true&contentid=' + encodeURIComponent(editableObj.data('objectid')) + '&type='+ encodeURIComponent(editableObj.data('object')) + '&siteid='+  Mura.siteid + '&instanceid=' + encodeURIComponent(editableObj.data('instanceid'));
+				} else {
+						src=adminLoc + '?muraAction=cArch.editLive&compactDisplay=true&title=' + encodeURIComponent(editableObj.data('objectid')) + '&type='+ encodeURIComponent(editableObj.data('object')) + '&siteid=' + Mura.siteid + '&instanceid=' + encodeURIComponent(editableObj.data('instanceid'));
+				}
+
+			}
 
 		//If there's no direct src to goto then we're going to assume it's a display object configurator
 		if(!src){
-			if(utility(a).hasClass("mura-object")){
-			var editableObj=utility(a);
-			} else {
+			if(editableObj.hasClass("mura-object")){
 				var editableObj=utility(a).closest(".mura-object,.mura-async-object");
 			}
 
@@ -396,6 +425,12 @@
 				This reloads the element in the dom to ensure that all the latest
 				values are present
 			*/
+
+			if(typeof Mura.currentObjectInstanceID != 'undefined' && Mura.currentObjectInstanceID == editableObj.data('instanceid')){
+				return;
+			}
+
+			Mura.currentObjectInstanceID= editableObj.data('instanceid');
 
 			editableObj=Mura('[data-instanceid="' + editableObj.data('instanceid') + '"]');
 			editableObj.hide().show();
@@ -431,6 +466,7 @@
 		}
 
 		if(targetFrame=='modal'){
+			editableObj=Mura(a);
 			var isModal=editableObj.attr("data-configurator");
 
 			//These are for the preview iframes
@@ -505,7 +541,7 @@
 				    return false;
 				});
 
-				utility("##frontEndToolsModalBody").css("top",(utility(document).scrollTop()+48) + "px")
+				utility("##frontEndToolsModalBody").css("top",(utility(document).scrollTop()+48) + "px");
 				resizeFrontEndToolsModal(frontEndModalHeight);
 			} else {
 
@@ -563,20 +599,32 @@
 			var frame = document.getElementById("frontEndToolsModaliframe");
 			var frameContainer = document.getElementById("frontEndToolsModalContainer");
 			var framesrc = frame.getAttribute('src');
+			var appliedHeight = 0;
+
+
+			// mark: finding size of ckeditor in modal
+
+			var isEditText = framesrc.includes('cArch.edittext');
 			var isFullHeight = framesrc.includes('cArch.editLive') || framesrc.includes('cArch.edit');
 			var windowHeight = Math.max(frameHeight, utility(window).height());
 
 			utility('##frontEndToolsModalContainer ##frontEndToolsModalBody,##frontEndToolsModalContainer ##frontEndToolsModaliframe').width(frontEndModalWidth);
 
-			if (isFullHeight){
-				frame.style.height = utility(window).height()-96 + "px";
+			if (isEditText){
+				appliedHeight = Math.min(760, utility(window).height()-96);
+			} else if(isFullHeight) {
+				appliedHeight = utility(window).height()-96;
 			} else {
-				frame.style.height = frameHeight + "px";
+				appliedHeight = frameHeight;
 			}
 
+			frame.style.height = appliedHeight + "px";
 			frameContainer.style.position = "absolute";
 			document.overflow = "auto";
 
+//			console.log('appliedHeight: ' + appliedHeight);
+//			console.log('frameHeight: ' + frameHeight);
+//			console.log('isEditText: ' + isEditText);
 //			console.log('framesrc: ' + framesrc);
 //			console.log('isFullHeight: ' + isFullHeight);
 //			console.log('windowHeight: ' + windowHeight);
@@ -748,6 +796,15 @@
 			}
 		},
 		init: function(){
+			if(typeof Mura != 'undefined'){
+				var sheet=Mura.getStyleSheet('mura-inline-editor');
+				sheet.insertRule(
+					'.mura-region-local, .mura-region-inherited, .mura-object {	min-height: 24px;	}',
+					sheet.cssRules.length
+				);
+
+			}
+
 			utility(document)
 				.trigger('muraContentEditInit')
 				.trigger('ContentEditInit');
@@ -1193,11 +1250,7 @@
 
 			<cfif $.getContentRenderer().useLayoutManager()>
 			if(window.Mura.layoutmanager){
-				var openToolbar=function(event){
-					event.preventDefault();
-					//console.log("fet:" + 1106)
-					openFrontEndToolsModal(this);
-				};
+
 
 				Mura("img").each(function(){MuraInlineEditor.checkforImageCroppers(this);});
 
@@ -1215,8 +1268,7 @@
 						item.children('.frontEndToolsModal').remove();
 						item.prepend(window.Mura.layoutmanagertoolbar );
 
-						item.find(".frontEndToolsModal")
-							.off("click",openToolbar)
+						item.off("click",openToolbar)
 							.on("click",openToolbar);
 
 
@@ -1237,8 +1289,7 @@
 									item.children('.frontEndToolsModal').remove();
 									item.prepend(window.Mura.layoutmanagertoolbar);
 
-									item.find(".frontEndToolsModal")
-										.off("click",openToolbar)
+									item.off("click",openToolbar)
 										.on("click",openToolbar);
 
 									item.find("img").each(function(){MuraInlineEditor.checkforImageCroppers(this);});
@@ -1261,8 +1312,7 @@
 									item.children('.frontEndToolsModal').remove();
 									item.prepend(window.Mura.layoutmanagertoolbar);
 
-									item.find(".frontEndToolsModal")
-										.off("click",openToolbar)
+									item.off("click",openToolbar)
 										.on("click",openToolbar);
 
 									item.find("img").each(function(){MuraInlineEditor.checkforImageCroppers(this);});
@@ -1283,8 +1333,7 @@
 					item.addClass("mura-active");
 					item.children('.frontEndToolsModal').remove();
 					item.prepend(window.Mura.layoutmanagertoolbar);
-					item.find(".frontEndToolsModal")
-						.off("click",openToolbar)
+					item.off("click",openToolbar)
 						.on("click",openToolbar);
 				});
 
@@ -2234,14 +2283,18 @@
 		   return false;
 		},
 		sidebarAction:function(action){
+
 			if(action=='showobjects'){
+				Mura.currentObjectInstanceID='';
 				MuraInlineEditor.resetEditableAttributes();
 				Mura('.mura-object-selected').removeClass('mura-object-selected');
+				Mura('.mura-editable-attribute.mura-active').removeClass('mura-active');
 				Mura('#mura-sidebar-configurator').hide();
 				Mura('#mura-sidebar-objects-legacy').hide();
 				Mura('#mura-sidebar-objects').show();
 				Mura('#mura-sidebar-editor').hide();
 			} else if(action=='showlegacyobjects'){
+				Mura.currentObjectInstanceID='';
 				MuraInlineEditor.resetEditableAttributes();
 				Mura('.mura-object-selected').removeClass('mura-object-selected');
 				Mura('#mura-sidebar-configurator').hide();
@@ -2255,16 +2308,19 @@
 				Mura('#mura-sidebar-objects').hide();
 				Mura('#mura-sidebar-editor').hide();
 			} else if(action=='showeditor'){
+				Mura.currentObjectInstanceID='';
 				Mura('.mura-object-selected').removeClass('mura-object-selected');
 				Mura('#mura-sidebar-configurator').hide();
 				Mura('#mura-sidebar-objects-legacy').hide();
 				Mura('#mura-sidebar-objects').hide();
 				Mura('#mura-sidebar-editor').show();
 			} else if(action=='minimizesidebar'){
+				Mura.currentObjectInstanceID='';
 				Mura('#mura-sidebar-container').fadeOut();
 				Mura('body').removeClass('mura-sidebar-state__pushed--right')
 				Mura('.mura-object').removeClass('mura-active').addClass("mura-active-min");
 			} else if(action=='restoresidebar'){
+				Mura.currentObjectInstanceID='';
 				Mura('#mura-sidebar-container').fadeIn();
 				Mura('body').addClass('mura-sidebar-state__pushed--right');
 				Mura('.mura-object').removeClass('mura-active-min').addClass("mura-active");
@@ -2326,7 +2382,7 @@
 	window.openFrontEndToolsModal=openFrontEndToolsModal;
 	window.themepath=window.themepath || Mura.themepath;
 	window.muraInlineEditor=window.MuraInlineEditor;
-
+	Mura.handleObjectClick=openToolbar;
 	Mura.initFrontendUI=initFrontendUI;
 
 	<cfif url.contenttype eq 'Variation'>

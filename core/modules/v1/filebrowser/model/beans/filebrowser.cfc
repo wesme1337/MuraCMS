@@ -106,7 +106,12 @@ component
 			var tempDir = m.globalConfig().getTempDir();
 			var timage = replace(createUUID(),"-","","all");
 			var delim = rereplace(baseFilePath,".*\/","");
-			var filePath = baseFilePath & rereplace(arguments.file.url,".*?#delim#","")
+			var filePath = baseFilePath & rereplace(arguments.file.url,".*?#delim#","");
+
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath,filepath)){
+				throw(message="Illegal file path",code="invalidParameters");
+			}
+
 			var sourceImage = ImageNew(filePath);
 			var response = {};
 
@@ -177,10 +182,19 @@ component
 			var tempDir = m.globalConfig().getTempDir();
 			var timage = replace(createUUID(),"-","","all");
 			var delim = rereplace(baseFilePath,".*\/","");
-			var filePath = baseFilePath & rereplace(arguments.file.url,".*?#delim#","")
+			var filePath = baseFilePath & rereplace(arguments.file.url,".*?#delim#","");
+
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath,filepath)){
+				throw(message="Illegal file path",code="invalidParameters");
+			}
+
 			var sourceImage = ImageNew(filePath);
 			var destination = replace(filePath,".#arguments.file.ext#","-copy1.#arguments.file.ext#");
 			var version = 1;
+
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath,destination)){
+				throw(message="Illegal file path",code="invalidParameters");
+			}
 
 			while(fileExists(destination)) {
 				version++;
@@ -214,7 +228,12 @@ component
 			var tempDir = m.globalConfig().getTempDir();
 			var timage = replace(createUUID(),"-","","all");
 			var delim = rereplace(baseFilePath,".*\/","");
-			var filePath = baseFilePath & rereplace(arguments.file.url,".*?#delim#","")
+			var filePath = baseFilePath & rereplace(arguments.file.url,".*?#delim#","");
+
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath,filepath)){
+				throw(message="Illegal file path",code="invalidParameters");
+			}
+
 			var sourceImage = ImageNew(filePath);
 			var response = {};
 
@@ -264,7 +283,11 @@ component
 			}
 
 			var delim = rereplace(baseFilePath,".*\/","");
-			var filePath = baseFilePath & rereplace(arguments.file.url,".*?#delim#","")
+			var filePath = baseFilePath & rereplace(arguments.file.url,".*?#delim#","");
+
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath,filepath)){
+				throw(message="Illegal file path",code="invalidParameters");
+			}
 
 			var sourceImage = ImageNew(filePath);
 
@@ -354,6 +377,10 @@ component
 			var baseFilePath = getBaseFileDir( arguments.siteid,arguments.resourcePath );
 			var filePath = baseFilePath  & m.globalConfig().getFileDelim() & rereplace(arguments.directory,"\.{1,}","\.","all");
 
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath,filepath)){
+				throw(message="Illegal file path",code="invalidParameters");
+			}
+
 			response.uploaded = fileUploadAll(destination=tempDir,nameconflict="unique");
 			response.allowedExtensions = allowedExtensions;
 
@@ -366,7 +393,7 @@ component
 							ArrayAppend(response.saved,item);
 						}
 						catch( any e ) {
-							ArrayAppend(e.message,item);
+							ArrayAppend("Unable to move file",item);
 						}
 				}
 				else {
@@ -397,13 +424,15 @@ component
 			var filePath = baseFilePath  & m.globalConfig().getFileDelim() & rereplace(arguments.directory,"\.{1,}","\.","all");
 			var path = expandpath(filePath) & application.configBean.getFileDelim() & arguments.filename;
 
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath,path)){
+				throw(message="Illegal file path",code="invalidParameters");
+			}
 
 			try {
 				var fileContent = fileRead(path);
 			}
 			catch( any e ) {
-				response['error'] = e;
-				return( e );
+				throw( message = "Unable to edit file",type="customExp");
 			}
 
 			response['content'] = fileContent;
@@ -430,12 +459,15 @@ component
 			var filePath = baseFilePath  & m.globalConfig().getFileDelim() & rereplace(arguments.directory,"\.{1,}","\.","all");
 			var path = expandpath(filePath) & application.configBean.getFileDelim() & arguments.filename;
 
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath,path)){
+				throw(message="Illegal file path",code="invalidParameters");
+			}
+
 			try {
 				fileWrite(path,arguments.content);
 			}
 			catch( any e ) {
-				response['error'] = e;
-				return( e );
+				throw( message = "Unable to update file",type="customExp");
 			}
 
 			response.success = 1;
@@ -460,6 +492,10 @@ component
 			var filePath = baseFilePath  & m.globalConfig().getFileDelim() & rereplace(arguments.directory,"\.{1,}","\.","all");
 			var path = expandpath(filePath) & application.configBean.getFileDelim() & arguments.filename;
 
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath,path)){
+				throw(message="Illegal file path",code="invalidParameters");
+			}
+
 			try {
 
 				var info = getFileInfo ( path );
@@ -482,12 +518,10 @@ component
 
 			}
 			catch( customExp e ) {
-				throw( message = response.message,object=response,type="customExp");
-				return response;
+				throw( message = response.message,type="customExp");
 			}
 			catch( any e ) {
-				rethrow;
-				return response;
+				throw( message = "Unable to delete file",type="customExp");
 			}
 
 			response.success = 1;
@@ -512,11 +546,20 @@ component
 			var filePath = baseFilePath  & m.globalConfig().getFileDelim() & rereplace(arguments.directory,"\.{1,}","\.","all");
 			var ext = rereplacenocase(arguments.filename,".[^\.]*","");
 
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath,expandpath(filePath) & application.configBean.getFileDelim() & arguments.filename)){
+				throw(message="Illegal file path",code="invalidParameters");
+			}
+
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath,expandpath(filePath) & application.configBean.getFileDelim() & arguments.name & ext)){
+				throw(message="Illegal file path",code="invalidParameters");
+			}
+
+
 			try {
 				var fileContent = filemove(expandpath(filePath) & application.configBean.getFileDelim() & arguments.filename,expandpath(filePath) & application.configBean.getFileDelim() & arguments.name & ext);
 			}
 			catch( any e ) {
-				return( e );
+				throw( message = "Unable to rename file",type="customExp");
 			}
 			response.success = 1;
 			return response;
@@ -539,11 +582,15 @@ component
 			var baseFilePath = getBaseFileDir( arguments.siteid,arguments.resourcePath );
 			var filePath = baseFilePath  & m.globalConfig().getFileDelim() & rereplace(arguments.directory,"\.{1,}","\.","all");
 
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath,expandpath(filePath) & application.configBean.getFileDelim() & arguments.name)){
+				throw(message="Illegal file path",code="invalidParameters");
+			}
+
 			try {
 				var fileContent = directorycreate(expandpath(filePath) & application.configBean.getFileDelim() & arguments.name);
 			}
 			catch( any e ) {
-				return( e );
+				throw( message = "Unable to add directory",type="customExp");
 			}
 
 			return true;
@@ -591,8 +638,18 @@ component
 
 			var baseFilePath = getBaseFileDir( arguments.siteid,arguments.resourcePath );
 			var filePath = baseFilePath  & m.globalConfig().getFileDelim() & rereplace(arguments.directory,"\.{1,}","\.","all");
+			var expandedFilePath = expandPath(filePath);
 
-// move to getBaseResourcePath() --> getFileAssetPath()
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath,filepath)){
+				throw(message="Illegal file path",code="invalidParameters");
+			}
+
+			if(!directoryExists(expandedFilePath)){
+				expandedFilePath=expandPath(baseFilePath);
+				arguments.directory='';
+			}
+
+			// move to getBaseResourcePath() --> getFileAssetPath()
 			var assetPath = getBaseResourcePath(arguments.siteid,arguments.resourcePath) & replace(arguments.directory,"\","/","all");
 
 			var frow = {};
@@ -606,7 +663,7 @@ component
 			response['directory'] = rereplace(response['directory'],"\\","\/","all");
 			response['directory'] = rereplace(response['directory'],"$\\","");
 
-			var rsDirectory = directoryList(expandPath(filePath),false,"query");
+			var rsDirectory = directoryList(expandedFilePath,false,"query");
 
 			response['startindex'] = 1 + response['itemsperpage'] * pageIndex - response['itemsperpage'];
 			response['endindex'] = response['startindex'] + response['itemsperpage'] - 1;
@@ -634,7 +691,7 @@ component
 
 			response['endindex'] = response['endindex'] > rsFiles.recordCount ? rsFiles.recordCount : response['endindex'];
 
-			response['res'] = rsFiles;
+			//response['res'] = rsFiles;
 			response['totalpages'] = ceiling(rsFiles.recordCount / response['itemsperpage']);
 			response['totalitems'] = 1;
 			response['pageindex'] = arguments.pageindex;
@@ -691,5 +748,16 @@ component
 
 		}
 
+	function isPathLegal(siteid,resourcePath, path){
+		var sessionData=getSession();
+		if(!(arguments.resourcepath == 'User_Assets' || listFind(sessionData.mura.memberships,'S2'))){
+			return false;
+		}
+		var rootPath=replace(expandPath(getBaseFileDir( arguments.siteid,arguments.resourcePath )), "\", "/", "ALL");
+		arguments.path=replace(expandPath(arguments.path), "\", "/", "ALL");
+		return (
+			len(arguments.path) >= len(rootPath) && left(arguments.path,len(rootPath)) == rootPath
+		)
+	}
 
 }

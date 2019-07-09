@@ -71,6 +71,49 @@ config: {
   return true;
 }
 
+, moveFile: function( currentFile,source,destination,onSuccess ) {
+
+  var baseurl = this.endpoint + "/move?directory=" + source + "&destination=" + destination + "&resourcepath=" + this.config.resourcepath + "&filename=" + currentFile.fullname;
+
+  if(!this.validate()) {
+    return error("No Access");
+  }
+
+  Mura.get( baseurl )
+    .then(
+      //success
+      function(response) {
+        onSuccess(response);
+      },
+      //fail
+      function(response) {
+        this.onError(response);
+      }
+    );
+
+}
+
+, getChildDirectory: function( dir,onSuccess,fileViewer) {
+  var baseurl = this.endpoint + "/childdir?directory=" + dir + "&resourcepath=" + this.config.resourcepath;
+
+  if(!this.validate()) {
+    return error("No Access");
+  }
+
+  Mura.get( baseurl )
+    .then(
+      //success
+      function(response) {
+        onSuccess(response);
+      },
+      //fail
+      function(response) {
+        this.onError(response);
+      }
+    );
+}
+
+
 , getEditFile: function( directory,currentFile,onSuccess) {
   var dir = directory == undefined ? "" : directory;
   var baseurl = this.endpoint + "/edit?directory=" + dir + "&filename=" + currentFile.fullname + "&resourcepath=" + this.config.resourcepath;
@@ -489,7 +532,8 @@ config: {
           <li v-if="checkIsFile() && checkSelectMode()"><a href="#" @click.prevent="selectFile()"><i class="mi-check"></i>Select</a></li>
           <li v-if="checkIsFile() && checkFileEditable()"><a href="#" @click.prevent="editFile()"><i class="mi-pencil"></i>Edit</a></li>
           <li v-if="checkIsFile() && checkImageType()"><a href="#" @click.prevent="viewFile()"><i class="mi-image"></i>View</a></li>
-          <li v-if="checkIsFile() && checkImageType()"><a href="#" @click.prevent="duplicateFile()"><i class="mi-copy"></i>Duplicate</a></li>
+          <li v-if="checkIsFile() || checkImageType()"><a href="#" @click.prevent="moveFile()"><i class="mi-move"></i>Move</a></li>
+          <li v-if="checkIsFile() || checkImageType()"><a href="#" @click.prevent="duplicateFile()"><i class="mi-copy"></i>Duplicate</a></li>
           <li><a href="#" @click.prevent="renameFile()"><i class="mi-edit"> Rename</i></a></li>
           <li v-if="checkIsFile()"><a href="#" @click="downloadFile()"><i class="mi-download"> Download</i></a></li>
           <li class="delete"><a href="#" @click="deleteFile()"><i class="mi-trash"> Delete</i></a></li>
@@ -525,7 +569,9 @@ config: {
           return MuraFileBrowser.config.selectCallback( fileViewer.currentFile );
         }
       }
-
+      , moveFile: function() {
+        fileViewer.isDisplayWindow = "MOVE";
+      }
       , editFile: function() {
         fileViewer.editFile(this.successEditFile);
       }
@@ -572,6 +618,7 @@ config: {
       </div>
       <div v-else id="actionwindow-wrapper">
         <renamewindow v-if="isDisplayWindow=='RENAME'" :currentFile="currentFile"></renamewindow>
+        <movewindow v-if="isDisplayWindow=='MOVE'" :currentFile="currentFile"></movewindow>
         <addfolderwindow v-if="isDisplayWindow=='ADDFOLDER'" :currentFile="currentFile"></addfolderwindow>
         <downloadwindow v-if="isDisplayWindow=='DOWNLOAD'" :currentFile="currentFile"></downloadwindow>
         <deletewindow v-if="isDisplayWindow=='DELETE'" :currentFile="currentFile"></deletewindow>
@@ -582,6 +629,109 @@ config: {
         return {};
     },
     methods: {
+    }
+  });
+
+  Vue.component('movewindow', {
+    props: ["currentFile"],
+    template: `
+      <div class="ui-dialog dialog-nobg actionwindow-formwrapper actionwindow-long">
+        <div>
+          <span class="ui-dialog-title">Move {{currentFile.fullname}}</span>
+          <div>
+            <label>Destination:</label>
+            <input type="text" v-model="destinationFolder" style="width: 80%"></input>
+            <span class="small">{{invalid}}</span>
+          </div>
+          <div v-if="childFolders.length">
+            <label>Directory:</label>
+            <select v-model="folderPath">
+              <option  v-for="item in childFolders" :value="item">{{item}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="buttonset">
+          <button @click="moveFile()">Move</button>
+          <button @click="cancel()">Cancel</button>
+        </div>
+      </div>
+    `,
+    data() {
+        return {
+          destinationFolder: '',
+          resourcename: '',
+          folderPath: '',
+          childFolders: [],
+          invalid: ''
+        };
+    },
+    watch: {
+      destinationFolder: function(val) {
+        // delay for typing
+        setTimeout(() => {
+          var tf = this.destinationFolder;
+
+          if(val == tf && this.folderPath != '')
+            MuraFileBrowser.getChildDirectory(this.destinationFolder,this.updateDirectory,fileViewer);
+          }, 1000);
+      }
+      , folderPath: function(val) {
+        if(this.folderPath != '') {
+          this.destinationFolder += "/" + this.folderPath;
+          this.folderPath = '';
+          MuraFileBrowser.getChildDirectory(this.destinationFolder,this.updateDirectory,fileViewer);
+        }
+      }
+    },
+    methods: {
+      moveFile: function() {
+        var source = "";
+
+        for(i in fileViewer.foldertree) {
+          source += "/" + fileViewer.foldertree[i];
+        }
+        fileViewer.spinnermodal = 1;
+        MuraFileBrowser.moveFile(this.currentFile,source,this.destinationFolder,this.fileMoved);
+      }
+      , fileMoved: function() {
+        fileViewer.isDisplayWindow = '';
+        fileViewer.refresh();
+      }
+      , updateDirectory: function(result) {
+        if(parseInt(result.data.valid)) {
+          this.invalid = "";
+          this.childFolders = result.data.folders;
+        }
+        else {
+          this.childFolders = [];
+          this.invalid = "(This does not appear to be a valid directory)";
+        }
+      }
+      , cancel: function() {
+        fileViewer.isDisplayWindow = '';
+      }
+    },
+    mounted: function() {
+      this.filename = this.currentFile.name;
+      fileViewer.isDisplayContext = 0;
+      for(i in fileViewer.foldertree) {
+        this.destinationFolder += "/" + fileViewer.foldertree[i];
+      }
+
+      MuraFileBrowser.getChildDirectory(this.destinationFolder,this.updateDirectory,fileViewer);
+
+      switch(MuraFileBrowser.config.resourcepath) {
+        case "Site_Files":
+          this.resourcename = "Site Files";
+          break;
+        case "Application_Root":
+          this.resourcename = "Application Root";
+          break;
+        default:
+          this.resourcename = "User Assets";
+      }
+
+
     }
   });
 
@@ -961,9 +1111,9 @@ config: {
   });
 
   Vue.component('appbar', {
-    props: ["links","isbottomnav","response","itemsper","location"],
+    props: ["links","isbottomnav","response","itemsper","location","showbar"],
     template: `
-      <div class="filewindow-appbar">
+      <div :class="[showbar ? 'filewindow-appbar' : 'filewindow-hideappbar']">
           <navmenu v-if="response.links" :links="links" :response="response" :itemsper="itemsper" :isbottomnav="isbottomnav"></navmenu>
           <modemenu v-if="location"></modemenu>
       </div>
@@ -1283,11 +1433,11 @@ config: {
         </div>
         <div v-for="(file,index) in files">
           <div class="fileviewer-item" v-if="parseInt(file.isfile)">
-            <div class="fileviewer-item-image" @click="openMenu($event,file,index)">
+            <div class="fileviewer-item-image">
               <div v-if="0" class="fileviewer-item-icon" :class="['fileviewer-item-icon-' + file.type]"></div>
-              <div v-else class="fileviewer-item-icon" :style="{ 'background-image': 'url(' + encodeURI(file.url) + ')' }"></div>
+              <div v-else class="fileviewer-item-icon" :style="{ 'background-image': 'url(' + encodeURI(file.url) + ')' }" @click.prevent="viewFile(file,index)"></div>
             </div>
-            <div class="fileviewer-item-meta">
+            <div class="fileviewer-item-meta" @click="openMenu($event,file,index)">
               <div class="fileviewer-item-label">
                 {{file.fullname}}
               </div>
@@ -1335,10 +1485,39 @@ config: {
       refresh: function( directory,index ) {
         this.$root.refresh( directory,index );
       }
-      ,back: function( ) {
+      , back: function( ) {
         this.$root.back( );
       }
-      ,openMenu: function(e,file,index) {
+
+      , viewFile: function( file,index ) {
+        this.$root.currentFile = file;
+        this.$root.currentIndex = index;
+
+        if(this.checkImageType(file,index)) {
+          fileViewer.isDisplayWindow = "VIEW";
+        }
+        else if(this.checkFileEditable(file,index)) {
+          fileViewer.editFile(this.successEditFile);
+        }
+      }
+      , checkFileEditable: function(file,index) {
+        this.$root.currentFile = file;
+        this.$root.currentIndex = index;
+        return fileViewer.checkFileEditable();
+      }
+      , checkImageType: function(file,index) {
+        this.$root.currentFile = file;
+        this.$root.currentIndex = index;
+        return fileViewer.checkImageType();
+      }
+      , checkIsFile: function() {
+        return fileViewer.checkIsFile();
+      }
+      , successEditFile: function( response ) {
+        this.currentFile.content = response.data.content;
+        fileViewer.isDisplayWindow = "EDIT";
+      }
+      , openMenu: function(e,file,index) {
 
         // gridmode
         var offsetLeft = 0;
@@ -1432,9 +1611,9 @@ config: {
             </p>
           </form>
         </div>
-        <appbar v-if="response.links" :settings="settings" :location=1 :links="response.links" :itemsper="itemsper" :response="response"></appbar>
+        <appbar v-if="response.links" :showbar=1 :settings="settings" :location=1 :links="response.links" :itemsper="itemsper" :response="response"></appbar>
         <filewindow :settings="settings" :currentFile="currentFile" :isDisplayContext="isDisplayContext" :foldertree="foldertree" :files="files" :folders="folders" :displaymode="displaymode"></filewindow>
-        <appbar v-if="response.totalpages != '1'" :settings="settings" :location=0 :links="response.links" :itemsper="itemsper" :response="response"></appbar>
+        <appbar v-if="response.links" :showbar=showfooter :settings="settings" :location=0 :links="response.links" :itemsper="itemsper" :response="response"></appbar>
       </div>`
     ,
     data: {
@@ -1448,6 +1627,7 @@ config: {
       folders: [],
       spinnermodal: 0,
       error: "",
+      showfooter: 0,
       settings: { rb: {} },
       displaymode: this.config.displaymode,
       uploadedFiles: [],
@@ -1524,6 +1704,8 @@ config: {
         this.$nextTick(function () {
           this.spinnermodal = 0;
         });
+
+        this.showfooter = this.response.totalpages-1;
 
       }
       , displayError: function( e ) {
@@ -1643,6 +1825,7 @@ config: {
 
         var fdata = {
           foldertree: JSON.parse(JSON.stringify(this.foldertree)),
+          itemsper: this.itemsper,
 					resourcepath: MuraFileBrowser.config.resourcepath
         }
 
@@ -1757,10 +1940,14 @@ config: {
         if(cFolder) {
           var cFolderJSON = JSON.parse(cFolder);
 
-          if(cFolderJSON.context != self.config.resourcepath) {
+          if(cFolderJSON.itemsper)
+            this.itemsper = cFolderJSON.itemsper;
+
+          if(cFolderJSON.resourcepath != self.config.resourcepath) {
             var fdata = {
               foldertree: [],
-              context: self.config.resourcepath
+              itemsper: this.itemsper,
+              resourcepath: self.config.resourcepath
             }
             Mura.createCookie( 'fbFolderTree',JSON.stringify(fdata),1);
           }
@@ -1781,7 +1968,6 @@ config: {
 
           if(fbDisplayJSON.displaymode)
             this.$root.displaymode = this.viewmode = fbDisplayJSON.displaymode;
-
         }
 
         self.loadBaseDirectory(this.displayResults,this.displayError,dir);

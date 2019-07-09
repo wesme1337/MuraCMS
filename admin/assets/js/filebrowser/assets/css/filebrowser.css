@@ -65,6 +65,18 @@ body.MuraFileBrowserWindow .mura-header ul.breadcrumb{
   padding: 7px 0 0 7px;
 }
 
+.filewindow-hideappbar {
+  border-top: 1px solid #dbdbdb;
+  display: block;
+  clear: both;
+  height: 1px;
+  margin: 0;
+}
+
+.filewindow-appbar-empty {
+  height: 0px;
+}
+
 .filewindow-navmenu {
   float: right;
   margin: 0 5px;
@@ -173,6 +185,10 @@ body.MuraFileBrowserWindow .mura-header ul.breadcrumb{
   min-height: 205px;
   min-width: 450px;
   width: auto;
+}
+
+.actionwindow-long {
+  min-width: 600px;
 }
 
 .actionwindow-formwrapper .editwindow {
@@ -415,7 +431,7 @@ input.filebrowser-filter {
   top: 0;
   background-color: rgba(0, 0, 0, 0.8);
 }
- 
+
 .fileviewer-gallery {
   display: block;
   width: 70%;

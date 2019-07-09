@@ -1433,11 +1433,11 @@ config: {
         </div>
         <div v-for="(file,index) in files">
           <div class="fileviewer-item" v-if="parseInt(file.isfile)">
-            <div class="fileviewer-item-image" @click="openMenu($event,file,index)">
+            <div class="fileviewer-item-image">
               <div v-if="0" class="fileviewer-item-icon" :class="['fileviewer-item-icon-' + file.type]"></div>
-              <div v-else class="fileviewer-item-icon" :style="{ 'background-image': 'url(' + encodeURI(file.url) + ')' }"></div>
+              <div v-else class="fileviewer-item-icon" :style="{ 'background-image': 'url(' + encodeURI(file.url) + ')' }" @click.prevent="viewFile(file,index)"></div>
             </div>
-            <div class="fileviewer-item-meta">
+            <div class="fileviewer-item-meta" @click="openMenu($event,file,index)">
               <div class="fileviewer-item-label">
                 {{file.fullname}}
               </div>
@@ -1485,10 +1485,39 @@ config: {
       refresh: function( directory,index ) {
         this.$root.refresh( directory,index );
       }
-      ,back: function( ) {
+      , back: function( ) {
         this.$root.back( );
       }
-      ,openMenu: function(e,file,index) {
+
+      , viewFile: function( file,index ) {
+        this.$root.currentFile = file;
+        this.$root.currentIndex = index;
+
+        if(this.checkImageType(file,index)) {
+          fileViewer.isDisplayWindow = "VIEW";
+        }
+        else if(this.checkFileEditable(file,index)) {
+          fileViewer.editFile(this.successEditFile);
+        }
+      }
+      , checkFileEditable: function(file,index) {
+        this.$root.currentFile = file;
+        this.$root.currentIndex = index;
+        return fileViewer.checkFileEditable();
+      }
+      , checkImageType: function(file,index) {
+        this.$root.currentFile = file;
+        this.$root.currentIndex = index;
+        return fileViewer.checkImageType();
+      }
+      , checkIsFile: function() {
+        return fileViewer.checkIsFile();
+      }
+      , successEditFile: function( response ) {
+        this.currentFile.content = response.data.content;
+        fileViewer.isDisplayWindow = "EDIT";
+      }
+      , openMenu: function(e,file,index) {
 
         // gridmode
         var offsetLeft = 0;
@@ -1796,6 +1825,7 @@ config: {
 
         var fdata = {
           foldertree: JSON.parse(JSON.stringify(this.foldertree)),
+          itemsper: this.itemsper,
 					resourcepath: MuraFileBrowser.config.resourcepath
         }
 
@@ -1910,9 +1940,13 @@ config: {
         if(cFolder) {
           var cFolderJSON = JSON.parse(cFolder);
 
+          if(cFolderJSON.itemsper)
+            this.itemsper = cFolderJSON.itemsper;
+
           if(cFolderJSON.resourcepath != self.config.resourcepath) {
             var fdata = {
               foldertree: [],
+              itemsper: this.itemsper,
               resourcepath: self.config.resourcepath
             }
             Mura.createCookie( 'fbFolderTree',JSON.stringify(fdata),1);
@@ -1934,7 +1968,6 @@ config: {
 
           if(fbDisplayJSON.displaymode)
             this.$root.displaymode = this.viewmode = fbDisplayJSON.displaymode;
-
         }
 
         self.loadBaseDirectory(this.displayResults,this.displayError,dir);

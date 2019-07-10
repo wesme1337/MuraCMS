@@ -1952,7 +1952,7 @@ var Mura=(function(){
 
 
 	var layoutmanagertoolbar =
-			'<div class="frontEndToolsModal mura"><span class="mura-edit-icon"></span><span class="mura-edit-label"></span><span class="mura-edit-handle"></span></div>';
+			'<div class="frontEndToolsModal mura"><span class="mura-fetborder-left"></span><span class="mura-fetborder-right"></span><span class="mura-fetborder-top"></span><span class="mura-fetborder-bottom"></span><span class="mura-edit-icon"></span><span class="mura-edit-label"></span></div>';
 
 	function processMarkup(scope) {
 

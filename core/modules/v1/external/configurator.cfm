@@ -5,7 +5,7 @@
 
 	if(isValid("url", objectConfig.configurator)){
 		httpService=application.configBean.getHTTPService();
-		lhttpService.setMethod("get");
+		httpService.setMethod("get");
 		httpService.setCharset("utf-8");
 		httpService.setURL(objectConfig.configurator);
 		configuratorMarkup=httpService.send().getPrefix();

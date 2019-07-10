@@ -378,6 +378,10 @@ function getIsHistorical() output=false {
 	return isDefined("application.objectMappings.#getValue('entityName')#.historical") && IsBoolean(application.objectMappings[getValue('entityName')].historical) && application.objectMappings[getValue('entityName')].historical;
 }
 
+function getIsVersioned() output=false {
+	return isDefined("application.objectMappings.#getValue('entityName')#.versioned") && IsBoolean(application.objectMappings[getValue('entityName')].versioned) && application.objectMappings[getValue('entityName')].versioned;
+}
+
 function getDiscriminatorColumn() output=false {
 	return application.objectMappings[getValue('entityName')].discriminatorColumn;
 }
@@ -797,6 +801,10 @@ function getEndRow() output=false {
 	<cfset var tableModifier="">
 	<cfset var transformCriteria="">
 
+	<cfif getIsVersioned()>
+		<cfset var hasContenthistidAsParam=false>
+	</cfif>
+
 	<cfif getDbType() eq "MSSQL">
 		<cfset tableModifier="with (nolock)">
 	</cfif>
@@ -896,6 +904,12 @@ function getEndRow() output=false {
 			 )
 		</cfif>
 
+		<cfif getIsVersioned()>
+			left join tcontent  on (
+				#variables.instance.table#.contenthistid=tcontent.contenthistid
+			)
+		</cfif>
+
 		<!--- Join to implied tables based on field prefix --->
 		<cfloop list="#jointables#" index="jointable">
 			<cfif not hasJoin(jointable)>
@@ -962,6 +976,9 @@ function getEndRow() output=false {
 				<cfset isListParam=listFindNoCase("IN,NOT IN,NOTIN",param.getCondition())>
 
 				<cfif len(param.getField())>
+					<cfif getIsVersioned() and listLast(param.getField(),'.') eq 'contenthistid'>
+						<cfset hasContenthistidAsParam=true>
+					</cfif>
 					#param.getFieldStatement()#
 					<cfif param.getCriteria() eq 'null'>
 						#param.getCondition()# NULL
@@ -1005,6 +1022,10 @@ function getEndRow() output=false {
 
 	<cfif getIsHistorical()>
 		and #variables.instance.table#.deleted=0
+	</cfif>
+
+	<cfif getIsVersioned() and not hasContenthistidAsParam>
+		#getBean('contentGateway').renderActiveClause('tcontent',getSiteid())#
 	</cfif>
 
 	<cfset started=false>

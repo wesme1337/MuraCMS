@@ -474,9 +474,11 @@ component extends="mura.bean.beanExtendable" entityName="content" table="tconten
 		var checkfound=false;
 
 		if(arrayLen(variables.instance.addObjects)){
+			WriteDump(variables.instance.addObjects);abort;
 			for(var obj in variables.instance.addObjects){
 				errorCheck=obj.validate().getErrors();
 				if(!structIsEmpty(errorCheck)){
+
 					do{
 						if( !structKeyExists(variables.instance.errors,obj.getEntityName() & checknum) ){
 							variables.instance.errors[obj.getEntityName()  & checknum ]=errorCheck;

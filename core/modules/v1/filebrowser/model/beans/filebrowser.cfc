@@ -638,6 +638,7 @@ component
 				throw(message="Illegal file path",code="invalidParameters");
 			}
 
+
 			if(!isPathLegal(arguments.siteid,arguments.resourcepath,expandpath(filePath) & application.configBean.getFileDelim() & arguments.name & ext)){
 				throw(message="Illegal file path",code="invalidParameters");
 			}
@@ -838,14 +839,22 @@ component
 
 	function isPathLegal(siteid,resourcePath, path){
 		var sessionData=getSession();
-		if(!(arguments.resourcepath == 'User_Assets' || listFind(sessionData.mura.memberships,'S2'))){
+		if(arguments.resourcepath != 'User_Assets' && !listFind(sessionData.mura.memberships,'S2')){
 			return false;
 		}
 		var rootPath=replace(expandPath(getBaseFileDir( arguments.siteid,arguments.resourcePath )), "\", "/", "ALL");
-		arguments.path=replace(expandPath(arguments.path), "\", "/", "ALL");
-		return (
+		arguments.path=replace(arguments.path, "\", "/", "ALL");
+
+		var result=  (
 			len(arguments.path) >= len(rootPath) && left(arguments.path,len(rootPath)) == rootPath
-		)
+		);
+
+		if(!result){
+			WriteDump(arguments);
+			abort;
+		}
+		return result;
+
 	}
 
 }

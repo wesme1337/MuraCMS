@@ -65,6 +65,11 @@ body.mura-sidebar-state__pushed--right .mura__layout-manager__controls {
 
 // clearfixes
 
+.mura-object {
+	box-sizing: border-box;
+	position: relative;
+}
+
 .mura-region::after,
 .mura-region > .mura-editable > .mura-region-local::after,
 .mura-region > .mura-region-inherited::after {
@@ -90,7 +95,7 @@ body.mura-sidebar-state__pushed--right .mura__layout-manager__controls {
 }
 
 .mura-region-inherited .mura-object.mura-active {
-	box-shadow: none;
+	box-shadow: inset 0 0 0 1px #eee;
 }
 
 
@@ -118,7 +123,7 @@ body.mura-sidebar-state__pushed--right .mura__layout-manager__controls {
 .mura-async-object.mura-active[data-object="gallery"].mura-object-selected,
 .mura-object-content.mura-object-selected,
 .mura-object-meta.mura-object-selected {
-	box-shadow: inset 0 0 0 2px @objectbordercolor;
+	/*box-shadow: inset 0 0 0 2px @objectbordercolor;*/
 
 	.mura-edit-label{
 		cursor: move;
@@ -147,38 +152,36 @@ body.mura-sidebar-state__pushed--right .mura__layout-manager__controls {
 	opacity: 1;
 	}
 
-.mura-object {
-	position: relative;
-}
-
 .frontEndToolsModal.mura {
+	box-shadow: inset 0 0 0 2px @objectbordercolor;
 	box-sizing: border-box;
 	color: #fff !important;
 	display: block !important;
-	font-size: 10.5px !important;
+	font-size: 10px !important;
 	line-height: 24px !important;
 	min-height: 24px !important;
 	opacity: 0;
 	position: absolute;
 	top: 0;
 	right: 0;
+	height: 100%;
+	background:transparent;
 	width: 100%;
-	z-index: 10002;
+	z-index: 10002; 
 
 	 > span.mura-edit-label{
 	    background-color: @objectbordercolor!important;
-	    border-top-left-radius: 3px;
-	    border-top-right-radius: 3px;
+	    border-bottom-right-radius: 3px;
 	    font-family: @font-family-base;
 	    font-weight: 700;
-	    font-size: 10px;
+	    font-size: 11px;
 	    min-width: 64px;
 	    height: 24px;
 	    letter-spacing: .025em;
-	    padding: 2px 16px 2px 33px;
+	    padding: 2px 16px 2px 31px;
 	    position: absolute;
-	    top: -24px;
-	    left: 6px;
+	    top: 0;
+	    right: 0;
 	    text-align: center;
 	    text-transform: uppercase;
 

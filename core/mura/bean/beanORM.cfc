@@ -843,11 +843,10 @@ component extends="mura.bean.bean" versioned=false hint="This provides dynamic C
 
 			if(addVersionFilter){
 				if(not started){
-					writeOutput("where ");
+					writeOutput("where 1=1");
 					started=true;
-				} else {
-					writeOutput("and ");
 				}
+				
 				WriteOutput("#getBean('contentDAO').renderActiveClause("tcontent",arguments.siteID)#");
 			}
 

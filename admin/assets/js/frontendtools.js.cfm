@@ -1272,6 +1272,9 @@
 						} else {
 							item.children('.frontEndToolsModal').children('.mura-edit-label').html(Mura.firstToUpperCase(item.data('object')));
 						}
+						if(item.data('objecticonclass')){
+							item.children('.frontEndToolsModal').children('.mura-edit-label').addClass(item.data('objecticonclass'));
+						}
 
 						item.off("click",openToolbar)
 							.on("click",openToolbar);
@@ -1298,6 +1301,9 @@
 										item.children('.frontEndToolsModal').children('.mura-edit-label').html(item.data('objectname'));
 									} else {
 										item.children('.frontEndToolsModal').children('.mura-edit-label').html(Mura.firstToUpperCase(item.data('object')));
+									}
+									if(item.data('objecticonclass')){
+										item.children('.frontEndToolsModal').children('.mura-edit-label').addClass(item.data('objecticonclass'));
 									}
 
 									item.off("click",openToolbar)
@@ -1327,6 +1333,9 @@
 									} else {
 										item.children('.frontEndToolsModal').children('.mura-edit-label').html(Mura.firstToUpperCase(item.data('object')));
 									}
+									if(item.data('objecticonclass')){
+										item.children('.frontEndToolsModal').children('.mura-edit-label').addClass(item.data('objecticonclass'));
+									}
 
 									item.off("click",openToolbar)
 										.on("click",openToolbar);
@@ -1353,6 +1362,9 @@
 						item.children('.frontEndToolsModal').children('.mura-edit-label').html(item.data('objectname'));
 					} else {
 						item.children('.frontEndToolsModal').children('.mura-edit-label').html(Mura.firstToUpperCase(item.data('object')));
+					}
+					if(item.data('objecticonclass')){
+						item.children('.frontEndToolsModal').children('.mura-edit-label').addClass(item.data('objecticonclass'));
 					}
 					item.off("click",openToolbar)
 						.on("click",openToolbar);
@@ -2310,6 +2322,7 @@
 				MuraInlineEditor.resetEditableAttributes();
 				Mura('.mura-object-selected').removeClass('mura-object-selected');
 				Mura('.mura-editable-attribute.mura-active').removeClass('mura-active');
+				Mura('.mura-container-active').removeClass('mura-container-active');
 				Mura('#mura-sidebar-configurator').hide();
 				Mura('#mura-sidebar-objects-legacy').hide();
 				Mura('#mura-sidebar-objects').show();
@@ -2318,6 +2331,7 @@
 				Mura.currentObjectInstanceID='';
 				MuraInlineEditor.resetEditableAttributes();
 				Mura('.mura-object-selected').removeClass('mura-object-selected');
+				Mura('.mura-container-active').removeClass('mura-container-active');
 				Mura('#mura-sidebar-configurator').hide();
 				Mura('#mura-sidebar-objects-legacy').show();
 				Mura('#mura-sidebar-objects').hide();
@@ -2345,6 +2359,8 @@
 				Mura('#mura-sidebar-container').fadeIn();
 				Mura('body').addClass('mura-sidebar-state__pushed--right');
 				Mura('.mura-object').removeClass('mura-active-min').addClass("mura-active");
+				Mura('.mura-container-active').removeClass('mura-container-active');
+
 			}
 
 		},

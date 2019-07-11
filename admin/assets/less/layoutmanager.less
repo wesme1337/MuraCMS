@@ -145,15 +145,17 @@ body.mura-sidebar-state__pushed--right .mura__layout-manager__controls {
 	margin-top: -1px;
 }
 
+.mura-object.mura-active.mura-active-target > .mura-fetborder,
 .mura-object.mura-active.mura-active-target > .frontEndToolsModal.mura{
 	opacity: .75;
 	}
+.mura-object.mura-active.mura-object-selected > .mura-fetborder,
 .mura-object.mura-active.mura-object-selected > .frontEndToolsModal.mura {
 	opacity: 1;
 	}
 
 .frontEndToolsModal.mura {
-	box-shadow: inset 0 0 0 2px @objectbordercolor;
+	/*box-shadow: inset 0 0 0 2px @objectbordercolor;*/
 	box-sizing: border-box;
 	color: #fff !important;
 	display: block !important;
@@ -163,8 +165,7 @@ body.mura-sidebar-state__pushed--right .mura__layout-manager__controls {
 	opacity: 0;
 	position: absolute;
 	top: 0;
-	right: 0;
-	height: 100%;
+	left: 0;
 	background:transparent;
 	width: 100%;
 	z-index: 10002; 
@@ -214,6 +215,39 @@ body.mura-sidebar-state__pushed--right .mura__layout-manager__controls {
 	 }
 
 } /* .frontEndToolsModal.mura */
+
+span.mura-fetborder{
+	background-color: @objectbordercolor !important;
+	display: block;
+	opacity: 0;
+	position: absolute;
+	z-index: 1;
+
+	&.mura-fetborder-top{
+		height: 2px;
+		width: 100%;
+		top: 0;
+		left: 0;
+	}
+	&.mura-fetborder-right{
+		height: 100%;
+		width: 2px;
+		top: 0;
+		right: 0;			
+	}
+	&.mura-fetborder-bottom{
+		height: 2px;
+		width: 100%;
+		bottom: 0;
+		left: 0;
+	}
+	&.mura-fetborder-left{
+		height: 100%;
+		width: 2px;
+		top: 0;
+		left: 0;		
+	}
+} /* /.mura-fetborder */
 
 /* collection */
 div.mura-object[data-objecticonclass="mi-th-list"] span.mura-edit-label:before{

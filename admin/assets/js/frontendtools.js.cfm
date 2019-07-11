@@ -437,6 +437,16 @@
 
 			Mura('.mura-object-select').removeClass('mura-object-select');
 			Mura('.mura-active-target').removeClass('mura-active-target');
+			Mura('.mura-container-active').removeClass('mura-container-active');
+
+			if(editableObj.data('object')=='container'){
+				editableObj.addClass('mura-container-active');
+			} else {
+				var container=editableObj.closest('div[data-object="container"]');
+				if(container.length){
+					container.addClass('mura-container-active');
+				}
+			}
 			editableObj.addClass('mura-object-select');
 
 			var legacyMap={

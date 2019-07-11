@@ -149,7 +149,9 @@
 	function initDraggableObject_hoverin(e){
 		//e.stopPropagation();
 		Mura('.mura-active-target').removeClass('mura-active-target');
-		Mura('.mura-container-active').removeClass('mura-container-active');
+
+		var activeContainer=Mura('.mura-container-active');
+
 
 		var self = Mura(this);
 		if (!self.hasClass('mura-object-selected')) {
@@ -169,23 +171,27 @@
 	function initDraggableObject_hoverout(e){
 		//e.stopPropagation();
 		var item=Mura(this);
-		item.removeClass('mura-active-target').removeClass('mura-container-active');
+		item.removeClass('mura-active-target');
 
+		var removeContainerClass=true;
 
 		if(typeof Mura.currentObjectInstanceID != 'undefined'
 			&& Mura.currentObjectInstanceID){
 
-			var isContainer=false;
-
 			if(item.data('object')=='container'){
-				item.addClass('mura-container-active')
+				removeContainerClass=false;
+				//item.addClass('mura-container-active')
 			} else{
 				var container=item.closest('div[data-object="container"]');
 				if(container.length){
-					container.addClass('mura-container-active')
+					removeContainerClass=false;
+					//container.addClass('mura-container-active')
 				}
 			}
 
+		}
+		if(removeContainerClass){
+			item.removeClass('mura-container-active')
 		}
 
 		//.calculateDisplayObjectStyles();

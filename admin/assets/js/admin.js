@@ -785,7 +785,7 @@ function setFinders(e,config) {
 }
 
 function wireupExterndalUIWidgets() {
-    setFinders(".mura-ckfinder"), "undefined" != typeof dtLocale && setDatePickers(".datepicker", dtLocale),
+    setFinders(".mura-ckfinder, .mura-finder"), "undefined" != typeof dtLocale && setDatePickers(".datepicker", dtLocale),
     "undefined" != typeof activetab && setTabs(".mura-tabs", activetab), setHTMLEditors(),
     "undefined" != typeof activepanel && setAccordions(".accordion", activepanel), setCheckboxTrees(),
     setColorPickers(".mura-colorpicker"), setToolTips(".container"), setFileSelectors();

@@ -1274,7 +1274,7 @@ buttons: {
 		setHTMLEditors();
 		setDatePickers(".tab-content .datepicker", dtLocale);
 		setColorPickers(".tab-content .mura-colorpicker");
-		setFinders(".tab-content .mura-ckfinder");
+		setFinders(".tab-content .mura-ckfinder, .tab-content .mura-finder");
 		setToolTips(".tab-content");
 		setFileSelectors();
 

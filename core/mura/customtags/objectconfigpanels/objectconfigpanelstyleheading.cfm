@@ -236,7 +236,7 @@
 								<label>Background Image</label>
 								<input type="hidden" id="metabackgroundimage" name="backgroundImage" class="metaStyle" value="#esapiEncode('html_attr',attributes.params.stylesupport.metastyles.backgroundimage)#">
 								<input type="text" id="metabackgroundimageurl" name="metabackgroundimageurl" placeholder="URL" class="styleSupport" value="#esapiEncode('html_attr',attributes.params.styleSupport.metabackgroundimageurl)#">
-								<button type="button" class="btn mura-ckfinder" data-target="metabackgroundimageurl" data-completepath="false"><i class="mi-image"></i> Select Image</button>
+								<button type="button" class="btn mura-finder" data-target="metabackgroundimageurl" data-completepath="false"><i class="mi-image"></i> Select Image</button>
 							</div>
 
 							<div class="mura-control-group mura-ui-grid meta-css-bg-option bg-position" style="display:none;">

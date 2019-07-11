@@ -84,7 +84,6 @@ body.mura-sidebar-state__pushed--right .mura__layout-manager__controls {
    margin-top: 15px;
 }
 
-
 .mura-region-inherited + .mura-region-local.mura-editable-attribute {
     margin-top: 15px;
 }
@@ -98,18 +97,26 @@ body.mura-sidebar-state__pushed--right .mura__layout-manager__controls {
 	box-shadow: inset 0 0 0 1px #eee;
 }
 
-
 //a region that IS being interacted with
 .mura-object.mura-active.mura-active-target,
 .mura-async-object.mura-active.mura-active-target[data-object="folder"],
 .mura-async-object.mura-active.mura-active-target[data-object="calendar"],
 .mura-async-object.mura-active.mura-active-target[data-object="gallery"] {
-	box-shadow: inset 0 0 0 1px @objectbordercolor !important;
+	box-shadow: inset 0 0 0 2px @objectbordercolor !important;
 
 	.mura-edit-label{
 		cursor: move;
 	}
 
+}
+
+// adjusting for non movable items
+.mura-async-object.mura-active.mura-active-target[data-object="folder"],
+.mura-async-object.mura-active.mura-active-target[data-object="calendar"],
+.mura-async-object.mura-active.mura-active-target[data-object="gallery"] {
+	.mura-edit-label{
+		cursor: auto;
+	}
 }
 
 .mura-object.mura-active .mura-object.mura-active:not('.mura-drop-target') {
@@ -161,7 +168,6 @@ body.mura-sidebar-state__pushed--right .mura__layout-manager__controls {
 	display: block !important;
 	font-size: 10px !important;
 	line-height: 24px !important;
-	min-height: 24px !important;
 	opacity: 0;
 	position: absolute;
 	top: 0;
@@ -201,21 +207,36 @@ body.mura-sidebar-state__pushed--right .mura__layout-manager__controls {
 	 } /* /.mura-edit-label */
 
 	 > span.mura-edit-icon{
+	 	display: none !important;
 		background-color:@objectbordercolor !important;
 	 	background-image:url(../images/pencil-fe@2x.png);
 	 	background-repeat:no-repeat;
 	 	background-size: 24px 24px;
     border-bottom-left-radius: 3px;
 		color: #fff !important;
-	 	display: block !important;
-	 	float: right !important;
 	 	height: 24px !important;
 		padding: 0 6px !important;
+		position: absolute;
+		top: 0;
+		right: 0;
 	 	width: 24px !important;
 	 }
 
 } /* .frontEndToolsModal.mura */
 
+// special handling for containers
+div.mura-object[data-object="container"]:not(.mura-object-pin-tools) > .frontEndToolsModal.mura {
+	z-index: 10002;
+	top: -24px;
+
+	> span.mura-edit-label{
+		border-radius: 0;
+		border-top-right-radius: 3px;
+		border-top-left-radius: 3px;
+	}
+}
+
+// inset outline 
 span.mura-fetborder{
 	background-color: @objectbordercolor !important;
 	display: block;
@@ -280,17 +301,6 @@ div.mura-object[data-objecticonclass="mi-cog"] span.mura-edit-label:before{
 /* text */
 div.mura-object[data-objecticonclass="mi-font"] span.mura-edit-label:before{
 	content: '\f031';
-}
-
-
-
-
-
-
-div.mura-object[data-object="container"]:not(.mura-object-pin-tools) > .frontEndToolsModal.mura {
-	position: relative;
-	width: 100% !important;
-	z-index: 10002;
 }
 
 .mura-object-primary {

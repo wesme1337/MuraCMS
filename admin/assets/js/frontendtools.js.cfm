@@ -444,7 +444,10 @@
 			} else {
 				var container=editableObj.closest('div[data-object="container"]');
 				if(container.length){
-					container.addClass('mura-container-active');
+					var finder=container.find('div[data-instanceid="' + Mura.currentObjectInstanceID + '"]')
+					if(finder.length){
+						container.addClass('mura-container-active');
+					}
 				}
 			}
 			editableObj.addClass('mura-object-select');

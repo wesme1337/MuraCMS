@@ -25,6 +25,7 @@
 		MuraInlineEditor.sidebarAction('showobjects');
 		Mura('.mura-object-selected').removeClass('mura-object-selected');
 		Mura('.mura-region, .mura-region .mura-editable').addClass('mura-region-active');
+		Mura('.mura-region div[data-object="container"], .mura-region .mura-editable div[data-object="container"]').addClass('mura-container-active');
 		Mura(this).addClass('mura-object-selected');
 	}
 
@@ -34,6 +35,7 @@
 		newMuraObject = false;
 		Mura('.mura-object-selected').removeClass('mura-object-selected');
 		Mura('.mura-region, .mura-region .mura-editable').removeClass('mura-region-active');
+		Mura('.mura-region div[data-object="container"], .mura-region .mura-editable div[data-object="container"]').removeClass('mura-container-active');
 	}
 
 	function initDraggableObject_dragover(e) {
@@ -427,6 +429,7 @@
 						Mura('#dragtype').html(item.data('object'));
 						Mura('.mura-sidebar').addClass('mura-sidebar--dragging');
 						Mura('.mura-region, .mura-region .mura-editable').addClass('mura-region-active');
+						Mura('.mura-region div[data-object="container"], .mura-region .mura-editable div[data-object="container"]').addClass('mura-container-active');
 
 						e.dataTransfer.setData("text", JSON.stringify({
 							object: item.data('object'),
@@ -442,6 +445,7 @@
 						newMuraObject = false;
 						Mura('.mura-sidebar').removeClass('mura-sidebar--dragging');
 						Mura('.mura-region, .mura-region .mura-editable').removeClass('mura-region-active');
+						Mura('.mura-region div[data-object="container"], .mura-region .mura-editable div[data-object="container"]').removeClass('mura-container-active');
 					});
 
 				item.data('inited', true);

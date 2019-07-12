@@ -178,14 +178,16 @@
 		if(typeof Mura.currentObjectInstanceID != 'undefined'
 			&& Mura.currentObjectInstanceID){
 
-			if(item.data('object')=='container'){
+			if(item.data('object')=='container' && Mura.currentObjectInstanceID == item.data('instanceid')){
 				removeContainerClass=false;
-				//item.addClass('mura-container-active')
 			} else{
 				var container=item.closest('div[data-object="container"]');
+
 				if(container.length){
-					removeContainerClass=false;
-					//container.addClass('mura-container-active')
+					var finder=container.find('div[data-instanceid="' + Mura.currentObjectInstanceID + '"]')
+					if(finder.length){
+						removeContainerClass=false;
+					}
 				}
 			}
 

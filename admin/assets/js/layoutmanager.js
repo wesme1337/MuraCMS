@@ -24,7 +24,7 @@
 		muraLooseDropTarget = null;
 		MuraInlineEditor.sidebarAction('showobjects');
 		Mura('.mura-object-selected').removeClass('mura-object-selected');
-		Mura('.mura-region-loose, .mura-region-local').addClass('mura-region-active');
+		Mura('.mura-region, .mura-region-loose, .mura-region-local').addClass('mura-region-active');
 		Mura(this).addClass('mura-object-selected');
 	}
 
@@ -33,7 +33,7 @@
 		elDropHandled = false;
 		newMuraObject = false;
 		Mura('.mura-object-selected').removeClass('mura-object-selected');
-		Mura('.mura-region-loose, .mura-region-local').removeClass('mura-region-active');
+		Mura('.mura-region, .mura-region-loose, .mura-region-local').removeClass('mura-region-active');
 	}
 
 	function initDraggableObject_dragover(e) {
@@ -424,7 +424,7 @@
 						muraLooseDropTarget = null;
 						Mura('#dragtype').html(item.data('object'));
 						Mura('.mura-sidebar').addClass('mura-sidebar--dragging');
-						Mura('.mura-region-loose, .mura-region-local').addClass('mura-region-active');
+						Mura('.mura-region, .mura-region-loose, .mura-region-local').addClass('mura-region-active');
 
 						e.dataTransfer.setData("text", JSON.stringify({
 							object: item.data('object'),
@@ -439,7 +439,7 @@
 						elDropHandled = false;
 						newMuraObject = false;
 						Mura('.mura-sidebar').removeClass('mura-sidebar--dragging');
-						Mura('.mura-region-loose, .mura-region-local').removeClass('mura-region-active');
+						Mura('.mura-region, .mura-region-loose, .mura-region-local').removeClass('mura-region-active');
 					});
 
 				item.data('inited', true);

@@ -152,10 +152,14 @@ body.mura-sidebar-state__pushed--right .mura__layout-manager__controls {
 	margin-top: -1px;
 }
 
+.mura-object.mura-active.mura-container-active > .mura-fetborder,
+.mura-object.mura-active.mura-container-active > .frontEndToolsModal.mura,
 .mura-object.mura-active.mura-active-target > .mura-fetborder,
 .mura-object.mura-active.mura-active-target > .frontEndToolsModal.mura{
 	opacity: .75;
 	}
+.mura-object.mura-active.mura-container-active.mura-object-selected > .mura-fetborder,
+.mura-object.mura-active.mura-container-active.mura-object-selected > .frontEndToolsModal.mura,
 .mura-object.mura-active.mura-object-selected > .mura-fetborder,
 .mura-object.mura-active.mura-object-selected > .frontEndToolsModal.mura {
 	opacity: 1;
@@ -177,7 +181,7 @@ body.mura-sidebar-state__pushed--right .mura__layout-manager__controls {
 
 	 > span.mura-edit-label{
 	    background-color: @objectbordercolor!important;
-	    border-bottom-right-radius: 3px;
+	    border-bottom-left-radius: 3px;
 	    font-family: @font-family-base;
 	    font-weight: 700;
 	    font-size: 11px;
@@ -224,18 +228,6 @@ body.mura-sidebar-state__pushed--right .mura__layout-manager__controls {
 
 } /* .frontEndToolsModal.mura */
 
-// special handling for containers
-div.mura-object[data-object="container"]:not(.mura-object-pin-tools) > .frontEndToolsModal.mura {
-	z-index: 10002;
-	top: -24px;
-
-	> span.mura-edit-label{
-		border-radius: 0;
-		border-top-right-radius: 3px;
-		border-top-left-radius: 3px;
-		line-height: 24px !important;
-	}
-}
 
 // inset outline 
 span.mura-fetborder{
@@ -270,6 +262,27 @@ span.mura-fetborder{
 		left: 0;		
 	}
 } /* /.mura-fetborder */
+
+// special handling for containers
+div.mura-object[data-object="container"]:not(.mura-object-pin-tools) {
+
+	&> .frontEndToolsModal.mura {
+		z-index: 10002;
+		top: -24px;
+
+		> span.mura-edit-label{
+			background-color: #646464 !important;
+			border-radius: 0;
+			border-top-right-radius: 3px;
+			border-top-left-radius: 3px;
+			line-height: 24px !important;
+		}
+	}
+
+	&> span.mura-fetborder{
+		background-color: #646464 !important;
+	}
+}
 
 /* collection */
 div.mura-object[data-objecticonclass="mi-th-list"] span.mura-edit-label:before{

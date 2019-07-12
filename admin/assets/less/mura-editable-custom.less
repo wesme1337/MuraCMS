@@ -4,12 +4,12 @@
 	min-width: 20px !important;
 
 	.mura-editable-attribute {
-		outline: 1px dotted #ccc !important;
+		outline: 1px dotted #8A8A8A !important;
 
 		&:hover, 
 		&.mura-active,
 		&:focus {
-			outline: 1px dotted #646464 !important;
+			outline: 2px solid #8A8A8A !important;
 		}
 
 	}
@@ -21,25 +21,40 @@
 	&.inline {
 		.inline-block() !important;
 	}
-
+	&.mura-region-active .mura-editable-label,
 	&:hover .mura-editable-label {
 		.inline-block() !important;
 		background: #646464 !important;
+    border-radius: 3px 3px 0 0;
 		color: #fff !important;
 		font-size: 11px !important;
 		font-weight: 700 !important;
 		height: 24px !important;
 		letter-spacing: .025em;
-		line-height: 1 !important;
+		line-height: 24px !important;
 		margin: 0 !important;
+		min-width: 64px;
 		opacity: .75;
-		padding: 6px 8px 0 8px !important;
+		padding: 1px 16px 2px 31px !important;
 		position: absolute !important;
-		left: -1px !important;
+		left: 12px !important;
 		top: -24px !important;
 		text-align: left !important;
+		text-transform: uppercase !important;
 		width: auto !important;
 		z-index: 10001 !important;
+
+		&:before{
+			content: '\f05b';
+	    display: inline-block;
+	    font-family: FontAwesome;
+			font-size: 14px;
+			font-weight: normal;
+	    position: absolute;
+	    left: 12px;
+	    top: 1px;				
+		}
+
 	}
 
 	&.mura-inactive,

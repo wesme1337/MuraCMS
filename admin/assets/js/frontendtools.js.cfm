@@ -809,7 +809,7 @@
 			if(typeof Mura != 'undefined'){
 				var sheet=Mura.getStyleSheet('mura-inline-editor');
 				sheet.insertRule(
-					'.mura-region-local, .mura-region-inherited, .mura-object {	min-height: 24px;	}',
+					'.mura-region-local, .mura-region-inherited, .mura-object {	min-height: 30px;	}',
 					sheet.cssRules.length
 				);
 

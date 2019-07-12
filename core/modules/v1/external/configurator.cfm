@@ -8,7 +8,7 @@
 		httpService.setMethod("get");
 		httpService.setCharset("utf-8");
 		httpService.setURL(objectConfig.configurator);
-		configuratorMarkup=httpService.send().getPrefix();
+		configuratorMarkup=httpService.send().getPrefix().filecontent;
 	} else if(len(objectConfig.configurator)){
 		configuratorMarkup=objectConfig.configurator;
 	}

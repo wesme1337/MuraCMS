@@ -143,13 +143,13 @@ body.mura-sidebar-state__pushed--right .mura__layout-manager__controls {
 }
 
 .mura-drop-target.mura-append {
-	border-bottom: 1px dotted @objectbordercolor;
-	margin-bottom: -1px;
+	border-bottom: 2px dotted @objectbordercolor;
+	margin-bottom: -2px;
 }
 
 .mura-drop-target.mura-prepend {
-	border-top: 1px dotted @objectbordercolor;
-	margin-top: -1px;
+	border-top: 2px dotted @objectbordercolor;
+	margin-top: -2px;
 }
 
 .mura-object.mura-active.mura-container-active > .mura-fetborder,
@@ -197,8 +197,6 @@ body.mura-sidebar-state__pushed--right .mura__layout-manager__controls {
 	    text-transform: uppercase;
 
 		&:before{
-			/* defaults to same content as .mi-cog */
-			content: '\f013';
 	    display: inline-block;
 	    font-family: FontAwesome;
 			font-size: 14px;
@@ -206,6 +204,11 @@ body.mura-sidebar-state__pushed--right .mura__layout-manager__controls {
 	    position: absolute;
 	    left: 12px;
 	    top: 1px;
+		}
+
+		&:not([class*="mi-"]):before{
+		/* defaults to same content as .mi-cog */
+			content: '\f013';
 		}
 
 	 } /* /.mura-edit-label */
@@ -282,39 +285,6 @@ div.mura-object[data-object="container"]:not(.mura-object-pin-tools) {
 	&> span.mura-fetborder{
 		background-color: #646464 !important;
 	}
-}
-
-/* collection */
-div.mura-object[data-objecticonclass="mi-th-list"] span.mura-edit-label:before{
-	content: '\f00b';
-}
-/* container */
-div.mura-object[data-objecticonclass="mi-square-o"] span.mura-edit-label:before{
-	content: '\f096';
-}
-/* cta */
-div.mura-object[data-objecticonclass="mi-info"] span.mura-edit-label:before{
-	content: '\f129';
-}
-/* embed */
-div.mura-object[data-objecticonclass="mi-code"] span.mura-edit-label:before{
-	content: '\f121';
-}
-/* form */
-div.mura-object[data-objecticonclass="mi-code"] span.mura-edit-label:before{
-	content: '\f205';
-}
-/* navigation */
-div.mura-object[data-objecticonclass="mi-code"] span.mura-edit-label:before{
-	content: '\f039';
-}
-/* system (default) */
-div.mura-object[data-objecticonclass="mi-cog"] span.mura-edit-label:before{
-	content: '\f013';
-}
-/* text */
-div.mura-object[data-objecticonclass="mi-font"] span.mura-edit-label:before{
-	content: '\f031';
 }
 
 .mura-object-primary {

@@ -103,53 +103,53 @@ body.mura-sidebar-state__pushed--right .mura__layout-manager__controls {
 .mura-async-object.mura-active.mura-active-target[data-object="calendar"],
 .mura-async-object.mura-active.mura-active-target[data-object="gallery"] {
 	box-shadow: inset 0 0 0 2px @objectbordercolor !important;
-
-	.mura-edit-label{
-		cursor: move;
-	}
-
-}
-
-// adjusting for non movable items
-.mura-async-object.mura-active.mura-active-target[data-object="folder"],
-.mura-async-object.mura-active.mura-active-target[data-object="calendar"],
-.mura-async-object.mura-active.mura-active-target[data-object="gallery"] {
-	.mura-edit-label{
-		cursor: auto;
-	}
 }
 
 .mura-object.mura-active .mura-object.mura-active:not('.mura-drop-target') {
-	border: 1px solid transparent;
+	border: 2px solid transparent;
 }
 
-//a region that IS being currently selected
-.mura-object.mura-active.mura-object-selected,
-.mura-async-object.mura-active[data-object="folder"].mura-object-selected,
-.mura-async-object.mura-active[data-object="calendar"].mura-object-selected,
-.mura-async-object.mura-active[data-object="gallery"].mura-object-selected,
-.mura-object-content.mura-object-selected,
-.mura-object-meta.mura-object-selected {
-	/*box-shadow: inset 0 0 0 2px @objectbordercolor;*/
+.mura-object[data-object="component"] > .frontEndToolsModal.mura > .mura-edit-label,
+.mura-object[data-object="form"] > .frontEndToolsModal.mura > .mura-edit-label{
+	cursor: pointer;
+}
 
-	.mura-edit-label{
-		cursor: move;
-	}
+.mura-region-local .mura-object > .frontEndToolsModal.mura > .mura-edit-label{
+	cursor: move !important;
 }
 
 .mura-object-content.mura-object-selected,
 .mura-object-meta.mura-object-selected{
 	box-shadow: inset 0 0 0 1px @objectbordercolor;
+
 }
+	
+.mura-object-content.mura-object-selected:after,
+.mura-object-meta.mura-object-selected:after{
+	background-color:@objectbordercolor !important;
+ 	background-image:url(../images/pencil-fe@2x.png);
+ 	background-repeat:no-repeat;
+ 	background-size: 24px 24px;
+  border-bottom-left-radius: 3px;
+	color: #fff !important;
+	content: "";
+	display: block;
+ 	height: 24px !important;
+	padding: 0 6px !important;
+	position: absolute;
+	top: 0;
+	right: 0;
+ 	width: 24px !important;
+	}	
 
 .mura-drop-target.mura-append {
 	border-bottom: 2px dotted @objectbordercolor;
-	margin-bottom: -2px;
+	/*margin-bottom: -2px;*/
 }
 
 .mura-drop-target.mura-prepend {
 	border-top: 2px dotted @objectbordercolor;
-	margin-top: -2px;
+	/*margin-top: -2px;*/
 }
 
 .mura-object.mura-active.mura-container-active > .mura-fetborder,

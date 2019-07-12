@@ -880,6 +880,15 @@ config: {
       , editImage: function() {
         fileViewer.isDisplayWindow = "EDITIMAGE";
       }
+			, selectFile: function() {
+				 if(MuraFileBrowser.config.selectMode == 1) {
+					 window.opener.CKEDITOR.tools.callFunction(self.callback,fileViewer.currentFile.url);
+					 window.close();
+				 }
+				 else {
+					 return MuraFileBrowser.config.selectCallback( fileViewer.currentFile );
+				 }
+			 }
       , downloadFile: function() {
           window.open(fileViewer.currentFile.url, '_blank');
       }

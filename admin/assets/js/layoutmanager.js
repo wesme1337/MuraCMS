@@ -152,7 +152,7 @@
 		//e.stopPropagation();
 		Mura('.mura-active-target').removeClass('mura-active-target');
 
-		var activeContainer=Mura('.mura-container-active');
+		//var activeContainer=Mura('.mura-container-active');
 
 
 		var self = Mura(this);
@@ -160,6 +160,7 @@
 			Mura(this).addClass('mura-active-target');
 		}
 
+		/*
 		if(self.data('object')=='container'){
 			self.addClass('mura-container-active');
 		} else {
@@ -168,6 +169,7 @@
 				container.addClass('mura-container-active');
 			}
 		}
+		*/
 	}
 
 	function initDraggableObject_hoverout(e){
@@ -175,6 +177,7 @@
 		var item=Mura(this);
 		item.removeClass('mura-active-target');
 
+		/*
 		var removeContainerClass=true;
 
 		if(typeof Mura.currentObjectInstanceID != 'undefined'
@@ -197,6 +200,7 @@
 		if(removeContainerClass){
 			item.removeClass('mura-container-active')
 		}
+		*/
 
 		//.calculateDisplayObjectStyles();
 
@@ -275,7 +279,7 @@
 			var prev = Mura('.mura-drop-target');
 			muraLooseDropTarget = this;
 
-			Mura('.mura-container-active').removeClass('mura-container-active');
+			//Mura('.mura-container-active').removeClass('mura-container-active');
 
 			if (prev.length) {
 				prev
@@ -289,12 +293,14 @@
 			}
 
 			var item = Mura(this).closest('.mura-object');
+
+			/*
 			var container=Mura(this).closest('div[data-object="container"]');
 
 			if(container.length){
 				container.addClass('mura-container-active');
 			}
-
+			*/
 			if (item.length) {
 				applyObjectTargetClass(item, e, this);
 			} else {
@@ -320,7 +326,7 @@
 			.removeClass('mura-append')
 			.removeClass('mura-prepend');
 
-		Mura('.mura-container-active').removeClass('mura-container-active');
+		//Mura('.mura-container-active').removeClass('mura-container-active');
 
 		muraLooseDropTarget = null;
 		if (!Mura(this).attr('class')) {
@@ -331,7 +337,7 @@
 	function initLooseDropTarget_drop(e) {
 		disabledEventPropagation(e);
 
-		Mura('.mura-container-active').removeClass('mura-container-active');
+		//Mura('.mura-container-active').removeClass('mura-container-active');
 
 		if (dragEl || newMuraObject) {
 
@@ -519,12 +525,20 @@
 			}
 
 			initDraggableObject(displayObject);
-			openFrontEndToolsModal(displayObject, true);
+
 			Mura.processAsyncObject(displayObject);
 
-			Mura(displayObject).on('click',Mura.handleObjectClick);
-			Mura(displayObject).closest('.mura-region-local').data('dirty', true);
-			Mura(displayObject).on('dragover', function() {})
+			displayObject=Mura(displayObject);
+
+			openFrontEndToolsModal(displayObject.node, true);
+
+			if(displayObject.data('object')=="container"){
+				displayObject.addClass('mura-container-active');
+			}
+
+			displayObject.on('click',Mura.handleObjectClick);
+			displayObject.closest('.mura-region-local').data('dirty', true);
+			displayObject.on('dragover', function() {})
 			Mura('#adminSave').show();
 			disabledEventPropagation(e);
 

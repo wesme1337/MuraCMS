@@ -1464,7 +1464,7 @@
 			<cfset theRegion.header='<div class="mura-region">'>
 			<cfset theRegion.footer='</div>'>
 
-			<cfset theRegion.local.header='<div class="mura-editable mura-inactive"><div class="mura-region-local mura-inactive mura-editable-attribute" data-loose="false" data-regionid="#arguments.columnid#" data-inited="false" data-perm="#perm#"><label class="mura-editable-label" style="display:none" >DISPLAY REGION : #regionLabel#</label>'>
+			<cfset theRegion.local.header='<div class="mura-editable mura-inactive"><div class="mura-region-local mura-inactive mura-editable-attribute" data-loose="false" data-regionid="#arguments.columnid#" data-inited="false" data-perm="#perm#"><label class="mura-editable-label" style="display:none">#regionLabel#</label>'>
 			<cfset theRegion.local.footer='</div></div>'>
 
 			<cfset theRegion.inherited.header='<div class="mura-region-inherited">'>

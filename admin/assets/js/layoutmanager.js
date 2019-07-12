@@ -24,7 +24,7 @@
 		muraLooseDropTarget = null;
 		MuraInlineEditor.sidebarAction('showobjects');
 		Mura('.mura-object-selected').removeClass('mura-object-selected');
-		Mura('.mura-region').addClass('mura-region-active');
+		Mura('.mura-region-loose, .mura-region-local').addClass('mura-region-active');
 		Mura(this).addClass('mura-object-selected');
 	}
 
@@ -33,7 +33,7 @@
 		elDropHandled = false;
 		newMuraObject = false;
 		Mura('.mura-object-selected').removeClass('mura-object-selected');
-		Mura('.mura-region').removeClass('mura-region-active');
+		Mura('.mura-region-loose, .mura-region-local').removeClass('mura-region-active');
 	}
 
 	function initDraggableObject_dragover(e) {

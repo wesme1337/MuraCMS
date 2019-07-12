@@ -197,8 +197,6 @@ body.mura-sidebar-state__pushed--right .mura__layout-manager__controls {
 	    text-transform: uppercase;
 
 		&:before{
-			/* defaults to same content as .mi-cog */
-			content: '\f013';
 	    display: inline-block;
 	    font-family: FontAwesome;
 			font-size: 14px;
@@ -206,6 +204,11 @@ body.mura-sidebar-state__pushed--right .mura__layout-manager__controls {
 	    position: absolute;
 	    left: 12px;
 	    top: 1px;
+		}
+
+		&:not([class*="mi-"]):before{
+		/* defaults to same content as .mi-cog */
+			content: '\f013';
 		}
 
 	 } /* /.mura-edit-label */

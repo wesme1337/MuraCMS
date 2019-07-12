@@ -200,7 +200,7 @@
 		if(removeContainerClass){
 			item.removeClass('mura-container-active')
 		}
-	
+
 
 		//.calculateDisplayObjectStyles();
 

@@ -851,6 +851,7 @@ component
 
 		if(!result){
 			WriteDump(arguments);
+			WriteDump(rootpath);
 			abort;
 		}
 		return result;

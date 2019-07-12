@@ -152,7 +152,7 @@
 		//e.stopPropagation();
 		Mura('.mura-active-target').removeClass('mura-active-target');
 
-		//var activeContainer=Mura('.mura-container-active');
+		var activeContainer=Mura('.mura-container-active');
 
 
 		var self = Mura(this);
@@ -160,7 +160,7 @@
 			Mura(this).addClass('mura-active-target');
 		}
 
-		/*
+
 		if(self.data('object')=='container'){
 			self.addClass('mura-container-active');
 		} else {
@@ -169,7 +169,7 @@
 				container.addClass('mura-container-active');
 			}
 		}
-		*/
+
 	}
 
 	function initDraggableObject_hoverout(e){
@@ -177,7 +177,7 @@
 		var item=Mura(this);
 		item.removeClass('mura-active-target');
 
-		/*
+
 		var removeContainerClass=true;
 
 		if(typeof Mura.currentObjectInstanceID != 'undefined'
@@ -200,7 +200,7 @@
 		if(removeContainerClass){
 			item.removeClass('mura-container-active')
 		}
-		*/
+	
 
 		//.calculateDisplayObjectStyles();
 
@@ -452,6 +452,20 @@
 						Mura('.mura-sidebar').removeClass('mura-sidebar--dragging');
 						Mura('.mura-region, .mura-region .mura-editable').removeClass('mura-region-active');
 						Mura('.mura-region div[data-object="container"], .mura-region .mura-editable div[data-object="container"]').removeClass('mura-container-active');
+
+						if(typeof Mura.currentObjectInstanceID != 'undefined' && Mura.currentObjectInstanceID){
+							var current=Mura('div[data-instanceid="' +  Mura.currentObjectInstanceID + '"]');
+							if(current.data('object')=='container'){
+								current.addClass('mura-container-active');
+							}
+							container=current.closest('div[data-object="container"]');
+							if(container.length){
+								var finder=container.find('div[data-instanceid="' + Mura.currentObjectInstanceID + '"]')
+								if(finder.length){
+									container.addClass('mura-container-active');
+								}
+							}
+						}
 					});
 
 				item.data('inited', true);
@@ -531,10 +545,6 @@
 			displayObject=Mura(displayObject);
 
 			openFrontEndToolsModal(displayObject.node, true);
-
-			if(displayObject.data('object')=="container"){
-				displayObject.addClass('mura-container-active');
-			}
 
 			displayObject.on('click',Mura.handleObjectClick);
 			displayObject.closest('.mura-region-local').data('dirty', true);

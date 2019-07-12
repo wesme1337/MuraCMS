@@ -2355,6 +2355,7 @@
 			} else if(action=='showeditor'){
 				Mura.currentObjectInstanceID='';
 				Mura('.mura-object-selected').removeClass('mura-object-selected');
+				Mura('.mura-container-active').removeClass('mura-container-active');
 				Mura('#mura-sidebar-configurator').hide();
 				Mura('#mura-sidebar-objects-legacy').hide();
 				Mura('#mura-sidebar-objects').hide();

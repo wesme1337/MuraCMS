@@ -609,7 +609,7 @@
 				});
 
 				obj.find(
-					'.mura-object[data-object="container"], .mura-region-local div, .mura-region-local[data-loose="true"] p, .mura-region-local[data-loose="true"] h1, .mura-region-local[data-loose="true"] h2, .mura-region-local[data-loose="true"] h3, .mura-region-local[data-loose="true"] h4, .mura-region-local[data-loose="true"] img, .mura-region-local[data-loose="true"] table, .mura-region-local[data-loose="true"] article, .mura-region-local[data-loose="true"] dl'
+					'.mura-region-local .mura-object[data-object="container"], .mura-region-local div, .mura-region-local[data-loose="true"] p, .mura-region-local[data-loose="true"] h1, .mura-region-local[data-loose="true"] h2, .mura-region-local[data-loose="true"] h3, .mura-region-local[data-loose="true"] h4, .mura-region-local[data-loose="true"] img, .mura-region-local[data-loose="true"] table, .mura-region-local[data-loose="true"] article, .mura-region-local[data-loose="true"] dl'
 				).each(function() {
 					initLooseDropTarget(this)
 				});
@@ -679,7 +679,7 @@
 		Mura('body').addClass('mura-sidebar-state__hidden--right');
 		Mura('body').removeClass('mura-sidebar-state__pushed--right');
 
-		Mura('.mura-object, .mura-body-object').each(function(){
+		Mura('.mura-region-local .mura-object, .mura-body-object').each(function(){
 			Mura(this)
 				.off('dragenter', initDraggableObject_dragstart)
 				.off('dragover', initDraggableObject_dragover)
@@ -702,7 +702,7 @@
 					.off('dragover',initRegion_dragover)
 					.data('inited', 'false')
 
-				Mura('.mura-object[data-object="container"], .mura-region-local div, .mura-region-local[data-loose="true"] p, .mura-region-local[data-loose="true"] h1, .mura-region-local[data-loose="true"] h2, .mura-region-local[data-loose="true"] h3, .mura-region-local[data-loose="true"] h4, .mura-region-local[data-loose="true"] img, .mura-region-local[data-loose="true"] table, .mura-region-local[data-loose="true"] article, .mura-region-local[data-loose="true"] dl')
+				Mura('.mura-region-local .mura-object[data-object="container"], .mura-region-local div, .mura-region-local[data-loose="true"] p, .mura-region-local[data-loose="true"] h1, .mura-region-local[data-loose="true"] h2, .mura-region-local[data-loose="true"] h3, .mura-region-local[data-loose="true"] h4, .mura-region-local[data-loose="true"] img, .mura-region-local[data-loose="true"] table, .mura-region-local[data-loose="true"] article, .mura-region-local[data-loose="true"] dl')
 				.off('dragenter', initLooseDropTarget_dragenter)
 				.off('dragover', initLooseDropTarget_dragover)
 				.off('drop', initLooseDropTarget_drop)

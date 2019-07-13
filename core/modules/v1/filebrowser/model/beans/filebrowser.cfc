@@ -845,13 +845,18 @@ component
 		var rootPath=replace(expandPath(getBaseFileDir( arguments.siteid,arguments.resourcePath )), "\", "/", "ALL");
 		arguments.path=replace(arguments.path, "\", "/", "ALL");
 
+		var s3assets=getBean('configBean').get('s3assets');
+
+		if(len(s3assets)){
+			rootPath=replace(rootPath,s3assets,"/s3assets/");
+		}
+
 		var result=  (
 			len(arguments.path) >= len(rootPath) && left(arguments.path,len(rootPath)) == rootPath
 		);
 
 		if(!result){
 			WriteDump(arguments);
-			WriteDump(rootpath);
 			abort;
 		}
 		return result;

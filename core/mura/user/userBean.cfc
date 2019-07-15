@@ -392,10 +392,48 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 
 </cffunction>
 
+<cffunction name="expirePassword" output="false">
+	<cfif exists()>
+		<cfset variables.instance.passwordCreated=''>
+		<cfquery>
+			update tusers set passwordCreated=null where userID = <cfqueryparam cfsqltype="cf_sql_varchar" value="#trim(variables.instance.userID)#">
+		</cfquery>
+		<cfset getBean('userManager').purgeUserCache(userBean=this)>
+
+		<cfset var sessionData=getSession()>
+		<cfif isDefined('sessionData.mura.userid') && sessionData.mura.userid eq variables.instance.userID>
+			<cfset sessionData.mura.passwordcreated=''>
+			<cfset sessionData.mura.passwordExpired=true>
+		</cfif>
+	</cfif>
+	<cfreturn this>
+</cffunction>
+
+<cffunction name="getPasswordExpired" output="false">
+	
+	<cfif not isDate(get('passwordCreated'))>
+		<cfreturn true>
+	</cfif>
+	
+	<cfset var expireIn=getBean('configBean').getValue(property="expirePasswords", defaultValue=0)>
+
+	<cfif not isNumeric(expireIn) or expireIn eq 0>	
+		<cfreturn false>
+	<cfelse>
+		<cfreturn getPasswordExpiration(expireIn) lt now()>
+	</cfif>
+
+</cffunction>
+
+<cffunction name="getPasswordExpiration" output="false">
+	<cfargument name="expiresIn" default="#getBean('configBean').getValue(property="expirePasswords", defaultValue=0)#">
+	<cfreturn dateAdd('d',arguments.expiresIn,get('passwordCreated'))>
+</cffunction>
+
 <cffunction name="checkEmail" returntype="boolean" output="false">
 	<cfargument name="email" default="#trim(variables.instance.email)#">
 	<cfset var rsCheck=""/>
-	<cfquery name="rsCheck" datasource="#variables.configBean.getReadOnlyDatasource()#" username="#variables.configBean.getReadOnlyDbUsername()#" password="#variables.configBean.getReadOnlyDbPassword()#">
+	<cfquery name="rsCheck">
 		select username from tusers where type=2 and email=<cfqueryparam cfsqltype="cf_sql_varchar" value="#trim(arguments.email)#"> and UserID <> <cfqueryparam cfsqltype="cf_sql_varchar" value="#trim(getUserID())#">
 		and (siteid=<cfqueryparam cfsqltype="cf_sql_varchar" value="#variables.settingsManager.getSite(variables.instance.siteid).getPrivateUserPoolID()#">
 			or
@@ -449,7 +487,8 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 			<cfif variables.instance.email eq "" >
 				<cfset variables.instance.errors.email=variables.settingsManager.getSite(variables.instance.siteID).getRBFactory().getKey("user.emailrequired") />
 			</cfif>
-	</cfif>
+			
+		</cfif>
 
 		<!--- If captcha data has been submitted validate it --->
 		<cfif not (not len(variables.instance.hKey) or variables.instance.hKey eq hash(variables.instance.uKey))>

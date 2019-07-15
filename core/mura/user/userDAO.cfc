@@ -311,7 +311,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 		 <cfqueryparam cfsqltype="cf_sql_varchar" null="#iif(arguments.userBean.getTablist() neq '',de('no'),de('yes'))#" value="#arguments.userBean.getTablist()#">
 		 )
 
-   </CFQUERY>
+   </cfquery>
 
   <!---  <cfif arguments.userBean.getType() eq 2> --->
    <cfset createUserMemberships(arguments.userBean.getUserID(),arguments.userBean.getGroupID()) />
@@ -421,48 +421,54 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 		 TabList= <cfqueryparam cfsqltype="cf_sql_varchar" null="#iif(arguments.userBean.getTablist() neq '',de('no'),de('yes'))#" value="#arguments.userBean.getTablist()#">
 
        WHERE UserID = '#arguments.userBean.getUserID()#'
-   </CFQUERY>
+   </cfquery>
 
+   <cfset var sessionData=getSession()>
 
+   <cfif len(arguments.userBean.getPassword()) and isDefined('sessionData.mura.userid') and sessionData.mura.userid eq arguments.userBean.get('userid')>
+		<cfset sessionData.mura.passwordCreated=now()>
+		<cfset sessionData.mura.passwordExpired=false>
+   </cfif>
+ 
 	<!--- <cfif arguments.userBean.gettype() EQ 2 > --->
-		<cfif arguments.updateGroups>
-		<cfset deleteUserMemberships(arguments.userBean.getUserID(),arguments.originID) />
-		<cfset createUserMemberships(arguments.userBean.getUserID(),arguments.userBean.getGroupID()) />
-		<cfset clearBadMemberships(arguments.userBean) />
-		</cfif>
+	<cfif arguments.updateGroups>
+	<cfset deleteUserMemberships(arguments.userBean.getUserID(),arguments.originID) />
+	<cfset createUserMemberships(arguments.userBean.getUserID(),arguments.userBean.getGroupID()) />
+	<cfset clearBadMemberships(arguments.userBean) />
+	</cfif>
 
-		<cfif arguments.updateInterests>
-		<cfset deleteUserInterests(arguments.userBean.getUserID(),arguments.originID) />
-		<cfset createUserInterests(arguments.userBean.getUserID(),arguments.userBean.getCategoryID()) />
-		</cfif>
+	<cfif arguments.updateInterests>
+	<cfset deleteUserInterests(arguments.userBean.getUserID(),arguments.originID) />
+	<cfset createUserInterests(arguments.userBean.getUserID(),arguments.userBean.getCategoryID()) />
+	</cfif>
 
-		<cfif arguments.userBean.getPrimaryAddressID() neq ''>
-		<cfset setPrimaryAddress(arguments.userBean.getUserID(),arguments.userBean.getPrimaryAddressID()) />
-		</cfif>
+	<cfif arguments.userBean.getPrimaryAddressID() neq ''>
+	<cfset setPrimaryAddress(arguments.userBean.getUserID(),arguments.userBean.getPrimaryAddressID()) />
+	</cfif>
 
-		<cfset deleteTags(arguments.userBean.getUserID()) />
-		<cfset createTags(arguments.userBean) />
+	<cfset deleteTags(arguments.userBean.getUserID()) />
+	<cfset createTags(arguments.userBean) />
 
-		<cfif len(arguments.userBean.get('removeToken'))>
-	 	   <cfset var tokens=getFeed('oauthtoken')
-	 		   .where()
-	 		   .prop('userID').isEQ(arguments.userBean.getUserID())
-	 		   .andProp('token').isIn(arguments.userBean.get('removeToken'))
-	 		   .getIterator()>
+	<cfif len(arguments.userBean.get('removeToken'))>
+		<cfset var tokens=getFeed('oauthtoken')
+			.where()
+			.prop('userID').isEQ(arguments.userBean.getUserID())
+			.andProp('token').isIn(arguments.userBean.get('removeToken'))
+			.getIterator()>
 
-	 		  <cfloop condition="tokens.hasNext()">
-	 			  <cfset tokens.next().delete()>
-	 		  </cfloop>
-	    </cfif>
+			<cfloop condition="tokens.hasNext()">
+				<cfset tokens.next().delete()>
+			</cfloop>
+	</cfif>
 
-		<!--- Load up redirect bean with provided userid --->
-		<cfset var redirectBean = getBean('userRedirectBean').loadBy(userid=arguments.userBean.get('userid')) />
-		<!--- if it's not new we need to remove any --->
-		<cfif !redirectBean.get('isnew')>
-			<!--- remove any existing redirect records once the user is updated --->
-			<cfset var userUtility = getBean('userUtility') />
-			<cfset userUtility.removePrevRedirects(userid=redirectBean.getUserID()) />
-		</cfif>
+	<!--- Load up redirect bean with provided userid --->
+	<cfset var redirectBean = getBean('userRedirectBean').loadBy(userid=arguments.userBean.get('userid')) />
+	<!--- if it's not new we need to remove any --->
+	<cfif !redirectBean.get('isnew')>
+		<!--- remove any existing redirect records once the user is updated --->
+		<cfset var userUtility = getBean('userUtility') />
+		<cfset userUtility.removePrevRedirects(userid=redirectBean.getUserID()) />
+	</cfif>
 	<!--- </cfif> --->
 
 </cffunction>
@@ -478,7 +484,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 							where siteid=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.originID#">
 							<!--- and type=1 --->)
 		</cfif>
-		</cfquery>
+	</cfquery>
 
 </cffunction>
 
@@ -487,7 +493,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 
 	<cfquery>
 		DELETE FROM tusersmemb where groupID=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.groupID#">
-		</cfquery>
+	</cfquery>
 
 </cffunction>
 
@@ -496,7 +502,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 
 	<cfquery>
 		DELETE FROM tpermissions where groupID=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.groupID#">
-		</cfquery>
+	</cfquery>
 
 </cffunction>
 
@@ -505,7 +511,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 	<cfargument name="groupid" type="string" />
 
 	<cfquery>
-	delete from tusersmemb where userid=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.userID#"> and groupid=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.groupID#">
+		delete from tusersmemb where userid=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.userID#"> and groupid=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.groupID#">
 	</cfquery>
 
 </cffunction>
@@ -516,8 +522,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 	<cfset var checkmemb=""/>
 
 	<cfquery attributeCollection="#variables.configBean.getReadOnlyQRYAttrs(name='checkmemb')#">
-	select * from tusersmemb where groupid=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.groupID#"> and userid=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.userID#">
-
+		select * from tusersmemb where groupid=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.groupID#"> and userid=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.userID#">
 	</cfquery>
 
 	<cfif not checkmemb.recordcount>
@@ -667,7 +672,15 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 	  	 password =  <cfqueryparam cfsqltype="cf_sql_varchar" null="#iif(arguments.password neq '',de('no'),de('yes'))#" value="#iif(variables.configBean.getEncryptPasswords(),de('#encryptPassword(arguments.password)#'),de('#arguments.password#'))#">,
 		 passwordCreated =<cfqueryparam cfsqltype="cf_sql_timestamp" value="#now()#">
        WHERE UserID =<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.userID#">
-   </CFQUERY>
+   </cfquery>
+   
+   <cfset var sessionData=getSession()>
+
+   <cfif isDefined('sessionData.mura.userid') and sessionData.mura.userid eq arguments.userid>
+		<cfset sessionData.mura.userid=now()>
+		<cfset sessionData.mura.passwordCreated=now()>
+		<cfset sessionData.mura.passwordExpired=false>
+   </cfif>
 </cffunction>
 
 <cffunction name="readUserHash" output="false">
@@ -737,7 +750,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 		addressEmail=<cfqueryparam cfsqltype="cf_sql_varchar" null="#iif(arguments.addressBean.getAddressEmail() neq '',de('no'),de('yes'))#" value="#arguments.addressBean.getAddressEmail()#">,
 		hours =  <cfqueryparam cfsqltype="cf_sql_longvarchar" null="#iif(arguments.addressBean.getHours() neq '',de('no'),de('yes'))#" value="#arguments.addressBean.getHours()#">
        WHERE AddressID = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.addressBean.getAddressID()#">
-   </CFQUERY>
+   </cfquery>
 
 </cffunction>
 
@@ -771,7 +784,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 		<cfqueryparam cfsqltype="cf_sql_longvarchar" null="#iif(arguments.addressBean.getHours() neq '',de('no'),de('yes'))#" value="#arguments.addressBean.getHours()#">
 		  )
 
-   </CFQUERY>
+   </cfquery>
 
 </cffunction>
 

@@ -410,7 +410,10 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 </cffunction>
 
 <cffunction name="getPasswordExpired" output="false">
-	
+	<cfif not getBean('configBean').passwordsExpire()>
+		<cfreturn false>
+	</cfif>
+
 	<cfif not isDate(get('passwordCreated'))>
 		<cfreturn true>
 	</cfif>
@@ -478,6 +481,10 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 					<cfset variables.instance.errors.password=variables.settingsManager.getSite(variables.instance.siteID).getRBFactory().getKey("user.passwordstrengthvalidate") />
 				</cfif>
 
+			</cfif>
+
+			<cfif get('doaction') eq 'updateprofile' and getPasswordExpired()>
+				<cfset variables.instance.errors.passwordexpired=variables.settingsManager.getSite(variables.instance.siteID).getRBFactory().getKey("user.passwordexpired")>
 			</cfif>
 
 			<cfif(variables.instance.username eq "" or not checkUsername())>

@@ -64,6 +64,10 @@
 	<cfif not(structIsEmpty(request.userBean.getErrors()) and request.doaction eq 'createprofile')>
 		<div id="svEditProfile" class="mura-edit-profile #this.editProfileWrapperClass#">
 
+			<cfif request.userBean.getPasswordExpired()>
+				<cfset request.userBean.getErrors().passwordExpired=variables.$.rbKey("layout.passwordexpirednotice")>
+			</cfif>
+			
 			<cfif not structIsEmpty(request.userBean.getErrors()) >
 				<div class="#this.editProfileErrorMessageClass#">#variables.$.getBean('utility').displayErrors(request.userBean.getErrors())#</div>
 			<cfelse>

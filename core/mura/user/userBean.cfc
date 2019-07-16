@@ -102,7 +102,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 	<cfset variables.instance.lname="" />
 	<cfset variables.instance.username="" />
 	<cfset variables.instance.password="" />
-	<cfset variables.instance.passwordCreated="#now()#" />
+	<cfset variables.instance.passwordCreated="" />
 	<cfset variables.instance.email="" />
 	<cfset variables.instance.company="" />
 	<cfset variables.instance.jobtitle="" />
@@ -483,7 +483,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 
 			</cfif>
 
-			<cfif get('doaction') eq 'updateprofile' and getPasswordExpired()>
+			<cfif exists() and (get('doaction') eq 'updateprofile' or (isdefined('url.display') and url.display eq 'editprofile')) and getPasswordExpired()>
 				<cfset variables.instance.errors.passwordexpired=variables.settingsManager.getSite(variables.instance.siteID).getRBFactory().getKey("user.passwordexpired")>
 			</cfif>
 

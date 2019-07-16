@@ -82,6 +82,13 @@ component
 
 
 		remote any function resize( resourcePath,file,dimensions ) {
+
+			var m=getBean('$').init(arguments.siteid);
+
+			if(!m.validateCSRFTokens(context='resize')){
+				throw(type="invalidTokens");
+			}
+
 			var permission = checkPerms(arguments.siteid,'editimage',resourcePath);
 			var response = { success: 0 };
 
@@ -100,7 +107,6 @@ component
 
 			response.args = arguments;
 
-			var m=getBean('$').init(arguments.siteid);
 			var currentSite = application.settingsManager.getSite(arguments.siteid);
 			var baseFilePath = getBaseFileDir( arguments.siteid,arguments.resourcePath );
 			var tempDir = m.globalConfig().getTempDir();
@@ -163,6 +169,13 @@ component
 		}
 
 		remote any function duplicate( resourcePath,file ) {
+
+			var m=getBean('$').init(arguments.siteid);
+
+			if(!m.validateCSRFTokens(context='duplicate')){
+				throw(type="invalidTokens");
+			}
+
 			var permission = checkPerms(arguments.siteid,'duplicate',resourcePath);
 			var response = { success: 0 };
 
@@ -176,7 +189,6 @@ component
 				arguments.file = deserializeJSON(arguments.file);
 			}
 
-			var m=getBean('$').init(arguments.siteid);
 			var currentSite = application.settingsManager.getSite(arguments.siteid);
 			var baseFilePath = getBaseFileDir( arguments.siteid,arguments.resourcePath );
 			var tempDir = m.globalConfig().getTempDir();
@@ -209,6 +221,13 @@ component
 		}
 
 		remote any function rotate( resourcePath,file,direction ) {
+
+			var m=getBean('$').init(arguments.siteid);
+
+			if(!m.validateCSRFTokens(context='rotate')){
+				throw(type="invalidTokens");
+			}
+
 			var permission = checkPerms(arguments.siteid,'editimage',resourcePath);
 			var response = { success: 0 };
 
@@ -222,7 +241,6 @@ component
 				arguments.file = deserializeJSON(arguments.file);
 			}
 
-			var m=getBean('$').init(arguments.siteid);
 			var currentSite = application.settingsManager.getSite(arguments.siteid);
 			var baseFilePath = getBaseFileDir( arguments.siteid,arguments.resourcePath );
 			var tempDir = m.globalConfig().getTempDir();
@@ -255,6 +273,13 @@ component
 		}
 
 		remote any function processCrop( resourcePath,file,crop,size ) {
+
+			var m=getBean('$').init(arguments.siteid);
+
+			if(!m.validateCSRFTokens(context='processCrop')){
+				throw(type="invalidTokens");
+			}
+
 			var permission = checkPerms(arguments.siteid,'editimage',resourcePath);
 			var response = { success: 0};
 
@@ -264,8 +289,6 @@ component
 				return response;
 			}
 
-
-			var m=getBean('$').init(arguments.siteid);
 			var currentSite = application.settingsManager.getSite(arguments.siteid);
 			var baseFilePath = getBaseFileDir( arguments.siteid,arguments.resourcePath );
 			var tempDir = m.globalConfig().getTempDir();
@@ -356,6 +379,13 @@ component
 		remote any function move( siteid,directory,destination,filename,resourcePath )  {
 
 			arguments.siteid == "" ? "default" : arguments.siteid;
+
+			var m=getBean('m').init(arguments.siteid);
+
+     		if(!m.validateCSRFTokens(context='move')){
+				throw(type="invalidTokens");
+			}
+
 			arguments.directory = arguments.directory == "" ? "" : arguments.directory;
 			arguments.directory = rereplace(arguments.directory,"\\",application.configBean.getFileDelim(),"all");
 			response.success = 0;
@@ -444,6 +474,13 @@ component
 		remote any function upload( siteid,directory,formData,resourcePath )  {
 
 			arguments.siteid == "" ? "default" : arguments.siteid;
+
+			var m=getBean('m').init(arguments.siteid);
+			
+     		if(!m.validateCSRFTokens(context='upload')){
+				throw(type="invalidTokens");
+			}
+
 			arguments.directory = arguments.directory == "" ? "" : arguments.directory;
 			arguments.directory = rereplace(arguments.directory,"\\",application.configBean.getFileDelim(),"all");
 
@@ -533,6 +570,12 @@ component
 		remote any function update( siteid,directory,filename,filter="",resourcepath,content )  {
 			arguments.siteid == "" ? "default" : arguments.siteid;
 
+			var m=getBean('m').init(arguments.siteid);
+			
+     		if(!m.validateCSRFTokens(context='update')){
+				throw(type="invalidTokens");
+			}
+
 			var permission = checkPerms(arguments.siteid,'write',resourcePath);
 			var response = { success: 0};
 
@@ -564,6 +607,13 @@ component
 
 		remote any function delete( siteid,directory,filename,filter="",pageIndex=1,resourcePath )  {
 			arguments.siteid == "" ? "default" : arguments.siteid;
+
+			var m=getBean('m').init(arguments.siteid);
+			
+     		if(!m.validateCSRFTokens(context='delete')){
+				throw(type="invalidTokens");
+			}
+
 			arguments.pageindex == isNumeric(arguments.pageindex) ? arguments.pageindex : 1;
 
 			var permission = checkPerms(arguments.siteid,'delete',resourcePath);
@@ -618,6 +668,13 @@ component
 
 		remote any function rename( siteid,directory,filename,name,filter="",pageIndex=1,resourcePath )  {
 			arguments.siteid == "" ? "default" : arguments.siteid;
+
+			var m=getBean('m').init(arguments.siteid);
+			
+     		if(!m.validateCSRFTokens(context='rename')){
+				throw(type="invalidTokens");
+			}
+
 			arguments.pageindex == isNumeric(arguments.pageindex) ? arguments.pageindex : 1;
 
 			var permission = checkPerms(arguments.siteid,'rename',resourcePath);
@@ -656,6 +713,13 @@ component
 
 		remote any function addFolder( siteid,directory,name,filter="",pageIndex=1,resourcePath )  {
 			arguments.siteid == "" ? "default" : arguments.siteid;
+
+			var m=getBean('m').init(arguments.siteid);
+			
+     		if(!m.validateCSRFTokens(context='addfolder')){
+				throw(type="invalidTokens");
+			}
+
 			arguments.pageindex == isNumeric(arguments.pageindex) ? arguments.pageindex : 1;
 
 			var permission = checkPerms(arguments.siteid,'addFolder',resourcePath);
@@ -693,7 +757,7 @@ component
 			return rb;
 		}
 
-		remote any function browse( siteid,directory,filterResults="",pageIndex=1,sortOn,sortDir,resourcePath,itemsPerPage=20,settings=0 )  {
+		remote any function browse( siteid,directory,filterResults="",pageIndex=1,sortOn,sortDir,resourcePath,itemsPerPage=25,settings=0 )  {
 
 			arguments.siteid == "" ? "default" : arguments.siteid;
 			arguments.pageindex == isNumeric(arguments.pageindex) ? arguments.pageindex : 1;
@@ -778,15 +842,16 @@ component
 			var rsFiles = rsExecute.getResult();
 			var rsPrefix = rsExecute.getPrefix();
 
+
+
 			response['endindex'] = response['endindex'] > rsFiles.recordCount ? rsFiles.recordCount : response['endindex'];
 
 			//response['res'] = rsFiles;
 			response['totalpages'] = ceiling(rsFiles.recordCount / response['itemsperpage']);
-			response['totalitems'] = 1;
 			response['pageindex'] = arguments.pageindex;
 			response['totalitems'] = rsFiles.recordCount;
-			response['pre'] = serializeJSON(rsPrefix);
-
+			//response['pre'] = serializeJSON(rsPrefix);
+				//writeDump(response);abort;
 //			response['sql'] = rsExecute.getSQL();
 
 			for(var x = response['startindex'];x <= response['endindex'];x++) {

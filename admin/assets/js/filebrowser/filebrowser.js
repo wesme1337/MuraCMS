@@ -72,24 +72,32 @@ config: {
 }
 
 , moveFile: function( currentFile,source,destination,onSuccess ) {
-
-  var baseurl = this.endpoint + "/move?directory=" + source + "&destination=" + destination + "&resourcepath=" + this.config.resourcepath + "&filename=" + currentFile.fullname;
+  
+  //var baseurl = this.endpoint + "/move?directory=" + source + "&destination=" + destination + "&resourcepath=" + this.config.resourcepath + "&filename=" + currentFile.fullname;
 
   if(!this.validate()) {
     return error("No Access");
   }
 
-  Mura.get( baseurl )
-    .then(
-      //success
-      function(response) {
-        onSuccess(response);
-      },
-      //fail
-      function(response) {
-        this.onError(response);
-      }
-    );
+  Mura.getEntity('filebrowser').invokeWithCSRF(
+    'move',
+    {
+      directory:source,
+      destination:destination,
+      resourcepath:this.config.resourcepath,
+      filename:currentFile.fullname
+    },
+    'post' 
+  ).then(
+    //success
+    function(response) {
+      onSuccess(response);
+    },
+    //fail
+    function(response) {
+      this.onError(response);
+    }
+  );
 
 }
 
@@ -137,13 +145,21 @@ config: {
 
 , doDeleteFile: function( directory,currentFile,onSuccess,onError) {
   var dir = directory == undefined ? "" : directory;
-  var baseurl = this.endpoint + "/delete?directory=" + dir + "&filename=" + currentFile.fullname + "&resourcepath=" + this.config.resourcepath;
+  //var baseurl = this.endpoint + "/delete?directory=" + dir + "&filename=" + currentFile.fullname + "&resourcepath=" + this.config.resourcepath;
 
   if(!this.validate()) {
     return error("No Access");
   }
 
-  Mura.get( baseurl )
+  Mura.getEntity('filebrowser').invokeWithCSRF(
+    'delete',
+    {
+      directory:dir,
+      resourcepath:this.config.resourcepath,
+      filename:currentFile.fullname
+    },
+    'post' 
+  )
     .then(
       //success
       function(response) {
@@ -158,17 +174,21 @@ config: {
 
 , doDuplicateFile: function( directory,currentFile,onSuccess,onError) {
   var dir = directory == undefined ? "" : directory;
-  var baseurl = this.endpoint + "/duplicate?directory=" + dir + "&resourcepath=" + this.config.resourcepath;
+  //var baseurl = this.endpoint + "/duplicate?directory=" + dir + "&resourcepath=" + this.config.resourcepath;
 
   if(!this.validate()) {
     return error("No Access");
   }
 
-  var formData = {};
-  formData.file = currentFile;
-
-  Mura.post( baseurl,formData )
-    .then(
+  Mura.getEntity('filebrowser').invokeWithCSRF(
+    'duplicate',
+    {
+      directory:dir,
+      resourcepath:this.config.resourcepath,
+      file:currentFile
+    },
+    'post' 
+  ).then(
       //success
       function(response) {
         onSuccess(response);
@@ -177,70 +197,93 @@ config: {
       function(response) {
         this.onError(response);
       }
-    );
+  );
 }
 
 , doUpdateContent: function( directory,currentFile,content,onSuccess,onError) {
   var dir = directory == undefined ? "" : directory;
-  var baseurl = this.endpoint + "/update?directory=" + dir + "&filename=" + currentFile.fullname + "&resourcepath=" + this.config.resourcepath;
+  //var baseurl = this.endpoint + "/update?directory=" + dir + "&filename=" + currentFile.fullname + "&resourcepath=" + this.config.resourcepath;
 
   if(!this.validate()) {
     return error("No Access");
   }
 
-  Mura.post( baseurl,{content: content} )
-    .then(
-      //success
-      function(response) {
-        onSuccess(response);
-      },
-      //fail
-      function(response) {
-        this.onError(response);
-      }
-    );
+  Mura.getEntity('filebrowser').invokeWithCSRF(
+    'update',
+    {
+      directory:dir,
+      resourcepath:this.config.resourcepath,
+      filename:currentFile.fullname,
+      content:content
+    },
+    'post' 
+  ).then(
+    //success
+    function(response) {
+      onSuccess(response);
+    },
+    //fail
+    function(response) {
+      this.onError(response);
+    }
+  );
 }
 
 , doRenameFile: function( directory,currentFile,onSuccess,onError) {
   var dir = directory == undefined ? "" : directory;
-  var baseurl = this.endpoint + "/rename?directory=" + dir + "&filename=" + currentFile.fullname + "&name=" + currentFile.name + "&resourcepath=" + this.config.resourcepath;
+  //var baseurl = this.endpoint + "/rename?directory=" + dir + "&filename=" + currentFile.fullname + "&name=" + currentFile.name + "&resourcepath=" + this.config.resourcepath;
 
   if(!this.validate()) {
     return error("No Access");
   }
 
-  Mura.get( baseurl )
-    .then(
-      //success
-      function(response) {
-        onSuccess(response);
-      },
-      //fail
-      function(response) {
-        this.onError(response);
-      }
-    );
+  Mura.getEntity('filebrowser').invokeWithCSRF(
+    'rename',
+    {
+      directory:dir,
+      resourcepath:this.config.resourcepath,
+      filename:currentFile.fullname,
+      name:currentFile.name 
+    },
+    'post' 
+  ).then(
+    //success
+    function(response) {
+      onSuccess(response);
+    },
+    //fail
+    function(response) {
+      this.onError(response);
+    }
+  );
 }
 
 , doNewFolder: function( directory,newfolder,onSuccess ) {
   var dir = directory == undefined ? "" : directory;
-  var baseurl = this.endpoint + "/addfolder?directory=" + dir + "&name=" + newfolder + "&resourcepath=" + this.config.resourcepath;
+  //var baseurl = this.endpoint + "/addfolder?directory=" + dir + "&name=" + newfolder + "&resourcepath=" + this.config.resourcepath;
 
   if(!this.validate()) {
     return error("No Access");
   }
 
-  Mura.get( baseurl )
-    .then(
-      //success
-      function(response) {
-        onSuccess(response);
-      },
-      //fail
-      function(response) {
-        onError(response);
-      }
-    );
+  Mura.getEntity('filebrowser').invokeWithCSRF(
+    'addfolder',
+    {
+      directory:dir,
+      resourcepath:this.config.resourcepath,
+      name:newfolder
+    },
+    'post' 
+  ).then(
+    //success
+    function(response) {
+      onSuccess(response);
+    },
+    //fail
+    function(response) {
+      onError(response);
+    }
+  );
 }
 
 , loadDirectory: function( directory,pageindex,onSuccess,onError,filterResults,sortOn,sortDir,itemsper ) {
@@ -305,25 +348,30 @@ config: {
 
 , doUpload: function( formData,success,fail ) {
   var self = this;
-  var baseurl = this.endpoint + "/upload" + "?resourcepath=" + this.config.resourcepath;
+  //var baseurl = this.endpoint + "/upload" + "?resourcepath=" + this.config.resourcepath;
 
   if(!this.validate()) {
     return error("No Access");
   }
+  
+  formData.resourcepath=this.config.resourcepath;
 
-  Mura.post( baseurl,formData )
-    .then(
-      function doSuccess( response ) {
-        success( response );
-      },
-      function doonError( response ) {
-        this.onError(response);
-      }
-    );
+  Mura.getEntity('filebrowser').invokeWithCSRF(
+    'upload',
+    formData,
+    'post' 
+  ).then(
+    function doSuccess( response ) {
+      success( response );
+    },
+    function doonError( response ) {
+      this.onError(response);
+    }
+  );
 }
 , rotate: function( currentFile,direction,success,error) {
   var self = this;
-  var baseurl = this.endpoint + "rotate" + "?resourcepath=" + this.config.resourcepath;
+  //var baseurl = this.endpoint + "rotate" + "?resourcepath=" + this.config.resourcepath;
 
   if(!this.validate()) {
     return error("No Access");
@@ -333,22 +381,26 @@ config: {
 
   formData.file = JSON.parse(JSON.stringify(currentFile));
   formData.direction = direction;
+  formData.resourcepath=this.config.resourcepath;
 
-  Mura.post( baseurl,formData )
-    .then(
-      function doSuccess( response ) {
-        success( response );
-      },
-      function doonError( response ) {
-        this.onError(response);
-      }
-    );
+  Mura.getEntity('filebrowser').invokeWithCSRF(
+    'rotate',
+    formData,
+    'post' 
+  ).then(
+    function doSuccess( response ) {
+      success( response );
+    },
+    function doonError( response ) {
+      this.onError(response);
+    }
+  );
 
 }
 
 , performResize: function( currentFile,dimensions,success,error ) {
   var self = this;
-  var baseurl = this.endpoint + "resize" + "?resourcepath=" + this.config.resourcepath;
+  //var baseurl = this.endpoint + "resize" + "?resourcepath=" + this.config.resourcepath;
 
   if(!this.validate()) {
     return error("No Access");
@@ -358,21 +410,25 @@ config: {
 
   formData.file = JSON.parse(JSON.stringify(currentFile));
   formData.dimensions = dimensions;
+  formData.resourcepath=this.config.resourcepath;
 
-  Mura.post( baseurl,formData )
-    .then(
-      function doSuccess( response ) {
-        success( response );
-      },
-      function doonError( response ) {
-        this.onError(response);
-      }
-    );
+  Mura.getEntity('filebrowser').invokeWithCSRF(
+    'resize',
+    formData,
+    'post' 
+  ).then(
+    function doSuccess( response ) {
+      success( response );
+    },
+    function doonError( response ) {
+      this.onError(response);
+    }
+  );
 }
 
 , performCrop: function( currentFile,success,error ) {
   var self = this;
-  var baseurl = this.endpoint + "processCrop" + "?resourcepath=" + this.config.resourcepath;
+  //var baseurl = this.endpoint + "processCrop" + "?resourcepath=" + this.config.resourcepath;
 
   if(!this.validate()) {
     return error("No Access");
@@ -414,15 +470,20 @@ config: {
   formData.crop = crop;
   formData.size = size;
 
-  Mura.post( baseurl,formData )
-    .then(
-      function doSuccess( response ) {
-        success( response );
-      },
-      function doonError( response ) {
-        this.onError(response);
-      }
-    );
+  formData.resourcepath=this.config.resourcepath;
+
+  Mura.getEntity('filebrowser').invokeWithCSRF(
+    'processCrop',
+    formData,
+    'post' 
+  ).then(
+    function doSuccess( response ) {
+      success( response );
+    },
+    function doonError( response ) {
+      this.onError(response);
+    }
+  );
 
 }
 , crop: function( canvas,clear ) {
@@ -1123,7 +1184,7 @@ config: {
     props: ["links","isbottomnav","response","itemsper","location","showbar"],
     template: `
       <div :class="[showbar ? 'filewindow-appbar' : 'filewindow-hideappbar']">
-          <navmenu v-if="response.links" :links="links" :response="response" :itemsper="itemsper" :isbottomnav="isbottomnav"></navmenu>
+          <navmenu :links="links" :response="response" :itemsper="itemsper" :isbottomnav="isbottomnav"></navmenu>
           <modemenu v-if="location"></modemenu>
       </div>
     `,
@@ -1216,7 +1277,7 @@ config: {
           {{response.pageindex}} of {{response.totalpages}}
           </p>
         <ul class="pagination" v-if="response.totalitems>=25">
-          <li class="paging" v-if="links.previous || links.next">
+          <li class="paging" v-if="links && (links.previous || links.next)">
             <a href="#" v-if="links.first" @click.prevent="applyPage('first')">
               <i class="mi-angle-double-left"></i>
             </a>
@@ -1224,7 +1285,7 @@ config: {
               <i class="mi-angle-double-left"></i>
             </a>
           </li>
-          <li class="paging" v-if="links.previous || links.next">
+          <li class="paging" v-if="links && (links.previous || links.next)">
             <a href="#" v-if="links.previous" @click.prevent="applyPage('previous')">
               <i class="mi-angle-left"></i>
             </a>
@@ -1232,7 +1293,7 @@ config: {
               <i class="mi-angle-left"></i>
             </a>
           </li>
-          <li class="paging" v-if="links.previous || links.next">
+          <li class="paging" v-if="links && (links.previous || links.next)">
             <a href="#" v-if="links.next" @click.prevent="applyPage('next')">
               <i class="mi-angle-right"></i>
             </a>
@@ -1240,7 +1301,7 @@ config: {
               <i class="mi-angle-right"></i>
             </a>
           </li>
-          <li class="paging paging-last" v-if="links.previous || links.next">
+          <li class="paging paging-last" v-if="links && (links.previous || links.next)">
             <a href="#" v-if="links.last" @click.prevent="applyPage('last')">
               <i class="mi-angle-double-right"></i>
             </a>

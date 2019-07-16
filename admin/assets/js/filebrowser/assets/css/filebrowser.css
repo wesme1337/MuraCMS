@@ -11,13 +11,13 @@ body.MuraFileBrowserWindow .mura-header ul.breadcrumb{
 }
 #spinner {
   position: absolute;
-  z-index: 10000;
+  z-index: 1029;
   top: 0;
   left: 0;
   height: 100%;
   width: 100%;
   background: rgba(0, 0, 0, .2);
-  no-repeat;
+  background-repeat: no-repeat;
   text-align: center;
   vertical-align: middle;
 }

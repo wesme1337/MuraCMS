@@ -410,7 +410,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 </cffunction>
 
 <cffunction name="getPasswordExpired" output="false">
-	<cfif not getBean('configBean').passwordsExpire()>
+	<cfif not getBean('configBean').passwordsExpire() or not exists()>
 		<cfreturn false>
 	</cfif>
 
@@ -483,7 +483,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 
 			</cfif>
 
-			<cfif exists() and (get('doaction') eq 'updateprofile' or (isdefined('url.display') and url.display eq 'editprofile')) and getPasswordExpired()>
+			<cfif (get('doaction') eq 'updateprofile' or (isdefined('url.display') and url.display eq 'editprofile')) and getPasswordExpired()>
 				<cfset variables.instance.errors.passwordexpired=variables.settingsManager.getSite(variables.instance.siteID).getRBFactory().getKey("user.passwordexpired")>
 			</cfif>
 

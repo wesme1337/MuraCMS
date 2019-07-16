@@ -2367,11 +2367,13 @@
 				Mura.currentObjectInstanceID='';
 				Mura('#mura-sidebar-container').fadeOut();
 				Mura('body').removeClass('mura-sidebar-state__pushed--right')
+				Mura('body').removeClass('mura-editing')
 				Mura('.mura-object').removeClass('mura-active').addClass("mura-active-min");
 			} else if(action=='restoresidebar'){
 				Mura.currentObjectInstanceID='';
 				Mura('#mura-sidebar-container').fadeIn();
 				Mura('body').addClass('mura-sidebar-state__pushed--right');
+				Mura('body').raddClass('mura-editing')
 				Mura('.mura-object').removeClass('mura-active-min').addClass("mura-active");
 				Mura('.mura-container-active').removeClass('mura-container-active');
 

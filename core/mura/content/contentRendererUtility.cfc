@@ -1477,7 +1477,7 @@
 			<cfset theRegion.local.header='<div class="mura-region-local">'>
 			<cfset theRegion.local.footer='</div>'>
 
-			<cfset theRegion.inherited.header='<div class="mura-region-inherited">'>
+			<cfset theRegion.inherited.header='<div class="mura-region-inherited"><div class="frontEndToolsModal mura"><span class="mura-edit-icon"></span><span class="mura-edit-label mi-font">#regionLabel# Inherited</span></div>'>
 			<cfset theRegion.inherited.footer='</div>'>
 		</cfif>
 

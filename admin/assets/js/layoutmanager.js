@@ -600,7 +600,9 @@
 
 					Mura('body')
 						.removeClass('mura-sidebar-state__hidden--right')
-						.addClass('mura-sidebar-state__pushed--right');
+						.removeClass('mura-editing')
+						.addClass('mura-sidebar-state__pushed--right')
+						.addClass('mura-editing');
 				}
 
 				var iframe = Mura('#frontEndToolsSidebariframe');
@@ -704,7 +706,7 @@
 	function deInitLayoutManager(){
 		Mura.editing=false;
 
-		Mura('body').addClass('mura-sidebar-state__hidden--right');
+		Mura('body').removeClass('mura-editing')
 		Mura('body').removeClass('mura-sidebar-state__pushed--right');
 
 		Mura('.mura-region-local .mura-object, .mura-body-object').each(function(){

@@ -788,7 +788,7 @@ component
 			var filePath = baseFilePath  & m.globalConfig().getFileDelim() & rereplace(arguments.directory,"\.{1,}","\.","all");
 			var expandedFilePath = expandPath(filePath);
 
-			if(!isPathLegal(arguments.siteid,arguments.resourcepath,filepath)){
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath,expandPath(filepath))){
 				throw(message="Illegal file path",code="invalidParameters");
 			}
 

@@ -1491,14 +1491,9 @@ config: {
     props: ['files','folders','foldertree','isDisplayContext','currentFile'],
     template: `
       <div class="gridmode-wrapper">
-        <div v-if="foldertree.length" class="fileviewer-item" @click="back()">
+        <div v-if="foldertree.length" class="fileviewer-back fileviewer-item" @click="back()">
           <div class="fileviewer-item-icon">
             <i class="mi-arrow-circle-o-left"></i>
-          </div>
-          <div class="fileviewer-item-meta">
-            <div class="fileviewer-item-label">
-              Back
-            </div>
           </div>
         </div>
         <div v-for="(file,index) in files">

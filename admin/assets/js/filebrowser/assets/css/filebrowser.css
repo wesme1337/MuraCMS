@@ -373,6 +373,18 @@ input.filebrowser-filter {
   padding-top: 29px;
 }
 
+.fileviewer-back.fileviewer-item{
+  box-shadow: none;
+}
+.fileviewer-back .fileviewer-item-icon{
+  height: 100%;
+}
+
+.fileviewer-back .fileviewer-item-icon i{
+  font-size: 48px !important;
+  padding-top: 56px;
+}
+
 .fileviewer-item-icon-jpg {
   background-image: url("./assets/images/jpg.png");
 }

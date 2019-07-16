@@ -71,11 +71,6 @@ component
 				return permission;
 			}
 
-/*			if(!m.validateCSRFTokens()) {
-					permission.message = "Invalid CSRF tokens";
-					return permission;
-			}
-*/
 			permission.success = 1;
 			return permission;
 		}

@@ -720,8 +720,8 @@ component
 				}
 			}
 
-// m.siteConfig().getFileDir() ... OS file path (no siteid)
-// m.siteConfig().getFileAssetPath() ... includes siteid (urls)
+			// m.siteConfig().getFileDir() ... OS file path (no siteid)
+			// m.siteConfig().getFileAssetPath() ... includes siteid (urls)
 
 			var m = application.serviceFactory.getBean('m').init(arguments.siteid);
 
@@ -843,12 +843,14 @@ component
 			return false;
 		}
 		var rootPath=replace(expandPath(getBaseFileDir( arguments.siteid,arguments.resourcePath )), "\", "/", "ALL");
+		
 		arguments.path=replace(arguments.path, "\", "/", "ALL");
 
 		var s3assets=getBean('configBean').get('s3assets');
 
 		if(len(s3assets)){
 			rootPath=replace(rootPath,s3assets,"/s3assets/");
+			arguments.path=replace(arguments.path,s3assets,"/s3assets/");
 		}
 
 		var result=  (
@@ -859,8 +861,10 @@ component
 			WriteDump(arguments);
 			abort;
 		}
+
 		return result;
 
 	}
+
 
 }

@@ -48,7 +48,7 @@
 						<cfif this.legacyobjects>
 							<button id="mura-objects-legacy-btn" class="btn mura-primary"><i class="mi-object-ungroup"></i> #application.rbFactory.getKeyValue(session.rb,'sitemanager.legacyobjects')#</button>
 						</cfif>
-						<cfif listLen(request.muraActiveRegions) lt $.siteConfig('columnCount')>
+						<cfif listLen(request.muraActiveRegions) lt $.siteConfig('columnCount') || request.muraAPIRequest>
 							<button id="mura-objects-openregions-btn" class="btn"><i class="mi-columns"></i> #application.rbFactory.getKeyValue(session.rb,'sitemanager.additionaldisplayregions')#</button>
 						</cfif>
 					</cfif>
@@ -129,7 +129,7 @@
 	</div>
 
 </div>
-<cfif listLen(request.muraActiveRegions) lt $.siteConfig('columnCount')>
+<cfif listLen(request.muraActiveRegions) lt $.siteConfig('columnCount') || request.muraAPIRequest>
 	<div class="mura__layout-manager__display-regions">
 		<div class="mura__layout-manager__display-regions__X">
 			<p><button id="mura-objects-closeregions-btn" class="btn mura-primary">Close <i class="mi-angle-right"></i></button><p>
@@ -139,8 +139,8 @@
 			<cfset regionCount=$.siteConfig('columnCount')>
 
 			<cfloop from="1" to="#regionCount#" index="r">
-			<cfif not listFind(request.muraActiveRegions,r) and listLen(regionNames,'^') gte r>
-				<div class="mura-region__item">
+			<cfif (not listFind(request.muraActiveRegions,r) || request.muraAPIRequest) and listLen(regionNames,'^') gte r>
+				<div class="mura-region__item" data-regionid="#r#">
 					<h4>#esapiEncode('html',listGetAt(regionNames,r,'^'))#</h4>
 					#$.dspObjects(columnid=r,allowInheritance=false)#
 				</div>

@@ -1461,7 +1461,8 @@
 			<cfelse>
 				<cfset var regionLabel=arguments.columnid>
 			</cfif>
-			<cfset theRegion.header='<div class="mura-region">'>
+			<cfset theRegion.regionid=arguments.columnID>
+			<cfset theRegion.header='<div class="mura-region" data-regionid="#arguments.columnID#">'>
 			<cfset theRegion.footer='</div>'>
 
 			<cfset theRegion.local.header='<div class="mura-editable mura-inactive"><div class="mura-region-local mura-inactive mura-editable-attribute" data-loose="false" data-regionid="#arguments.columnid#" data-inited="false" data-perm="#perm#"><label class="mura-editable-label" style="display:none">#regionLabel#</label>'>

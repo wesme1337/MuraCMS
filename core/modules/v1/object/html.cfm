@@ -17,7 +17,7 @@
 	<div class="block block-bordered">
 	  	<div class="block-content">
 		  	<div class="mura-control-group">
-				<textarea style="display:none" name="#esapiEncode('html_attr',$.event('target'))#" id="#esapiEncode('html_attr',$.event('target'))#" class="htmlEditor" data-width="100%"></textarea>
+				<textarea style="display:none" name="#esapiEncode('html_attr',$.event('target'))#" id="#esapiEncode('html_attr',$.event('target'))#" class="objectParam htmlEditor" data-width="100%"></textarea>
 			</div>
 			<div class="mura-actions">
 				<div class="form-actions">
@@ -29,53 +29,17 @@
 </div> <!-- /.block-constrain -->
 
 <script>
-$(function(){
-    var target='#esapiEncode('javascript',$.event('target'))#';
+    Mura(function(m){
+		var target='#esapiEncode('javascript',$.event('target'))#';
 
-	$('##updateBtn').click(function(){
-        params={};
-        params[target]=CKEDITOR.instances[target].getData();
+        siteManager.setDisplayObjectModalWidth(800);
+        siteManager.requestDisplayObjectParams(function(params){});
 
-		frontEndProxy.post({
-			cmd:'setObjectParams',
-			reinit:true,
-			instanceid:'#esapiEncode("javascript",rc.instanceid)#',
-			params:params,
-			complete:false
-			});
-	});
-
-	function initConfiguratorProxy(){
-
-		function onFrontEndMessage(messageEvent){
-
-			var parameters=messageEvent.data;
-		
-			if (parameters["cmd"] == "setObjectParams") {
-				if(typeof CKEDITOR.instances[target] != 'undefined'){
-					CKEDITOR.instances[target].setData(parameters["params"][target]);
-				}
-			}
-
-			frontEndProxy.addEventListener(onFrontEndMessage);
-			frontEndProxy.post({cmd:'setWidth',width:800});
-			frontEndProxy.post({
-				cmd:'requestObjectParams',
-				instanceid:'#esapiEncode("javascript",rc.instanceid)#',
-				targetFrame:'modal'
-				}
-			);
-
-		}
-
-	}
-
-	if($("##ProxyIFrame").length){
-		$("##ProxyIFrame").load(initConfiguratorProxy);
-	} else {
-		initConfiguratorProxy();
-	}
-
-});
-</script>
+        m("##updateBtn").click(function(){
+            var params={};
+        	params[target]=CKEDITOR.instances[target].getData();
+            siteManager.updateDisplayObjectParams(params);
+        });
+    });
+   </script>
 </cfoutput>

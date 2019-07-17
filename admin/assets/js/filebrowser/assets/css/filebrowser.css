@@ -45,7 +45,6 @@ body.MuraFileBrowserWindow .mura-header ul.breadcrumb{
 
 .fileviewer-wrapper {
   display: block;
-  /* position: relative; */
 }
 
 .fileviewer-wrapper:after {
@@ -168,12 +167,14 @@ body.MuraFileBrowserWindow .mura-header ul.breadcrumb{
 }
 
 #actionwindow-wrapper {
-  display: block;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 100000;
+    display: block;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 450px;
+    min-height: 210px;
+    z-index: 100000;
 }
 #actionwindow-wrapper.editwindow {
   transform: translate(-50%, -50%);

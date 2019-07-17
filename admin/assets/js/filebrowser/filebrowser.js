@@ -699,6 +699,11 @@ config: {
       <div class="ui-dialog dialog-nobg actionwindow-formwrapper actionwindow-long">
         <div>
           <span class="ui-dialog-title">Move {{currentFile.fullname}}</span>
+          <ul class="breadcrumb">
+            <li><a><i class="mi-home"></i>Home</a></li>
+            <li><a><i class="mi-folder"></i>Folder</a></li>
+            <li><a><i class="mi-folder"></i>Folder</a></li>
+          </ul>
           <div>
             <label>Destination:</label>
             <input type="text" v-model="destinationFolder" style="width: 80%"></input>

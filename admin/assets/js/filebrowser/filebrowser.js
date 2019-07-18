@@ -833,10 +833,10 @@ config: {
           <div class="block-content">
             <div>
               <div class="mura-header">
-                <h1>Rename</h1></div>
-                <div>
-                  <label>Name:</label>
-                  <input type="text" v-model="filename"></input>
+                <h1>Rename File</h1></div>
+                <div class="mura-control-group">
+                  <label><strong>Filename:</strong> {{currentFile.name}}.{{currentFile.ext}}</label>
+                  <label><strong>New Name:</strong> <input type="text" v-model="filename"></input>.{{currentFile.ext}}</label>                  
                 </div>
               </div>
               <div class="buttonset">

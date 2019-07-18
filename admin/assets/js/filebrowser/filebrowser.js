@@ -714,7 +714,7 @@ config: {
           <span v-for="(item,index) in foldertree" @click="setDirDepth(index)"> / <a>{{item}}</a></span>
           <span>
             <select v-if="childFolders.length" v-model="folderPath">
-              <option v-if="item.length" v-for="item in childFolders" :value="item">/ {{item}}</option>
+              <option v-if="item.length" v-for="item in childFolders" :value="item">/{{item}}</option>
             </select>
           </span>
 
@@ -740,8 +740,8 @@ config: {
 -->          
         </div>
         <div class="buttonset">
-          <button @click="moveFile()">Move</button>
-          <button @click="cancel()">Cancel</button>
+          <button @click="moveFile()"><i class="mi-check"></i>Move</button>
+          <button class="mura-secondary" @click="cancel()"><i class="mi-ban"></i>Cancel</button>
         </div>
       </div>
     </div>
@@ -840,8 +840,8 @@ config: {
                 </div>
               </div>
               <div class="buttonset">
-                <button @click="updateRename()">Save</button>
-                <button @click="cancel()">Cancel</button>
+                <button @click="updateRename()"><i class="mi-check"></i>Save</button>
+                <button class="mura-secondary" @click="cancel()"><i class="mi-ban"></i>Cancel</button>
               </div>
             </div>
           </div>
@@ -913,8 +913,8 @@ config: {
               <input type="text" v-model="foldername"></input>
             </div>
             <div class="buttonset">
-              <button @click="newFolder()">Save</button>
-              <button @click="cancel()">Cancel</button>
+              <button @click="newFolder()"><i class="mi-check"></i>Save</button>
+              <button class="mura-secondary" @click="cancel()"><i class="mi-ban"></i>Cancel</button>
             </div>
           </div>
         </div>
@@ -1061,7 +1061,7 @@ config: {
                 <!--- CROP --->
                 <span  v-if="editmode=='CROP'">
                   <li><a @click="confirmCrop()"><i class="mi-check"> Confirm</i></a></li>
-                  <li><a @click="cancel()"><i class="mi-times"> Cancel</i></a></li>
+                  <li><a @click="cancel()"><i class="mi-ban"> Cancel</i></a></li>
                 </span>
                 <!--- RESIZE --->
                 <span  v-if="editmode=='RESIZE'">
@@ -1076,7 +1076,7 @@ config: {
                     </select>
                   </li>
                   <li><a @click="confirmResize()"><i class="mi-check"> Confirm</i></a></li>
-                  <li><a @click="cancel()"><i class="mi-times"> Cancel</i></a></li>
+                  <li><a @click="cancel()"><i class="mi-ban"> Cancel</i></a></li>
                 </span>
               </ul>
               <p>{{currentFile.fullname}} ({{currentFile.size}}kb {{currentFile.info.width}}x{{currentFile.info.height}})</p>
@@ -1151,8 +1151,8 @@ config: {
           <h1>Delete</h1></div>
           <p>Confirm Deletion: {{currentFile.fullname}}</p>
           <div class="buttonset">
-          <button @click="doDelete()">Delete</button>
-          <button @click="cancel()">Cancel</button>
+          <button @click="doDelete()"><i class="mi-check"></i>Delete</button>
+          <button class="mura-secondary" @click="cancel()"><i class="mi-ban"></i>Cancel</button>
           </div>
         </div>
       </div>
@@ -1183,8 +1183,8 @@ config: {
           </div>
           <textarea id="contenteditfield" class="editwindow" v-model="filecontent"></textarea>
           <div class="buttonset">
-            <button @click="updateContent()">Update</button>
-            <button @click="cancel()">Cancel</button>
+            <button @click="updateContent()"><i class="mi-check"></i>Update</button>
+            <button class="mura-secondary" @click="cancel()"><i class="mi-ban"></i>Cancel</button>
           </div>
         </div>
       </div>

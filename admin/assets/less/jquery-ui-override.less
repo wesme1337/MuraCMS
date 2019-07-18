@@ -57,6 +57,7 @@
   height: 100%;
 }
 
+.ui-dialog h1:not([class]),
 .ui-dialog-title,
 .modal-wrapper .ui-dialog-title{
   .bold-font;
@@ -65,7 +66,6 @@
   float: left; 
   font-size: 24px;
   line-height: 1.2;
-  padding: 0;
   width: 100%;
 }
 
@@ -108,6 +108,35 @@
 
 } // ui-dialog-content
 
+
+.ui-dialog{
+  font-size: 14px;
+
+   h1{
+    color: @text-color !important;
+    text-align: left;
+    margin: 0 !important;
+    padding: 0 !important;
+  }  
+
+  .mura-header{
+    margin: -9px 0 12px;
+  }
+  
+  label{
+    font-size: 14px;
+  }
+
+  .block,
+  .block-content,
+  .block-constrain,
+  .block-bordered{
+    margin: 0 !important;
+    padding:0 !important;
+  }
+
+}
+
 .ui-dialog .buttonset,
 .ui-dialog .ui-dialog-buttonpane{
   margin: 26px 0 8px;
@@ -134,12 +163,19 @@
   font-weight: 400;
   padding: .4em 1.1em;
 
-
   &.mura-primary{
    background-color: @mura-red;
    color: #fff !important;
    }
 
+  &.mura-secondary{
+   background-color: #6f6f6f !important;
+   color: #fff !important;
+   }
+
+   > i{
+    margin-right: 6px;
+   }
 }
 
 .ui-dialog-buttonset .ui-button-text-only .ui-button-text {

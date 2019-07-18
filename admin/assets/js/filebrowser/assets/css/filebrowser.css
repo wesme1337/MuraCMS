@@ -11,13 +11,13 @@ body.MuraFileBrowserWindow .mura-header ul.breadcrumb{
 }
 #spinner {
   position: absolute;
-  z-index: 10000;
+  z-index: 1029;
   top: 0;
   left: 0;
   height: 100%;
   width: 100%;
   background: rgba(0, 0, 0, .2);
-  no-repeat;
+  background-repeat: no-repeat;
   text-align: center;
   vertical-align: middle;
 }
@@ -45,7 +45,6 @@ body.MuraFileBrowserWindow .mura-header ul.breadcrumb{
 
 .fileviewer-wrapper {
   display: block;
-  /* position: relative; */
 }
 
 .fileviewer-wrapper:after {
@@ -168,12 +167,14 @@ body.MuraFileBrowserWindow .mura-header ul.breadcrumb{
 }
 
 #actionwindow-wrapper {
-  display: block;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 100000;
+    display: block;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 450px;
+    min-height: 210px;
+    z-index: 100000;
 }
 #actionwindow-wrapper.editwindow {
   transform: translate(-50%, -50%);
@@ -371,6 +372,18 @@ input.filebrowser-filter {
   color: #cccccc;
   font-size: 28px !important;
   padding-top: 29px;
+}
+
+.fileviewer-back.fileviewer-item{
+  box-shadow: none;
+}
+.fileviewer-back .fileviewer-item-icon{
+  height: 100%;
+}
+
+.fileviewer-back .fileviewer-item-icon i{
+  font-size: 48px !important;
+  padding-top: 56px;
 }
 
 .fileviewer-item-icon-jpg {

@@ -696,32 +696,55 @@ config: {
   Vue.component('movewindow', {
     props: ["currentFile","foldertree"],
     template: `
-      <div class="ui-dialog dialog-nobg actionwindow-formwrapper actionwindow-long">
-        <div>
-          <span class="ui-dialog-title">Move {{currentFile.fullname}}</span>
+    <div class="ui-dialog dialog-nobg actionwindow-formwrapper actionwindow-long">
+      <div class="block block-constrain">
+        <div class="block-content">
+          <div class="mura-header">
+            <h1>Move File</h1>
+          </div>
+          
+          <div class="mura-control-group">
+            <label><strong>Name: </strong>{{currentFile.fullname}}</label>
+            <label><strong>Location: </strong><span>{{this.$root.resourcepath}}</span><span v-for="(item, index) in foldertree"> / {{item}}</span> </label>
+          </div>
+          
+          <label><strong>Move to:</strong></label>
 
+          <span><a>{{this.$root.resourcepath}}</a></span>
+          <span v-for="(item,index) in foldertree" @click="setDirDepth(index)"> / <a>{{item}}</a></span>
+          <span>
+            <select v-if="childFolders.length" v-model="folderPath">
+              <option v-if="item.length" v-for="item in childFolders" :value="item">/ {{item}}</option>
+            </select>
+          </span>
+
+<!--
           <ul class="breadcrumb">
-            <li @click="setDirDepth(-1)"><a><i class="mi-home"></i>{{this.$root.resourcepath}}</a></li>
+            <li @click="setDirDepth(-1)"><a>{{this.$root.resourcepath}}</a></li>
             <li v-for="(item,index) in foldertree" @click="setDirDepth(index)"><a><i class="mi-folder-open"></i>{{item}}</a></li>
+            <li v-if="childFolders.length">
+              <i class="mi-folder-open"></i>
+              <select v-model="folderPath">
+                <option  v-for="item in childFolders" :value="item">{{item}}</option>
+              </select>
+            </li>
           </ul>
+-->
+<!--
 
           <div>
             <label>Destination:</label>
             <input type="text" v-model="destinationFolder" style="width: 80%"></input>
             <span class="small">{{invalid}}</span>
           </div>
-          <div v-if="childFolders.length">
-            <label>Directory:</label>
-            <select v-model="folderPath">
-              <option  v-for="item in childFolders" :value="item">{{item}}</option>
-            </select>
-          </div>
+-->          
         </div>
         <div class="buttonset">
           <button @click="moveFile()">Move</button>
           <button @click="cancel()">Cancel</button>
         </div>
       </div>
+    </div>
     `,
     data() {
         return {
@@ -806,18 +829,23 @@ config: {
     props: ["currentFile"],
     template: `
       <div class="ui-dialog dialog-nobg actionwindow-formwrapper">
-        <div>
-          <span class="ui-dialog-title">Rename</span>
+        <div class="block block-constrain">
+          <div class="block-content">
             <div>
-              <label>Name:</label>
-              <input type="text" v-model="filename"></input>
+              <div class="mura-header">
+                <h1>Rename</h1></div>
+                <div>
+                  <label>Name:</label>
+                  <input type="text" v-model="filename"></input>
+                </div>
+              </div>
+              <div class="buttonset">
+                <button @click="updateRename()">Save</button>
+                <button @click="cancel()">Cancel</button>
+              </div>
             </div>
+          </div>
         </div>
-        <div class="buttonset">
-          <button @click="updateRename()">Save</button>
-          <button @click="cancel()">Cancel</button>
-        </div>
-      </div>
     `,
     data() {
         return {
@@ -845,12 +873,17 @@ config: {
     props: ['error'],
     template: `
       <div class="ui-dialog dialog-confirm ui-dialog actionwindow-formwrapper">
-        <div>
-          <span class="ui-dialog-title">Error</span>
-          <h4>{{error}}</h4>
-        </div>
-        <div class="buttonset">
-          <button @click="cancel()">Close</button>
+       <div class="block block-constrain">
+        <div class="block-content">
+          <div>
+            <div class="mura-header">
+              <h1>Error</h1></div>
+              <h4>{{error}}</h4>
+            </div>
+            <div class="buttonset">
+              <button @click="cancel()">Close</button>
+            </div>
+          </div>
         </div>
       </div>
     `,
@@ -870,14 +903,20 @@ config: {
     props: ["currentFile"],
     template: `
       <div class="ui-dialog dialog-nobg actionwindow-formwrapper">
-        <div>
-          <span class="ui-dialog-title">Add Folder</span>
-            Name:
-            <input type="text" v-model="foldername"></input>
-        </div>
-        <div class="buttonset">
-          <button @click="newFolder()">Save</button>
-          <button @click="cancel()">Cancel</button>
+        <div class="block block-constrain">
+          <div class="block-content">
+            <div class="mura-control-group">
+              <div class="mura-header">
+                <h1>Add Folder</h1>
+              </div>
+              Name:
+              <input type="text" v-model="foldername"></input>
+            </div>
+            <div class="buttonset">
+              <button @click="newFolder()">Save</button>
+              <button @click="cancel()">Cancel</button>
+            </div>
+          </div>
         </div>
       </div>
     `,
@@ -904,26 +943,31 @@ config: {
   Vue.component('gallerywindow', {
     props: ["currentFile","currentIndex","total"],
     template: `
-      <div class="fileviewer-modal">
-        <div class="fileviewer-gallery" v-click-outside="closewindow">
-          <div class="fileviewer-image" :style="{ 'background-image': 'url(' + encodeURI(currentFile.url) + '?' + Math.ceil(Math.random()*100000) + ')' }"></div>
-            <div>
-              <div class="actionwindow-left" @click="lastimage"><i class="mi-caret-left"></i></div>
-              <div class="actionwindow-right" @click="nextimage"><i class="mi-caret-right"></i></div>
-              <div class="fileviewer-gallery-menu">
-                <ul>
-                  <li v-if="checkImageType() && checkSelectMode()"><a @click="selectFile()"><i class="mi-check"></i>Select</a></li>
-                  <li v-if="checkImageType()"><a @click="editImage()"><i class="mi-check"></i>Edit Image</a></li>
-                  <li v-if="checkFileEditable()"><a @click="editFile()"><i class="mi-pencil"></i>Edit</a></li>
-                  <li><a @click="renameFile()"><i class="mi-edit"></i>Rename</a></li>
-                  <li v-if="checkIsFile()"><a @click="downloadFile()"><i class="mi-download"></i>Download</a></li>
-                  <li><a @click="deleteFile()"><i class="mi-trash"></i>Delete</a></li>
-                  <li><a @click="closewindow()"><i class="mi-times"></i>Close</a></li>
-                </ul>
+    <div class="fileviewer-modal">
+      <div class="block block-constrain">
+        <div class="block-content">
+          <div class="fileviewer-gallery" v-click-outside="closewindow">
+            <div class="fileviewer-image" :style="{ 'background-image': 'url(' + encodeURI(currentFile.url) + '?' + Math.ceil(Math.random()*100000) + ')' }"></div>
+            <div class="actionwindow-left" @click="lastimage"><i class="mi-caret-left"></i></div>
+            <div class="actionwindow-right" @click="nextimage"><i class="mi-caret-right"></i></div>
+            <div class="fileviewer-gallery-menu">
+              <div class="mura-control-group">
+              <ul>
+              <li v-if="checkImageType() && checkSelectMode()"><a @click="selectFile()"><i class="mi-check"></i>Select</a></li>
+              <li v-if="checkImageType()"><a @click="editImage()"><i class="mi-check"></i>Edit Image</a></li>
+              <li v-if="checkFileEditable()"><a @click="editFile()"><i class="mi-pencil"></i>Edit</a></li>
+              <li><a @click="renameFile()"><i class="mi-edit"></i>Rename</a></li>
+              <li v-if="checkIsFile()"><a @click="downloadFile()"><i class="mi-download"></i>Download</a></li>
+              <li><a @click="deleteFile()"><i class="mi-trash"></i>Delete</a></li>
+              <li><a @click="closewindow()"><i class="mi-times"></i>Close</a></li>
+              </ul>
               <p>{{currentFile.fullname}} ({{currentFile.size}}kb <span v-if="checkImageType()">{{currentFile.info.width}}x{{currentFile.info.height}}</span>)</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+    </div>
     `,
     data() {
         return {};
@@ -1002,39 +1046,41 @@ config: {
     template: `
        <div class="fileviewer-modal">
         <div class="fileviewer-image" id="imagediv" :style="{ 'background-image': 'url(' + encodeURI(currentFile.url) + '?' + Math.ceil(Math.random()*100000) + ')' }"></div>
-        <div>
-          <div class="fileviewer-gallery-menu">
-            <ul>
-              <!--- MAIN --->
-              <span v-if="editmode==''">
-                <li><a @click="crop()"><i class="mi-crop"> Crop</i></a></li>
-                <li><a @click="rotateRight()"><i class="mi-rotate-right"> Rotate Right</i></a></li>
-                <li><a @click="rotateLeft()"><i class="mi-rotate-left"> Rotate Left</i></a></li>
-                <li><a @click="resize()"><i class="mi-expand"> Resize</i></a></li>
-                <li><a @click="cancel()"><i class="mi-chevron-left"> Back</i></a></li>
-              </span>
-              <!--- CROP --->
-              <span  v-if="editmode=='CROP'">
-                <li><a @click="confirmCrop()"><i class="mi-check"> Confirm</i></a></li>
-                <li><a @click="cancel()"><i class="mi-times"> Cancel</i></a></li>
-              </span>
-              <!--- RESIZE --->
-              <span  v-if="editmode=='RESIZE'">
-                <li>Width: <input :disabled="resizedimensions.aspect == 'height'" name="resize-width" v-model="resizedimensions.width"></li>
-                <li>Height: <input :disabled="resizedimensions.aspect == 'width'" name="resize-height" v-model="resizedimensions.height"></li>
-                <li>Aspect:
-                  <select name="resize-aspect" v-model="resizedimensions.aspect">
-                    <option value="none">None</option>
-                    <option value="height">Height</option>
-                    <option value="width">Width</option>
-                    <option value="within">Within</option>
-                  </select>
-                </li>
-                <li><a @click="confirmResize()"><i class="mi-check"> Confirm</i></a></li>
-                <li><a @click="cancel()"><i class="mi-times"> Cancel</i></a></li>
-              </span>
-            </ul>
-            <p>{{currentFile.fullname}} ({{currentFile.size}}kb {{currentFile.info.width}}x{{currentFile.info.height}})</p>
+        <div class="block block-constrain">
+          <div class="block-content">
+            <div class="fileviewer-gallery-menu">
+              <ul>
+                <!--- MAIN --->
+                <span v-if="editmode==''">
+                  <li><a @click="crop()"><i class="mi-crop"> Crop</i></a></li>
+                  <li><a @click="rotateRight()"><i class="mi-rotate-right"> Rotate Right</i></a></li>
+                  <li><a @click="rotateLeft()"><i class="mi-rotate-left"> Rotate Left</i></a></li>
+                  <li><a @click="resize()"><i class="mi-expand"> Resize</i></a></li>
+                  <li><a @click="cancel()"><i class="mi-chevron-left"> Back</i></a></li>
+                </span>
+                <!--- CROP --->
+                <span  v-if="editmode=='CROP'">
+                  <li><a @click="confirmCrop()"><i class="mi-check"> Confirm</i></a></li>
+                  <li><a @click="cancel()"><i class="mi-times"> Cancel</i></a></li>
+                </span>
+                <!--- RESIZE --->
+                <span  v-if="editmode=='RESIZE'">
+                  <li>Width: <input :disabled="resizedimensions.aspect == 'height'" name="resize-width" v-model="resizedimensions.width"></li>
+                  <li>Height: <input :disabled="resizedimensions.aspect == 'width'" name="resize-height" v-model="resizedimensions.height"></li>
+                  <li>Aspect:
+                    <select name="resize-aspect" v-model="resizedimensions.aspect">
+                      <option value="none">None</option>
+                      <option value="height">Height</option>
+                      <option value="width">Width</option>
+                      <option value="within">Within</option>
+                    </select>
+                  </li>
+                  <li><a @click="confirmResize()"><i class="mi-check"> Confirm</i></a></li>
+                  <li><a @click="cancel()"><i class="mi-times"> Cancel</i></a></li>
+                </span>
+              </ul>
+              <p>{{currentFile.fullname}} ({{currentFile.size}}kb {{currentFile.info.width}}x{{currentFile.info.height}})</p>
+            </div>
           </div>
         </div>
       </div>
@@ -1098,14 +1144,19 @@ config: {
   Vue.component('deletewindow', {
     props: ["currentFile"],
     template: `
-      <div class="ui-dialog dialog-confirm actionwindow-formwrapper">
-        <span class="ui-dialog-title">Delete</span>
+    <div class="ui-dialog dialog-confirm actionwindow-formwrapper">
+      <div class="block block-constrain">
+        <div class="block-content">
+          <div class="mura-header">
+          <h1>Delete</h1></div>
           <p>Confirm Deletion: {{currentFile.fullname}}</p>
           <div class="buttonset">
-            <button @click="doDelete()">Delete</button>
-            <button @click="cancel()">Cancel</button>
+          <button @click="doDelete()">Delete</button>
+          <button @click="cancel()">Cancel</button>
           </div>
+        </div>
       </div>
+    </div>
     `,
     data() {
         return {};
@@ -1121,20 +1172,23 @@ config: {
     }
   });
 
-
-// mark this is the edit file modal
-
   Vue.component('editwindow', {
     props: ["currentFile"],
     template: `
-      <div class="ui-dialog dialog-nobg actionwindow-formwrapper">
-        <span class="ui-dialog-title">Edit</span>
-        <textarea id="contenteditfield" class="editwindow" v-model="filecontent"></textarea>
-        <div class="buttonset">
-          <button @click="updateContent()">Update</button>
-          <button @click="cancel()">Cancel</button>
+    <div class="ui-dialog dialog-nobg actionwindow-formwrapper">
+      <div class="block block-constrain">
+        <div class="block-content">
+          <div class="mura-header">
+            <h1>Edit</h1>
+          </div>
+          <textarea id="contenteditfield" class="editwindow" v-model="filecontent"></textarea>
+          <div class="buttonset">
+            <button @click="updateContent()">Update</button>
+            <button @click="cancel()">Cancel</button>
+          </div>
         </div>
       </div>
+    </div>
     `,
     data() {
         return {

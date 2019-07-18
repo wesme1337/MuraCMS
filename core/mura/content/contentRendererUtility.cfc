@@ -1461,7 +1461,8 @@
 			<cfelse>
 				<cfset var regionLabel=arguments.columnid>
 			</cfif>
-			<cfset theRegion.header='<div class="mura-region">'>
+			<cfset theRegion.regionid=arguments.columnID>
+			<cfset theRegion.header='<div class="mura-region" data-regionid="#arguments.columnID#">'>
 			<cfset theRegion.footer='</div>'>
 
 			<cfset theRegion.local.header='<div class="mura-editable mura-inactive"><div class="mura-region-local mura-inactive mura-editable-attribute" data-loose="false" data-regionid="#arguments.columnid#" data-inited="false" data-perm="#perm#"><label class="mura-editable-label" style="display:none">#regionLabel#</label>'>
@@ -1499,11 +1500,13 @@
 					<cfset request.muraRegionObjectCounts['region#arguments.columnID#']=rsObjects.recordcount>
 					<cfloop query="rsObjects">
 						<cfset theObject=arguments.renderer.dspObject(object=rsObjects.object,objectid=rsObjects.objectid,siteid=event.getValue('siteID'), params=rsObjects.params, assignmentid=event.getValue('inheritedObjects'), regionid=arguments.columnID, orderno=rsObjects.orderno, hasConfigurator=len(rsObjects.configuratorInit),assignmentPerm=inheritedObjectsPerm,objectname=rsObjects.name,returnformat=objectReturnFormat)>
-						<cfif isSimpleValue(theObject)>
-							<cfset theObject={html=theObject}>
+						<cfif not(objectReturnFormat eq 'struct' and arguments.renderer.uselayoutmanager() and isSimpleValue(theObject))>
+							<cfif isSimpleValue(theObject)>
+								<cfset theObject={html=theObject}>
+							</cfif>
+							<cfset arrayAppend(theRegion.inherited.items,theObject) />
+							<cfset request.muraRegionID=arguments.columnID>
 						</cfif>
-						<cfset arrayAppend(theRegion.inherited.items,theObject) />
-						<cfset request.muraRegionID=arguments.columnID>
 					</cfloop>
 			</cfif>
 
@@ -1511,11 +1514,13 @@
 			<cfset request.muraRegionObjectCounts['region#arguments.columnID#']=request.muraRegionObjectCounts['region#arguments.columnID#'] + rsObjects.recordcount>
 			<cfloop query="rsObjects">
 				<cfset theObject=arguments.renderer.dspObject(object=rsObjects.object,objectid=rsObjects.objectid,siteid=event.getValue('siteID'), params=rsObjects.params, assignmentid=arguments.contentHistID, regionid=arguments.columnID, orderno=rsObjects.orderno, hasConfigurator=len(rsObjects.configuratorInit),assignmentPerm=$.event('r').perm,objectname=rsObjects.name,returnformat=objectReturnFormat,RenderingAsRegion=true)>
-				<cfif isSimpleValue(theObject)>
-					<cfset theObject={html=theObject}>
+					<cfif not(objectReturnFormat eq 'struct' and arguments.renderer.uselayoutmanager() and isSimpleValue(theObject))>
+					<cfif isSimpleValue(theObject)>
+						<cfset theObject={html=theObject}>
+					</cfif>
+					<cfset arrayAppend(theRegion.local.items,theObject) />
+					<cfset request.muraRegionID=arguments.columnID>
 				</cfif>
-				<cfset arrayAppend(theRegion.local.items,theObject) />
-				<cfset request.muraRegionID=arguments.columnID>
 			</cfloop>
 		</cfif>
 		<cfset request.muraRegionID=0>

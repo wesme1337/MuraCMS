@@ -672,14 +672,14 @@ config: {
   });
 
   Vue.component('actionwindow', {
-    props: ["isDisplayWindow","currentFile","currentIndex","error"],
+    props: ["isDisplayWindow","foldertree","currentFile","currentIndex","error"],
     template: `
       <div id="actionwindow-wrapper" class="editwindow" v-if="isDisplayWindow=='EDIT'">
         <editwindow v-if="isDisplayWindow=='EDIT'" :currentFile="currentFile"></editwindow>
       </div>
       <div v-else id="actionwindow-wrapper">
         <renamewindow v-if="isDisplayWindow=='RENAME'" :currentFile="currentFile"></renamewindow>
-        <movewindow v-if="isDisplayWindow=='MOVE'" :currentFile="currentFile"></movewindow>
+        <movewindow v-if="isDisplayWindow=='MOVE'" :foldertree="foldertree" :currentFile="currentFile"></movewindow>
         <addfolderwindow v-if="isDisplayWindow=='ADDFOLDER'" :currentFile="currentFile"></addfolderwindow>
         <downloadwindow v-if="isDisplayWindow=='DOWNLOAD'" :currentFile="currentFile"></downloadwindow>
         <deletewindow v-if="isDisplayWindow=='DELETE'" :currentFile="currentFile"></deletewindow>
@@ -694,11 +694,17 @@ config: {
   });
 
   Vue.component('movewindow', {
-    props: ["currentFile"],
+    props: ["currentFile","foldertree"],
     template: `
       <div class="ui-dialog dialog-nobg actionwindow-formwrapper actionwindow-long">
         <div>
           <span class="ui-dialog-title">Move {{currentFile.fullname}}</span>
+
+          <ul class="breadcrumb">
+            <li @click="setDirDepth(-1)"><a><i class="mi-home"></i>{{this.$root.resourcepath}}</a></li>
+            <li v-for="(item,index) in foldertree" @click="setDirDepth(index)"><a><i class="mi-folder-open"></i>{{item}}</a></li>
+          </ul>
+
           <div>
             <label>Destination:</label>
             <input type="text" v-model="destinationFolder" style="width: 80%"></input>
@@ -1657,7 +1663,7 @@ config: {
         {{message}}
         <gallerywindow v-if="isDisplayWindow=='VIEW'" :settings="settings" :currentFile="currentFile" :currentIndex="currentIndex"></gallerywindow>
         <imageeditwindow v-if="isDisplayWindow=='EDITIMAGE'" :settings="settings" :currentFile="currentFile" :currentIndex="currentIndex"></imageeditwindow>
-        <actionwindow v-if="isDisplayWindow" :settings="settings" :isDisplayWindow="isDisplayWindow" :currentIndex="currentIndex" :currentFile="currentFile" :error="error"></actionwindow>
+        <actionwindow v-if="isDisplayWindow" :foldertree="foldertree" :settings="settings" :isDisplayWindow="isDisplayWindow" :currentIndex="currentIndex" :currentFile="currentFile" :error="error"></actionwindow>
         <div class="mura-header">
         <h1 class="mura-modal-only">File Browser</h1>
           <ul class="breadcrumb">

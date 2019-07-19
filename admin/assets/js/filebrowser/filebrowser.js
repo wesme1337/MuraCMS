@@ -1549,7 +1549,6 @@ config: {
         var offsetLeft = 33;
         var offsetTop = 10;
 
-
         // offset positioning relative to parent
         if (document.getElementById('MuraFileBrowserContainer')){
           if (document.getElementById('MuraFileBrowserContainer').parentNode == document.getElementById('alertDialogMessage')){
@@ -1564,13 +1563,13 @@ config: {
         var left = parentLeft - offsetLeft;
         var top = parentTop - offsetTop;
 
-        console.log('parent link ID: fileitem-'+index);
-        console.log('parentLeft: ' + parentLeft);
-        console.log('parentTop: ' + parentTop);
-        console.log('offsetLeft: ' + offsetLeft);
-        console.log('offsetTop: ' + offsetTop);
-        console.log('left: ' + left);
-        console.log('top: ' + top);
+        // console.log('parent link ID: fileitem-'+index);
+        // console.log('parentLeft: ' + parentLeft);
+        // console.log('parentTop: ' + parentTop);
+        // console.log('offsetLeft: ' + offsetLeft);
+        // console.log('offsetTop: ' + offsetTop);
+        // console.log('left: ' + left);
+        // console.log('top: ' + top);
 
         this.$nextTick(function () {
           this.$root.isDisplayContext = 1;
@@ -1686,12 +1685,18 @@ config: {
 
         // gridmode
         var offsetLeft = 0;
-        if (document.getElementById('alertDialog')){
-          offsetLeft = Math.floor(document.getElementById('alertDialog').getBoundingClientRect().left);
+        var offsetTop = 10;
+
+        // offset positioning relative to parent
+        if (document.getElementById('MuraFileBrowserContainer')){
+          if (document.getElementById('MuraFileBrowserContainer').parentNode == document.getElementById('alertDialogMessage')){
+            offsetTop += 70;
+            offsetLeft += Math.floor(document.getElementById('MuraFileBrowserContainer').getBoundingClientRect().left);
+          }
         }
 
         this.menux = Math.floor(document.getElementById('fileitem-'+index).getBoundingClientRect().left) - 28 - offsetLeft;
-        this.menuy =  Math.floor(document.getElementById('fileitem-'+index).getBoundingClientRect().top);
+        this.menuy =  Math.floor(document.getElementById('fileitem-'+index).getBoundingClientRect().top) - offsetTop;
 
         this.$root.currentFile = file;
         this.$root.currentIndex = index;

@@ -852,13 +852,13 @@ config: {
         <div class="block block-constrain">
           <div class="block-content">
             <div class="mura-header">
-              <h1 v-if="currentFile.isfolder==1">Rename Folder</h1>
+              <h1 v-if="parseInt(currentFile.isfolder)">Rename Folder</h1>
               <h1 v-else>Rename File</h1>
             </div>
             <div class="mura-control-group">
-              <label v-if="currentFile.isfolder==1">Folder Name: <span>{{currentFile.name}}</span></label>
+              <label v-if="parseInt(currentFile.isfolder)">Folder Name: <span>{{currentFile.name}}</span></label>
               <label v-else>Filename: <span>{{currentFile.name}}</span><span v-if="currentFile.ext != currentFile.name">.{{currentFile.ext}}</span></label>
-              <label v-if="currentFile.isfolder==1">New Name: <span><input type="text" v-model="filename"></input></span></label>
+              <label v-if="parseInt(currentFile.isfolder)">New Name: <span><input type="text" v-model="filename"></input></span></label>
               <label v-else>New Name: <span><input type="text" v-model="filename"></input></span><span v-if="currentFile.ext != currentFile.name">.{{currentFile.ext}}</span></label>
             </div>
             <div class="buttonset">
@@ -1156,15 +1156,15 @@ config: {
       <div class="block block-constrain">
         <div class="block-content">
           <div class="mura-header">
-            <h1 v-if="currentFile.isfolder==1">Delete Folder</h1>
+            <h1 v-if="parseInt(currentFile.isfolder)">Delete Folder</h1>
             <h1 v-else>Delete File</h1>
           </div>
           <div class="mura-control-group">
-            <label v-if="currentFile.isfolder==1">Are you sure you want to delete this folder?</label>
+            <label v-if="parseInt(currentFile.isfolder)">Are you sure you want to delete this folder?</label>
             <label v-else>Are you sure you want to delete this file?</label>
           </div>
           <div class="mura-control-group">
-            <label v-if="currentFile.isfolder==1">Folder: <span>{{this.$root.resourcepath}}</span><span v-for="(item, index) in foldertree">/{{item}}</span>/<span>{{currentFile.fullname}}</span></label>
+            <label v-if="parseInt(currentFile.isfolder)">Folder: <span>{{this.$root.resourcepath}}</span><span v-for="(item, index) in foldertree">/{{item}}</span>/<span>{{currentFile.fullname}}</span></label>
             <label v-else>File: <span>{{this.$root.resourcepath}}</span><span v-for="(item, index) in foldertree">/{{item}}</span>/<span>{{currentFile.fullname}}</span></label>
             <label>Modified: <span>{{currentFile.lastmodified.substring(0, currentFile.lastmodified.lastIndexOf(" ") )}}</span></label>
           </div>
@@ -1466,8 +1466,8 @@ config: {
                 </div>
               </td>
               <td class="var-width">
-                <a v-if="parseInt(file.isfile)" href="#" @click.prevent="viewFile(file,index)">{{file.fullname}}</a>
-                <a v-else href="#" @click.prevent="refresh(file.name)"><i class="mi-folder"></i>{{file.fullname}}</a>
+                <a v-if="parseInt(file.isfile)" href="#" @click.prevent="viewFile(file,index)"><i v-if="parseInt(file.isimage)" class="mi-picture"></i><i v-else class="mi-file"></i> {{file.fullname}}</a>
+                <a v-else href="#" @click.prevent="refresh(file.name)"><i class="mi-folder"></i> {{file.fullname}}</a>
               </td>
               <td>
                 <div v-if="parseInt(file.isfile)">

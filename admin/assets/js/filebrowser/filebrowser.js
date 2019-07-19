@@ -1541,19 +1541,34 @@ config: {
         return fileViewer.checkIsFile();
       }
       , openMenu: function(e,file,index,ref) {
-
+        // listmode actions menu
         this.$root.isDisplayContext = 0;
 
-        // listmode
         var offsetLeft = 33;
         var offsetTop = 10;
-        if (document.getElementById('alertDialog')){
-          offsetLeft += Math.floor(document.getElementById('alertDialog').getBoundingClientRect().left);
-          offsetTop += Math.floor(document.getElementById('alertDialog').getBoundingClientRect().top);
+
+
+        // offset positioning relative to parent
+        if (document.getElementById('MuraFileBrowserContainer')){
+          if (document.getElementById('MuraFileBrowserContainer').parentNode == document.getElementById('alertDialogMessage')){
+            offsetTop += 70;
+            offsetLeft += Math.floor(document.getElementById('MuraFileBrowserContainer').getBoundingClientRect().left);
+          }
         }
 
-        var left = Math.floor(document.getElementById('fileitem-'+index).getBoundingClientRect().left) - offsetLeft;
-        var top =  Math.floor(document.getElementById('fileitem-'+index).getBoundingClientRect().top) - offsetTop;
+        var parentLeft = Math.floor(document.getElementById('fileitem-'+index).getBoundingClientRect().left);
+        var parentTop =  Math.floor(document.getElementById('fileitem-'+index).getBoundingClientRect().top);
+
+        var left = parentLeft - offsetLeft;
+        var top = parentTop - offsetTop;
+
+        console.log('parent link ID: fileitem-'+index);
+        console.log('parentLeft: ' + parentLeft);
+        console.log('parentTop: ' + parentTop);
+        console.log('offsetLeft: ' + offsetLeft);
+        console.log('offsetTop: ' + offsetTop);
+        console.log('left: ' + left);
+        console.log('top: ' + top);
 
         this.$nextTick(function () {
           this.$root.isDisplayContext = 1;

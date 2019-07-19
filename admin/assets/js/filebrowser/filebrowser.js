@@ -1203,8 +1203,8 @@ config: {
           </div>
           <div class="mura-control-group">
             <label>Filename: <span>{{currentFile.name}}.{{currentFile.ext}}</span></label>
-            <textarea id="contenteditfield" class="editwindow" v-model="filecontent"></textarea>
           </div>
+          <textarea id="contenteditfield" class="editwindow" v-model="filecontent"></textarea>
           <div class="buttonset">
             <button @click="updateContent()"><i class="mi-check"></i>Update</button>
             <button class="mura-secondary" @click="cancel()"><i class="mi-ban"></i>Cancel</button>

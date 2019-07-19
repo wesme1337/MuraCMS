@@ -682,7 +682,7 @@ config: {
         <movewindow v-if="isDisplayWindow=='MOVE'" :foldertree="foldertree" :currentFile="currentFile"></movewindow>
         <addfolderwindow v-if="isDisplayWindow=='ADDFOLDER'" :currentFile="currentFile"></addfolderwindow>
         <downloadwindow v-if="isDisplayWindow=='DOWNLOAD'" :currentFile="currentFile"></downloadwindow>
-        <deletewindow v-if="isDisplayWindow=='DELETE'" :currentFile="currentFile"></deletewindow>
+        <deletewindow v-if="isDisplayWindow=='DELETE'" :foldertree="foldertree" :currentFile="currentFile"></deletewindow>
         <errorwindow v-if="isDisplayWindow=='ERROR'" :currentFile="currentFile" :error="error"></errorwindow>
       </div>
     `,
@@ -696,7 +696,7 @@ config: {
   Vue.component('movewindow', {
     props: ["currentFile","foldertree"],
     template: `
-    <div class="ui-dialog dialog-nobg actionwindow-formwrapper actionwindow-long">
+    <div class="ui-dialog dialog-info actionwindow-formwrapper actionwindow-long">
       <div class="block block-constrain">
         <div class="block-content">
           <div class="mura-header">
@@ -846,7 +846,7 @@ config: {
   Vue.component('renamewindow', {
     props: ["currentFile"],
     template: `
-      <div class="ui-dialog dialog-nobg actionwindow-formwrapper">
+      <div class="ui-dialog dialog-info actionwindow-formwrapper">
         <div class="block block-constrain">
           <div class="block-content">
             <div>
@@ -890,7 +890,7 @@ config: {
   Vue.component('errorwindow', {
     props: ['error'],
     template: `
-      <div class="ui-dialog dialog-confirm ui-dialog actionwindow-formwrapper">
+      <div class="ui-dialog dialog-info actionwindow-formwrapper">
        <div class="block block-constrain">
         <div class="block-content">
           <div>
@@ -920,15 +920,14 @@ config: {
   Vue.component('addfolderwindow', {
     props: ["currentFile"],
     template: `
-      <div class="ui-dialog dialog-nobg actionwindow-formwrapper">
+      <div class="ui-dialog dialog-info actionwindow-formwrapper">
         <div class="block block-constrain">
           <div class="block-content">
             <div class="mura-control-group">
               <div class="mura-header">
                 <h1>Add Folder</h1>
               </div>
-              Name:
-              <input type="text" v-model="foldername"></input>
+              <label><strong>Folder Name: </strong><input type="text" v-model="foldername"></input></label>
             </div>
             <div class="buttonset">
               <button @click="newFolder()"><i class="mi-check"></i>Save</button>
@@ -1160,14 +1159,16 @@ config: {
   });
 
   Vue.component('deletewindow', {
-    props: ["currentFile"],
+    props: ["currentFile","foldertree"],
     template: `
     <div class="ui-dialog dialog-confirm actionwindow-formwrapper">
       <div class="block block-constrain">
         <div class="block-content">
           <div class="mura-header">
-          <h1>Delete</h1></div>
-          <p>Confirm Deletion: {{currentFile.fullname}}</p>
+          <h1>Delete File</h1></div>
+          <h2>Are you sure you want to delete this file?</h2>
+          <p><strong>File: </strong><span>{{this.$root.resourcepath}}</span><span v-for="(item, index) in foldertree">/{{item}}</span>/{{currentFile.fullname}}</p>
+          <p><strong>Modified: </strong>{{currentFile.lastmodified.substring(0, currentFile.lastmodified.lastIndexOf(" ") )}}</p>
           <div class="buttonset">
           <button @click="doDelete()"><i class="mi-check"></i>Delete</button>
           <button class="mura-secondary" @click="cancel()"><i class="mi-ban"></i>Cancel</button>
@@ -1197,8 +1198,9 @@ config: {
       <div class="block block-constrain">
         <div class="block-content">
           <div class="mura-header">
-            <h1>Edit</h1>
+            <h1>Edit File</h1>
           </div>
+          <label><strong>Filename: </strong>{{currentFile.name}}.{{currentFile.ext}}</label>
           <textarea id="contenteditfield" class="editwindow" v-model="filecontent"></textarea>
           <div class="buttonset">
             <button @click="updateContent()"><i class="mi-check"></i>Update</button>

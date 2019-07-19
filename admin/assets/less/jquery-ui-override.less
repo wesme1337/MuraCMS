@@ -50,13 +50,6 @@
 } // ui-dialog
 
   
-.modal-wrapper .ui-dialog{
-  padding: 15px 30px !important;
-  background-color: #f5f5f5;
-  background-image: none !important;
-  height: 100%;
-}
-
 .ui-dialog h1:not([class]),
 .ui-dialog-title,
 .modal-wrapper .ui-dialog-title{
@@ -245,8 +238,24 @@
   opacity: .7 !important;
 }
 
+/* these styles are used in file browser dialogs - check all views before changing!! */
 .modal-wrapper{
+  
+  .ui-dialog{
+    padding: 15px 30px !important;
+    background-color: #fff;
+    min-height: 100%;
+    width: auto;
 
+    .mura-header{
+      margin-top: 0 !important;
+    }
+
+    .buttonset{
+      margin-top: 28px;
+    }
+  }
+  
   .ui-dialog .ui-dialog-titlebar-close,
   .ui-dialog .ui-dialog-titlebar-close:focus,
   .ui-dialog .ui-dialog-titlebar-close:hover{

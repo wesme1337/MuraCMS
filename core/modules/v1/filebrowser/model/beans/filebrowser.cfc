@@ -696,7 +696,10 @@ component
 
 
 			try {
-				var fileContent = filemove(expandpath(filePath) & application.configBean.getFileDelim() & arguments.filename,expandpath(filePath) & application.configBean.getFileDelim() & arguments.name & ext);
+				if(FileExists(expandpath(filePath) & application.configBean.getFileDelim() & arguments.filename))
+					var fileContent = filemove(expandpath(filePath) & application.configBean.getFileDelim() & arguments.filename,expandpath(filePath) & application.configBean.getFileDelim() & arguments.name & ext);
+				else if(DirectoryExists(expandpath(filePath) & application.configBean.getFileDelim() & arguments.filename))
+					directoryRename(expandpath(filePath) & application.configBean.getFileDelim() & arguments.filename,expandpath(filePath) & application.configBean.getFileDelim() & arguments.name);
 			}
 			catch( any e ) {
 				throw( message = "Unable to rename file",type="customExp");

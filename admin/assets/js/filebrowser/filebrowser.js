@@ -1060,38 +1060,36 @@ config: {
     template: `
        <div class="fileviewer-modal">
         <div class="fileviewer-image" id="imagediv" :style="{ 'background-image': 'url(' + encodeURI(currentFile.url) + '?' + Math.ceil(Math.random()*100000) + ')' }"></div>
-          <div class="fileviewer-gallery-menu">
-            <ul>
-              <!--- MAIN --->
-              <span v-if="editmode==''">
-                <li><a class="btn" @click="crop()"><i class="mi-crop"> Crop</i></a></li>
-                <li><a class="btn" @click="rotateRight()"><i class="mi-rotate-right"> Rotate Right</i></a></li>
-                <li><a class="btn" @click="rotateLeft()"><i class="mi-rotate-left"> Rotate Left</i></a></li>
-                <li><a class="btn" @click="resize()"><i class="mi-expand"> Resize</i></a></li>
-                <li><a class="btn" @click="cancel()"><i class="mi-chevron-left"> Back</i></a></li>
-              </span>
-              <!--- CROP --->
-              <span  v-if="editmode=='CROP'">
-                <li><a class="btn" @click="confirmCrop()"><i class="mi-check"> Confirm</i></a></li>
-                <li><a class="btn" @click="cancel()"><i class="mi-ban"> Cancel</i></a></li>
-              </span>
-              <!--- RESIZE --->
-              <span  v-if="editmode=='RESIZE'">
-                <li>Width: <input :disabled="resizedimensions.aspect == 'height'" name="resize-width" v-model="resizedimensions.width"></li>
-                <li>Height: <input :disabled="resizedimensions.aspect == 'width'" name="resize-height" v-model="resizedimensions.height"></li>
-                <li>Aspect:
-                  <select name="resize-aspect" v-model="resizedimensions.aspect">
-                    <option value="none">None</option>
-                    <option value="height">Height</option>
-                    <option value="width">Width</option>
-                    <option value="within">Within</option>
-                  </select>
-                </li>
-                <li><a class="btn" @click="confirmResize()"><i class="mi-check"> Confirm</i></a></li>
-                <li><a class="btn" @click="cancel()"><i class="mi-ban"> Cancel</i></a></li>
-              </span>
-            </ul>
-            <p>{{currentFile.fullname}} ({{currentFile.size}}kb {{currentFile.info.width}}x{{currentFile.info.height}})</p>
+          <div class="fileviewer-gallery-menu mura-actions">
+            <label class="fileinfo">{{currentFile.fullname}} ({{currentFile.size}}kb {{currentFile.info.width}}x{{currentFile.info.height}})</label>
+            <!-- MAIN -->
+            <div class="form-actions" v-if="editmode==''">
+              <a class="btn mura-primary" @click="crop()"><i class="mi-crop"></i>Crop</a>
+              <a class="btn mura-primary" @click="resize()"><i class="mi-expand"></i>Resize</a>
+              <a class="btn mura-primary" @click="rotateRight()"><i class="mi-rotate-right"></i>Rotate Right</a>
+              <a class="btn mura-primary" @click="rotateLeft()"><i class="mi-rotate-left"></i>Rotate Left</a>
+              <a class="btn" @click="cancel()"><i class="mi-close"></i>Cancel</a>
+            </div>
+            <!-- CROP -->
+            <div class="form-actions" v-if="editmode=='CROP'">
+              <a class="btn mura-primary" @click="confirmCrop()"><i class="mi-check"></i>Confirm</a>
+              <a class="btn" @click="cancel()"><i class="mi-ban"></i>Cancel</a>
+            </div>
+            <!-- RESIZE -->
+            <div class="form-actions" v-if="editmode=='RESIZE'">
+              <label>Width: <input :disabled="resizedimensions.aspect == 'height'" name="resize-width" v-model="resizedimensions.width"></label>
+              <label>Height: <input :disabled="resizedimensions.aspect == 'width'" name="resize-height" v-model="resizedimensions.height"></label>
+              <label>Aspect:
+                <select name="resize-aspect" v-model="resizedimensions.aspect">
+                  <option value="none">None</option>
+                  <option value="height">Height</option>
+                  <option value="width">Width</option>
+                  <option value="within">Within</option>
+                </select>
+              </label>
+              <a class="btn mura-primary" @click="confirmResize()"><i class="mi-check"></i>Confirm</a>
+              <a class="btn" @click="cancel()"><i class="mi-ban"></i>Cancel</a>
+            </div>
           </div>
         </div>
     `
@@ -1469,7 +1467,7 @@ config: {
               </td>
               <td class="var-width">
                 <a v-if="parseInt(file.isfile)" href="#" @click.prevent="viewFile(file,index)">{{file.fullname}}</a>
-                <a v-else href="#" @click.prevent="refresh(file.name)"><i class="mi-folder"></i> {{file.fullname}}</a>
+                <a v-else href="#" @click.prevent="refresh(file.name)"><i class="mi-folder"></i>{{file.fullname}}</a>
               </td>
               <td>
                 <div v-if="parseInt(file.isfile)">

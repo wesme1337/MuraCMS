@@ -489,6 +489,18 @@ a.folder-item {
 .fileviewer-gallery-menu.mura-actions label{
   margin-bottom: 12px;
   margin-top: -3px;
+  margin-right: 6px;
+}
+
+.fileviewer-gallery-menu.mura-actions label input {
+  border: 1px solid #dbdbdb;
+  margin: 0;
+  padding-left: 7px;
+  border-radius: 3px;
+  background-color: #fff;
+  height: 30px;
+  padding: 0 5px;
+  width: 60px;
 }
 
 .fileviewer-gallery-menu.mura-actions .form-actions > a.btn {
@@ -498,12 +510,6 @@ a.folder-item {
   line-height: 2;
   margin-bottom: 6px;
   margin-right: 6px;
-}
-
-.fileviewer-gallery-menu input {
-  width: 60px;
-  padding: 0 5px;
-  background-color: #ddd;
 }
 
 .fileviewer-gallery-menu input:disabled {

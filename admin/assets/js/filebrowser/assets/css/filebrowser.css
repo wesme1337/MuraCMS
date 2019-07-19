@@ -487,9 +487,15 @@ a.folder-item {
 }
 
 .fileviewer-gallery-menu.mura-actions label{
-  margin-bottom: 12px;
-  margin-top: -3px;
-  margin-right: 6px;
+    width: auto;
+    display: inline-block;
+    margin: 3px 6px 0 6px;
+}
+.fileviewer-gallery-menu.mura-actions label.fileinfo{
+  width: 100%;
+  display: block;
+  margin: 0;
+  padding: 0 0 8px 0;
 }
 
 .fileviewer-gallery-menu.mura-actions label input {
@@ -504,11 +510,18 @@ a.folder-item {
 }
 
 .fileviewer-gallery-menu.mura-actions .form-actions > a.btn {
+  background-color: #6f6f6f;
   cursor: pointer;
   font-weight: 400;
   font-size: 14px;
   line-height: 2;
-  margin-bottom: 6px;
+  margin: 6px;
+  padding: .2em 1.1em;
+  color: #fff;
+}
+
+.fileviewer-gallery-menu.mura-actions .form-actions > a.btn i{
+  color: #fff;
   margin-right: 6px;
 }
 

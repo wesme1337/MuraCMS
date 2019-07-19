@@ -72,7 +72,7 @@ config: {
 }
 
 , moveFile: function( currentFile,source,destination,onSuccess ) {
-  
+
   //var baseurl = this.endpoint + "/move?directory=" + source + "&destination=" + destination + "&resourcepath=" + this.config.resourcepath + "&filename=" + currentFile.fullname;
 
   if(!this.validate()) {
@@ -87,7 +87,7 @@ config: {
       resourcepath:this.config.resourcepath,
       filename:currentFile.fullname
     },
-    'post' 
+    'post'
   ).then(
     //success
     function(response) {
@@ -158,7 +158,7 @@ config: {
       resourcepath:this.config.resourcepath,
       filename:currentFile.fullname
     },
-    'post' 
+    'post'
   )
     .then(
       //success
@@ -187,7 +187,7 @@ config: {
       resourcepath:this.config.resourcepath,
       file:currentFile
     },
-    'post' 
+    'post'
   ).then(
       //success
       function(response) {
@@ -216,7 +216,7 @@ config: {
       filename:currentFile.fullname,
       content:content
     },
-    'post' 
+    'post'
   ).then(
     //success
     function(response) {
@@ -243,9 +243,9 @@ config: {
       directory:dir,
       resourcepath:this.config.resourcepath,
       filename:currentFile.fullname,
-      name:currentFile.name 
+      name:currentFile.name
     },
-    'post' 
+    'post'
   ).then(
     //success
     function(response) {
@@ -273,7 +273,7 @@ config: {
       resourcepath:this.config.resourcepath,
       name:newfolder
     },
-    'post' 
+    'post'
   ).then(
     //success
     function(response) {
@@ -353,13 +353,13 @@ config: {
   if(!this.validate()) {
     return error("No Access");
   }
-  
+
   formData.resourcepath=this.config.resourcepath;
 
   Mura.getEntity('filebrowser').invokeWithCSRF(
     'upload',
     formData,
-    'post' 
+    'post'
   ).then(
     function doSuccess( response ) {
       success( response );
@@ -386,7 +386,7 @@ config: {
   Mura.getEntity('filebrowser').invokeWithCSRF(
     'rotate',
     formData,
-    'post' 
+    'post'
   ).then(
     function doSuccess( response ) {
       success( response );
@@ -415,7 +415,7 @@ config: {
   Mura.getEntity('filebrowser').invokeWithCSRF(
     'resize',
     formData,
-    'post' 
+    'post'
   ).then(
     function doSuccess( response ) {
       success( response );
@@ -475,7 +475,7 @@ config: {
   Mura.getEntity('filebrowser').invokeWithCSRF(
     'processCrop',
     formData,
-    'post' 
+    'post'
   ).then(
     function doSuccess( response ) {
       success( response );
@@ -702,34 +702,21 @@ config: {
           <div class="mura-header">
             <h1>Move File</h1>
           </div>
-          
+
           <div class="mura-control-group">
             <label><strong>Name: </strong>{{currentFile.fullname}}</label>
             <label><strong>Location: </strong><span>{{this.$root.resourcepath}}</span><span v-for="(item, index) in foldertree"> / {{item}}</span> </label>
           </div>
-          
+
           <label><strong>Move to:</strong></label>
 
-          <span><a>{{this.$root.resourcepath}}</a></span>
-          <span v-for="(item,index) in foldertree" @click="setDirDepth(index)"> / <a>{{item}}</a></span>
+          <span><a @click="setDirDepth(-1)" class="folder-item">{{this.$root.resourcepath}}</a></span>
+            <span v-for="(item,index) in sourcefolders" @click="setDirDepth(index)"> / <a class="folder-item">{{item}}</a></span>
           <span>
-            <select v-if="childFolders.length" v-model="folderPath">
+            <select v-if="childFolders.length" v-model="folderName">
               <option v-if="item.length" v-for="item in childFolders" :value="item">/{{item}}</option>
             </select>
           </span>
-
-<!--
-          <ul class="breadcrumb">
-            <li @click="setDirDepth(-1)"><a>{{this.$root.resourcepath}}</a></li>
-            <li v-for="(item,index) in foldertree" @click="setDirDepth(index)"><a><i class="mi-folder-open"></i>{{item}}</a></li>
-            <li v-if="childFolders.length">
-              <i class="mi-folder-open"></i>
-              <select v-model="folderPath">
-                <option  v-for="item in childFolders" :value="item">{{item}}</option>
-              </select>
-            </li>
-          </ul>
--->
 <!--
 
           <div>
@@ -737,7 +724,7 @@ config: {
             <input type="text" v-model="destinationFolder" style="width: 80%"></input>
             <span class="small">{{invalid}}</span>
           </div>
--->          
+-->
         </div>
         <div class="buttonset">
           <button @click="moveFile()"><i class="mi-check"></i>Move</button>
@@ -748,14 +735,15 @@ config: {
     `,
     data() {
         return {
-          destinationFolder: '',
           resourcename: '',
-          folderPath: '',
+          folderName: '',
+          sourcefolders: [],
           childFolders: [],
           invalid: ''
         };
     },
     watch: {
+      /*
       destinationFolder: function(val) {
         // delay for typing
         setTimeout(() => {
@@ -765,23 +753,37 @@ config: {
             MuraFileBrowser.getChildDirectory(this.destinationFolder,this.updateDirectory,fileViewer);
           }, 1000);
       }
-      , folderPath: function(val) {
+      ,
+      */
+      folderName: function(val) {
         if(this.folderPath != '') {
-          this.destinationFolder += "/" + this.folderPath;
-          this.folderPath = '';
-          MuraFileBrowser.getChildDirectory(this.destinationFolder,this.updateDirectory,fileViewer);
+          this.sourcefolders.push(this.folderName);
+
+          var destination = "";
+
+          for(i in this.sourcefolders) {
+            destination += "/" + this.sourcefolders[i];
+          }
+          this.childFolders = [];
+          MuraFileBrowser.getChildDirectory(destination,this.updateDirectory,fileViewer);
         }
       }
     },
     methods: {
       moveFile: function() {
         var source = "";
+        var destination = "";
 
         for(i in fileViewer.foldertree) {
           source += "/" + fileViewer.foldertree[i];
         }
+
+        for(i in this.sourcefolders) {
+          destination += "/" + this.sourcefolders[i];
+        }
+
         fileViewer.spinnermodal = 1;
-        MuraFileBrowser.moveFile(this.currentFile,source,this.destinationFolder,this.fileMoved);
+        MuraFileBrowser.moveFile(this.currentFile,source,destination,this.fileMoved);
       }
       , fileMoved: function() {
         fileViewer.isDisplayWindow = '';
@@ -797,18 +799,34 @@ config: {
           this.invalid = "(This does not appear to be a valid directory)";
         }
       }
+      , setDirDepth: function(val) {
+        val +=1;
+        this.sourcefolders.length = val;
+        var destination = "";
+
+        for(i in this.sourcefolders) {
+          destination += "/" + this.sourcefolders[i];
+        }
+        this.childFolders = [];
+        MuraFileBrowser.getChildDirectory(destination,this.updateDirectory,fileViewer);
+      }
       , cancel: function() {
         fileViewer.isDisplayWindow = '';
       }
     },
     mounted: function() {
+      this.sourcefolders = this.foldertree.slice(0);
+
       this.filename = this.currentFile.name;
       fileViewer.isDisplayContext = 0;
-      for(i in fileViewer.foldertree) {
-        this.destinationFolder += "/" + fileViewer.foldertree[i];
+
+      var destination = "";
+
+      for(i in this.sourcefolders) {
+        destination += "/" + this.sourcefolders[i];
       }
 
-      MuraFileBrowser.getChildDirectory(this.destinationFolder,this.updateDirectory,fileViewer);
+      MuraFileBrowser.getChildDirectory(destination,this.updateDirectory,fileViewer);
 
       switch(MuraFileBrowser.config.resourcepath) {
         case "Site_Files":
@@ -836,7 +854,7 @@ config: {
                 <h1>Rename File</h1></div>
                 <div class="mura-control-group">
                   <label><strong>Filename:</strong> {{currentFile.name}}.{{currentFile.ext}}</label>
-                  <label><strong>New Name:</strong> <input type="text" v-model="filename"></input>.{{currentFile.ext}}</label>                  
+                  <label><strong>New Name:</strong> <input type="text" v-model="filename"></input>.{{currentFile.ext}}</label>
                 </div>
               </div>
               <div class="buttonset">

@@ -425,6 +425,10 @@ input.filebrowser-filter {
   width: 40px;
 }
 
+a.folder-item {
+  cursor: pointer;
+}
+
 .image {
   background-color: #ccc;
 }

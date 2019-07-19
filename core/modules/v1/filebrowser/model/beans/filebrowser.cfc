@@ -187,17 +187,16 @@ component
 			var currentSite = application.settingsManager.getSite(arguments.siteid);
 			var baseFilePath = getBaseFileDir( arguments.siteid,arguments.resourcePath );
 			var tempDir = m.globalConfig().getTempDir();
-			var timage = replace(createUUID(),"-","","all");
+			var tfile = replace(createUUID(),"-","","all");
 			var delim = rereplace(baseFilePath,".*\/","");
-			var filePath = baseFilePath & rereplace(arguments.file.url,".*?#delim#","");
 
-			if(!isPathLegal(arguments.siteid,arguments.resourcepath,filepath)){
+			var source = baseFilePath & rereplace(arguments.file.url,".*?#delim#","");
+			var destination = replace(source,".#arguments.file.ext#","-copy1.#arguments.file.ext#");
+			var version = 1;
+
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath,source)){
 				throw(message="Illegal file path",code="invalidParameters");
 			}
-
-			var sourceImage = ImageNew(filePath);
-			var destination = replace(filePath,".#arguments.file.ext#","-copy1.#arguments.file.ext#");
-			var version = 1;
 
 			if(!isPathLegal(arguments.siteid,arguments.resourcepath,destination)){
 				throw(message="Illegal file path",code="invalidParameters");
@@ -205,11 +204,11 @@ component
 
 			while(fileExists(destination)) {
 				version++;
-				destination = replace(filePath,".#arguments.file.ext#","-copy#version#.#arguments.file.ext#");
+				destination = replace(source,".#arguments.file.ext#","-copy#version#.#arguments.file.ext#");
 			}
+			fileCopy(source,tempDir & tfile & "." & arguments.file.ext);
 
-			ImageWrite(sourceImage,tempDir & timage & "." & arguments.file.ext);
-			fileMove(tempDir & timage & "." & arguments.file.ext,destination);
+			fileMove(tempDir & tfile & "." & arguments.file.ext,destination);
 
 			response.success = 1;
 			return response;
@@ -471,7 +470,7 @@ component
 			arguments.siteid == "" ? "default" : arguments.siteid;
 
 			var m=getBean('m').init(arguments.siteid);
-			
+
      		if(!m.validateCSRFTokens(context='upload')){
 				throw(type="invalidTokens");
 			}
@@ -566,7 +565,7 @@ component
 			arguments.siteid == "" ? "default" : arguments.siteid;
 
 			var m=getBean('m').init(arguments.siteid);
-			
+
      		if(!m.validateCSRFTokens(context='update')){
 				throw(type="invalidTokens");
 			}
@@ -604,7 +603,7 @@ component
 			arguments.siteid == "" ? "default" : arguments.siteid;
 
 			var m=getBean('m').init(arguments.siteid);
-			
+
      		if(!m.validateCSRFTokens(context='delete')){
 				throw(type="invalidTokens");
 			}
@@ -665,7 +664,7 @@ component
 			arguments.siteid == "" ? "default" : arguments.siteid;
 
 			var m=getBean('m').init(arguments.siteid);
-			
+
      		if(!m.validateCSRFTokens(context='rename')){
 				throw(type="invalidTokens");
 			}
@@ -710,7 +709,7 @@ component
 			arguments.siteid == "" ? "default" : arguments.siteid;
 
 			var m=getBean('m').init(arguments.siteid);
-			
+
      		if(!m.validateCSRFTokens(context='addfolder')){
 				throw(type="invalidTokens");
 			}
@@ -903,7 +902,7 @@ component
 			return false;
 		}
 		var rootPath=replace(expandPath(getBaseFileDir( arguments.siteid,arguments.resourcePath )), "\", "/", "ALL");
-		
+
 		arguments.path=replace(arguments.path, "\", "/", "ALL");
 
 		var s3assets=getBean('configBean').get('s3assets');
@@ -913,7 +912,7 @@ component
 			arguments.path=replace(arguments.path,s3assets,"/s3assets/");
 		}
 
-		var result=  (
+		var result = (
 			len(arguments.path) >= len(rootPath) && left(arguments.path,len(rootPath)) == rootPath
 		);
 

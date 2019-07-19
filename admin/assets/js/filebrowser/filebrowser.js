@@ -852,13 +852,13 @@ config: {
         <div class="block block-constrain">
           <div class="block-content">
             <div class="mura-header">
-              <h1 v-if="currentFile.isfolder==1">Rename Folder</h1>
+              <h1 v-if="parseInt(currentFile.isfolder)">Rename Folder</h1>
               <h1 v-else>Rename File</h1>
             </div>
             <div class="mura-control-group">
-              <label v-if="currentFile.isfolder==1">Folder Name: <span>{{currentFile.name}}</span></label>
+              <label v-if="parseInt(currentFile.isfolder)">Folder Name: <span>{{currentFile.name}}</span></label>
               <label v-else>Filename: <span>{{currentFile.name}}</span><span v-if="currentFile.ext != currentFile.name">.{{currentFile.ext}}</span></label>
-              <label v-if="currentFile.isfolder==1">New Name: <span><input type="text" v-model="filename"></input></span></label>
+              <label v-if="parseInt(currentFile.isfolder)">New Name: <span><input type="text" v-model="filename"></input></span></label>
               <label v-else>New Name: <span><input type="text" v-model="filename"></input></span><span v-if="currentFile.ext != currentFile.name">.{{currentFile.ext}}</span></label>
             </div>
             <div class="buttonset">
@@ -968,18 +968,16 @@ config: {
         <div class="fileviewer-image" :style="{ 'background-image': 'url(' + encodeURI(currentFile.url) + '?' + Math.ceil(Math.random()*100000) + ')' }"></div>
         <div class="actionwindow-left" @click="lastimage"><i class="mi-caret-left"></i></div>
         <div class="actionwindow-right" @click="nextimage"><i class="mi-caret-right"></i></div>
-        <div class="fileviewer-gallery-menu">
-          <div class="mura-control-group">
-          <ul>
-          <li v-if="checkImageType() && checkSelectMode()"><a @click="selectFile()"><i class="mi-check"></i>Select</a></li>
-          <li v-if="checkImageType()"><a @click="editImage()"><i class="mi-check"></i>Edit Image</a></li>
-          <li v-if="checkFileEditable()"><a @click="editFile()"><i class="mi-pencil"></i>Edit</a></li>
-          <li><a @click="renameFile()"><i class="mi-edit"></i>Rename</a></li>
-          <li v-if="checkIsFile()"><a @click="downloadFile()"><i class="mi-download"></i>Download</a></li>
-          <li><a @click="deleteFile()"><i class="mi-trash"></i>Delete</a></li>
-          <li><a @click="closewindow()"><i class="mi-times"></i>Close</a></li>
-          </ul>
-          <p>{{currentFile.fullname}} ({{currentFile.size}}kb <span v-if="checkImageType()">{{currentFile.info.width}}x{{currentFile.info.height}}</span>)</p>
+        <div class="fileviewer-gallery-menu mura-actions">
+          <label class="fileinfo">{{currentFile.fullname}} ({{currentFile.size}}kb <span v-if="checkImageType()">{{currentFile.info.width}}x{{currentFile.info.height}}</span>)</label>
+          <div class="form-actions">
+            <a v-if="checkImageType() && checkSelectMode()" class="btn mura-primary" @click="selectFile()"><i class="mi-check"></i>Select</a>
+            <a v-if="checkImageType()" class="btn mura-primary" @click="editImage()"><i class="mi-crop"></i>Edit Image</a>
+            <a v-if="checkFileEditable()" class="btn mura-primary" @click="editFile()"><i class="mi-pencil"></i>Edit</a>
+            <a class="btn mura-primary" @click="renameFile()"><i class="mi-edit"></i>Rename</a>
+            <a v-if="checkIsFile()" class="btn mura-primary" @click="downloadFile()"><i class="mi-download"></i>Download</a>
+            <a class="btn" @click="deleteFile()"><i class="mi-trash"></i>Delete</a>
+            <a class="btn" @click="closewindow()"><i class="mi-times"></i>Close</a>
           </div>
         </div>
       </div>
@@ -1062,38 +1060,36 @@ config: {
     template: `
        <div class="fileviewer-modal">
         <div class="fileviewer-image" id="imagediv" :style="{ 'background-image': 'url(' + encodeURI(currentFile.url) + '?' + Math.ceil(Math.random()*100000) + ')' }"></div>
-          <div class="fileviewer-gallery-menu">
-            <ul>
-              <!--- MAIN --->
-              <span v-if="editmode==''">
-                <li><a @click="crop()"><i class="mi-crop"> Crop</i></a></li>
-                <li><a @click="rotateRight()"><i class="mi-rotate-right"> Rotate Right</i></a></li>
-                <li><a @click="rotateLeft()"><i class="mi-rotate-left"> Rotate Left</i></a></li>
-                <li><a @click="resize()"><i class="mi-expand"> Resize</i></a></li>
-                <li><a @click="cancel()"><i class="mi-chevron-left"> Back</i></a></li>
-              </span>
-              <!--- CROP --->
-              <span  v-if="editmode=='CROP'">
-                <li><a @click="confirmCrop()"><i class="mi-check"> Confirm</i></a></li>
-                <li><a @click="cancel()"><i class="mi-ban"> Cancel</i></a></li>
-              </span>
-              <!--- RESIZE --->
-              <span  v-if="editmode=='RESIZE'">
-                <li>Width: <input :disabled="resizedimensions.aspect == 'height'" name="resize-width" v-model="resizedimensions.width"></li>
-                <li>Height: <input :disabled="resizedimensions.aspect == 'width'" name="resize-height" v-model="resizedimensions.height"></li>
-                <li>Aspect:
-                  <select name="resize-aspect" v-model="resizedimensions.aspect">
-                    <option value="none">None</option>
-                    <option value="height">Height</option>
-                    <option value="width">Width</option>
-                    <option value="within">Within</option>
-                  </select>
-                </li>
-                <li><a @click="confirmResize()"><i class="mi-check"> Confirm</i></a></li>
-                <li><a @click="cancel()"><i class="mi-ban"> Cancel</i></a></li>
-              </span>
-            </ul>
-            <p>{{currentFile.fullname}} ({{currentFile.size}}kb {{currentFile.info.width}}x{{currentFile.info.height}})</p>
+          <div class="fileviewer-gallery-menu mura-actions">
+            <label class="fileinfo">{{currentFile.fullname}} ({{currentFile.size}}kb {{currentFile.info.width}}x{{currentFile.info.height}})</label>
+            <!-- MAIN -->
+            <div class="form-actions" v-if="editmode==''">
+              <a class="btn mura-primary" @click="crop()"><i class="mi-crop"></i>Crop</a>
+              <a class="btn mura-primary" @click="resize()"><i class="mi-expand"></i>Resize</a>
+              <a class="btn mura-primary" @click="rotateRight()"><i class="mi-rotate-right"></i>Rotate Right</a>
+              <a class="btn mura-primary" @click="rotateLeft()"><i class="mi-rotate-left"></i>Rotate Left</a>
+              <a class="btn" @click="cancel()"><i class="mi-close"></i>Cancel</a>
+            </div>
+            <!-- CROP -->
+            <div class="form-actions" v-if="editmode=='CROP'">
+              <a class="btn mura-primary" @click="confirmCrop()"><i class="mi-check"></i>Confirm</a>
+              <a class="btn" @click="cancel()"><i class="mi-ban"></i>Cancel</a>
+            </div>
+            <!-- RESIZE -->
+            <div class="form-actions" v-if="editmode=='RESIZE'">
+              <label>Width: <input :disabled="resizedimensions.aspect == 'height'" name="resize-width" v-model="resizedimensions.width"></label>
+              <label>Height: <input :disabled="resizedimensions.aspect == 'width'" name="resize-height" v-model="resizedimensions.height"></label>
+              <label>Aspect:
+                <select name="resize-aspect" v-model="resizedimensions.aspect">
+                  <option value="none">None</option>
+                  <option value="height">Height</option>
+                  <option value="width">Width</option>
+                  <option value="within">Within</option>
+                </select>
+              </label>
+              <a class="btn mura-primary" @click="confirmResize()"><i class="mi-check"></i>Confirm</a>
+              <a class="btn" @click="cancel()"><i class="mi-ban"></i>Cancel</a>
+            </div>
           </div>
         </div>
     `
@@ -1160,13 +1156,15 @@ config: {
       <div class="block block-constrain">
         <div class="block-content">
           <div class="mura-header">
-            <h1 v-if="currentFile.isfolder==1">Delete Folder</h1>
+            <h1 v-if="parseInt(currentFile.isfolder)">Delete Folder</h1>
             <h1 v-else>Delete File</h1>
           </div>
-          <h2 v-if="currentFile.isfolder==1">Are you sure you want to delete this folder?</h2>
-          <h2 v-else>Are you sure you want to delete this file?</h2>
           <div class="mura-control-group">
-            <label v-if="currentFile.isfolder==1">Folder: <span>{{this.$root.resourcepath}}</span><span v-for="(item, index) in foldertree">/{{item}}</span>/<span>{{currentFile.fullname}}</span></label>
+            <label v-if="parseInt(currentFile.isfolder)">Are you sure you want to delete this folder?</label>
+            <label v-else>Are you sure you want to delete this file?</label>
+          </div>
+          <div class="mura-control-group">
+            <label v-if="parseInt(currentFile.isfolder)">Folder: <span>{{this.$root.resourcepath}}</span><span v-for="(item, index) in foldertree">/{{item}}</span>/<span>{{currentFile.fullname}}</span></label>
             <label v-else>File: <span>{{this.$root.resourcepath}}</span><span v-for="(item, index) in foldertree">/{{item}}</span>/<span>{{currentFile.fullname}}</span></label>
             <label>Modified: <span>{{currentFile.lastmodified.substring(0, currentFile.lastmodified.lastIndexOf(" ") )}}</span></label>
           </div>
@@ -1468,7 +1466,7 @@ config: {
                 </div>
               </td>
               <td class="var-width">
-                <a v-if="parseInt(file.isfile)" href="#" @click.prevent="viewFile(file,index)">{{file.fullname}}</a>
+                <a v-if="parseInt(file.isfile)" href="#" @click.prevent="viewFile(file,index)"><i v-if="parseInt(file.isimage)" class="mi-picture"></i><i v-else class="mi-file"></i> {{file.fullname}}</a>
                 <a v-else href="#" @click.prevent="refresh(file.name)"><i class="mi-folder"></i> {{file.fullname}}</a>
               </td>
               <td>
@@ -1547,7 +1545,6 @@ config: {
         var offsetLeft = 33;
         var offsetTop = 10;
 
-
         // offset positioning relative to parent
         if (document.getElementById('MuraFileBrowserContainer')){
           if (document.getElementById('MuraFileBrowserContainer').parentNode == document.getElementById('alertDialogMessage')){
@@ -1562,13 +1559,13 @@ config: {
         var left = parentLeft - offsetLeft;
         var top = parentTop - offsetTop;
 
-        console.log('parent link ID: fileitem-'+index);
-        console.log('parentLeft: ' + parentLeft);
-        console.log('parentTop: ' + parentTop);
-        console.log('offsetLeft: ' + offsetLeft);
-        console.log('offsetTop: ' + offsetTop);
-        console.log('left: ' + left);
-        console.log('top: ' + top);
+        // console.log('parent link ID: fileitem-'+index);
+        // console.log('parentLeft: ' + parentLeft);
+        // console.log('parentTop: ' + parentTop);
+        // console.log('offsetLeft: ' + offsetLeft);
+        // console.log('offsetTop: ' + offsetTop);
+        // console.log('left: ' + left);
+        // console.log('top: ' + top);
 
         this.$nextTick(function () {
           this.$root.isDisplayContext = 1;
@@ -1595,10 +1592,15 @@ config: {
           </div>
         </div>
         <div v-for="(file,index) in files">
+          <!-- files -->
           <div class="fileviewer-item" v-if="parseInt(file.isfile)">
             <div class="fileviewer-item-image">
-              <div v-if="0" class="fileviewer-item-icon" :class="['fileviewer-item-icon-' + file.type]"></div>
-              <div v-else class="fileviewer-item-icon" :style="{ 'background-image': 'url(' + encodeURI(file.url) + ')' }" @click.prevent="viewFile(file,index)"></div>
+              <!-- image -->
+              <div v-if="parseInt(file.isimage)" class="fileviewer-item-icon" :style="{ 'background-image': 'url(' + encodeURI(file.url) + ')' }" @click.prevent="viewFile(file,index)"></div>
+              <!-- file with icon -->
+              <div v-else class="fileviewer-item-icon" :class="['fileviewer-item-icon-' + file.type]" @click="openMenu($event,file,index)">
+                <i class="mi-file"></i>
+              </div>
             </div>
             <div class="fileviewer-item-meta" @click="openMenu($event,file,index)">
               <div class="fileviewer-item-label">
@@ -1614,8 +1616,9 @@ config: {
               </div>
             </div>
           </div>
-          <div class="fileviewer-item" v-else @click="refresh(file.name)">
-            <div class="fileviewer-item-icon">
+          <!-- folders -->
+          <div class="fileviewer-item" v-else>
+            <div class="fileviewer-item-icon" @click="refresh(file.name)">
               <i class="mi-folder-open"></i>
             </div>
             <div class="fileviewer-item-meta">
@@ -1626,6 +1629,9 @@ config: {
                 <div v-if="parseInt(file.isfile)" class="fileviewer-item-meta-size">
                   {{file.size}}kb
                 </div>
+              </div>
+              <div class="fileviewer-item-actions">
+                <a href="#" :id="'fileitem-'+index" class="show-actions" @click.prevent="openMenu($event,file,index)"><i class="mi-ellipsis-v"></i></a>
               </div>
             </div>
           </div>
@@ -1684,12 +1690,18 @@ config: {
 
         // gridmode
         var offsetLeft = 0;
-        if (document.getElementById('alertDialog')){
-          offsetLeft = Math.floor(document.getElementById('alertDialog').getBoundingClientRect().left);
+        var offsetTop = 10;
+
+        // offset positioning relative to parent
+        if (document.getElementById('MuraFileBrowserContainer')){
+          if (document.getElementById('MuraFileBrowserContainer').parentNode == document.getElementById('alertDialogMessage')){
+            offsetTop += 70;
+            offsetLeft += Math.floor(document.getElementById('MuraFileBrowserContainer').getBoundingClientRect().left);
+          }
         }
 
         this.menux = Math.floor(document.getElementById('fileitem-'+index).getBoundingClientRect().left) - 28 - offsetLeft;
-        this.menuy =  Math.floor(document.getElementById('fileitem-'+index).getBoundingClientRect().top);
+        this.menuy =  Math.floor(document.getElementById('fileitem-'+index).getBoundingClientRect().top) - offsetTop;
 
         this.$root.currentFile = file;
         this.$root.currentIndex = index;

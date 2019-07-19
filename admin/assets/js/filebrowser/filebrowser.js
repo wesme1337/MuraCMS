@@ -1163,8 +1163,10 @@ config: {
             <h1 v-if="currentFile.isfolder==1">Delete Folder</h1>
             <h1 v-else>Delete File</h1>
           </div>
-          <h2 v-if="currentFile.isfolder==1">Are you sure you want to delete this folder?</h2>
-          <h2 v-else>Are you sure you want to delete this file?</h2>
+          <div class="mura-control-group">
+            <label v-if="currentFile.isfolder==1">Are you sure you want to delete this folder?</label>
+            <label v-else>Are you sure you want to delete this file?</label>
+          </div>
           <div class="mura-control-group">
             <label v-if="currentFile.isfolder==1">Folder: <span>{{this.$root.resourcepath}}</span><span v-for="(item, index) in foldertree">/{{item}}</span>/<span>{{currentFile.fullname}}</span></label>
             <label v-else>File: <span>{{this.$root.resourcepath}}</span><span v-for="(item, index) in foldertree">/{{item}}</span>/<span>{{currentFile.fullname}}</span></label>

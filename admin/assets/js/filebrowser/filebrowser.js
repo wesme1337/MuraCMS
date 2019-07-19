@@ -968,18 +968,16 @@ config: {
         <div class="fileviewer-image" :style="{ 'background-image': 'url(' + encodeURI(currentFile.url) + '?' + Math.ceil(Math.random()*100000) + ')' }"></div>
         <div class="actionwindow-left" @click="lastimage"><i class="mi-caret-left"></i></div>
         <div class="actionwindow-right" @click="nextimage"><i class="mi-caret-right"></i></div>
-        <div class="fileviewer-gallery-menu">
-          <div class="mura-control-group">
-          <ul>
-          <li v-if="checkImageType() && checkSelectMode()"><a @click="selectFile()"><i class="mi-check"></i>Select</a></li>
-          <li v-if="checkImageType()"><a @click="editImage()"><i class="mi-check"></i>Edit Image</a></li>
-          <li v-if="checkFileEditable()"><a @click="editFile()"><i class="mi-pencil"></i>Edit</a></li>
-          <li><a @click="renameFile()"><i class="mi-edit"></i>Rename</a></li>
-          <li v-if="checkIsFile()"><a @click="downloadFile()"><i class="mi-download"></i>Download</a></li>
-          <li><a @click="deleteFile()"><i class="mi-trash"></i>Delete</a></li>
-          <li><a @click="closewindow()"><i class="mi-times"></i>Close</a></li>
-          </ul>
-          <p>{{currentFile.fullname}} ({{currentFile.size}}kb <span v-if="checkImageType()">{{currentFile.info.width}}x{{currentFile.info.height}}</span>)</p>
+        <div class="fileviewer-gallery-menu mura-actions">
+          <label class="fileinfo">{{currentFile.fullname}} ({{currentFile.size}}kb <span v-if="checkImageType()">{{currentFile.info.width}}x{{currentFile.info.height}}</span>)</label>
+          <div class="form-actions">
+            <a v-if="checkImageType() && checkSelectMode()" class="btn mura-primary" @click="selectFile()"><i class="mi-check"></i>Select</a>
+            <a v-if="checkImageType()" class="btn mura-primary" @click="editImage()"><i class="mi-crop"></i>Edit Image</a>
+            <a v-if="checkFileEditable()" class="btn mura-primary" @click="editFile()"><i class="mi-pencil"></i>Edit</a>
+            <a class="btn mura-primary" @click="renameFile()"><i class="mi-edit"></i>Rename</a>
+            <a v-if="checkIsFile()" class="btn mura-primary" @click="downloadFile()"><i class="mi-download"></i>Download</a>
+            <a class="btn" @click="deleteFile()"><i class="mi-trash"></i>Delete</a>
+            <a class="btn" @click="closewindow()"><i class="mi-times"></i>Close</a>
           </div>
         </div>
       </div>
@@ -1066,16 +1064,16 @@ config: {
             <ul>
               <!--- MAIN --->
               <span v-if="editmode==''">
-                <li><a @click="crop()"><i class="mi-crop"> Crop</i></a></li>
-                <li><a @click="rotateRight()"><i class="mi-rotate-right"> Rotate Right</i></a></li>
-                <li><a @click="rotateLeft()"><i class="mi-rotate-left"> Rotate Left</i></a></li>
-                <li><a @click="resize()"><i class="mi-expand"> Resize</i></a></li>
-                <li><a @click="cancel()"><i class="mi-chevron-left"> Back</i></a></li>
+                <li><a class="btn" @click="crop()"><i class="mi-crop"> Crop</i></a></li>
+                <li><a class="btn" @click="rotateRight()"><i class="mi-rotate-right"> Rotate Right</i></a></li>
+                <li><a class="btn" @click="rotateLeft()"><i class="mi-rotate-left"> Rotate Left</i></a></li>
+                <li><a class="btn" @click="resize()"><i class="mi-expand"> Resize</i></a></li>
+                <li><a class="btn" @click="cancel()"><i class="mi-chevron-left"> Back</i></a></li>
               </span>
               <!--- CROP --->
               <span  v-if="editmode=='CROP'">
-                <li><a @click="confirmCrop()"><i class="mi-check"> Confirm</i></a></li>
-                <li><a @click="cancel()"><i class="mi-ban"> Cancel</i></a></li>
+                <li><a class="btn" @click="confirmCrop()"><i class="mi-check"> Confirm</i></a></li>
+                <li><a class="btn" @click="cancel()"><i class="mi-ban"> Cancel</i></a></li>
               </span>
               <!--- RESIZE --->
               <span  v-if="editmode=='RESIZE'">
@@ -1089,8 +1087,8 @@ config: {
                     <option value="within">Within</option>
                   </select>
                 </li>
-                <li><a @click="confirmResize()"><i class="mi-check"> Confirm</i></a></li>
-                <li><a @click="cancel()"><i class="mi-ban"> Cancel</i></a></li>
+                <li><a class="btn" @click="confirmResize()"><i class="mi-check"> Confirm</i></a></li>
+                <li><a class="btn" @click="cancel()"><i class="mi-ban"> Cancel</i></a></li>
               </span>
             </ul>
             <p>{{currentFile.fullname}} ({{currentFile.size}}kb {{currentFile.info.width}}x{{currentFile.info.height}})</p>

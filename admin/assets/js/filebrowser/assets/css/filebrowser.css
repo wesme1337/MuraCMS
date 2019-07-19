@@ -446,7 +446,7 @@ a.folder-item {
   height: 100%;
   left: 0;
   top: 0;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.25);
 }
 
 .fileviewer-gallery {
@@ -455,7 +455,7 @@ a.folder-item {
   height: 70%;
   margin: 10% auto;
   position: relative;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color:#fff;
   padding-top: 16px;
 }
 
@@ -477,30 +477,27 @@ a.folder-item {
   background-repeat: no-repeat;
 }
 
-.fileviewer-gallery-menu {
+.fileviewer-gallery-menu.mura-actions {
   bottom: -81px;
   position: absolute;
   text-align: center;
   width: 100%;
-  padding: 20px 0 10px 0;
-  background-color: rgba(0, 0, 0, 0.70);
+  padding: 15px 0 !important;
+  background-color: #fff;
 }
 
-.fileviewer-gallery-menu ul li {
-  display: inline;
-  list-style: none;
-  color: #000;
-  padding: 4px 10px;
-  background-color: rgba(255, 255, 255, 0.5);
+.fileviewer-gallery-menu.mura-actions label{
+  margin-bottom: 12px;
+  margin-top: -3px;
 }
 
-.fileviewer-gallery-menu ul li a {
-  color: #000;
+.fileviewer-gallery-menu.mura-actions .form-actions > a.btn {
   cursor: pointer;
-}
-
-.fileviewer-gallery-menu ul li a i{
-  margin-right: 4px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 2;
+  margin-bottom: 6px;
+  margin-right: 6px;
 }
 
 .fileviewer-gallery-menu input {

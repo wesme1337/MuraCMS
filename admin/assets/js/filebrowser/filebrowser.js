@@ -1592,10 +1592,15 @@ config: {
           </div>
         </div>
         <div v-for="(file,index) in files">
+          <!-- files -->
           <div class="fileviewer-item" v-if="parseInt(file.isfile)">
             <div class="fileviewer-item-image">
-              <div v-if="0" class="fileviewer-item-icon" :class="['fileviewer-item-icon-' + file.type]"></div>
-              <div v-else class="fileviewer-item-icon" :style="{ 'background-image': 'url(' + encodeURI(file.url) + ')' }" @click.prevent="viewFile(file,index)"></div>
+              <!-- image -->
+              <div v-if="parseInt(file.isimage)" class="fileviewer-item-icon" :style="{ 'background-image': 'url(' + encodeURI(file.url) + ')' }" @click.prevent="viewFile(file,index)"></div>
+              <!-- file with icon -->
+              <div v-else class="fileviewer-item-icon" :class="['fileviewer-item-icon-' + file.type]" @click="openMenu($event,file,index)">
+                <i class="mi-file"></i>
+              </div>
             </div>
             <div class="fileviewer-item-meta" @click="openMenu($event,file,index)">
               <div class="fileviewer-item-label">
@@ -1611,8 +1616,9 @@ config: {
               </div>
             </div>
           </div>
-          <div class="fileviewer-item" v-else @click="refresh(file.name)">
-            <div class="fileviewer-item-icon">
+          <!-- folders -->
+          <div class="fileviewer-item" v-else>
+            <div class="fileviewer-item-icon" @click="refresh(file.name)">
               <i class="mi-folder-open"></i>
             </div>
             <div class="fileviewer-item-meta">
@@ -1623,6 +1629,9 @@ config: {
                 <div v-if="parseInt(file.isfile)" class="fileviewer-item-meta-size">
                   {{file.size}}kb
                 </div>
+              </div>
+              <div class="fileviewer-item-actions">
+                <a href="#" :id="'fileitem-'+index" class="show-actions" @click.prevent="openMenu($event,file,index)"><i class="mi-ellipsis-v"></i></a>
               </div>
             </div>
           </div>

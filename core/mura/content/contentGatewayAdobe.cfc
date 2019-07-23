@@ -1754,7 +1754,18 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 							or
 								(
 									tcontent.type not in ('Link','File')
-									and #renderTextParamColumn('tcontent.body')# like <cfqueryparam cfsqltype="cf_sql_varchar" value="%#renderTextParamValue(arguments.keywords)#%">
+									and (
+										#renderTextParamColumn('tcontent.body')# like <cfqueryparam cfsqltype="cf_sql_varchar" value="%#renderTextParamValue(arguments.keywords)#%">
+										<cfset var jsonParam=serializeJSONParam(arguments.keywords)>
+										<cfif len(jsonParam)>
+											or #renderTextParamColumn('tcontent.body')# like <cfqueryparam cfsqltype="cf_sql_varchar" value="%#renderTextParamValue(jsonParam)#%">
+											or tcontent.contenthistid in (
+												select tcontentobjects.contenthistid from tcontentobjects
+												where tcontentobjects.siteid = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.siteID#"/>
+												and #renderTextParamColumn('tcontentobjects.params')# like <cfqueryparam cfsqltype="cf_sql_varchar" value="%#renderTextParamValue(jsonParam)#%"/>
+											)
+										</cfif>
+									)
 								)
 							or tcontent.contenthistid in (
 								select distinct tcontent.contenthistid from tclassextenddata
@@ -1954,8 +1965,18 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 							or #renderTextParamColumn('tcontent.metaKeywords')# like <cfqueryparam cfsqltype="cf_sql_varchar" value="%#renderTextParamValue(arguments.keywords)#%">
 							or #renderTextParamColumn('tcontent.summary')# like <cfqueryparam cfsqltype="cf_sql_varchar" value="%#renderTextParamValue(arguments.keywords)#%">
 							or (
-									tcontent.type not in ('Link','File')
-									and #renderTextParamColumn('tcontent.body')# like <cfqueryparam cfsqltype="cf_sql_varchar" value="%#renderTextParamValue(arguments.keywords)#%">
+									tcontent.type not in ('Link','File') and (
+										#renderTextParamColumn('tcontent.body')# like <cfqueryparam cfsqltype="cf_sql_varchar" value="%#renderTextParamValue(arguments.keywords)#%">
+										<cfset var jsonParam=serializeJSONParam(arguments.keywords)>
+										<cfif len(jsonParam)>
+											or #renderTextParamColumn('tcontent.body')# like <cfqueryparam cfsqltype="cf_sql_varchar" value="%#renderTextParamValue(jsonParam)#%">
+											or tcontent.contenthistid in (
+												select tcontentobjects.contenthistid from tcontentobjects
+												where tcontentobjects.siteid = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.siteID#"/>
+												and #renderTextParamColumn('tcontentobjects.params')# like <cfqueryparam cfsqltype="cf_sql_varchar" value="%#renderTextParamValue(jsonParam)#%"/>
+											)
+										</cfif>
+									)
 								)
 							or #renderTextParamColumn('tcontent.credits')# like <cfqueryparam cfsqltype="cf_sql_varchar" value="%#renderTextParamValue(arguments.keywords)#%">
 
@@ -3070,6 +3091,19 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 		<cfreturn "cf_sql_timestamp">
 	<cfelse>
 		<cfreturn "cf_sql_timestamp">
+	</cfif>
+</cffunction>
+
+<cffunction name="serializeJSONParam">
+	<cfargument name="value">
+	<cfset arguments.value=serializeJSON(arguments.value)>
+	
+	<cfif isNumeric(arguments.value)>
+		<cfreturn arguments.value>
+	<cfelseif len(arguments.value) lte 2>
+		<cfreturn "">
+	<cfelse>
+		<cfreturn mid(arguments.value,2,len(arguments.value)-2)>
 	</cfif>
 </cffunction>
 

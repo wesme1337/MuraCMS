@@ -762,7 +762,7 @@ function setFinders(e,config) {
                 MuraFileBrowser.config.selectCallback = function(e) {
                     var t = $('input[name="' + a.data("target") + '"]');
 										var serverpath=a.attr('data-serverpath');
-										if(serverpath.toLowerCase()=='true'){
+										if(serverpath && serverpath.toLowerCase()=='true'){
 											t.val(webroot + e.url);
 										} else {
 											t.val(e.url);

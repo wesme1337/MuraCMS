@@ -48,7 +48,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 </cfloop>
 
 <cfoutput>
-  <div class="mura-panel panel">
+  <div class="mura-panel panel" id="tabLayoutObjects">
     <div class="mura-panel-heading" role="tab" id="heading-layout">
       <h4 class="mura-panel-title">
         <a class="collapse collapsed" role="button" data-toggle="collapse" data-parent="##content-panels" href="##panel-layout" aria-expanded="false" aria-controls="panel-layout">#application.rbFactory.getKeyValue(session.rb,"sitemanager.content.tabs.layoutobjects")#</a>
@@ -291,7 +291,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
         </cfif>
 
         <!--- list display options --->
-        <cfif rc.moduleid eq '00000000000000000000000000000000000' and (not rc.$.getContentRenderer().useLayoutManager() and listFindNoCase('Page,Folder,Gallery,Calender',rc.type) and (not len(tabAssignments) or listFindNocase(tabAssignments,'List Display Options')))>
+        <cfif rc.moduleid eq '00000000000000000000000000000000000' and (not rc.$.getContentRenderer().useLayoutManager() and listFindNoCase('Page,Folder,Gallery,Calender',rc.type))>
 
           <cfset displayList=rc.contentBean.getDisplayList()>
           <cfset availableList=rc.contentBean.getAvailableDisplayList()>
@@ -361,9 +361,6 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 
         </cfif>
         <!--- /list display options --->
-
-
-
 
       <span id="extendset-container-layoutobjects" class="extendset-container"></span>
       <span id="extendset-container-tablayoutobjectsbottom" class="extendset-container"></span>

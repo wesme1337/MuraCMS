@@ -43,7 +43,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 --->
 <cfset tabList=listAppend(tabList,"tabSummary")>
 <cfoutput>
-<div class="mura-panel panel">
+<div class="mura-panel panel" id="tabSummary">
 	<div class="mura-panel-heading" role="tab" id="heading-summary">
 		<h4 class="mura-panel-title">
 			<a class="collapse collapsed" role="button" data-toggle="collapse" data-parent="##content-panels" href="##panel-summary" aria-expanded="true" aria-controls="panel-summary">#application.rbFactory.getKeyValue(session.rb,"sitemanager.content.fields.summary")#</a>
@@ -52,7 +52,6 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 	<div id="panel-summary" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-summary" aria-expanded="false" style="height: 0px;">
 		<div class="mura-panel-body">
 
-<!--- todo: add new tabs extendset containers to layout UI/Tab selection --->
 			<span id="extendset-container-tabsummarytop" class="extendset-container"></span>
 
 			<!--- metadata --->
@@ -194,6 +193,9 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 					</label>
 					<textarea name="notes" rows="3" id="abstract">#esapiEncode('html',rc.contentBean.getNotes())#</textarea>
 				</div> <!--- /end mura-control-group --->
+
+			<span id="extendset-container-summary" class="extendset-container"></span>
+			<span id="extendset-container-tabsummarybottom" class="extendset-container"></span>
 
 		</div>
 	</div>

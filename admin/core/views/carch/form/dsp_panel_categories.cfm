@@ -43,7 +43,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 --->
 <cfset tabList=listAppend(tabList,"tabCategorization")>
 <cfoutput>
-<div class="mura-panel panel">
+<div class="mura-panel panel" id="tabCategorization">
 	<div class="mura-panel-heading" role="tab" id="heading-categories">
 		<h4 class="mura-panel-title">
 			<a class="collapse collapsed" role="button" data-toggle="collapse" data-parent="##content-panels" href="##panel-categories" aria-expanded="false" aria-controls="panel-categories">#application.rbFactory.getKeyValue(session.rb,"sitemanager.content.tabs.categorization")#</a>

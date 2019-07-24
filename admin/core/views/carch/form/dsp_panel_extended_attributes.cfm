@@ -42,8 +42,9 @@ modified version; it is your choice whether to do so, or to make such modified v
 version 2 without this exception.  You may, if you choose, apply this exception to your own modified versions of Mura CMS.
 --->
 <cfset tabList=listAppend(tabList,"tabExtendedAttributes")>
+<cfset extendSets=application.classExtensionManager.getSubTypeByName(rc.type,rc.contentBean.getSubType(),rc.siteid).getExtendSets(activeOnly=true) />
 <cfoutput>
-<div class="mura-panel panel">
+<div class="mura-panel panel<cfif not arrayLen(extendSets)> hide</cfif>" id="tabExtendedAttributes">
 	<div class="mura-panel-heading" role="tab" id="heading-extendedattributes">
 		<h4 class="mura-panel-title">
 			<a class="collapse collapsed" role="button" data-toggle="collapse" data-parent="##content-panels" href="##panel-extendedattributes" aria-expanded="false" aria-controls="panel-extendedattributes">#application.rbFactory.getKeyValue(session.rb,"sitemanager.content.tabs.extendedattributes")#</a>

@@ -43,7 +43,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 --->
 <cfset tabList=listAppend(tabList,"tabRemote")>
 <cfoutput>
-<div class="mura-panel panel">
+<div class="mura-panel panel" id="tabRemote">
 	<div class="mura-panel-heading" role="tab" id="heading-remote">
 		<h4 class="mura-panel-title">
 			<!--- todo: change rb key from 'advanced' to remote --->

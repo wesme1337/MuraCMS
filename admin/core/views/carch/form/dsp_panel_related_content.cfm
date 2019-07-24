@@ -46,7 +46,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 <cfset relatedContentSets = subtype.getRelatedContentSets()>
 
 <cfoutput>
-	<div class="mura-panel panel">
+	<div class="mura-panel panel" id="tabRelatedcontent">
 		<div class="mura-panel-heading" role="tab" id="heading-relatedcontent">
 			<h4 class="mura-panel-title">
 				<a class="collapse collapsed" role="button" data-toggle="collapse" data-parent="##content-panels" href="##panel-relatedcontent" aria-expanded="false" aria-controls="panel-relatedcontent">#application.rbFactory.getKeyValue(session.rb,"sitemanager.content.tabs.relatedcontent")#</a>

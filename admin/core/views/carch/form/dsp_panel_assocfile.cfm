@@ -44,7 +44,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 <cfif ListFindNoCase("Page,Folder,Calendar,Gallery,Link",rc.type)>
 <cfset tabList=listAppend(tabList,"tabAssoc")>
 <cfoutput>
-<div class="mura-panel panel">
+<div class="mura-panel panel" id="tabAssoc">
 	<div class="mura-panel-heading" role="tab" id="heading-assoc">
 		<h4 class="mura-panel-title">
 			<a class="collapse collapsed" role="button" data-toggle="collapse" data-parent="##content-panels" href="##panel-assoc" aria-expanded="true" aria-controls="panel-assoc">

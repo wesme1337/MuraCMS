@@ -48,7 +48,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 </cfloop>
 
 <cfoutput>
-  <div class="mura-panel panel">
+  <div class="mura-panel panel" id="tabLayoutObjects">
     <div class="mura-panel-heading" role="tab" id="heading-layout">
       <h4 class="mura-panel-title">
         <a class="collapse collapsed" role="button" data-toggle="collapse" data-parent="##content-panels" href="##panel-layout" aria-expanded="false" aria-controls="panel-layout">#application.rbFactory.getKeyValue(session.rb,"sitemanager.content.tabs.layoutobjects")#</a>

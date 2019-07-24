@@ -1221,19 +1221,26 @@ buttons: {
 	},
 
 	setExtendedAttributes: function(data) {
-		//alert(data);
+
+		/* MARK this markup and list of tabs needs to change */
+
+		console.log(data);
 		var r = eval("(" + data + ")");
 
 		$.each(r, function(name, value) {
-			//alert(name + ": " + value);
+			if (value.length){
+				console.log(name + ": " + value);
+			}
 			$('#extendset-container-' + name + ' .load-inline').spin(false);
 			$('#extendset-container-' + name).html(value);
 
 		});
 
 		if(r['default'] == '') {
+			$('#tabExtendedAttributes').addClass('hide');
 			$('#tabExtendedAttributesLI').addClass('hide');
 		} else {
+			$('#tabExtendedAttributes').removeClass('hide');
 			$('#tabExtendedAttributesLI').removeClass('hide');
 		}
 

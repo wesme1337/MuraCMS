@@ -204,6 +204,9 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 
 						<!--- set up body content --->
 						<cfsavecontent variable="bodyContent">
+
+					   <span id="extendset-container-tabprimarytop" class="extendset-container"></span>
+
 							<div id="bodyContainer" class="body-container mura-control-group" style="display:none;">
 								<label>
 					      	#application.rbFactory.getKeyValue(session.rb,"sitemanager.content.fields.content")#
@@ -275,18 +278,27 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 									</script>
 								</cfif>
 							</cfif>
+
+					   <span id="extendset-container-primary" class="extendset-container"></span>
+					   <span id="extendset-container-tabprimarybottom" class="extendset-container"></span>
 						</div>
 						<div id="noBodyContainer" class="no-body-container mura-control-group" style="display:none;">
-							<div class="block">
-								<div class="help-block-empty">
-								This content type does not include a body.
+						   <span id="extendset-container-tabprimarytop" class="extendset-container"></span>
+								<div class="block">
+									<div class="help-block-empty">
+									This content type does not include a body.
+									</div>
 								</div>
-							</div>
+						   <span id="extendset-container-primary" class="extendset-container"></span>
+						   <span id="extendset-container-tabprimarybottom" class="extendset-container"></span>
 						</div>
 					</cfsavecontent>
 
 				<cfelseif rc.type eq 'Link'>
 					<cfsavecontent variable="bodyContent">
+
+			   <span id="extendset-container-tabprimarytop" class="extendset-container"></span>
+
 					<div class="mura-control-group">
 					     <h2>
 				      		#application.rbFactory.getKeyValue(session.rb,"sitemanager.content.fields.url")#
@@ -313,6 +325,10 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 					     	 	</div>
 				     	 	</div>
 						</cfif>
+
+				   <span id="extendset-container-primary" class="extendset-container"></span>
+				   <span id="extendset-container-tabprimarybottom" class="extendset-container"></span>
+
 			     	</div>
 			     </cfsavecontent>
 				<cfelseif rc.type eq 'File'>

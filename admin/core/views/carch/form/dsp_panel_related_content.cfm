@@ -70,6 +70,10 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 					</div> <!--- /.bigui --->
 				</div>
 				<input id="relatedContentSetData" type="hidden" name="relatedContentSetData" value="" />	
+
+		   <span id="extendset-container-relatedcontent" class="extendset-container"></span>
+		   <span id="extendset-container-tabrelatedcontentbottom" class="extendset-container"></span>
+
 			</div>
 		</div>
 	</div> 

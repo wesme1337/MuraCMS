@@ -139,7 +139,7 @@
 	<cfset returnsets[containerID]=trim(returnsets[containerID]) />
 </cfloop>
 <cftry>
-	<cfparam name="rc.tablist" default="tabBasic,tabSummary,tabImage,tabPublishing,tabScheduling,tabLayout,tabCategorization,tabTags,tabRelatedcontent,tabExtendedattributes,tabListDisplayOptions,tabUsagereport">
+	<cfparam name="rc.tablist" default="tabAssoc,tabBasic,tabCategorization,tabExtendedattributes,tabLayoutObjects,tabPrimary,tabPublishing,tabRelatedcontent,tabRemote,tabSchedule,tabSummary,tabTags,tabUsagereport">
 	<cfloop list="#rc.tablist#" index="tab">
 		<cfloop list="top,bottom" index="context">
 			<cfsavecontent variable="returnsets.#tab##context#">

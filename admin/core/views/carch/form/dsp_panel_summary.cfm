@@ -52,7 +52,6 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 	<div id="panel-summary" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-summary" aria-expanded="false" style="height: 0px;">
 		<div class="mura-panel-body">
 
-<!--- todo: add new tabs extendset containers to layout UI/Tab selection --->
 			<span id="extendset-container-tabsummarytop" class="extendset-container"></span>
 
 			<!--- metadata --->
@@ -194,6 +193,9 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 					</label>
 					<textarea name="notes" rows="3" id="abstract">#esapiEncode('html',rc.contentBean.getNotes())#</textarea>
 				</div> <!--- /end mura-control-group --->
+
+			<span id="extendset-container-summary" class="extendset-container"></span>
+			<span id="extendset-container-tabsummarybottom" class="extendset-container"></span>
 
 		</div>
 	</div>

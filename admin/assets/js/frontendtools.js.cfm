@@ -1828,7 +1828,7 @@
 											} else if(location.href!=resp.location){
 												location.href=resp.location;
 											} else {
-												location.reload;
+												location.reload();
 											}
 					        	</cfif>
 								} else {

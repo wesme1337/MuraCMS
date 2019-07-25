@@ -92,7 +92,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 						<!--- layoutobjects,categories,related_content,tags,usage --->
 						<cfswitch expression="#rc.type#">
 							<cfcase value="Page,Folder,Calendar,Gallery">
-								<cfif rc.moduleid eq '00000000000000000000000000000000000' and (not len(tabAssignments) or listFindNocase(tabAssignments,'Layout & Objects'))>
+								<cfif rc.moduleid eq '00000000000000000000000000000000000' and (not len(tabAssignments) or listFindNocase(tabAssignments,'Layout & Objects') or listFindNocase(tabAssignments,'Layout'))>
 									<cfif listFind(session.mura.memberships,'S2IsPrivate')>
 										<cfinclude template="form/dsp_panel_layoutobjects.cfm">
 									</cfif>
@@ -172,16 +172,12 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 						<!--- extended attributes --->
 						<cfif listFindNoCase(rc.$.getBean('contentManager').ExtendableList,rc.type)>
 							<cfif not len(tabAssignments) or listFindNocase(tabAssignments,'Extended Attributes')>
-								<cfset extendSets=application.classExtensionManager.getSubTypeByName(rc.type,rc.contentBean.getSubType(),rc.siteid).getExtendSets(activeOnly=true) />
-								<cfif arrayLen(extendSets)>
 									<cfinclude template="form/dsp_panel_extended_attributes.cfm">
-								</cfif>
 							</cfif>
 						</cfif>
 						<!--- /extended attributes --->
 
 						<!--- Remote --->
-						<!--- todo: change "advanced" to "remote" in other locations --->
 						<cfif (rc.type neq 'Component' and rc.type neq 'Form') and rc.contentBean.getcontentID() neq '00000000000000000000000000000000001'>
 							<cfif not len(tabAssignments) or listFindNocase(tabAssignments,'Remote')>
 								<cfif listFind(session.mura.memberships,'S2IsPrivate')>

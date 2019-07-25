@@ -43,11 +43,9 @@ component
 
 			if(arguments.resourcePath == "Site_Files") {
 				pathRoot = currentSite.getAssetPath(complete=1);
-			}
-			else if(arguments.resourcePath == "Application_Root") {
-				pathRoot = application.configBean.getRootPath(complete=1);
-			}
-			else {
+			} else if (arguments.resourcePath == "Application_Root") {
+				pathRoot = currentSite.getRootPath(complete=1);
+			} else {
 				pathRoot = currentSite.getFileAssetPath(complete=1) & '/assets';
 			}
 

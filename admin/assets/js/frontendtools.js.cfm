@@ -1817,19 +1817,19 @@
 								if(resp.success){
 					        	<cfif node.getType() eq 'Variation'>
 							        if(MuraInlineEditor.requestedURL){
-												location.href=MuraInlineEditor.requestedURL
-											} else {
+										location.href=MuraInlineEditor.requestedURL
+									} else {
 							        	location.reload();
-											}
+									}
 					        	<cfelse>
 					        		var resp = eval('(' + data + ')');
 					        		if(MuraInlineEditor.requestedURL && !(MuraInlineEditor.requestedURL.indexOf('previewid') > -1)){
-												location.href=MuraInlineEditor.requestedURL
-											} else if(location.href!=resp.location){
-												location.href=resp.location;
-											} else {
-												location.reload();
-											}
+										location.href=MuraInlineEditor.requestedURL
+									} else if(location.href!=resp.location){
+										location.href=resp.location;
+									} else {
+										location.reload();
+									}
 					        	</cfif>
 								} else {
 

@@ -157,6 +157,9 @@ component
 			fileMove(tempDir & timage & "." & arguments.file.ext,filePath);
 
 			response.info = imageInfo(sourceImage);
+			response.info.url=arguments.file.url;
+			m.event('fileInfo',response.info).announceEvent('onAfterImageManipulation');
+			
 			structDelete(response.info,'source');
 
 			response.success = 1;
@@ -261,6 +264,9 @@ component
 			fileMove(tempDir & timage & "." & arguments.file.ext,filePath);
 
 			response.info = imageInfo(sourceImage);
+			response.info.url=arguments.file.url;
+			m.event('fileInfo',response.info).announceEvent('onAfterImageManipulation');
+
 			structDelete(response.info,'source');
 
 			response.success = 1;
@@ -332,6 +338,9 @@ component
 			workImage = ImageNew(filePath);
 
 			response.info = imageInfo(workImage);
+			response.info.url=arguments.file.url;
+			m.event('fileInfo',response.info).announceEvent('onAfterImageManipulation');
+
 			structDelete(response.info,'source');
 
 			response.aspect = aspect;

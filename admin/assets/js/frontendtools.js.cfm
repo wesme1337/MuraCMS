@@ -1816,17 +1816,23 @@
 
 								if(resp.success){
 					        	<cfif node.getType() eq 'Variation'>
-							        if(MuraInlineEditor.requestedURL){
+							        if(MuraInlineEditor.requestedURL && location.href != MuraInlineEditor.requestedURL){
 										location.href=MuraInlineEditor.requestedURL
 									} else {
 							        	location.reload();
 									}
 					        	<cfelse>
 					        		var resp = eval('(' + data + ')');
-					        		if(MuraInlineEditor.requestedURL && !(MuraInlineEditor.requestedURL.indexOf('previewid') > -1)){
-										location.href=MuraInlineEditor.requestedURL
+					        		if(MuraInlineEditor.requestedURL   && MuraInlineEditor.requestedURL != location.href && !(MuraInlineEditor.requestedURL.indexOf('previewid') > -1) ){
+										location.href=MuraInlineEditor.requestedURL;
+										if(location.href.indexOf('##') > -1){
+											location.reload();
+										}
 									} else if(location.href!=resp.location){
 										location.href=resp.location;
+										if(location.href.indexOf('##') > -1){
+											location.reload();
+										}
 									} else {
 										location.reload();
 									}
@@ -1855,8 +1861,11 @@
 					        }
 					       });
 						} else {
-							if(MuraInlineEditor.requestedURL){
-								location.href=MuraInlineEditor.requestedURL
+							if(MuraInlineEditor.requestedURL && MuraInlineEditor.requestedURL != location.href){
+								location.href=MuraInlineEditor.requestedURL;
+								if(location.href.indexOf('##') > -1){
+									location.reload();
+								}
 							} else {
 								location.reload();
 							}

@@ -157,6 +157,8 @@ component
 			fileMove(tempDir & timage & "." & arguments.file.ext,filePath);
 
 			response.info = imageInfo(sourceImage);
+			structDelete(response.info,'source');
+
 			response.success = 1;
 			return response;
 		}
@@ -259,6 +261,8 @@ component
 			fileMove(tempDir & timage & "." & arguments.file.ext,filePath);
 
 			response.info = imageInfo(sourceImage);
+			structDelete(response.info,'source');
+
 			response.success = 1;
 			return response;
 
@@ -328,6 +332,8 @@ component
 			workImage = ImageNew(filePath);
 
 			response.info = imageInfo(workImage);
+			structDelete(response.info,'source');
+
 			response.aspect = aspect;
 
 			response.success = 1;

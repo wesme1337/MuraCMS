@@ -997,7 +997,6 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 	<cfset pluginEvent.init(arguments)>
 	<cfset var pluginManager=getBean("pluginManager")>
 
-
 	<cfset arguments.size=lcase(arguments.size)>
 
 	<cfset pluginManager.announceEvent("onBeforeImageManipulation",pluginEvent)>
@@ -1007,7 +1006,8 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 	</cfif>
 
 	<cfif rsMeta.recordcount and IsImageFile(source)>
-
+		<cfset pluginEvent.setValue('siteid',rsMeta.siteID)>
+		
 		<cfif arguments.size eq "large">
 			<cfset var file="#application.configBean.getFileDir()#/#arguments.siteID#/cache/file/#arguments.fileID#.#rsMeta.fileExt#">
 		<cfelse>
@@ -1103,6 +1103,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 	<cfset var pluginManager=getBean("pluginManager")>
 
 	<cfif rsMeta.recordcount and IsImageFile(source)>
+		<cfset pluginEvent.setValue('siteid',rsMeta.siteID)>
 		<cfset getBean("pluginManager").announceEvent("onBeforeImageManipulation",pluginEvent)>
 
 		<cfscript>
@@ -1131,6 +1132,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 	<cfset var pluginManager=getBean("pluginManager")>
 
 	<cfif rsMeta.recordcount and IsImageFile(source)>
+		<cfset pluginEvent.setValue('siteid',rsMeta.siteID)>
 		<cfset pluginManager.announceEvent("onBeforeImageManipulation",pluginEvent)>
 		<cfscript>
 			myImage=imageRead(source);

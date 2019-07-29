@@ -1002,7 +1002,10 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 	<cfset pluginManager.announceEvent("onBeforeImageManipulation",pluginEvent)>
 
 	<cfif not fileExists(source)>
-		<cfset source="#application.configBean.getFileDir()#/#arguments.siteID#/cache/file/#arguments.fileID#.#rsMeta.fileExt#">
+		<cfset var source2="#application.configBean.getFileDir()#/#arguments.siteID#/cache/file/#arguments.fileID#.#rsMeta.fileExt#">
+		<cfif fileExists(source2)>
+			<cfset fileCopy(source2,source)>
+		</cfif>
 	</cfif>
 
 	<cfif rsMeta.recordcount and IsImageFile(source)>

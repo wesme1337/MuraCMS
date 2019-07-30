@@ -174,7 +174,7 @@ body.MuraFileBrowserWindow .mura-header ul.breadcrumb{
     transform: translate(-50%, -50%);
     min-width: 450px;
     min-height: 210px;
-    z-index: 100000;
+    z-index: 10;
 }
 #actionwindow-wrapper.editwindow {
   transform: translate(-50%, -50%);
@@ -478,7 +478,7 @@ a.folder-item {
 }
 
 .fileviewer-gallery-menu.mura-actions {
-  bottom: -81px;
+  bottom: -105px;
   position: absolute;
   text-align: center;
   width: 100%;

@@ -1,7 +1,8 @@
 <cfscript>
 if ( request.muraInDocker) {
 	// MySQL, MSSQL
-	application.dbmaintenance = getINIProperty('dbmaintenance') == "true";
+	application.dbmaintenance = (len(getINIProperty('dbmaintenance'))) ? getINIProperty('dbmaintenance') : "false";
+	
 	if (application.dbmaintenance) {
 		if (Len(getINIProperty('dbmaintenancetemplate'))) {
 			include getINIProperty('dbmaintenancetemplate');
@@ -16,7 +17,7 @@ if ( request.muraInDocker) {
 		// Attempt to connect to database
 		try {
 			cfdbinfo(datasource="nodatabase",type='dbnames',name="rsdbnames");
-		} catch (e) {
+		} catch (any e) {
 			application.dbconnectionerror = true;
 			if (Len(getINIProperty('dbconnectionerrortemplate'))) {
 				include getINIProperty('dbconnectionerrortemplate');

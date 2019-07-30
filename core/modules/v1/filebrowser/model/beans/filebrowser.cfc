@@ -107,7 +107,7 @@ component
 			var delim = rereplace(baseFilePath,".*\/","");
 			var filePath = baseFilePath & rereplace(arguments.file.url,".*?#delim#","");
 
-			if(!isPathLegal(arguments.siteid,arguments.resourcepath,filepath)){
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath, expandpath(filePath))){
 				throw(message="Illegal file path",errorcode ="invalidParameters");
 			}
 
@@ -197,11 +197,11 @@ component
 			var destination = replace(source,".#arguments.file.ext#","-copy1.#arguments.file.ext#");
 			var version = 1;
 
-			if(!isPathLegal(arguments.siteid,arguments.resourcepath,source)){
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath, expandpath(source))){
 				throw(message="Illegal file path",errorcode ="invalidParameters");
 			}
 
-			if(!isPathLegal(arguments.siteid,arguments.resourcepath,destination)){
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath, expandpath(destination))){
 				throw(message="Illegal file path",errorcode ="invalidParameters");
 			}
 
@@ -245,7 +245,7 @@ component
 			var delim = rereplace(baseFilePath,".*\/","");
 			var filePath = baseFilePath & rereplace(arguments.file.url,".*?#delim#","");
 
-			if(!isPathLegal(arguments.siteid,arguments.resourcepath,filepath)){
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath, expandpath(filePath))){
 				throw(message="Illegal file path",errorcode ="invalidParameters");
 			}
 
@@ -310,7 +310,7 @@ component
 			var delim = rereplace(baseFilePath,".*\/","");
 			var filePath = baseFilePath & rereplace(arguments.file.url,".*?#delim#","");
 
-			if(!isPathLegal(arguments.siteid,arguments.resourcepath,filepath)){
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath, expandpath(filePath))){
 				throw(message="Illegal file path",errorcode ="invalidParameters");
 			}
 
@@ -420,10 +420,10 @@ component
 				return response;
 			}
 
-			if(!isPathLegal(arguments.siteid,arguments.resourcepath,filepath)){
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath, expandpath(filePath))){
 				throw(message="Illegal file path",errorcode ="invalidParameters");
 			}
-			if(!isPathLegal(arguments.siteid,arguments.resourcepath,destinationPath)){
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath, expandpath(destinationPath))){
 				throw(message="Illegal file path",errorcode ="invalidParameters");
 			}
 
@@ -464,7 +464,7 @@ component
 				return response;
 			}
 
-			if(!isPathLegal(arguments.siteid,arguments.resourcepath,filepath)){
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath,expandpath(filePath))){
 				throw(message="Illegal file path",errorcode ="invalidParameters");
 			}
 
@@ -509,7 +509,7 @@ component
 			var baseFilePath = getBaseFileDir( arguments.siteid,arguments.resourcePath );
 			var filePath = baseFilePath  & m.globalConfig().getFileDelim() & rereplace(arguments.directory,"\.{1,}","\.","all");
 
-			if(!isPathLegal(arguments.siteid,arguments.resourcepath,filepath)){
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath,expandpath(filePath))){
 				throw(message="Illegal file path",errorcode ="invalidParameters");
 			}
 

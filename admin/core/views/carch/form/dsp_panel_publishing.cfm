@@ -311,7 +311,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 			</div> <!--- /end mura-control-group --->
 			
 			<!--- expiration --->
-			<cfif listFind("Page,Folder,Calendar,Gallery,Link,File,Link",rc.type)>
+			<cfif listFind("Page,Folder,Calendar,Gallery,Link,File,Variation",rc.type)>
 				<cfset rsAssigned=application.serviceFactory.getBean("contentDAO").getExpireAssignments(rc.contenthistid)>
 				<div class="mura-control-group">
 					<label>#esapiEncode('html_attr',application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.expires'))#</label>

@@ -302,9 +302,11 @@
 			});
 
 			// set width of pane relative to side controls
-			var resizeTabPane = function(offsetVal=17){
+			var resizeTabPane = function(offsetVal){
 				if ($('##mura-content-body-block').length){
-
+					if (offsetVal == ''){
+						offsetVal = 17;
+					}
 					var blockW = $('##mura-content-body-block').width();
 					var controlW = $('##mura-content-body-block .mura__edit__controls').width();
 					var newW = (blockW - controlW) - offsetVal;

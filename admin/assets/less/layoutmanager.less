@@ -1,5 +1,8 @@
 /* variables */
+// color for active module frames
 @objectbordercolor: @mura-red;
+// z-index for front end tool elements
+@fetoolzindex: 999;
 
 // push the body padding around, transition
 body.mura-sidebar-state__hidden--left {
@@ -171,15 +174,24 @@ body.mura-sidebar-state__pushed--right .mura__layout-manager__controls {
 	/*margin-top: -2px;*/
 }
 
+// todo set border background color to match .66 opacity on flag, border, all 
 .mura-object.mura-active.mura-container-active > .mura-fetborder,
-.mura-object.mura-active.mura-container-active > .frontEndToolsModal.mura,
-.mura-object.mura-active.mura-active-target > .mura-fetborder,
-.mura-object.mura-active.mura-active-target > .frontEndToolsModal.mura{
-	opacity: .75;
-	}
+.mura-object.mura-active.mura-active-target > .mura-fetborder{
+//	background-color: rgba(227, 74, 54, 0.66)!important;
+}
+
 .mura-object.mura-active.mura-container-active.mura-object-selected > .mura-fetborder,
+.mura-object.mura-active.mura-object-selected > .mura-fetborder{
+//	background-color: rgba(227, 74, 54, 1)!important;
+
+}
+
+
+.mura-object.mura-active.mura-container-active > .frontEndToolsModal.mura,
+.mura-object.mura-active.mura-active-target > .frontEndToolsModal.mura{
+	opacity: .66;
+	}
 .mura-object.mura-active.mura-container-active.mura-object-selected > .frontEndToolsModal.mura,
-.mura-object.mura-active.mura-object-selected > .mura-fetborder,
 .mura-object.mura-active.mura-object-selected > .frontEndToolsModal.mura {
 	opacity: 1;
 	}
@@ -196,7 +208,7 @@ body.mura-sidebar-state__pushed--right .mura__layout-manager__controls {
 	left: 0;
 	background:transparent;
 	width: 100%;
-	z-index: 10002; 
+	z-index: @fetoolzindex; 
 
 	 > span.mura-edit-label{
 	    background-color: @objectbordercolor!important;
@@ -289,7 +301,7 @@ span.mura-fetborder{
 div.mura-object[data-object="container"]:not(.mura-object-pin-tools) {
 
 	&> .frontEndToolsModal.mura {
-		z-index: 10002;
+		z-index: @fetoolzindex;
 		top: -24px;
 
 		> span.mura-edit-label{

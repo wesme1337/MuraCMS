@@ -354,7 +354,7 @@ config: {
     return error("No Access");
   }
 
-  formData.resourcepath=this.config.resourcepath;
+  formData.append('resourcepath',this.config.resourcepath);
 
   Mura.getEntity('filebrowser').invokeWithCSRF(
     'upload',

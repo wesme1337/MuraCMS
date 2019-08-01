@@ -196,6 +196,8 @@ function loadBy(commentID, remoteID) output=false {
 	if ( rs.recordcount ) {
 		variables.instance.isNew=0;
 		set(rs);
+	} else {
+		variables.instance.isApproved=getBean('settingsManager').getSite(variables.instance.siteid).getCommentApprovalDefault();
 	}
 	return this;
 }
@@ -290,7 +292,7 @@ function getCommenter() output=false {
 
 		<cfset eventArgs.siteID=variables.instance.siteID>
 		<cfset eventArgs.commentBean=this>
-	  <cfset eventArgs.bean=this>
+	  	<cfset eventArgs.bean=this>
 		<cfset pluginEvent.init(eventArgs)>
 
 		<cfset pluginManager.announceEvent(eventToAnnounce="onBeforeCommentDelete",currentEventObject=pluginEvent,objectid=getValue("commentid"))>
@@ -408,17 +410,13 @@ function getCommenter() output=false {
 
 	<cfset eventArgs.siteID=variables.instance.siteID>
 	<cfset eventArgs.commentBean=this>
-  <cfset eventArgs.bean=this>
+  	<cfset eventArgs.bean=this>
 	<cfset structAppend(eventArgs, arguments)>
 
 	<cfset currentEventObject.init(eventArgs)>
 
-	<cfif allowModuleAccess()>
-		<cfif not exists()>
-			<cfset variables.instance.isapproved=1>
-		</cfif>
-	<cfelse>
-		<cfset variables.instance.isapproved=getBean('settingsManager').getSite(variables.instance.siteid).getCommentApprovalDefault()>
+	<cfif not allowModuleAccess() and not getBean('settingsManager').getSite(variables.instance.siteid).getCommentApprovalDefault()>
+		<cfset variables.instance.isapproved=0>
 	</cfif>
 
 	<cfif len(variables.instance.parentID)>

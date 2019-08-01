@@ -468,7 +468,7 @@
 			cursor: pointer !important;
 			display: inline-block !important; 
 			font-size: @feToolbarFontSize !important;
-			padding: 2px 12px !important;
+			padding: 0 12px 2px 12px !important;
 			position: relative !important;
 			margin: 0 !important;
 
@@ -496,8 +496,14 @@
 				i{	
 					-webkit-animation: fa-spin 2s infinite linear;
 					animation: fa-spin 2s infinite linear;	
-					font-size: @feToolbarFontSize !important;				
-					margin-right: 1px !important;
+					margin-left: -1px !important;
+					margin-right: 3px !important;
+					/* font-size: @feToolbarFontSize !important; */
+
+					&:before{
+						content:'\f110';
+					}
+
 				}
 
 				&:hover i{

@@ -513,7 +513,7 @@ component
 				throw(message="Illegal file path",errorcode ="invalidParameters");
 			}
 
-			response.uploaded = fileUploadAll(destination);
+			response.uploaded = fileUploadAll(tempDir);
 			response.allowedExtensions = allowedExtensions;
 
 			for(var i = 1; i lte ArrayLen(response.uploaded);i++ ) {

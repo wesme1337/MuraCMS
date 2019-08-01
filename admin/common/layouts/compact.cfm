@@ -107,9 +107,9 @@
 		<script type="text/javascript">
 
 			var resizeTabPane = function(offsetVal){
-				if (offsetVal == ''){
-					offsetVal = 17;
-				}
+					if (isNaN(offsetVal)){
+						offsetVal = 17;
+					}
 				// set width of pane relative to side controls
 				if ($('##mura-content-body-block').length){
 

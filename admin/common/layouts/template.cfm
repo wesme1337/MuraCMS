@@ -304,7 +304,7 @@
 			// set width of pane relative to side controls
 			var resizeTabPane = function(offsetVal){
 				if ($('##mura-content-body-block').length){
-					if (offsetVal == ''){
+					if (isNaN(offsetVal)){
 						offsetVal = 17;
 					}
 					var blockW = $('##mura-content-body-block').width();

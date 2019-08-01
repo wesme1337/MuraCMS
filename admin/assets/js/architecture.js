@@ -1193,10 +1193,11 @@ buttons: {
 	loadExtendedAttributes: function(contentid,contentHistID, type, subType, _siteID, _context, _themeAssetPath) {
 		var url = './';
 		var pars = 'muraAction=cArch.loadExtendedAttributes&contentHistID=' + contentHistID + '&type=' + type + '&subType=' + subType + '&siteID=' + _siteID + '&tablist=' + siteManager.tablist + '&cacheid=' + Math.random();
-
+	
 		siteID = _siteID;
 		context = _context;
 		themeAssetPath = _themeAssetPath;
+
 		//location.href=url + "?" + pars;
 		$('.extendset-container').each(
 
@@ -1223,8 +1224,8 @@ buttons: {
 	setExtendedAttributes: function(data) {
 
 		/* MARK this markup and list of tabs needs to change */
-
-		console.log(data);
+		
+		//console.log(data);
 		var r = eval("(" + data + ")");
 
 		$.each(r, function(name, value) {
@@ -1278,6 +1279,18 @@ buttons: {
 		setFinders(".tab-content .mura-ckfinder, .tab-content .mura-finder");
 		setToolTips(".tab-content");
 		setFileSelectors();
+
+		var niceSelects=$('.extendset-container select');
+		
+		if(niceSelects.niceSelect){
+			niceSelects.each(function(){
+				var self=$(this);
+				if(typeof self.data('niceselect') == 'undefined' || self.data('niceselect')){
+					self.niceSelect();
+				}
+			})
+
+		}
 
 		$(window).trigger('resize');
 	},

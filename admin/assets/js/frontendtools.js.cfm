@@ -614,9 +614,6 @@
 			var framesrc = frame.getAttribute('src');
 			var appliedHeight = 0;
 
-
-			// mark: finding size of ckeditor in modal
-
 			var isEditText = framesrc.includes('cArch.edittext');
 			var isFullHeight = framesrc.includes('cArch.editLive') || framesrc.includes('cArch.edit');
 			var windowHeight = Math.max(frameHeight, utility(window).height());

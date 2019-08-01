@@ -61,15 +61,14 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 			<div class="mura-control-group">
 				<label class="mura-control-label">#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.contentsource')#</label>
 				<select class="objectParam" name="sourcetype">
-					<option value="">#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.selectcontentsource')#</option>
-					<option <cfif objectParams.sourcetype eq 'custom'>selected </cfif>value="custom">#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.custom')#</option>
+					<option <cfif objectParams.sourcetype eq 'custom'>selected </cfif>value="custom">#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.text')#</option>
 					<option <cfif objectParams.sourcetype eq 'component'>selected </cfif>value="component">#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.component')#</option>
 					<option <cfif objectParams.sourcetype eq 'boundattribute'>selected </cfif>value="boundattribute">#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.boundattribute')#</option>
 				</select>
 				<button id="editSource" class="btn"><i class="mi-pencil"></i> #application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.edit')#</button>
 			</div>
 			<div id="componentcontainer" class="mura-control-group source-container" style="display:none">
-				<label class="mura-control-label">#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.selectcomponent')#</label>
+				<label class="mura-control-label">#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.type.component')#</label>
 				<cfset rs=rc.$.getBean('contentManager').getList(args={moduleid='00000000000000000000000000000000003',siteid=session.siteid})>
 				<select name="source" id="component">
 					<option value="unconfigured">
@@ -111,17 +110,17 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 
 			</div>
 			<div id="boundattributecontainer" class="mura-control-group source-container" style="display:none">
-				<label class="mura-ontrol-label">#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.selectboundattribute')#</label>
+				<label class="mura-ontrol-label">#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.boundattribute')#</label>
 					<cfsilent>
 					<cfset options=arrayNew(2) />
-					<cfset options[1][1]="menutitle">
-					<cfset options[1][2]=application.rbFactory.getKeyValue(session.rb,'params.menutitle')>
-					<cfset options[2][1]="title">
-					<cfset options[2][2]=application.rbFactory.getKeyValue(session.rb,'params.title')>
-					<cfset options[3][1]="credits">
-					<cfset options[3][2]=application.rbFactory.getKeyValue(session.rb,'params.credits')>
-					<cfset options[4][1]="summary">
-					<cfset options[4][2]=application.rbFactory.getKeyValue(session.rb,'params.summary')>
+					<cfset options[1][1]="title">
+					<cfset options[1][2]=application.rbFactory.getKeyValue(session.rb,'params.title')>
+					<cfset options[2][1]="menutitle">
+					<cfset options[2][2]=application.rbFactory.getKeyValue(session.rb,'params.menutitle')>
+					<cfset options[3][1]="summary">
+					<cfset options[3][2]=application.rbFactory.getKeyValue(session.rb,'params.summary')>
+					<cfset options[4][1]="credits">
+					<cfset options[4][2]=application.rbFactory.getKeyValue(session.rb,'params.credits')>
 
 					<cfset rsExtend=application.configBean.getClassExtensionManager().getExtendedAttributeList(siteID=rc.siteid,baseTable="tcontent",activeOnly=true,type=content.getType(),subtype=content.getSubType())>
 					<cfloop query="rsExtend">

@@ -1,14 +1,15 @@
 /* variables */
 
 /* panel headers */
+
 @controlspanelhdrbgrd: #FFFFFF;
 @controlspanelhdrtext: #545454;
 @controlspanelhdrhover: #FEFEFE;
 @controlspanelhdrhovertext: #212529;
 @controlspanelhdrborder: #EBEBEB;
 @controlsclosedicon: #9b9b9b;
-
 /* panels and elements */
+
 @controlsdivbgrd: #F9F9F9;
 @controlspanelbgrd: transparent;
 @controlsgroupbgrd: #FCFCFC;
@@ -23,16 +24,15 @@
 @controlsinputfocusshadow: 0 1px 0 #b1b1b1;
 @cardshadow: none;
 @titleeditwidth: 100%;
-
 /* panels layout */
+
 @editcalcheight: ~"calc(100vh - 216px)";
 @editscrollheight: ~"calc(100vh - 260px)";
 @editcalcwidth: ~"calc(100% - 315px)";
-
 /* front end modal */
+
 @frontendcalcheight: ~"calc(100vh - 84px)";
 @frontendcontrolsheight: ~"calc(100vh - 170px)";
-
 .contentTitle {
     font-size: 26px;
     font-weight: bold;
@@ -55,15 +55,13 @@
     min-height: @editscrollheight !important;
     text-transform: none;
     z-index: 98!important;
-
-    h1, h2, h3, h4, p{
+    h1, h2, h3, h4, p {
         color: @controlstextcolor;
         font-weight: normal;
     }
-    h1, h2{
+    h1, h2 {
         margin-bottom: 8px;
-    }    
-
+    }
     #mura__edit__settings__filter {
         margin: 0;
         padding: 0;
@@ -143,8 +141,7 @@
             background-image: none;
             text-shadow: none;
         }
-        .btn-default,
-        .btn:not([class*="btn-"]) {
+        .btn-default, .btn:not([class*="btn-"]) {
             border-radius: 2px;
             background-image: none;
             text-shadow: none;
@@ -171,10 +168,7 @@
             padding-left: 17px;
         }
         .mura-input-set {
-            .btn.focus,
-            .btn-default:hover,
-            .btn:not([class*="btn-"]):hover,
-            .btn.active:hover {
+            .btn.focus, .btn-default:hover, .btn:not([class*="btn-"]):hover, .btn.active:hover {
                 background-color: @controlspanelhdrbgrd;
                 color: @controlstextcolor;
             }
@@ -196,66 +190,54 @@
             background-color: @controlsgroupbgrd !important;
             position: relative !important;
             min-height: 36px !important;
-
-            &.boolean{
+            &.boolean {
                 background-color: transparent !important;
                 padding-bottom: 0 !important;
                 margin: 0 auto 4px !important;
-                &+.mura-control-group:not(.boolean){
+                &+.mura-control-group:not(.boolean) {
                     margin-top: 16px !important;
                 }
             }
-
-            .mura-control-heading,
-            p.mura-control-heading{
-            	font-size: @controlsinputfontsize;
-            	font-weight: normal;
-            	padding-top: 8px !important;
+            .mura-control-heading, p.mura-control-heading {
+                font-size: @controlsinputfontsize;
+                font-weight: normal;
+                padding-top: 8px !important;
             }
-
-			label, 
-			.control-label, 
-			.mura-control-label {
-	            font-size: 14px !important;
-	            font-weight: normal !important;
-	            color: @controlslabelcolor !important;
-	            line-height: 1.2 !important;
-	            padding-top: 4px;
-
-                i{
+            label, .control-label, .mura-control-label {
+                font-size: 14px !important;
+                font-weight: normal !important;
+                color: @controlslabelcolor !important;
+                line-height: 1.2 !important;
+                padding-top: 4px;
+                i {
                     color: @controlslabeliconcolor;
                 }
-
-	            &.checkbox, 
-	            &.radio{
-	            	color: @controlstextcolor !important;
-	            }
-				&.checkbox{
-				  padding-left: 22px !important;
-				}
-				&.radio{
-				  padding-left: 15px !important;
-				}
-				&.checkbox.inline,
-				&.radio.inline{
-				  width:auto !important;
-				  padding-left: 30px !important;
-				  margin-top: 0 !important;
-				}
-				&.radio.inline{
-				  padding-left: 22px !important;
-				}
-				&.time-repeat {
-        		  width: 75px !important;
- 			   }
+                &.checkbox, &.radio {
+                    color: @controlstextcolor !important;
+                }
+                &.checkbox {
+                    padding-left: 22px !important;
+                }
+                &.radio {
+                    padding-left: 15px !important;
+                }
+                &.checkbox.inline, &.radio.inline {
+                    width: auto !important;
+                    padding-left: 30px !important;
+                    margin-top: 0 !important;
+                }
+                &.radio.inline {
+                    padding-left: 22px !important;
+                }
+                &.time-repeat {
+                    width: 75px !important;
+                }
             }
-
             &>label+textarea:not([class*=mura-constrain]) {
                 min-height: 6em !important;
                 max-width: 100% !important;
                 min-width: 100% !important;
             }
-
         }
         .mura-panel-group {
             border-radius: 0;
@@ -339,7 +321,7 @@
             }
             /* /nested panels */
             &.no-header {
-               &> .mura-panel .mura-panel-heading {
+                &>.mura-panel .mura-panel-heading {
                     display: none !important;
                     margin: 0 !important;
                     padding: 0 !important;
@@ -352,7 +334,7 @@
                 margin: 8px 0;
                 padding: 6px 10px;
             }
-            #panel-gds-object{
+            #panel-gds-object {
                 margin-top: -16px;
             }
             .panel-gds-box span {
@@ -369,21 +351,7 @@
             }
         }
         /* /mura-panel-group */
-
-        select, select:focus, input[type=date], input[type=file], input[type=datetime], input[type=datetime-local], input[type=image], input[type=email], input[type=month], input[type=number], input[type=tel], input[type=range], input[type=text], input[type=text].mura-repeat-option, input[type=url], input[type=week], textarea,
-        .mura-control-group>label+textarea:not([class*="mura-constrain"]),
-        .mura-control-group>label+*+textarea:not([class*="mura-constrain"]),
-        .mura-control-group>label+input[type=text]:not([class*="datepicker"]):not([class*="mura-constrain"]),
-        .mura-control-group>label+*+input[type=text]:not([class*="datepicker"]):not([class*="mura-constrain"]),
-        .mura-control-group>label+input[type=password],
-        .mura-control-group>label+*+input[type=password],
-        .mura-control-group>label+input[type=file],
-        .mura-control-group>label+*+input[type=file],
-        .mura-control-group>label+select:not([class*="time"]):not([class*="mura-constrain"]),
-        .mura-control-group>label+*+select:not([class*="time"]):not([class*="mura-constrain"]),
-        .mura-control-group>label+input:not([type]),
-        .mura-control-group>label+*+input:not([type]),
-        .mura-control-group>label+*+.nice-select {
+        select, select:focus, input[type=date], input[type=file], input[type=datetime], input[type=datetime-local], input[type=image], input[type=email], input[type=month], input[type=number], input[type=tel], input[type=range], input[type=text], input[type=text].mura-repeat-option, input[type=url], input[type=week], textarea, .mura-control-group>label+textarea:not([class*="mura-constrain"]), .mura-control-group>label+*+textarea:not([class*="mura-constrain"]), .mura-control-group>label+input[type=text]:not([class*="datepicker"]):not([class*="mura-constrain"]), .mura-control-group>label+*+input[type=text]:not([class*="datepicker"]):not([class*="mura-constrain"]), .mura-control-group>label+input[type=password], .mura-control-group>label+*+input[type=password], .mura-control-group>label+input[type=file], .mura-control-group>label+*+input[type=file], .mura-control-group>label+select:not([class*="time"]):not([class*="mura-constrain"]), .mura-control-group>label+*+select:not([class*="time"]):not([class*="mura-constrain"]), .mura-control-group>label+input:not([type]), .mura-control-group>label+*+input:not([type]), .mura-control-group>label+*+.nice-select {
             margin: 0;
             width: 100%;
             background-color: @controlsinputbgrd;
@@ -395,20 +363,19 @@
             outline: none;
             outline-offset: 0;
         }
-        .mura-control.justify select.multiSelect{
+        .mura-control.justify select.multiSelect {
             font-size: 14px;
             height: auto !important;
             overflow: auto;
             padding-left: 32px;
         }
-        .mura-timeselectwrapper{
+        .mura-timeselectwrapper {
             max-width: 266px;
             min-width: 232px;
             margin: 0;
             padding: 0;
             float: left;
-
-            .nice-select.time{
+            .nice-select.time {
                 width: 30%;
                 padding: 7px 12px 8px 3px;
                 margin-right: 6px;
@@ -417,38 +384,29 @@
                 clear: none;
             }
         }
-
-        .mura-control-group>label+input[type=text],
-        .mura-control-group>label+*+input[type=text],
-        .mura-control-group>label+input[type=password],
-        .mura-control-group>label+*+input[type=password],
-        .mura-control-group>label+textarea,
-        .mura-control-group>label+*+textarea{
+        .mura-control-group>label+input[type=text], .mura-control-group>label+*+input[type=text], .mura-control-group>label+input[type=password], .mura-control-group>label+*+input[type=password], .mura-control-group>label+textarea, .mura-control-group>label+*+textarea {
             box-shadow: @controlsinputshadow;
             border-bottom-right-radius: 0px;
             border-bottom-left-radius: 0px;
             margin-bottom: 8px !important;
             padding: 0;
-            &:focus{
+            &:focus {
                 box-shadow: @controlsinputfocusshadow;
             }
         }
-        .mura-control-group>label+textarea,
-        .mura-control-group>label+*+textarea{
+        .mura-control-group>label+textarea, .mura-control-group>label+*+textarea {
             min-height: 48px !important;
         }
-        .cke_bottom, 
-        .cke_chrome, 
-        .cke_top{
+        .cke_bottom, .cke_chrome, .cke_top {
             border-color: transparent !important;
             background-color: #fff;
         }
-        .cke_bottom{
+        .cke_bottom {
             border-top: 1px solid #f9f9f9!important;
             width: ~"calc(100% - 36px)" !important;
             margin: 0 0 0 12px;
         }
-        .cke_top{
+        .cke_top {
             border-bottom: 1px solid #f9f9f9!important;
             width: ~"calc(100% - 36px)" !important;
             margin: 0 0 0 12px;
@@ -494,10 +452,9 @@
             background: none;
             color: @controlsinputtextcolor;
         }
-        .colorpicker-element .add-on,
-        .colorpicker-element .input-group-addon{
+        .colorpicker-element .add-on, .colorpicker-element .input-group-addon {
             border: none;
-            i{           
+            i {
                 display: inline-block;
                 cursor: pointer;
                 height: 16px;
@@ -506,11 +463,8 @@
                 vertical-align: text-top;
                 width: 16px;
             }
-        }        
-        .mura-control-group input.radio,
-        .mura-control-group input[type=radio],
-        .mura-control-group input.checkbox,
-        .mura-control-group input[type=checkbox] {
+        }
+        .mura-control-group input.radio, .mura-control-group input[type=radio], .mura-control-group input.checkbox, .mura-control-group input[type=checkbox] {
             margin-top: 2px !important;
             border: none;
             outline: 0;
@@ -536,17 +490,17 @@
                 }
             }
         }
-        .tagSelector{
-             input{
+        .tagSelector {
+            input {
                 margin-top: 0;
             }
-            .tag{
+            .tag {
                 background-color: @controlslabelcolor;
                 border-radius: 2px;
                 color: #FFF;
                 font-size: 14px;
                 height: 24px;
-                 a i{
+                a i {
                     color: #e0e0e0 !important;
                     float: right;
                     font-size: 12px;
@@ -554,8 +508,7 @@
                     margin: 6px 0px 0 6px;
                 }
             }
-         }   
-
+        }
         #feedCustomImageOptions .half {
             padding-right: 12px;
             +.half {
@@ -563,18 +516,14 @@
                 padding-left: 12px;
             }
         }
-        #availableFields, #availableGroups,
-        .dragMsg {
+        #availableFields, #availableGroups, .dragMsg {
             color: @controlstextcolor;
             span {
                 color: @controlstextcolor;
             }
         }
-        #sortableFields,
-        .sortableFields, #sortableGroups,
-        .sortableGroups {
-            .dragMsg,
-            .dragMsg span {
+        #sortableFields, .sortableFields, #sortableGroups, .sortableGroups {
+            .dragMsg, .dragMsg span {
                 color: @controlstextcolor;
             }
             #availableListSort, #contentAvailableListSort, #groupAvailableListSort, #contentDisplayListSort, #displayListSort, #groupAssignmentListSort, #groupAvailableListSort {
@@ -610,8 +559,7 @@
             margin: 0;
             clear: both;
         }
-        .mura-control-group .mura-control.highlight,
-        .mura-control.highlight {
+        .mura-control-group .mura-control.highlight, .mura-control.highlight {
             background: @controlspanelhdrbgrd;
         }
         /* "big ui" launch button (auto-generated) */
@@ -678,8 +626,8 @@
         .bigui__controls {
             background-color: #f8f8f8;
             border-radius: 2px;
-            margin-bottom: 24px;      
-            min-height: 54px; 
+            margin-bottom: 24px;
+            min-height: 54px;
             padding: 12px 18px 5px;
         }
         .bigui__close {
@@ -701,12 +649,7 @@
         }
     }
     /* /.bigui__wrapper */
-    .btn.active.focus,
-    .btn.active:focus,
-    .btn.focus,
-    .btn:active.focus,
-    .btn:active:focus,
-    .btn:focus {
+    .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
         outline: none !important !important;
     }
     .btn-secondary {
@@ -716,8 +659,7 @@
         border-radius: 2px;
         color: @controlstextcolor;
     }
-    .btn-primary,
-    .mura-primary {
+    .btn-primary, .mura-primary {
         color: #ffffff !important;
         background-color: @mura-red;
         border-color: @mura-red;
@@ -733,7 +675,7 @@
     .categoryAssignment li ul {
         margin: 0 !important;
     }
-    .bigui__wrapper{
+    .bigui__wrapper {
         overflow: visible;
     }
     .mura-grid {
@@ -827,6 +769,7 @@
 /* /#bigui_categories */
 
 /* selected item lists for big ui panels */
+
 #categories__selected, #relcontent__selected {
     p {
         padding: 12px 0 12px 0px;
@@ -905,7 +848,7 @@ body.sidebar-tab {
     }
 }
 #mura-content-title-render {
-    .contentTitle; 
+    .contentTitle;
     color: @controlstextcolor;
     font-weight: 400;
     cursor: pointer;
@@ -918,11 +861,11 @@ body.sidebar-tab {
     width: @titleeditwidth !important;
     background-color: transparent;
     padding-left: 12px;
-    border: @controlspanelhdrborder solid 1px!important;        
+    border: @controlspanelhdrborder solid 1px!important;
     /*box-shadow: 0 1px 0 #e6e6e6;*/
-    &:hover{
-    /*border: #CDCDCD solid 1px!important;*/
-    } 
+    &:hover {
+        /*border: #CDCDCD solid 1px!important;*/
+    }
     &.editing {
         border: #CDCDCD solid 1px!important;
         /*border: @mura-red dashed 1px!important;*/
@@ -942,53 +885,46 @@ body.sidebar-tab {
 }
 #mura-content-body-render {
     clear: left;
-
     #assocImage {
-      clear: none !important;
+        clear: none !important;
     }
-    #mura-content-body-inner{
+    #mura-content-body-inner {
         background: white;
-        padding: 24px;    
-        
-            h2{
-                font-size: 15px;
-                font-weight: 700;
-                margin-bottom: 15px;
-            }
+        padding: 24px;
+        h2 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
     }
-
-    .block>.nav-tabs>li>a{  
+    .block>.nav-tabs>li>a {
         font-weight: normal !important;
         color: @controlslabelcolor !important;
     }
-    .block>.nav-tabs>li.active>a{
+    .block>.nav-tabs>li.active>a {
         font-weight: bold;
         color: @controlstextcolor !important;
     }
-
-    #bodyContainer > label {
+    #bodyContainer>label {
         display: none;
     }
-    #noBodyContainer > .block{
+    #noBodyContainer>.block {
         padding: 12px 12px 1px;
     }
 }
-
 /* modal window in legacy layout view */
+
 #carch .ui-dialog {
     .objectParam.nice-select {
         background-color: #fff;
         color: #646464;
         border: 1px solid #e6e6e6;
         border-radius: 3px;
-        ul.list,
-        .option {
+        ul.list, .option {
             background-color: #fff !important;
             color: #646464 !important;
         }
-        .option.focus,
-        .option.selected.focus,
-        .option:hover {
+        .option.focus, .option.selected.focus, .option:hover {
             background-color: #f6f6f6 !important;
             color: #646464 !important;
         }
@@ -998,36 +934,30 @@ body.sidebar-tab {
         background-color: @mura-red;
     }
 }
-
 /* nice-select overrides */
+
 .mura__edit__controls {
     select:not(#restrictGroups) {
         display: none;
     }
-    .nice-select, 
-    .mura-control-group>label+.nice-select {
+    .nice-select, .mura-control-group>label+.nice-select {
         background-color: @controlsselectbgrd !important;
         border-radius: 0;
         border: none;
         color: @controlsinputtextcolor;
         font-size: @controlsinputfontsize;
-        height: 36px;   
+        height: 36px;
         line-height: 36px;
         margin: 0;
         outline-offset: 0;
         -webkit-transition: all .1s ease-in-out;
         transition: all .1s ease-in-out;
         width: 100%;
-
-        .current{
+        .current {
             padding-left: 12px;
             margin-top: -6px;
         }
-
-        &.open,
-        &:active,
-        &:focus,
-        &:hover {
+        &.open, &:active, &:focus, &:hover {
             border-color: transparent
         }
         &:after {
@@ -1057,8 +987,7 @@ body.sidebar-tab {
             font-size: 13px;
             line-height: 34px
         }
-        .list, 
-        ul.list {
+        .list, ul.list {
             background-color: #FFF;
             border-radius: 0;
             border-top-color: transparent !important;
@@ -1087,9 +1016,7 @@ body.sidebar-tab {
             overflow: visible;
             text-overflow: inherit;
         }
-        .option.focus,
-        .option.selected.focus,
-        .option:hover {
+        .option.focus, .option.selected.focus, .option:hover {
             background-color: transparent;
             color: @controlsinputtextcolor;
         }
@@ -1099,36 +1026,34 @@ body.sidebar-tab {
             cursor: default
         }
     }
-    .mura-timeselectwrapper{
+    .mura-timeselectwrapper {
         width: 75%;
-        float:left;
+        float: left;
     }
 }
-
 /* front end modal */
-body.modal-wrapper{
-    .mura-header{
+
+body.modal-wrapper {
+    .mura-header {
         padding-bottom: 2px;
-        .nav-module-specific{
+        .nav-module-specific {
             display: none;
         }
     }
-    .block-content{
+    .block-content {
         padding-bottom: 0;
     }
-    .body-container.mura-control-group{
+    .body-container.mura-control-group {
         padding-bottom: 0;
         margin-bottom: 0;
     }
-
     .block-constrain#mura-content-body-block {
         height: @frontendcalcheight;
         box-shadow: none !important;
-    }      
-    .mura__edit__controls{
+    }
+    .mura__edit__controls {
         height: @frontendcontrolsheight;
-
-         .mura__edit__controls__scrollable {
+        .mura__edit__controls__scrollable {
             height: @frontendcontrolsheight;
             min-height: @frontendcontrolsheight;
             width: 100%;
@@ -1136,12 +1061,11 @@ body.modal-wrapper{
             overflow: auto;
             padding-right: 0;
         }
-
     }
-    .mura-actions{
+    .mura-actions {
         padding-bottom: 0 !important;
     }
-    .alert, #mura-content .alert{
+    .alert, #mura-content .alert {
         background-position: -13px center;
         background-repeat: no-repeat;
         background-size: 40px 40px;
@@ -1151,5 +1075,4 @@ body.modal-wrapper{
         min-height: 3em;
         padding: 1em 20px 1em 40px;
     }
-
 }

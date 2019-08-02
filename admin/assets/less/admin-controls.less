@@ -55,11 +55,16 @@
     min-height: @editscrollheight !important;
     text-transform: none;
     z-index: 98!important;
-    h1, h2, h3, h4, p {
+    h1,
+    h2,
+    h3,
+    h4,
+    p {
         color: @controlstextcolor;
         font-weight: normal;
     }
-    h1, h2 {
+    h1,
+    h2 {
         margin-bottom: 8px;
     }
     #mura__edit__settings__filter {
@@ -119,7 +124,8 @@
         .clearfix {
             clear: both !important;
         }
-        img+div, img+label {
+        img+div,
+        img+label {
             margin-top: 8px;
         }
         .mura-close {
@@ -141,7 +147,8 @@
             background-image: none;
             text-shadow: none;
         }
-        .btn-default, .btn:not([class*="btn-"]) {
+        .btn-default,
+        .btn:not([class*="btn-"]) {
             border-radius: 2px;
             background-image: none;
             text-shadow: none;
@@ -156,10 +163,12 @@
             clear: left;
             margin-top: 8px;
         }
-        label+.btn:not([class*="btn-"]), label div+.btn:not([class*="btn-"]) {
+        label+.btn:not([class*="btn-"]),
+        label div+.btn:not([class*="btn-"]) {
             margin-top: 8px;
         }
-        label.checkbox.inline, label.radio.inline {
+        label.checkbox.inline,
+        label.radio.inline {
             width: auto;
             padding-left: 20px !important;
             margin-top: 0;
@@ -168,7 +177,10 @@
             padding-left: 17px;
         }
         .mura-input-set {
-            .btn.focus, .btn-default:hover, .btn:not([class*="btn-"]):hover, .btn.active:hover {
+            .btn.focus,
+            .btn-default:hover,
+            .btn:not([class*="btn-"]):hover,
+            .btn.active:hover {
                 background-color: @controlspanelhdrbgrd;
                 color: @controlstextcolor;
             }
@@ -198,12 +210,15 @@
                     margin-top: 16px !important;
                 }
             }
-            .mura-control-heading, p.mura-control-heading {
+            .mura-control-heading,
+            p.mura-control-heading {
                 font-size: @controlsinputfontsize;
                 font-weight: normal;
                 padding-top: 8px !important;
             }
-            label, .control-label, .mura-control-label {
+            label,
+            .control-label,
+            .mura-control-label {
                 font-size: 14px !important;
                 font-weight: normal !important;
                 color: @controlslabelcolor !important;
@@ -212,7 +227,8 @@
                 i {
                     color: @controlslabeliconcolor;
                 }
-                &.checkbox, &.radio {
+                &.checkbox,
+                &.radio {
                     color: @controlstextcolor !important;
                 }
                 &.checkbox {
@@ -221,7 +237,8 @@
                 &.radio {
                     padding-left: 15px !important;
                 }
-                &.checkbox.inline, &.radio.inline {
+                &.checkbox.inline,
+                &.radio.inline {
                     width: auto !important;
                     padding-left: 30px !important;
                     margin-top: 0 !important;
@@ -295,13 +312,16 @@
                             left: 16px;
                         }
                     }
-                    a:hover, a:active, a:focus {
+                    a:hover,
+                    a:active,
+                    a:focus {
                         color: @controlspanelhdrhovertext !important;
                     }
                 }
             }
             /* /mura-panel*/
-            .help-block, form .help-block {
+            .help-block,
+            form .help-block {
                 background-color: #FFF !important;
                 box-shadow: @cardshadow;
                 border: none !important;
@@ -351,7 +371,36 @@
             }
         }
         /* /mura-panel-group */
-        select, select:focus, input[type=date], input[type=file], input[type=datetime], input[type=datetime-local], input[type=image], input[type=email], input[type=month], input[type=number], input[type=tel], input[type=range], input[type=text], input[type=text].mura-repeat-option, input[type=url], input[type=week], textarea, .mura-control-group>label+textarea:not([class*="mura-constrain"]), .mura-control-group>label+*+textarea:not([class*="mura-constrain"]), .mura-control-group>label+input[type=text]:not([class*="datepicker"]):not([class*="mura-constrain"]), .mura-control-group>label+*+input[type=text]:not([class*="datepicker"]):not([class*="mura-constrain"]), .mura-control-group>label+input[type=password], .mura-control-group>label+*+input[type=password], .mura-control-group>label+input[type=file], .mura-control-group>label+*+input[type=file], .mura-control-group>label+select:not([class*="time"]):not([class*="mura-constrain"]), .mura-control-group>label+*+select:not([class*="time"]):not([class*="mura-constrain"]), .mura-control-group>label+input:not([type]), .mura-control-group>label+*+input:not([type]), .mura-control-group>label+*+.nice-select {
+        select,
+        select:focus,
+        input[type=date],
+        input[type=file],
+        input[type=datetime],
+        input[type=datetime-local],
+        input[type=image],
+        input[type=email],
+        input[type=month],
+        input[type=number],
+        input[type=tel],
+        input[type=range],
+        input[type=text],
+        input[type=text].mura-repeat-option,
+        input[type=url],
+        input[type=week],
+        textarea,
+        .mura-control-group>label+textarea:not([class*="mura-constrain"]),
+        .mura-control-group>label+*+textarea:not([class*="mura-constrain"]),
+        .mura-control-group>label+input[type=text]:not([class*="datepicker"]):not([class*="mura-constrain"]),
+        .mura-control-group>label+*+input[type=text]:not([class*="datepicker"]):not([class*="mura-constrain"]),
+        .mura-control-group>label+input[type=password],
+        .mura-control-group>label+*+input[type=password],
+        .mura-control-group>label+input[type=file],
+        .mura-control-group>label+*+input[type=file],
+        .mura-control-group>label+select:not([class*="time"]):not([class*="mura-constrain"]),
+        .mura-control-group>label+*+select:not([class*="time"]):not([class*="mura-constrain"]),
+        .mura-control-group>label+input:not([type]),
+        .mura-control-group>label+*+input:not([type]),
+        .mura-control-group>label+*+.nice-select {
             margin: 0;
             width: 100%;
             background-color: @controlsinputbgrd;
@@ -384,7 +433,12 @@
                 clear: none;
             }
         }
-        .mura-control-group>label+input[type=text], .mura-control-group>label+*+input[type=text], .mura-control-group>label+input[type=password], .mura-control-group>label+*+input[type=password], .mura-control-group>label+textarea, .mura-control-group>label+*+textarea {
+        .mura-control-group>label+input[type=text],
+        .mura-control-group>label+*+input[type=text],
+        .mura-control-group>label+input[type=password],
+        .mura-control-group>label+*+input[type=password],
+        .mura-control-group>label+textarea,
+        .mura-control-group>label+*+textarea {
             box-shadow: @controlsinputshadow;
             border-bottom-right-radius: 0px;
             border-bottom-left-radius: 0px;
@@ -394,10 +448,13 @@
                 box-shadow: @controlsinputfocusshadow;
             }
         }
-        .mura-control-group>label+textarea, .mura-control-group>label+*+textarea {
+        .mura-control-group>label+textarea,
+        .mura-control-group>label+*+textarea {
             min-height: 48px !important;
         }
-        .cke_bottom, .cke_chrome, .cke_top {
+        .cke_bottom,
+        .cke_chrome,
+        .cke_top {
             border-color: transparent !important;
             background-color: #fff;
         }
@@ -430,29 +487,50 @@
             cursor: pointer;
         }
         /* custom styles for date inputs */
-        input[type=date], input[type=datetime], input[type=datetime-local], input[type=month], input[type=week] {
+        input[type=date],
+        input[type=datetime],
+        input[type=datetime-local],
+        input[type=month],
+        input[type=week] {
             appearance: none;
             -webkit-appearance: none;
             display: inline-block !important;
             visibility: visible !important;
         }
         /* hide the clear button from date inputs */
-        input[type=date]::-webkit-clear-button, input[type=datetime]::-webkit-clear-button, input[type=datetime-local]::-webkit-clear-button, input[type=month]::-webkit-clear-button, input[type=week]::-webkit-clear-button {
+        input[type=date]::-webkit-clear-button,
+        input[type=datetime]::-webkit-clear-button,
+        input[type=datetime-local]::-webkit-clear-button,
+        input[type=month]::-webkit-clear-button,
+        input[type=week]::-webkit-clear-button {
             display: none;
         }
         /* hide the spin button */
-        input[type=date]::-webkit-inner-spin-button, input[type=datetime]::-webkit-inner-spin-button, input[type=datetime-local]::-webkit-inner-spin-button, input[type=month]::-webkit-inner-spin-button, input[type=week]::-webkit-inner-spin-button {
+        input[type=date]::-webkit-inner-spin-button,
+        input[type=datetime]::-webkit-inner-spin-button,
+        input[type=datetime-local]::-webkit-inner-spin-button,
+        input[type=month]::-webkit-inner-spin-button,
+        input[type=week]::-webkit-inner-spin-button {
             display: none;
         }
         /* always display the drop down caret */
-        input[type=date]::-webkit-calendar-picker-indicator, input[type=datetime]::-webkit-calendar-picker-indicator, input[type=datetime-local]::-webkit-calendar-picker-indicator, input[type=month]::-webkit-calendar-picker-indicator, input[type=week]::-webkit-calendar-picker-indicator {
+        input[type=date]::-webkit-calendar-picker-indicator,
+        input[type=datetime]::-webkit-calendar-picker-indicator,
+        input[type=datetime-local]::-webkit-calendar-picker-indicator,
+        input[type=month]::-webkit-calendar-picker-indicator,
+        input[type=week]::-webkit-calendar-picker-indicator {
             color: @controlsinputtextcolor;
         }
-        input[type=date]::-webkit-calendar-picker-indicator:hover, input[type=datetime]::-webkit-calendar-picker-indicator:hover, input[type=datetime-local]::-webkit-calendar-picker-indicator:hover, input[type=month]::-webkit-calendar-picker-indicator:hover, input[type=week]::-webkit-calendar-picker-indicator:hover {
+        input[type=date]::-webkit-calendar-picker-indicator:hover,
+        input[type=datetime]::-webkit-calendar-picker-indicator:hover,
+        input[type=datetime-local]::-webkit-calendar-picker-indicator:hover,
+        input[type=month]::-webkit-calendar-picker-indicator:hover,
+        input[type=week]::-webkit-calendar-picker-indicator:hover {
             background: none;
             color: @controlsinputtextcolor;
         }
-        .colorpicker-element .add-on, .colorpicker-element .input-group-addon {
+        .colorpicker-element .add-on,
+        .colorpicker-element .input-group-addon {
             border: none;
             i {
                 display: inline-block;
@@ -464,7 +542,10 @@
                 width: 16px;
             }
         }
-        .mura-control-group input.radio, .mura-control-group input[type=radio], .mura-control-group input.checkbox, .mura-control-group input[type=checkbox] {
+        .mura-control-group input.radio,
+        .mura-control-group input[type=radio],
+        .mura-control-group input.checkbox,
+        .mura-control-group input[type=checkbox] {
             margin-top: 2px !important;
             border: none;
             outline: 0;
@@ -516,17 +597,29 @@
                 padding-left: 12px;
             }
         }
-        #availableFields, #availableGroups, .dragMsg {
+        #availableFields,
+        #availableGroups,
+        .dragMsg {
             color: @controlstextcolor;
             span {
                 color: @controlstextcolor;
             }
         }
-        #sortableFields, .sortableFields, #sortableGroups, .sortableGroups {
-            .dragMsg, .dragMsg span {
+        #sortableFields,
+        .sortableFields,
+        #sortableGroups,
+        .sortableGroups {
+            .dragMsg,
+            .dragMsg span {
                 color: @controlstextcolor;
             }
-            #availableListSort, #contentAvailableListSort, #groupAvailableListSort, #contentDisplayListSort, #displayListSort, #groupAssignmentListSort, #groupAvailableListSort {
+            #availableListSort,
+            #contentAvailableListSort,
+            #groupAvailableListSort,
+            #contentDisplayListSort,
+            #displayListSort,
+            #groupAssignmentListSort,
+            #groupAvailableListSort {
                 li {
                     text-overflow: ellipsis;
                     width: 100%;
@@ -559,7 +652,8 @@
             margin: 0;
             clear: both;
         }
-        .mura-control-group .mura-control.highlight, .mura-control.highlight {
+        .mura-control-group .mura-control.highlight,
+        .mura-control.highlight {
             background: @controlspanelhdrbgrd;
         }
         /* "big ui" launch button (auto-generated) */
@@ -640,7 +734,8 @@
         .navZoom li {
             cursor: default;
         }
-        #availableObjectsContainer, #availableRegions {
+        #availableObjectsContainer,
+        #availableRegions {
             min-width: 380px;
             float: left;
         }
@@ -649,7 +744,12 @@
         }
     }
     /* /.bigui__wrapper */
-    .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
+    .btn.active.focus,
+    .btn.active:focus,
+    .btn.focus,
+    .btn:active.focus,
+    .btn:active:focus,
+    .btn:focus {
         outline: none !important !important;
     }
     .btn-secondary {
@@ -659,7 +759,8 @@
         border-radius: 2px;
         color: @controlstextcolor;
     }
-    .btn-primary, .mura-primary {
+    .btn-primary,
+    .mura-primary {
         color: #ffffff !important;
         background-color: @mura-red;
         border-color: @mura-red;
@@ -701,7 +802,8 @@
             float: right;
         }
         .mura-grid-hdr {
-            dt, dd {
+            dt,
+            dd {
                 .bold-font;
             }
             dt {
@@ -770,7 +872,8 @@
 
 /* selected item lists for big ui panels */
 
-#categories__selected, #relcontent__selected {
+#categories__selected,
+#relcontent__selected {
     p {
         padding: 12px 0 12px 0px;
     }
@@ -920,11 +1023,14 @@ body.sidebar-tab {
         color: #646464;
         border: 1px solid #e6e6e6;
         border-radius: 3px;
-        ul.list, .option {
+        ul.list,
+        .option {
             background-color: #fff !important;
             color: #646464 !important;
         }
-        .option.focus, .option.selected.focus, .option:hover {
+        .option.focus,
+        .option.selected.focus,
+        .option:hover {
             background-color: #f6f6f6 !important;
             color: #646464 !important;
         }
@@ -940,7 +1046,8 @@ body.sidebar-tab {
     select:not(#restrictGroups) {
         display: none;
     }
-    .nice-select, .mura-control-group>label+.nice-select {
+    .nice-select,
+    .mura-control-group>label+.nice-select {
         background-color: @controlsselectbgrd !important;
         border-radius: 0;
         border: none;
@@ -957,7 +1064,10 @@ body.sidebar-tab {
             padding-left: 12px;
             margin-top: -6px;
         }
-        &.open, &:active, &:focus, &:hover {
+        &.open,
+        &:active,
+        &:focus,
+        &:hover {
             border-color: transparent
         }
         &:after {
@@ -987,7 +1097,8 @@ body.sidebar-tab {
             font-size: 13px;
             line-height: 34px
         }
-        .list, ul.list {
+        .list,
+        ul.list {
             background-color: #FFF;
             border-radius: 0;
             border-top-color: transparent !important;
@@ -1016,7 +1127,9 @@ body.sidebar-tab {
             overflow: visible;
             text-overflow: inherit;
         }
-        .option.focus, .option.selected.focus, .option:hover {
+        .option.focus,
+        .option.selected.focus,
+        .option:hover {
             background-color: transparent;
             color: @controlsinputtextcolor;
         }
@@ -1065,7 +1178,8 @@ body.modal-wrapper {
     .mura-actions {
         padding-bottom: 0 !important;
     }
-    .alert, #mura-content .alert {
+    .alert,
+    #mura-content .alert {
         background-position: -13px center;
         background-repeat: no-repeat;
         background-size: 40px 40px;

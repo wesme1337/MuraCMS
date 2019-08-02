@@ -1150,8 +1150,11 @@ and parentID is null
 	<cfset var newFilename ="" />
 	<cfset var newAttributeValue ="" />
 	<cfset var newStringValue ="" />
+	<cfset var newParams ="" />
+	<cfset var jsonFind ="" />
+	<cfset var jsonReplace ="" />
 
-	<cfif arguments.find neq "/">
+	<cfif len(arguments.find) and arguments.find neq "/">
 		<cfquery name="rs" datasource="#variables.configBean.getDatasource()#"  username="#variables.configBean.getDBUsername()#" password="#variables.configBean.getDBPassword()#">
 		select contentID, contentHistID, siteID, filename from tcontent
 		where siteid= <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.siteID#"/>
@@ -1191,6 +1194,36 @@ and parentID is null
 			</cfquery>
 		</cfloop>
 
+		<cfif isNumeric(arguments.find)>
+			<cfset jsonFind=arguments.find>
+		<cfelse>
+			<cfset jsonFind=serializeJSON(arguments.find)>
+			<cfset jsonFind=mid(jsonFind,2,len(jsonFind)-2)>
+		</cfif>
+		<cfif isNumeric(arguments.replace)>
+			<cfset jsonReplace=arguments.replace>
+		<cfelse>
+			<cfset jsonReplace=serializeJSON(arguments.replace)>
+			<cfset jsonReplace=mid(jsonReplace,2,len(jsonReplace)-2)>
+		</cfif>
+		
+		<cfquery datasource="#variables.configBean.getReadOnlyDatasource()#" name="rs"  username="#variables.configBean.getReadOnlyDbUsername()#" password="#variables.configBean.getReadOnlyDbPassword()#">
+			select * from tcontentobjects where params like <cfqueryparam value="%#jsonFind#%" cfsqltype="cf_sql_varchar"> and siteID = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.siteID#"/>
+		</cfquery>
+
+		<cfloop query="rs">
+			<cfset newParams = replaceNoCase(rs.params,"#jsonFind#","#jsonReplace#","ALL")>
+			<cfquery datasource="#variables.configBean.getDatasource()#" username="#variables.configBean.getDBUsername()#" password="#variables.configBean.getDBPassword()#">
+			update tcontentobjects set params = <cfqueryparam value="#newParams#" cfsqltype="cf_sql_longvarchar"> 
+			where contenthistid = <cfqueryparam cfsqltype="cf_sql_varchar" value="#rs.contenthistID#"/>
+			and siteid = <cfqueryparam cfsqltype="cf_sql_varchar" value="#rs.contenthistID#"/>
+			and object = <cfqueryparam cfsqltype="cf_sql_varchar" value="#rs.object#"/>
+			and objectid = <cfqueryparam cfsqltype="cf_sql_varchar" value="#rs.objectid#"/>
+			and columnid = <cfqueryparam cfsqltype="cf_sql_numeric" value="#rs.columnid#"/>
+			and orderno = <cfqueryparam cfsqltype="cf_sql_numeric" value="#rs.orderno#"/>
+			</cfquery>
+		</cfloop>
+
 		<cfquery datasource="#variables.configBean.getReadOnlyDatasource()#" name="rs">
 			select tclassextenddata.dataid, tclassextenddata.attributevalue, tclassextenddata.stringvalue from tclassextenddata
 			inner join tclassextendattributes on (tclassextenddata.attributeid=tclassextendattributes.attributeid)
@@ -1199,6 +1232,7 @@ and parentID is null
 			and tclassextendattributes.type='HTMLEditor'
 			and tclassextenddata.attributevalue like <cfqueryparam value="%#arguments.find#%" cfsqltype="cf_sql_varchar">
 		</cfquery>
+		
 
 		<cfloop query="rs">
 			<cfset newAttributeValue = replaceNoCase(rs.attributeValue,"#arguments.find#","#arguments.replace#","ALL")>

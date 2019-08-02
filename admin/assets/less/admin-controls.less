@@ -14,14 +14,15 @@
 @controlspanelbgrd: transparent;
 @controlsgroupbgrd: #FCFCFC;
 @controlslabelcolor: #999999;
+@controlslabelfontsize: 13px;
 @controlslabeliconcolor: #e0e0e0;
 @controlstextcolor: #333333;
 @controlsselectbgrd: #EFEFEF;
 @controlsinputbgrd: #FCFCFC;
 @controlsinputtextcolor: #333333;
-@controlsinputfontsize: 16px;
-@controlsinputshadow: 0 1px 0 #e6e6e6;
-@controlsinputfocusshadow: 0 1px 0 #b1b1b1;
+@controlsinputfontsize: 14px;
+@controlsinputshadow: none;
+@controlsinputfocusshadow: none;
 @cardshadow: none;
 @titleeditwidth: 100%;
 /* panels layout */
@@ -78,7 +79,7 @@
             border-bottom-right-radius: 0;
             color: @controlsinputtextcolor;
             cursor: pointer;
-            font-size: 14px;
+            font-size: @controlsinputfontsize;
             margin: 0;
             outline: none;
             outline-offset: 0;
@@ -96,7 +97,7 @@
         border: 1px solid transparent !important;
         box-shadow: none !important;
         cursor: pointer !important;
-        font-size: 14px !important;
+        font-size: @controlsinputfontsize !important;
         height: 32px !important;
         letter-spacing: normal !important;
         line-height: 1.42857143 !important;
@@ -139,7 +140,7 @@
             }
         }
         .btn {
-            font-size: 14px;
+            font-size: @controlsinputfontsize;
             padding: 6px 12px;
             -webkit-box-shadow: none;
             -moz-box-shadow: none;
@@ -197,11 +198,11 @@
             margin: 0;
         }
         .mura-control-group {
-            margin: 0 auto 12px !important;
-            padding: 6px 12px 12px !important;
-            background-color: @controlsgroupbgrd !important;
-            position: relative !important;
-            min-height: 36px !important;
+            margin: 0;
+            padding: 6px 12px 12px!important;
+            background-color: transparent;
+            position: relative!important;
+            min-height: 36px!important;
             &.boolean {
                 background-color: transparent !important;
                 padding-bottom: 0 !important;
@@ -219,9 +220,9 @@
             label,
             .control-label,
             .mura-control-label {
-                font-size: 14px !important;
-                font-weight: normal !important;
                 color: @controlslabelcolor !important;
+                font-size: @controlslabelfontsize !important;
+                font-weight: normal !important;
                 line-height: 1.2 !important;
                 padding-top: 4px;
                 i {
@@ -280,7 +281,7 @@
                 }
                 .mura-panel-body {
                     border-radius: 0;
-                    padding: 12px 18px 0;
+                    padding: 12px 12px 0;
                 }
                 .mura-panel-title {
                     color: @controlspanelhdrtext;
@@ -401,19 +402,15 @@
         .mura-control-group>label+input:not([type]),
         .mura-control-group>label+*+input:not([type]),
         .mura-control-group>label+*+.nice-select {
-            margin: 0;
-            width: 100%;
             background-color: @controlsinputbgrd;
             color: @controlsinputtextcolor;
-            padding: 7px 0;
-            font-size: @controlsinputfontsize;
-            border: none;
             cursor: pointer;
-            outline: none;
-            outline-offset: 0;
+            font-size: @controlsinputfontsize;
+            margin: 0;
+            width: 100%;
         }
         .mura-control.justify select.multiSelect {
-            font-size: 14px;
+            font-size: @controlsinputfontsize;
             height: auto !important;
             overflow: auto;
             padding-left: 32px;
@@ -440,8 +437,6 @@
         .mura-control-group>label+textarea,
         .mura-control-group>label+*+textarea {
             box-shadow: @controlsinputshadow;
-            border-bottom-right-radius: 0px;
-            border-bottom-left-radius: 0px;
             margin-bottom: 8px !important;
             padding: 0;
             &:focus {
@@ -1062,7 +1057,6 @@ body.sidebar-tab {
         width: 100%;
         .current {
             padding-left: 12px;
-            margin-top: -6px;
         }
         &.open,
         &:active,

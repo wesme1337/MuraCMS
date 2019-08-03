@@ -45,7 +45,7 @@ component
 			if(arguments.resourcePath == "Site_Files") {
 				pathRoot = currentSite.getAssetPath(complete=1);
 			} else if (arguments.resourcePath == "Application_Root") {
-				pathRoot = currentSite.getRootPath(complete=1);
+				pathRoot = currentSite.getRootPath(complete=0);
 			} else {
 				pathRoot = currentSite.getFileAssetPath(complete=1) & '/assets';
 			}
@@ -854,8 +854,6 @@ component
 			var rsFiles = rsExecute.getResult();
 			var rsPrefix = rsExecute.getPrefix();
 
-
-
 			response['endindex'] = response['endindex'] > rsFiles.recordCount ? rsFiles.recordCount : response['endindex'];
 
 			//response['res'] = rsFiles;
@@ -890,6 +888,7 @@ component
 				}
 				frow['lastmodified'] = rsFiles['datelastmodified'][x];
 				frow['lastmodifiedshort'] = LSDateFormat(rsFiles['datelastmodified'][x],m.getShortDateFormat());
+				frow['url'] = assetPath & "/" & frow['fullname'];
 				frow['url'] = assetPath & "/" & frow['fullname'];
 				ArrayAppend(response['items'],frow,true);
 			}

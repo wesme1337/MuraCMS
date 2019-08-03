@@ -763,7 +763,12 @@ function setFinders(e,config) {
                     var t = $('input[name="' + a.data("target") + '"]');
                     var serverpath=a.attr('data-serverpath');
                     if(serverpath && serverpath.toLowerCase()=='true'){
-                        t.val(webroot + e.url);
+                        if(e.url.indexOf(rootpath) > -1){
+                            t.val(webroot + e.url.substring(rootpath.length,e.url.length));
+                        } else {
+                            t.val(webroot + e.url);
+                        }
+                       
                     } else {
                         t.val(e.url);
                     }

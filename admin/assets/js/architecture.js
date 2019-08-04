@@ -2989,6 +2989,11 @@ buttons: {
 		if(typeof originParams == 'object'){
 			this.availableObject.params=$.extend(originParams,this.availableObject.params);
 		}
+	
+		if(!this.availableObject.params.label){
+			console.log(this.availableObject.params.labeltag)
+			this.availableObject.params.labeltag='';
+		}
 
 	},
 	configuratorMap:{

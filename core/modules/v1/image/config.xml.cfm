@@ -1,1 +1,1 @@
-<mura name="Image" contenttypes="*" iconclass="mi-picture"/>
+<mura name="Image" contenttypes="*" iconclass="mi-image"/>

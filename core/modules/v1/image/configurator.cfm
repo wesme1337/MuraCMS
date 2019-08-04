@@ -60,7 +60,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 				<input type="text" name="alt" class="objectParam" value="#esapiEncode('html_attr',objectparams.alt)#"/>
 			</div>
 			<div class="mura-control-group">
-				<label class="mura-control-label">Alt Text</label>
+				<label class="mura-control-label">Caption Text</label>
 				<!---<div class="alert" id="captiondemo"><cfif objectparams.caption eq '' or objectparams.caption eq '<p></p>'>N/A<cfelse>#objectparams.caption#</cfif></div>--->
 				<button type="button" class="btn mura-html" data-target="caption" data-label="Edit Caption"><i class="mi-font"></i> Edit Caption</button>
  				<input type="hidden" class="objectParam" name="caption" value="#esapiEncode('html_attr',objectparams.caption)#">

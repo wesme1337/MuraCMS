@@ -52,7 +52,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 		<div class="mura-layout-row">
 			<div class="mura-control-group">
 				<label class="mura-control-label">Image Src</label>
-				<input type="text" name="src" class="objectParam" value="#esapiEncode('html_attr',objectparams.src)#"/>
+				<input type="text" placeholder="URL" name="src" class="objectParam" value="#esapiEncode('html_attr',objectparams.src)#"/>
 				<button type="button" class="btn mura-finder" data-target="src" data-completepath="false"><i class="mi-image"></i> Select Image</button>
 			</div>
 			<div class="mura-control-group">

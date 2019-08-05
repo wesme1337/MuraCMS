@@ -204,7 +204,7 @@
 	/* themeable options */
 	background-color: #fff;
 	padding: 30px; /* size of inside dismiss button */
-	box-shadow: 0 0 20px 0 rgba(0,0,0,.5);
+	box-shadow: rgba(0, 0, 0, 0.14) 0 3px 32px 0;
 }
 
 /* ------------------------------

@@ -1,27 +1,29 @@
 /* variables */
 
 /* panel headers */
-@controlspanelhdrbgrd: #FFFFFF;
+@controlspanelhdrbgrd: hsla(0, 0%, 98%, 1);
 @controlspanelhdrtext: #545454;
 @controlspanelhdrhover: #FEFEFE;
 @controlspanelhdrhovertext: #212529;
 @controlspanelhdrborder: none;
-@controlsclosedicon: #9b9b9b;
+@controlsclosediconcolor: #BFBFBF;
+@controlsopeniconcolor: #545454;
 /* panels and elements */
 
-@controlsdivbgrd: #F9F9F9;
+@controlsdivbgrd: hsla(0, 0%, 94%, 1);
 @controlspanelbgrd: transparent;
 @controlsgroupbgrd: #FCFCFC;
 @controlslabelcolor: #545454;
-@controlslabelfontsize: 15px;
-@controlslabeliconcolor: #e0e0e0;
+@controlslabelfontsize: 12px;
+@controlslabeliconcolor: #A4A4A4;
 @controlstextcolor: #333333;
 @controlsselectbgrd: #FCFCFC;
 @controlsinputbgrd: #FCFCFC;
-@controlsinputborder: 1px solid transparent;
-@controlsinputfocusborder: 1px solid #e6e6e6;
+@controlsinputborder: 1px solid #e6e6e6;
+@controlsinputfocusborder: hsla(0, 0%, 80%, 1);
 @controlsinputtextcolor: #333333;
-@controlsinputfontsize: 14px;
+@controlsinputfontsize: 13px;
+@controlsinputheight: 26px;
 @controlsinputshadow: none;
 @controlsinputfocusshadow: none;
 @cardshadow: none;
@@ -200,10 +202,10 @@
         }
         .mura-control-group {
             margin: 0;
-            padding: 6px 12px 12px!important;
+            padding: 0 4px 12px!important;
             background-color: transparent;
             position: relative!important;
-            min-height: 36px!important;
+            min-height: @controlsinputheight  !important;
             &.boolean {
                 background-color: transparent !important;
                 padding-bottom: 0 !important;
@@ -294,12 +296,12 @@
                     a {
                         display: block;
                         color: @controlspanelhdrtext;
-                        padding: 12px 16px 12px 12px;
+                        padding: 8px 16px 8px 12px;
                         font-weight: 400;
-                        font-size: 16px;
+                        font-size: 13px;
                         position: relative;
                         &:before {
-                            color: @mura-red;
+                            color: @controlsopeniconcolor;
                             content: "\f107";
                             display: inline-block;
                             position: absolute;
@@ -313,7 +315,7 @@
                             -ms-transform: translateY(-50%);
                         }
                         &.collapsed:before {
-                            color: @controlsclosedicon;
+                            color: @controlsclosediconcolor;
                             content: "\f105";
                             right: 16px;
                         }
@@ -409,12 +411,13 @@
         .mura-control-group>label+*+.nice-select {
             background-color: @controlsinputbgrd;
             border: @controlsinputborder !important;
-            border-radius: 3px;
+            border-radius: 2px;
             color: @controlsinputtextcolor;
             cursor: pointer;
             font-size: @controlsinputfontsize;
+            height: @controlsinputheight;
             margin: 0;
-            padding: 8px 12px;
+            padding: 4px 8px;
             transition: border-color .4s linear;
             -webkit-transition: border-color .4s linear;
             width: 100%;
@@ -436,7 +439,7 @@
             float: left;
             .nice-select.time {
                 width: 30%;
-                padding: 7px 12px 8px 3px;
+                padding: 5px 12px 8px 3px;
                 margin-right: 6px;
                 max-width: 86px;
                 min-width: 66px;
@@ -672,7 +675,7 @@
             color: @mura-red !important;
             margin: 0;
             position: absolute;
-            top: 8px;
+            top: 2px;
             right: 16px;
         }
     }
@@ -941,7 +944,7 @@ body.sidebar-tab {
     color: @controlslabelcolor;
     display: block;
     float: left;
-    font-size: 14px;
+    font-size: 12px;
     padding: 4px 12px 4px 0;
     width: 100%;
     text-overflow: ellipsis;
@@ -950,7 +953,7 @@ body.sidebar-tab {
     >span {
         color: @controlsinputtextcolor;
         font-weight: 100;
-        padding-left: 12px;
+        padding-left: 2px;
         display: inline-block;
     }
     &.meta-label-wide {
@@ -1062,8 +1065,8 @@ body.sidebar-tab {
         border-radius: 3px;
         color: @controlsinputtextcolor;
         font-size: @controlsinputfontsize;
-        height: 36px;
-        line-height: 36px;
+        height: @controlsinputheight;
+        line-height: @controlsinputheight;
         margin: 0;
         outline-offset: 0;
         -webkit-transition: all .4s linear;
@@ -1071,7 +1074,7 @@ body.sidebar-tab {
         width: 100%;
         .current {
             padding-left: 12px;
-            margin-top: -8px;
+            margin-top: -5px;
         }
         &.open,
         &:active,

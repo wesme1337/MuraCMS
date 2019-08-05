@@ -3350,6 +3350,10 @@ component extends="mura.cfobject" hint="This provides JSON/REST API functionalit
 
 	function findRelatedContent(id='',siteid,params,arguments,expand='',expanded=0,entity='',relatedContentSetID='',expandedProp=''){
 		param name="arguments.params" default=url;
+	
+		if(len(arguments.relatedContentSetID)){
+			arguments.params.relatedContentSetID=arguments.relatedContentSetID;
+		}
 
 		var $=getBean('$').init(arguments.siteid);
 
@@ -3382,6 +3386,7 @@ component extends="mura.cfobject" hint="This provides JSON/REST API functionalit
 			if(isDefined('arguments.params.relatedContentSetID') && len(arguments.params.relatedContentSetID)){
 				args.relatedContentSetID=arguments.params.relatedContentSetID;
 			}
+
 		} else {
 			args.relatedContentSetID=arguments.relatedContentSetID;
 		}
@@ -3429,6 +3434,7 @@ component extends="mura.cfobject" hint="This provides JSON/REST API functionalit
 			return result;
 
 		} else {
+			
 			iterator=entity.getRelatedContentIterator(argumentCollection=args);
 			setIteratorProps(iterator,arguments.params);
 			returnArray=iteratorToArray(iterator=iterator,siteid=arguments.siteid,expand=arguments.expand,$=$,expanded=arguments.expanded,expandedProp='relatedcontent');

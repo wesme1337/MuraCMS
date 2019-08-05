@@ -17,7 +17,7 @@
 					<h4 class="mura-panel-title">
 						<a class="collapse collapsed" role="button" data-toggle="collapse" data-parent="##configurator-panels" href="##panel-labeling" aria-expanded="false" aria-controls="panel-labeling">
 							<!--- todo: rb key for heading --->
-							<i class="mi-font"></i>Heading
+							<i class="mi-header"></i>Heading
 						</a>
 					</h4>
 				</div>
@@ -32,6 +32,14 @@
 						<label>#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.label')#</label>
 						</cfif>
 						<input id="labelText" name="label" type="text" class="objectParam" maxlength="50" value="#esapiEncode('html_attr',objectParams.label)#"/>
+					</div>
+					<div class="mura-control-group">
+						<label>Heading Tag</label>
+						<select name="labeltag" class="objectParam">
+							<cfloop list="h1,h2,h3,h4,h5,h6" item="tag">
+								<option value="#tag#" <cfif tag eq objectParams.labeltag> selected</cfif>>#ucase(tag)#</option>
+							</cfloop>
+						</select>
 					</div>
 				</div>
 	</cfoutput>

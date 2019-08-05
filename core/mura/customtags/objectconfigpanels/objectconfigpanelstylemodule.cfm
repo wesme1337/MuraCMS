@@ -65,16 +65,6 @@
 									</select>
 								</div>
 
-								<div class="mura-control-group">
-									<!--- todo: rbkeys for label and options --->
-									<label>Full-Width Breakpoint</label>
-									<select name="breakpoint" class="classtoggle">
-									<option value=""> (Phone)</option>
-									<option value="mura-sm"<cfif listFind(attributes.params.class,'mura-sm',' ')> selected</cfif>>768px (Tablet)</option>
-									<option value="mura-md"<cfif listFind(attributes.params.class,'mura-md',' ')> selected</cfif>>992px (Laptop)</option>
-									<option value="mura-lg"<cfif listFind(attributes.params.class,'mura-lg',' ')> selected</cfif>> 1200px (Desktop)</option>
-									</select>
-								</div>
 								<!--- todo: bootstrap slider --->
 								<!--- 						<input
 									type="text"
@@ -97,6 +87,18 @@
 											</select>
 									</div>
 								</cfif>
+
+								<div class="mura-control-group">
+									<!--- todo: rbkeys for label and options --->
+									<label>Full-Width Breakpoint</label>
+									<select name="breakpoint" class="classtoggle">
+									<option value="">Auto</option>
+									<option value="mura-sm"<cfif listFind(attributes.params.class,'mura-sm',' ')> selected</cfif>>768px (Tablet)</option>
+									<option value="mura-md"<cfif listFind(attributes.params.class,'mura-md',' ')> selected</cfif>>992px (Laptop)</option>
+									<option value="mura-lg"<cfif listFind(attributes.params.class,'mura-lg',' ')> selected</cfif>> 1200px (Desktop)</option>
+									</select>
+								</div>
+								
 							</cfif>
 
 							<div class="mura-control-group">
@@ -326,7 +328,7 @@
 							<label>Background Image</label>
 							<input type="hidden" id="objectbackgroundimage" name="backgroundImage" class="objectStyle" value="#esapiEncode('html_attr',attributes.params.stylesupport.objectstyles.backgroundimage)#">
 							<input type="text" id="objectbackgroundimageurl" name="objectbackgroundimageurl" placeholder="URL" class="styleSupport" value="#esapiEncode('html_attr',attributes.params.styleSupport.objectbackgroundimageurl)#">
-							<button type="button" class="btn mura-ckfinder" data-target="objectbackgroundimageurl" data-completepath="false"><i class="mi-image"></i> Select Image</button>
+							<button type="button" class="btn mura-finder" data-target="objectbackgroundimageurl" data-completepath="false"><i class="mi-image"></i> Select Image</button>
 						</div>
 
 						<div class="mura-control-group mura-ui-grid object-css-bg-option bg-position" style="display:none;">

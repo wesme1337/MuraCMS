@@ -143,11 +143,22 @@ component persistent='false' accessors='true' output='false' extends='controller
 		variables.fw.redirect(action='cUsers.list', append='siteid', path='./');
 	}
 
+	public any function expirepassword(rc){
+		if(structKeyExists(rc,'userid')){
+			var user=arguments.rc.$.getBean('user').loadBy(userid=rc.userid);
+			if(user.exists()){
+				user.expirePassword();
+			}
+		}
+		request.layout=false;
+		return true;
+	}
+
 	public any function list(rc) {
 		arguments.rc.rs = getUserManager().getUserGroups(siteid=arguments.rc.siteid, ispublic=arguments.rc.ispublic);
 
 		// Iterator
-			setUsersIterator(rc);
+		setUsersIterator(rc);
 	}
 
 	public any function listUsers(rc) {

@@ -432,6 +432,14 @@ if(request.muraInDocker && (len(getSystemEnvironmentSetting('MURA_DATABASE')) ||
 			if (len(getSystemEnvironmentSetting('MURA_DBCLASS'))) {
 				this.datasources['#getSystemEnvironmentSetting('MURA_DATASOURCE')#'].class = getSystemEnvironmentSetting('MURA_DBCLASS');
 			}
+
+			if (len(getSystemEnvironmentSetting('MURA_DBBUNDLENAME'))) {
+				this.datasources['#getSystemEnvironmentSetting('MURA_DATASOURCE')#'].bundleName = getSystemEnvironmentSetting('MURA_DBBUNDLENAME');
+			}
+
+			if (len(getSystemEnvironmentSetting('MURA_DBBUNDLEVERSION'))) {
+				this.datasources['#getSystemEnvironmentSetting('MURA_DATASOURCE')#'].bundleVersion = getSystemEnvironmentSetting('MURA_DBBUNDLEVERSION');
+			}
 		}
 
 		if (len(getSystemEnvironmentSetting('MURA_DATABASE'))) {
@@ -447,6 +455,14 @@ if(request.muraInDocker && (len(getSystemEnvironmentSetting('MURA_DATABASE')) ||
 
 			if (len(getSystemEnvironmentSetting('MURA_DBCLASS'))) {
 				this.datasources.nodatabase.class = getSystemEnvironmentSetting('MURA_DBCLASS');
+			}
+
+			if (len(getSystemEnvironmentSetting('MURA_DBBUNDLENAME'))) {
+				this.datasources.nodatabase.bundleName = getSystemEnvironmentSetting('MURA_DBBUNDLENAME');
+			}
+
+			if (len(getSystemEnvironmentSetting('MURA_DBBUNDLEVERSION'))) {
+				this.datasources.nodatabase.bundleVersion = getSystemEnvironmentSetting('MURA_DBBUNDLEVERSION');
 			}
 		}
 

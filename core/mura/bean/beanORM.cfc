@@ -726,6 +726,7 @@ component extends="mura.bean.bean" versioned=false hint="This provides dynamic C
 		var primaryOnly=true;
 		var primaryFound=false;
 		var primarykeyargvalue='';
+		var addVersionFilter=getIsVersioned() && !structKeyExists(arguments,'contenthistid');
 
 		if(!isDefined('arguments.siteid') && hasProperty('siteid') && len(getValue('siteID'))){
 			arguments.siteid=getValue('siteID');
@@ -758,6 +759,14 @@ component extends="mura.bean.bean" versioned=false hint="This provides dynamic C
 					 )"
 				 );
 
+			}
+
+			if(addVersionFilter){
+				writeOutput("
+					inner join tcontent on (
+						#getTable()#.contenthistid=tcontent.contenthistid
+					)
+				");
 			}
 
 			for(var arg in arguments){
@@ -819,16 +828,26 @@ component extends="mura.bean.bean" versioned=false hint="This provides dynamic C
 					writeOutput(" #getTable()#.#discriminatorColumn#= :#getDiscriminatorValue()# ");
 				}
 
-				if(getIsHistorical()){
-					if(not started){
-						writeOutput("where ");
-						started=true;
-					} else {
-						writeOutput("and ");
-					}
+			}
 
-					writeOutput(" #getTable()#.deleted= 0 ");
+			if(getIsHistorical()){
+				if(not started){
+					writeOutput("where ");
+					started=true;
+				} else {
+					writeOutput("and ");
 				}
+
+				writeOutput(" #getTable()#.deleted= 0 ");
+			}
+
+			if(addVersionFilter){
+				if(not started){
+					writeOutput("where 1=1");
+					started=true;
+				}
+				
+				WriteOutput("#getBean('contentDAO').renderActiveClause("tcontent",arguments.siteID)#");
 			}
 
 			if(structKeyExists(arguments,'orderby') && len(arguments.orderby)){

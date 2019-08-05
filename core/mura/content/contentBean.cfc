@@ -242,6 +242,7 @@ component extends="mura.bean.beanExtendable" entityName="content" table="tconten
 		variables.instance.approvingChainRequest = false;
 		variables.instance.relatedContentSetData = "";
 		variables.instance.objectParams={};
+		variables.instance.canonicalURL='';
 		variables.displayRegions = structNew();
 		return this;
 	}
@@ -473,9 +474,11 @@ component extends="mura.bean.beanExtendable" entityName="content" table="tconten
 		var checkfound=false;
 
 		if(arrayLen(variables.instance.addObjects)){
+			WriteDump(variables.instance.addObjects);abort;
 			for(var obj in variables.instance.addObjects){
 				errorCheck=obj.validate().getErrors();
 				if(!structIsEmpty(errorCheck)){
+
 					do{
 						if( !structKeyExists(variables.instance.errors,obj.getEntityName() & checknum) ){
 							variables.instance.errors[obj.getEntityName()  & checknum ]=errorCheck;

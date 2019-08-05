@@ -10,6 +10,7 @@
 *.log
 *.sublime-project
 *.sublime-workspace
+*.codekit3
 sftp-config.json
 
 # ignored '.' files and directories
@@ -41,12 +42,17 @@ compiled/
 logs/
 temp/
 
+
+
 # ignored CF & Tomcat directories
 CFIDE/
 META-INF/
 WEB-INF/
 
 # ignored directories
+/sites/
+/modules/
+/themes/
 /demo/
 /plugins/
 /temp/
@@ -86,3 +92,4 @@ node_modules/
 demo-*/
 temp-*/
 config.codekit3
+stuff.txt

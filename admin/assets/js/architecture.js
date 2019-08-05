@@ -1193,10 +1193,11 @@ buttons: {
 	loadExtendedAttributes: function(contentid,contentHistID, type, subType, _siteID, _context, _themeAssetPath) {
 		var url = './';
 		var pars = 'muraAction=cArch.loadExtendedAttributes&contentHistID=' + contentHistID + '&type=' + type + '&subType=' + subType + '&siteID=' + _siteID + '&tablist=' + siteManager.tablist + '&cacheid=' + Math.random();
-
+	
 		siteID = _siteID;
 		context = _context;
 		themeAssetPath = _themeAssetPath;
+
 		//location.href=url + "?" + pars;
 		$('.extendset-container').each(
 
@@ -1221,26 +1222,27 @@ buttons: {
 	},
 
 	setExtendedAttributes: function(data) {
-		//alert(data);
+
+		/* MARK this markup and list of tabs needs to change */
+		
+		//console.log(data);
 		var r = eval("(" + data + ")");
 
 		$.each(r, function(name, value) {
-			//alert(name + ": " + value);
+			if (value.length){
+				console.log(name + ": " + value);
+			}
 			$('#extendset-container-' + name + ' .load-inline').spin(false);
 			$('#extendset-container-' + name).html(value);
 
 		});
 
 		if(r['default'] == '') {
+			$('#tabExtendedAttributes').addClass('hide');
 			$('#tabExtendedAttributesLI').addClass('hide');
 		} else {
+			$('#tabExtendedAttributes').removeClass('hide');
 			$('#tabExtendedAttributesLI').removeClass('hide');
-		}
-
-		if(!r['hasconfigurator']) {
-			$('#tabListDisplayOptionsLI').addClass('hide');
-		} else {
-			$('#tabListDisplayOptionsLI').removeClass('hide');
 		}
 
 		if(!r.hassummary) {
@@ -1274,9 +1276,21 @@ buttons: {
 		setHTMLEditors();
 		setDatePickers(".tab-content .datepicker", dtLocale);
 		setColorPickers(".tab-content .mura-colorpicker");
-		setFinders(".tab-content .mura-ckfinder");
+		setFinders(".tab-content .mura-ckfinder, .tab-content .mura-finder");
 		setToolTips(".tab-content");
 		setFileSelectors();
+
+		var niceSelects=$('.extendset-container select');
+		
+		if(niceSelects.niceSelect){
+			niceSelects.each(function(){
+				var self=$(this);
+				if(typeof self.data('niceselect') == 'undefined' || self.data('niceselect')){
+					self.niceSelect();
+				}
+			})
+
+		}
 
 		$(window).trigger('resize');
 	},
@@ -2975,6 +2989,11 @@ buttons: {
 		if(typeof originParams == 'object'){
 			this.availableObject.params=$.extend(originParams,this.availableObject.params);
 		}
+	
+		if(!this.availableObject.params.label){
+			console.log(this.availableObject.params.labeltag)
+			this.availableObject.params.labeltag='';
+		}
 
 	},
 	configuratorMap:{
@@ -3290,6 +3309,13 @@ buttons: {
 				if(siteManager.configuratorMode=='frontEnd'){
 
 					wireupExterndalUIWidgets();
+
+					$('.mura-html').each(function(){
+						var self=$(this);
+						self.click(function(){
+							siteManager.openDisplayObjectModal('object/html.cfm',self.data());
+						});
+					})
 
 					//if(siteManager.layoutmanager){
 						if(config.title.indexOf("<i class=") > -1){

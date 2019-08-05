@@ -559,6 +559,11 @@ component extends="mura.cfobject" output="false" hint="This provides core bean f
 		return application.objectMappings[variables.entityName].table;
 	}
 
+	function getIsVersioned(){
+		param name="application.objectMappings.#variables.entityName#.versioned" default="false";
+		return application.objectMappings[variables.entityName].versioned;
+	}
+
 	function getOrderBy(){
 		param name="application.objectMappings.#variables.entityName#.orderby" default="";
 		return application.objectMappings[variables.entityName].orderby;

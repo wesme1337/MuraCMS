@@ -1,4 +1,4 @@
-<!--- This file is part of Mura CMS.
+ <!--- This file is part of Mura CMS.
 
 Mura CMS is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -41,36 +41,48 @@ For clarity, if you create a modified version of Mura CMS, you are not obligated
 modified version; it is your choice whether to do so, or to make such modified version available under the GNU General Public License
 version 2 without this exception.  You may, if you choose, apply this exception to your own modified versions of Mura CMS.
 --->
-<cfif ListFindNoCase("Page,Folder,Calendar,Gallery,Link",rc.type)>
-<cfset tabList=listAppend(tabList,"tabAssoc")>
+<cfsilent>
+	<cfparam name="objectParams.src" default="">
+	<cfparam name="objectParams.alt" default="">
+	<cfparam name="objectParams.caption" default="">
+</cfsilent>
+<cf_objectconfigurator params="#objectParams#">
 <cfoutput>
-<div class="mura-panel panel" id="tabAssoc">
-	<div class="mura-panel-heading" role="tab" id="heading-assoc">
-		<h4 class="mura-panel-title">
-			<a class="collapse collapsed" role="button" data-toggle="collapse" data-parent="##content-panels" href="##panel-assoc" aria-expanded="true" aria-controls="panel-assoc">
-				<!--- todo better rb keys for these --->
-				<cfif rc.ptype eq 'Gallery' or rc.type neq 'File'>
-			  		#listLast(application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.selectimage'),' ')#
-				<cfelse>
-					#listLast(application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.selectfile'),' ')#
-				</cfif>
-			</a>
-		</h4>
-	</div>
-	<div id="panel-assoc" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-assoc" aria-expanded="false" style="height: 0px;">
-		<div class="mura-panel-body">
-			
-				<span id="extendset-container-tabassoctop" class="extendset-container"></span>
-
-				<!--- file/image selector --->				
-				<cfinclude template="dsp_file_selector.cfm">
-
-				<span id="extendset-container-assoc" class="extendset-container"></span>
-
-				<span id="extendset-container-tabassocbottom" class="extendset-container"></span>
-
+	<div>
+		<div class="mura-layout-row">
+			<div class="mura-control-group">
+				<label class="mura-control-label">Image Src</label>
+				<input type="text" placeholder="URL" name="src" class="objectParam" value="#esapiEncode('html_attr',objectparams.src)#"/>
+				<button type="button" class="btn mura-finder" data-target="src" data-completepath="false"><i class="mi-image"></i> Select Image</button>
+			</div>
+			<div class="mura-control-group">
+				<label class="mura-control-label">Alt Text</label>
+				<input type="text" name="alt" class="objectParam" value="#esapiEncode('html_attr',objectparams.alt)#"/>
+			</div>
+			<div class="mura-control-group">
+				<label class="mura-control-label">Caption Text</label>
+				<!---<div class="alert" id="captiondemo"><cfif objectparams.caption eq '' or objectparams.caption eq '<p></p>'>N/A<cfelse>#objectparams.caption#</cfif></div>--->
+				<button type="button" class="btn mura-html" data-target="caption" data-label="Edit Caption"><i class="mi-pencil"></i> Edit Caption</button>
+ 				<input type="hidden" class="objectParam" name="caption" value="#esapiEncode('html_attr',objectparams.caption)#">
+				<!---<script>
+				$('input[name="caption"]').on('change',
+					function(){
+						if(!this.value || this.value=='<p></p>'){
+							getElementById('captiondemo').innerHTML='N/A'
+						} else {
+							getElementById('captiondemo').innerHTML=this.value
+						}
+					}
+				)
+				</script>--->
+			</div>
 		</div>
+		<input type="hidden" class="objectParam" name="async" value="false">
+		<input type="hidden" class="objectParam" name="render" value="client">
 	</div>
-</div> 
+	<!--- Include global config object options --->
+	<cfinclude template="#$.siteConfig().lookupDisplayObjectFilePath('object/configurator.cfm')#">
+
 </cfoutput>
-</cfif>
+</cf_objectconfigurator>
+

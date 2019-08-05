@@ -253,17 +253,6 @@ exports.f = __webpack_require__(7) ? Object.defineProperty : function defineProp
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
-// 7.1.13 ToObject(argument)
-var defined = __webpack_require__(25);
-module.exports = function (it) {
-  return Object(defined(it));
-};
-
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
 /* WEBPACK VAR INJECTION */(function(process) {
 //require("babel-polyfill");
 //require("./polyfill");
@@ -995,9 +984,10 @@ var Mura=(function(){
 
 		var str = data.header;
 
-		str += data.inherited.header;
+
 
 		if(data.inherited.items.length){
+			str += data.inherited.header;
 			for(var i in data.inherited.items){
 				str += data.inherited.items[i].header;
 				if(typeof data.inherited.items[i].html != 'undefined' && data.inherited.items[i].html){
@@ -1005,9 +995,8 @@ var Mura=(function(){
 				}
 				str += data.inherited.items[i].footer;
 			}
+			str += data.inherited.footer;
 		}
-
-		str += data.inherited.footer;
 
 		str += data.local.header;
 
@@ -1952,7 +1941,7 @@ var Mura=(function(){
 
 
 	var layoutmanagertoolbar =
-			'<div class="frontEndToolsModal mura"><span class="mura-edit-icon"></span><span class="mura-edit-label"></span><span class="mura-edit-handle"></span></div>';
+			'<span class="mura-fetborder mura-fetborder-left"></span><span class="mura-fetborder mura-fetborder-right"></span><span class="mura-fetborder mura-fetborder-top"></span><span class="mura-fetborder mura-fetborder-bottom"></span><div class="frontEndToolsModal mura"><span class="mura-edit-icon"></span><span class="mura-edit-label"></span></div>';
 
 	function processMarkup(scope) {
 
@@ -1968,6 +1957,23 @@ var Mura=(function(){
 			}
 
 			var processors = [
+
+				function(){
+					//if layout manager UI exists check for rendered regions and remove them from additional regions
+					if(Mura('.mura__layout-manager__display-regions').length){
+						find('.mura-region').each(function(){
+							var region=Mura(this);
+							var isEditRegion=region.closest('.mura-region__item');
+							if(!isEditRegion.length){
+								Mura('.mura-region__item[data-regionid="' + region.data('regionid') + '"]').remove()
+							}
+						})
+
+						if(!Mura('.mura__layout-manager__display-regions .mura-region__item').length){
+							Mura('#mura-objects-openregions-btn, .mura__layout-manager__display-regions').remove();
+						}
+					}
+				},
 
 				function() {
 					find('.mura-object, .mura-async-object')
@@ -2497,6 +2503,9 @@ var Mura=(function(){
 				} else {
 					obj.children('.frontEndToolsModal').children('.mura-edit-label').html(Mura.firstToUpperCase(obj.data('object')));
 				}
+				if(obj.data('objecticonclass')){
+					obj.children('.frontEndToolsModal').children('.mura-edit-label').addClass(obj.data('objecticonclass'));
+				}
 
 				MuraInlineEditor.setAnchorSaveChecks(obj.node);
 
@@ -2519,6 +2528,9 @@ var Mura=(function(){
 							obj.children('.frontEndToolsModal').children('.mura-edit-label').html(obj.data('objectname'));
 						} else {
 							obj.children('.frontEndToolsModal').children('.mura-edit-label').html(Mura.firstToUpperCase(obj.data('object')));
+						}
+						if(obj.data('objecticonclass')){
+							obj.children('.frontEndToolsModal').children('.mura-edit-label').addClass(obj.data('objecticonclass'));
 						}
 
 						MuraInlineEditor.setAnchorSaveChecks(obj.node);
@@ -2549,6 +2561,9 @@ var Mura=(function(){
 									obj.children('.frontEndToolsModal').children('.mura-edit-label').html(obj.data('objectname'));
 								} else {
 									obj.children('.frontEndToolsModal').children('.mura-edit-label').html(Mura.firstToUpperCase(obj.data('object')));
+								}
+								if(obj.data('objecticonclass')){
+									obj.children('.frontEndToolsModal').children('.mura-edit-label').addClass(obj.data('objecticonclass'));
 								}
 
 								MuraInlineEditor.setAnchorSaveChecks(obj.node);
@@ -2587,6 +2602,9 @@ var Mura=(function(){
 									obj.children('.frontEndToolsModal').children('.mura-edit-label').html(obj.data('objectname'));
 								} else {
 									obj.children('.frontEndToolsModal').children('.mura-edit-label').html(Mura.firstToUpperCase(obj.data('object')));
+								}
+								if(obj.data('objecticonclass')){
+									obj.children('.frontEndToolsModal').children('.mura-edit-label').addClass(obj.data('objecticonclass'));
 								}
 
 								obj.off('click',Mura.handleObjectClick).on('click',Mura.handleObjectClick);
@@ -3562,6 +3580,17 @@ module.exports=Mura;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(133)))
 
 /***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 7.1.13 ToObject(argument)
+var defined = __webpack_require__(25);
+module.exports = function (it) {
+  return Object(defined(it));
+};
+
+
+/***/ }),
 /* 11 */
 /***/ (function(module, exports) {
 
@@ -3697,7 +3726,7 @@ exports.f = __webpack_require__(7) ? gOPD : function getOwnPropertyDescriptor(O,
 
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
 var has = __webpack_require__(15);
-var toObject = __webpack_require__(9);
+var toObject = __webpack_require__(10);
 var IE_PROTO = __webpack_require__(72)('IE_PROTO');
 var ObjectProto = Object.prototype;
 
@@ -3841,7 +3870,7 @@ module.exports = function (KEY, exec) {
 // 6 -> Array#findIndex
 var ctx = __webpack_require__(20);
 var IObject = __webpack_require__(50);
-var toObject = __webpack_require__(9);
+var toObject = __webpack_require__(10);
 var toLength = __webpack_require__(6);
 var asc = __webpack_require__(88);
 module.exports = function (TYPE, $create) {
@@ -3904,7 +3933,7 @@ if (__webpack_require__(7)) {
   var has = __webpack_require__(15);
   var classof = __webpack_require__(46);
   var isObject = __webpack_require__(4);
-  var toObject = __webpack_require__(9);
+  var toObject = __webpack_require__(10);
   var isArrayIter = __webpack_require__(85);
   var create = __webpack_require__(38);
   var getPrototypeOf = __webpack_require__(18);
@@ -5867,7 +5896,7 @@ module.exports = function (original, length) {
 "use strict";
 // 22.1.3.6 Array.prototype.fill(value, start = 0, end = this.length)
 
-var toObject = __webpack_require__(9);
+var toObject = __webpack_require__(10);
 var toAbsoluteIndex = __webpack_require__(37);
 var toLength = __webpack_require__(6);
 module.exports = function fill(value /* , start = 0, end = @length */) {
@@ -6569,7 +6598,7 @@ module.exports.f = function getOwnPropertyNames(it) {
 var getKeys = __webpack_require__(36);
 var gOPS = __webpack_require__(56);
 var pIE = __webpack_require__(51);
-var toObject = __webpack_require__(9);
+var toObject = __webpack_require__(10);
 var IObject = __webpack_require__(50);
 var $assign = Object.assign;
 
@@ -6779,7 +6808,7 @@ module.exports = function (iterator, fn, value, entries) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var aFunction = __webpack_require__(11);
-var toObject = __webpack_require__(9);
+var toObject = __webpack_require__(10);
 var IObject = __webpack_require__(50);
 var toLength = __webpack_require__(6);
 
@@ -6815,7 +6844,7 @@ module.exports = function (that, callbackfn, aLen, memo, isRight) {
 "use strict";
 // 22.1.3.3 Array.prototype.copyWithin(target, start, end = this.length)
 
-var toObject = __webpack_require__(9);
+var toObject = __webpack_require__(10);
 var toAbsoluteIndex = __webpack_require__(37);
 var toLength = __webpack_require__(6);
 
@@ -7648,11 +7677,11 @@ var _exception = __webpack_require__(54);
 
 var _exception2 = _interopRequireDefault(_exception);
 
-var _helpers = __webpack_require__(360);
+var _helpers = __webpack_require__(361);
 
-var _decorators = __webpack_require__(368);
+var _decorators = __webpack_require__(369);
 
-var _logger = __webpack_require__(370);
+var _logger = __webpack_require__(371);
 
 var _logger2 = _interopRequireDefault(_logger);
 
@@ -8303,7 +8332,7 @@ __webpack_require__(26)('getOwnPropertyDescriptor', function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.9 Object.getPrototypeOf(O)
-var toObject = __webpack_require__(9);
+var toObject = __webpack_require__(10);
 var $getPrototypeOf = __webpack_require__(18);
 
 __webpack_require__(26)('getPrototypeOf', function () {
@@ -8318,7 +8347,7 @@ __webpack_require__(26)('getPrototypeOf', function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.14 Object.keys(O)
-var toObject = __webpack_require__(9);
+var toObject = __webpack_require__(10);
 var $keys = __webpack_require__(36);
 
 __webpack_require__(26)('keys', function () {
@@ -9535,7 +9564,7 @@ $export($export.S, 'Date', { now: function () { return new Date().getTime(); } }
 "use strict";
 
 var $export = __webpack_require__(0);
-var toObject = __webpack_require__(9);
+var toObject = __webpack_require__(10);
 var toPrimitive = __webpack_require__(24);
 
 $export($export.P + $export.F * __webpack_require__(3)(function () {
@@ -9660,7 +9689,7 @@ $export($export.S, 'Array', { isArray: __webpack_require__(57) });
 
 var ctx = __webpack_require__(20);
 var $export = __webpack_require__(0);
-var toObject = __webpack_require__(9);
+var toObject = __webpack_require__(10);
 var call = __webpack_require__(112);
 var isArrayIter = __webpack_require__(85);
 var toLength = __webpack_require__(6);
@@ -9784,7 +9813,7 @@ $export($export.P + $export.F * __webpack_require__(3)(function () {
 
 var $export = __webpack_require__(0);
 var aFunction = __webpack_require__(11);
-var toObject = __webpack_require__(9);
+var toObject = __webpack_require__(10);
 var fails = __webpack_require__(3);
 var $sort = [].sort;
 var test = [1, 2, 3];
@@ -10208,7 +10237,7 @@ __webpack_require__(62)('match', 1, function (defined, MATCH, $match, maybeCallN
 
 
 var anObject = __webpack_require__(1);
-var toObject = __webpack_require__(9);
+var toObject = __webpack_require__(10);
 var toLength = __webpack_require__(6);
 var toInteger = __webpack_require__(22);
 var advanceStringIndex = __webpack_require__(92);
@@ -11344,7 +11373,7 @@ __webpack_require__(33)('includes');
 // https://tc39.github.io/proposal-flatMap/#sec-Array.prototype.flatMap
 var $export = __webpack_require__(0);
 var flattenIntoArray = __webpack_require__(127);
-var toObject = __webpack_require__(9);
+var toObject = __webpack_require__(10);
 var toLength = __webpack_require__(6);
 var aFunction = __webpack_require__(11);
 var arraySpeciesCreate = __webpack_require__(88);
@@ -11373,7 +11402,7 @@ __webpack_require__(33)('flatMap');
 // https://tc39.github.io/proposal-flatMap/#sec-Array.prototype.flatten
 var $export = __webpack_require__(0);
 var flattenIntoArray = __webpack_require__(127);
-var toObject = __webpack_require__(9);
+var toObject = __webpack_require__(10);
 var toLength = __webpack_require__(6);
 var toInteger = __webpack_require__(22);
 var arraySpeciesCreate = __webpack_require__(88);
@@ -11595,7 +11624,7 @@ $export($export.S, 'Object', {
 "use strict";
 
 var $export = __webpack_require__(0);
-var toObject = __webpack_require__(9);
+var toObject = __webpack_require__(10);
 var aFunction = __webpack_require__(11);
 var $defineProperty = __webpack_require__(8);
 
@@ -11614,7 +11643,7 @@ __webpack_require__(7) && $export($export.P + __webpack_require__(66), 'Object',
 "use strict";
 
 var $export = __webpack_require__(0);
-var toObject = __webpack_require__(9);
+var toObject = __webpack_require__(10);
 var aFunction = __webpack_require__(11);
 var $defineProperty = __webpack_require__(8);
 
@@ -11633,7 +11662,7 @@ __webpack_require__(7) && $export($export.P + __webpack_require__(66), 'Object',
 "use strict";
 
 var $export = __webpack_require__(0);
-var toObject = __webpack_require__(9);
+var toObject = __webpack_require__(10);
 var toPrimitive = __webpack_require__(24);
 var getPrototypeOf = __webpack_require__(18);
 var getOwnPropertyDescriptor = __webpack_require__(17).f;
@@ -11658,7 +11687,7 @@ __webpack_require__(7) && $export($export.P + __webpack_require__(66), 'Object',
 "use strict";
 
 var $export = __webpack_require__(0);
-var toObject = __webpack_require__(9);
+var toObject = __webpack_require__(10);
 var toPrimitive = __webpack_require__(24);
 var getPrototypeOf = __webpack_require__(18);
 var getOwnPropertyDescriptor = __webpack_require__(17).f;
@@ -13309,7 +13338,7 @@ module.exports = __webpack_require__(339);
 __webpack_require__(340);
 }
 
-const Mura=__webpack_require__(10);
+const Mura=__webpack_require__(9);
 
 __webpack_require__(341);
 __webpack_require__(342);
@@ -13328,6 +13357,7 @@ __webpack_require__(354);
 __webpack_require__(355);
 __webpack_require__(356);
 __webpack_require__(357);
+__webpack_require__(358);
 
 if(Mura.isInNode()){
 	/*
@@ -13474,7 +13504,7 @@ if(typeof window !='undefined' && typeof window.document != 'undefined'){
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var Mura=__webpack_require__(10);
+var Mura=__webpack_require__(9);
 
 /**
 * Creates a new Mura.Core
@@ -13559,7 +13589,7 @@ Mura.Core=Core;
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var Mura=__webpack_require__(10);
+var Mura=__webpack_require__(9);
 
 /**
 * Creates a new Mura.Request
@@ -14081,7 +14111,7 @@ Mura.Request=Mura.Core.extend(
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var Mura=__webpack_require__(10);
+var Mura=__webpack_require__(9);
 
 /**
 * Creates a new Mura.RequestContext
@@ -14667,7 +14697,7 @@ Mura.RequestContext=Mura.Core.extend(
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var Mura=__webpack_require__(10);
+var Mura=__webpack_require__(9);
 /**
  * Creates a new Mura.Cache
  * @name Mura.Cache
@@ -14779,7 +14809,7 @@ Mura.datacache=new Mura.Cache();
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var Mura=__webpack_require__(10);
+var Mura=__webpack_require__(9);
 
 /**
 * Creates a new Mura.Entity
@@ -14885,12 +14915,16 @@ Mura.Entity = Mura.Core.extend(
 				eventHandler.error=reject;
 			}
 
+			if(params instanceof FormData){
+				params.append('_cacheid',Math.random());
+			} else {
+				params._cacheid=Math.random();
+			}
+
 			self._requestcontext.request({
 				type: method.toLowerCase(),
 				url: self.getApiEndPoint() + name,
-				data: Mura.extend(params,{
-					'_cacheid': Math.random()
-				}),
+				data: params,
 				success: function(resp) {
 					if (resp.data != 'undefined'	) {
 						if (typeof 	eventHandler.success ==	'function') {
@@ -14935,10 +14969,11 @@ Mura.Entity = Mura.Core.extend(
 		Mura.normalizeRequestHandler(eventHandler);
 
 		if(Mura.mode.toLowerCase() == 'rest'){
+
 			return new Promise(function(resolve,reject) {
 				return self.invoke(
 					name,
-					Mura.extend(params,resp.data),
+					params,
 					method,
 					eventHandler
 				).then(resolve,reject);
@@ -14961,10 +14996,18 @@ Mura.Entity = Mura.Core.extend(
 						context: name
 					},
 					success: function(resp) {
+
+						if(params instanceof FormData){
+							params.append('csrf_token',resp.data.csrf_token);
+							params.append('csrf_token_expires',resp.data.csrf_token_expires);
+						} else {
+							params=Mura.extend(params,resp.data);
+						}
+
 						if (resp.data != 'undefined'	) {
 							self.invoke(
 								name,
-								Mura.extend(params,resp.data),
+								params,
 								method,
 								eventHandler
 							).then(resolve,reject);
@@ -15690,7 +15733,7 @@ Mura.Entity = Mura.Core.extend(
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var Mura=__webpack_require__(10);
+var Mura=__webpack_require__(9);
 
 /**
 * Creates a new Mura.entities.Content
@@ -15795,7 +15838,7 @@ Mura.entities.Content = Mura.Entity.extend(
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var Mura=__webpack_require__(10);
+var Mura=__webpack_require__(9);
 
 /**
 * Creates a new Mura.entities.User
@@ -15896,7 +15939,7 @@ Mura.entities.User = Mura.Entity.extend(
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var Mura=__webpack_require__(10);
+var Mura=__webpack_require__(9);
 
 /**
  * Creates a new Mura.EntityCollection
@@ -16105,7 +16148,7 @@ Mura.EntityCollection=Mura.Entity.extend(
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var Mura=__webpack_require__(10);
+var Mura=__webpack_require__(9);
 
 /**
  * Creates a new Mura.Feed
@@ -16709,7 +16752,7 @@ Mura.Feed = Mura.Core.extend(
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var Mura=__webpack_require__(10);
+var Mura=__webpack_require__(9);
 
 //https://github.com/malko/l.js
 /*
@@ -17045,7 +17088,7 @@ if(typeof window !='undefined' && typeof window.document != 'undefined'){
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var Mura=__webpack_require__(10);
+var Mura=__webpack_require__(9);
 
 /**
  * Creates a new Mura.DOMSelection
@@ -18915,7 +18958,6 @@ Mura.DOMSelection = Mura.Core.extend(
 		</div>
 		*/
 		var markup='<div class="' + outerClass + '">';
-		markup +='<label class="mura-editable-label" style="display:none">' + params.label.toUpperCase() + '</label>';
 		markup +='<div contenteditable="false" id="mura-editable-attribute-' + params.name +' class="' + innerClass + '" ';
 		markup += ' data-attribute="' + params.name + '" ';
 		markup += ' data-type="' + params.type + '" ';
@@ -18925,7 +18967,9 @@ Mura.DOMSelection = Mura.Core.extend(
 		if(params.type == 'htmlEditor'){
 			markup += ' data-loose="true" data-perm="true" data-inited="false"';
 		}
-		markup += '>' + value + '</div></div>';
+		markup += '>' + value + '</div>';
+		markup += '<label class="mura-editable-label" style="display:none">' + params.label.toUpperCase() + '</label>';
+		markup +=	'</div>';
 		this.selection[0].innerHTML=markup;
 		Mura.evalScripts(this.selection[0]);
 		return this;
@@ -18965,7 +19009,7 @@ Mura.DOMSelection = Mura.Core.extend(
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var Mura =__webpack_require__(10);
+var Mura =__webpack_require__(9);
 
 /**
  * Creates a new Mura.UI instance
@@ -19066,7 +19110,7 @@ Mura.UI=Mura.Core.extend(
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var Mura=__webpack_require__(10);
+var Mura=__webpack_require__(9);
 /**
  * Creates a new Mura.UI.Form
  * @name	Mura.UI.Form
@@ -20653,7 +20697,7 @@ Mura.DisplayObject.Form=Mura.UI.Form;
 /* 354 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Mura=__webpack_require__(10);
+var Mura=__webpack_require__(9);
 /**
  * Creates a new Mura.UI.Text
  * @name  Mura.UI.Text
@@ -20688,7 +20732,7 @@ Mura.DisplayObject.Text=Mura.UI.Text;
 /* 355 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Mura=__webpack_require__(10);
+var Mura=__webpack_require__(9);
 /**
  * Creates a new Mura.UI.Embed
  * @name  Mura.UI.Embed
@@ -20717,7 +20761,37 @@ Mura.DisplayObject.Embed=Mura.UI.Embed;
 /* 356 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Mura=__webpack_require__(10);
+var Mura=__webpack_require__(9);
+/**
+ * Creates a new Mura.UI.Text
+ * @name  Mura.UI.Image
+ * @class
+ * @extends Mura.UI
+ * @memberof  Mura
+ */
+
+Mura.UI.Image=Mura.UI.extend(
+/** @lends Mura.DisplayObject.Image.prototype */
+{
+	renderClient:function(){
+		Mura(this.context.targetEl).html(Mura.templates['image'](this.context));
+		this.trigger('afterRender');
+	},
+
+	renderServer:function(){
+		return Mura.templates['image'](this.context);
+	
+	}
+});
+
+Mura.DisplayObject.Image=Mura.UI.Image;
+
+
+/***/ }),
+/* 357 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Mura=__webpack_require__(9);
 /**
  * Creates a new Mura.UI.Collection
  * @name  Mura.UI.Collection
@@ -20878,20 +20952,23 @@ Mura.Module.Collection=Mura.UI.Collection;
 
 
 /***/ }),
-/* 357 */
+/* 358 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var Mura=__webpack_require__(10);
-var Handlebars=__webpack_require__(358);
+var Mura=__webpack_require__(9);
+var Handlebars=__webpack_require__(359);
 Mura.Handlebars=Handlebars.create();
 Mura.templatesLoaded=false;
 Handlebars.noConflict();
 
 Mura.templates=Mura.templates || {};
 Mura.templates['meta']=function(context){
+	if(typeof context.labeltag == 'undefined' || !context.labeltag){
+		context.labeltag='h2';
+	}
 	if(context.label){
-		return '<div class="mura-object-meta-wrapper"><div class="mura-object-meta"><h2>' + Mura.escapeHTML(context.label) + '</h2></div></div>';
+		return '<div class="mura-object-meta-wrapper"><div class="mura-object-meta"><' + Mura.escapeHTML(context.labeltag) + '>' + Mura.escapeHTML(context.label) + '</' + Mura.escapeHTML(context.labeltag) + '></div></div>';
 	} else {
 		return '';
 	}
@@ -20919,20 +20996,41 @@ Mura.templates['embed']=function(context){
 	return context.source;
 }
 
-__webpack_require__(374);
+Mura.templates['image']=function(context){
+	context=context || {};
+	context.src=context.src||'';
+	context.alt=context.alt||'';
+	context.caption=context.caption||'';
 
+	var source='';
 
-/***/ }),
-/* 358 */
-/***/ (function(module, exports, __webpack_require__) {
+	if(!context.src){
+		return '';
+	}
 
-// Create a simple path alias to allow browserify to resolve
-// the runtime on a supported path.
-module.exports = __webpack_require__(359)['default'];
+	source='<img src="' + Mura.escapeHTML(context.src) + '" alt="' + Mura.escapeHTML(context.alt) + '" />';
+	if(context.caption && context.caption != '<p></p>'){
+		source+='<figcaption>' + context.caption + '</figcaption>';
+	}
+	source='<figure>' + source + '</figure>';
+
+	return source;
+}
+
+__webpack_require__(375);
 
 
 /***/ }),
 /* 359 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Create a simple path alias to allow browserify to resolve
+// the runtime on a supported path.
+module.exports = __webpack_require__(360)['default'];
+
+
+/***/ }),
+/* 360 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20954,7 +21052,7 @@ var base = _interopRequireWildcard(_handlebarsBase);
 // Each of these augment the Handlebars object. No need to setup here.
 // (This is done to easily share code between commonjs and browse envs)
 
-var _handlebarsSafeString = __webpack_require__(371);
+var _handlebarsSafeString = __webpack_require__(372);
 
 var _handlebarsSafeString2 = _interopRequireDefault(_handlebarsSafeString);
 
@@ -20966,11 +21064,11 @@ var _handlebarsUtils = __webpack_require__(30);
 
 var Utils = _interopRequireWildcard(_handlebarsUtils);
 
-var _handlebarsRuntime = __webpack_require__(372);
+var _handlebarsRuntime = __webpack_require__(373);
 
 var runtime = _interopRequireWildcard(_handlebarsRuntime);
 
-var _handlebarsNoConflict = __webpack_require__(373);
+var _handlebarsNoConflict = __webpack_require__(374);
 
 var _handlebarsNoConflict2 = _interopRequireDefault(_handlebarsNoConflict);
 
@@ -21005,7 +21103,7 @@ module.exports = exports['default'];
 
 
 /***/ }),
-/* 360 */
+/* 361 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21017,31 +21115,31 @@ exports.registerDefaultHelpers = registerDefaultHelpers;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var _helpersBlockHelperMissing = __webpack_require__(361);
+var _helpersBlockHelperMissing = __webpack_require__(362);
 
 var _helpersBlockHelperMissing2 = _interopRequireDefault(_helpersBlockHelperMissing);
 
-var _helpersEach = __webpack_require__(362);
+var _helpersEach = __webpack_require__(363);
 
 var _helpersEach2 = _interopRequireDefault(_helpersEach);
 
-var _helpersHelperMissing = __webpack_require__(363);
+var _helpersHelperMissing = __webpack_require__(364);
 
 var _helpersHelperMissing2 = _interopRequireDefault(_helpersHelperMissing);
 
-var _helpersIf = __webpack_require__(364);
+var _helpersIf = __webpack_require__(365);
 
 var _helpersIf2 = _interopRequireDefault(_helpersIf);
 
-var _helpersLog = __webpack_require__(365);
+var _helpersLog = __webpack_require__(366);
 
 var _helpersLog2 = _interopRequireDefault(_helpersLog);
 
-var _helpersLookup = __webpack_require__(366);
+var _helpersLookup = __webpack_require__(367);
 
 var _helpersLookup2 = _interopRequireDefault(_helpersLookup);
 
-var _helpersWith = __webpack_require__(367);
+var _helpersWith = __webpack_require__(368);
 
 var _helpersWith2 = _interopRequireDefault(_helpersWith);
 
@@ -21058,7 +21156,7 @@ function registerDefaultHelpers(instance) {
 
 
 /***/ }),
-/* 361 */
+/* 362 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21104,7 +21202,7 @@ module.exports = exports['default'];
 
 
 /***/ }),
-/* 362 */
+/* 363 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21205,7 +21303,7 @@ module.exports = exports['default'];
 
 
 /***/ }),
-/* 363 */
+/* 364 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21237,7 +21335,7 @@ module.exports = exports['default'];
 
 
 /***/ }),
-/* 364 */
+/* 365 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21273,7 +21371,7 @@ module.exports = exports['default'];
 
 
 /***/ }),
-/* 365 */
+/* 366 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21306,7 +21404,7 @@ module.exports = exports['default'];
 
 
 /***/ }),
-/* 366 */
+/* 367 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21331,7 +21429,7 @@ module.exports = exports['default'];
 
 
 /***/ }),
-/* 367 */
+/* 368 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21371,7 +21469,7 @@ module.exports = exports['default'];
 
 
 /***/ }),
-/* 368 */
+/* 369 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21383,7 +21481,7 @@ exports.registerDefaultDecorators = registerDefaultDecorators;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var _decoratorsInline = __webpack_require__(369);
+var _decoratorsInline = __webpack_require__(370);
 
 var _decoratorsInline2 = _interopRequireDefault(_decoratorsInline);
 
@@ -21394,7 +21492,7 @@ function registerDefaultDecorators(instance) {
 
 
 /***/ }),
-/* 369 */
+/* 370 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21430,7 +21528,7 @@ module.exports = exports['default'];
 
 
 /***/ }),
-/* 370 */
+/* 371 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21484,7 +21582,7 @@ module.exports = exports['default'];
 
 
 /***/ }),
-/* 371 */
+/* 372 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21506,7 +21604,7 @@ module.exports = exports['default'];
 
 
 /***/ }),
-/* 372 */
+/* 373 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21820,7 +21918,7 @@ function executeDecorators(fn, prog, container, depths, data, blockParams) {
 
 
 /***/ }),
-/* 373 */
+/* 374 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21848,10 +21946,10 @@ module.exports = exports['default'];
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(69)))
 
 /***/ }),
-/* 374 */
+/* 375 */
 /***/ (function(module, exports, __webpack_require__) {
 
-this["Mura"]=__webpack_require__(10);
+this["Mura"]=__webpack_require__(9);
 this["Mura"]["templates"] = this["Mura"]["templates"] || {};
 
 this["Mura"]["templates"]["checkbox_static"] = this.Mura.Handlebars.template({"1":function(container,depth0,helpers,partials,data) {

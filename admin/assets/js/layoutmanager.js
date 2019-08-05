@@ -24,6 +24,8 @@
 		muraLooseDropTarget = null;
 		MuraInlineEditor.sidebarAction('showobjects');
 		Mura('.mura-object-selected').removeClass('mura-object-selected');
+		Mura('.mura-region, .mura-region .mura-editable').addClass('mura-region-active');
+		Mura('.mura-region div[data-object="container"], .mura-region .mura-editable div[data-object="container"]').addClass('mura-container-active');
 		Mura(this).addClass('mura-object-selected');
 	}
 
@@ -32,6 +34,8 @@
 		elDropHandled = false;
 		newMuraObject = false;
 		Mura('.mura-object-selected').removeClass('mura-object-selected');
+		Mura('.mura-region, .mura-region .mura-editable').removeClass('mura-region-active');
+		Mura('.mura-region div[data-object="container"], .mura-region .mura-editable div[data-object="container"]').removeClass('mura-container-active');
 	}
 
 	function initDraggableObject_dragover(e) {
@@ -147,15 +151,58 @@
 	function initDraggableObject_hoverin(e){
 		//e.stopPropagation();
 		Mura('.mura-active-target').removeClass('mura-active-target');
+
+		var activeContainer=Mura('.mura-container-active');
+
+
 		var self = Mura(this);
 		if (!self.hasClass('mura-object-selected')) {
 			Mura(this).addClass('mura-active-target');
 		}
+
+
+		if(self.data('object')=='container'){
+			self.addClass('mura-container-active');
+		} else {
+			var container=self.closest('div[data-object="container"]');
+			if(container.length){
+				container.addClass('mura-container-active');
+			}
+		}
+
 	}
 
 	function initDraggableObject_hoverout(e){
 		//e.stopPropagation();
-		Mura(this).removeClass('mura-active-target');//.calculateDisplayObjectStyles();
+		var item=Mura(this);
+		item.removeClass('mura-active-target');
+
+
+		var removeContainerClass=true;
+
+		if(typeof Mura.currentObjectInstanceID != 'undefined'
+			&& Mura.currentObjectInstanceID){
+
+			if(item.data('object')=='container' && Mura.currentObjectInstanceID == item.data('instanceid')){
+				removeContainerClass=false;
+			} else{
+				var container=item.closest('div[data-object="container"]');
+
+				if(container.length){
+					var finder=container.find('div[data-instanceid="' + Mura.currentObjectInstanceID + '"]')
+					if(finder.length){
+						removeContainerClass=false;
+					}
+				}
+			}
+
+		}
+		if(removeContainerClass){
+			item.removeClass('mura-container-active')
+		}
+
+
+		//.calculateDisplayObjectStyles();
 
 	}
 
@@ -232,6 +279,8 @@
 			var prev = Mura('.mura-drop-target');
 			muraLooseDropTarget = this;
 
+			//Mura('.mura-container-active').removeClass('mura-container-active');
+
 			if (prev.length) {
 				prev
 					.removeClass('mura-drop-target')
@@ -245,6 +294,13 @@
 
 			var item = Mura(this).closest('.mura-object');
 
+			/*
+			var container=Mura(this).closest('div[data-object="container"]');
+
+			if(container.length){
+				container.addClass('mura-container-active');
+			}
+			*/
 			if (item.length) {
 				applyObjectTargetClass(item, e, this);
 			} else {
@@ -270,6 +326,8 @@
 			.removeClass('mura-append')
 			.removeClass('mura-prepend');
 
+		//Mura('.mura-container-active').removeClass('mura-container-active');
+
 		muraLooseDropTarget = null;
 		if (!Mura(this).attr('class')) {
 			Mura(this).removeAttr('class');
@@ -278,6 +336,8 @@
 
 	function initLooseDropTarget_drop(e) {
 		disabledEventPropagation(e);
+
+		//Mura('.mura-container-active').removeClass('mura-container-active');
 
 		if (dragEl || newMuraObject) {
 
@@ -374,6 +434,8 @@
 						muraLooseDropTarget = null;
 						Mura('#dragtype').html(item.data('object'));
 						Mura('.mura-sidebar').addClass('mura-sidebar--dragging');
+						Mura('.mura-region, .mura-region .mura-editable').addClass('mura-region-active');
+						Mura('.mura-region div[data-object="container"], .mura-region .mura-editable div[data-object="container"]').addClass('mura-container-active');
 
 						e.dataTransfer.setData("text", JSON.stringify({
 							object: item.data('object'),
@@ -388,6 +450,22 @@
 						elDropHandled = false;
 						newMuraObject = false;
 						Mura('.mura-sidebar').removeClass('mura-sidebar--dragging');
+						Mura('.mura-region, .mura-region .mura-editable').removeClass('mura-region-active');
+						Mura('.mura-region div[data-object="container"], .mura-region .mura-editable div[data-object="container"]').removeClass('mura-container-active');
+
+						if(typeof Mura.currentObjectInstanceID != 'undefined' && Mura.currentObjectInstanceID){
+							var current=Mura('div[data-instanceid="' +  Mura.currentObjectInstanceID + '"]');
+							if(current.data('object')=='container'){
+								current.addClass('mura-container-active');
+							}
+							container=current.closest('div[data-object="container"]');
+							if(container.length){
+								var finder=container.find('div[data-instanceid="' + Mura.currentObjectInstanceID + '"]')
+								if(finder.length){
+									container.addClass('mura-container-active');
+								}
+							}
+						}
 					});
 
 				item.data('inited', true);
@@ -461,12 +539,16 @@
 			}
 
 			initDraggableObject(displayObject);
-			openFrontEndToolsModal(displayObject, true);
+
 			Mura.processAsyncObject(displayObject);
 
-			Mura(displayObject).on('click',Mura.handleObjectClick);
-			Mura(displayObject).closest('.mura-region-local').data('dirty', true);
-			Mura(displayObject).on('dragover', function() {})
+			displayObject=Mura(displayObject);
+
+			openFrontEndToolsModal(displayObject.node, true);
+
+			displayObject.on('click',Mura.handleObjectClick);
+			displayObject.closest('.mura-region-local').data('dirty', true);
+			displayObject.on('dragover', function() {})
 			Mura('#adminSave').show();
 			disabledEventPropagation(e);
 
@@ -518,7 +600,9 @@
 
 					Mura('body')
 						.removeClass('mura-sidebar-state__hidden--right')
-						.addClass('mura-sidebar-state__pushed--right');
+						.removeClass('mura-editing')
+						.addClass('mura-sidebar-state__pushed--right')
+						.addClass('mura-editing');
 				}
 
 				var iframe = Mura('#frontEndToolsSidebariframe');
@@ -555,7 +639,7 @@
 				});
 
 				obj.find(
-					'.mura-object[data-object="container"], .mura-region-local div, .mura-region-local[data-loose="true"] p, .mura-region-local[data-loose="true"] h1, .mura-region-local[data-loose="true"] h2, .mura-region-local[data-loose="true"] h3, .mura-region-local[data-loose="true"] h4, .mura-region-local[data-loose="true"] img, .mura-region-local[data-loose="true"] table, .mura-region-local[data-loose="true"] article, .mura-region-local[data-loose="true"] dl'
+					'.mura-region-local .mura-object[data-object="container"], .mura-region-local div, .mura-region-local[data-loose="true"] p, .mura-region-local[data-loose="true"] h1, .mura-region-local[data-loose="true"] h2, .mura-region-local[data-loose="true"] h3, .mura-region-local[data-loose="true"] h4, .mura-region-local[data-loose="true"] img, .mura-region-local[data-loose="true"] table, .mura-region-local[data-loose="true"] article, .mura-region-local[data-loose="true"] dl'
 				).each(function() {
 					initLooseDropTarget(this)
 				});
@@ -622,10 +706,10 @@
 	function deInitLayoutManager(){
 		Mura.editing=false;
 
-		Mura('body').addClass('mura-sidebar-state__hidden--right');
+		Mura('body').removeClass('mura-editing')
 		Mura('body').removeClass('mura-sidebar-state__pushed--right');
 
-		Mura('.mura-object, .mura-body-object').each(function(){
+		Mura('.mura-region-local .mura-object, .mura-body-object').each(function(){
 			Mura(this)
 				.off('dragenter', initDraggableObject_dragstart)
 				.off('dragover', initDraggableObject_dragover)
@@ -648,7 +732,7 @@
 					.off('dragover',initRegion_dragover)
 					.data('inited', 'false')
 
-				Mura('.mura-object[data-object="container"], .mura-region-local div, .mura-region-local[data-loose="true"] p, .mura-region-local[data-loose="true"] h1, .mura-region-local[data-loose="true"] h2, .mura-region-local[data-loose="true"] h3, .mura-region-local[data-loose="true"] h4, .mura-region-local[data-loose="true"] img, .mura-region-local[data-loose="true"] table, .mura-region-local[data-loose="true"] article, .mura-region-local[data-loose="true"] dl')
+				Mura('.mura-region-local .mura-object[data-object="container"], .mura-region-local div, .mura-region-local[data-loose="true"] p, .mura-region-local[data-loose="true"] h1, .mura-region-local[data-loose="true"] h2, .mura-region-local[data-loose="true"] h3, .mura-region-local[data-loose="true"] h4, .mura-region-local[data-loose="true"] img, .mura-region-local[data-loose="true"] table, .mura-region-local[data-loose="true"] article, .mura-region-local[data-loose="true"] dl')
 				.off('dragenter', initLooseDropTarget_dragenter)
 				.off('dragover', initLooseDropTarget_dragover)
 				.off('drop', initLooseDropTarget_drop)

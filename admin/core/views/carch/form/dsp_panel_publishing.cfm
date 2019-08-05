@@ -43,7 +43,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 --->
 <cfset tabList=listAppend(tabList,"tabPublishing")>
 <cfoutput>
-<div class="mura-panel panel">
+<div class="mura-panel panel" id="tabPublishing">
 	<div class="mura-panel-heading" role="tab" id="heading-publishing">
 		<h4 class="mura-panel-title">
 			<a class="collapse collapsed" role="button" data-toggle="collapse" data-parent="##content-panels" href="##panel-publishing" aria-expanded="false" aria-controls="panel-publishing">#application.rbFactory.getKeyValue(session.rb,"sitemanager.content.tabs.publishing")#</a>
@@ -311,8 +311,8 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 			</div> <!--- /end mura-control-group --->
 			
 			<!--- expiration --->
-			<cfif listFind("Page,Folder,Calendar,Gallery,Link,File,Link",rc.type)>
-
+			<cfif listFind("Page,Folder,Calendar,Gallery,Link,File,Variation",rc.type)>
+				<cfset rsAssigned=application.serviceFactory.getBean("contentDAO").getExpireAssignments(rc.contenthistid)>
 				<div class="mura-control-group">
 					<label>#esapiEncode('html_attr',application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.expires'))#</label>
 					<div class="mura-control justify">
@@ -329,11 +329,11 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 						     	<cf_datetimeselector name="expires" datetime="#rc.contentBean.getExpires()#" defaulthour="23" defaultminute="59">
 								<div class="mura-control justify" id="expires-notify">
 									<label for="dspexpiresnotify" class="checkbox">
-										<input type="checkbox" name="dspExpiresNotify" id="dspexpiresnotify" onclick="siteManager.loadExpiresNotify('#esapiEncode('javascript',rc.siteid)#','#esapiEncode('javascript',rc.contenthistid)#','#esapiEncode('javascript',rc.parentid)#');"  class="checkbox"<cfif application.contentUtility.getNotify(rc.crumbdata).recordCount> checked</cfif>>
+										<input type="checkbox" name="dspExpiresNotify" id="dspexpiresnotify" onclick="siteManager.loadExpiresNotify('#esapiEncode('javascript',rc.siteid)#','#esapiEncode('javascript',rc.contenthistid)#','#esapiEncode('javascript',rc.parentid)#');"  class="checkbox"<cfif rsAssigned.recordCount> checked</cfif>>
 											#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.expiresnotify')#
 									</label>
 								</div>
-							<div class="mura-control-group" id="selectExpiresNotify"<cfif application.contentUtility.getNotify(rc.crumbdata).recordCount eq 0> style="display: none;"</cfif>></div>
+							<div class="mura-control-group" id="selectExpiresNotify"<cfif rsAssigned.recordCount eq 0> style="display: none;"</cfif>></div>
 							</div> <!--- /end mura-control-group --->
 						</div>
 					</div> <!--- /.bigui --->
@@ -342,6 +342,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 				</div>	
 
 				<!--- todo: resource bundle key for 'Expires' --->
+				
 				<script type="text/javascript">
 					function showSelectedExp(){
 						var expStr = 'Never';
@@ -360,7 +361,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 
 					$(document).ready(function(){
 						// load notification list if previously selected
-						<cfif application.contentUtility.getNotify(rc.crumbdata).recordCount>
+						<cfif rsAssigned.recordcount>
 							siteManager.loadExpiresNotify('#esapiEncode('javascript',rc.siteid)#','#esapiEncode('javascript',rc.contenthistid)#','#esapiEncode('javascript',rc.parentid)#');						
 						</cfif>
 						// run on page load

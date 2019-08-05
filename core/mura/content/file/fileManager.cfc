@@ -429,12 +429,20 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 <cffunction name="_allowMetaData" output="false">
 	<cfargument name="metadata">
 	<cfset var key="">
+	<cfset var keyValue="">
 	<cfloop collection="#arguments.metadata#" item="key">
-		<cfif isSimpleValue(key)>
-			<cfif isStruct(arguments.metadata['#key#']) and not allowMetaData(arguments.metadata['#key#'])>
-				 <cfreturn false>
-			<cfelseif isSimpleValue(arguments.metadata['#key#']) and (findNoCase('<cf',arguments.metadata['#key#']) or findNoCase('</cf',arguments.metadata['#key#']))>
+		<cfif not isDefined('#key#')>
+			<cfreturn false>
+		<cfelseif isSimpleValue(key)>
+			<cfset keyValue=arguments.metadata['#key#']>
+			<cfif not isDefined('keyValue')>
 				<cfreturn false>
+			<cfelse>
+				<cfif isStruct(arguments.metadata['#key#']) and not allowMetaData(arguments.metadata['#key#'])>
+					<cfreturn false>
+				<cfelseif isSimpleValue(arguments.metadata['#key#']) and (findNoCase('<cf',arguments.metadata['#key#']) or findNoCase('</cf',arguments.metadata['#key#']))>
+					<cfreturn false>
+				</cfif>
 			</cfif>
 		<cfelseif isStruct(key) and not allowMetaData(key)>
 			<cfreturn false>
@@ -997,17 +1005,20 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 	<cfset pluginEvent.init(arguments)>
 	<cfset var pluginManager=getBean("pluginManager")>
 
-
 	<cfset arguments.size=lcase(arguments.size)>
 
 	<cfset pluginManager.announceEvent("onBeforeImageManipulation",pluginEvent)>
 
 	<cfif not fileExists(source)>
-		<cfset source="#application.configBean.getFileDir()#/#arguments.siteID#/cache/file/#arguments.fileID#.#rsMeta.fileExt#">
+		<cfset var source2="#application.configBean.getFileDir()#/#arguments.siteID#/cache/file/#arguments.fileID#.#rsMeta.fileExt#">
+		<cfif fileExists(source2)>
+			<cfset fileCopy(source2,source)>
+		</cfif>
 	</cfif>
 
 	<cfif rsMeta.recordcount and IsImageFile(source)>
-
+		<cfset pluginEvent.setValue('siteid',rsMeta.siteID)>
+		
 		<cfif arguments.size eq "large">
 			<cfset var file="#application.configBean.getFileDir()#/#arguments.siteID#/cache/file/#arguments.fileID#.#rsMeta.fileExt#">
 		<cfelse>
@@ -1103,6 +1114,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 	<cfset var pluginManager=getBean("pluginManager")>
 
 	<cfif rsMeta.recordcount and IsImageFile(source)>
+		<cfset pluginEvent.setValue('siteid',rsMeta.siteID)>
 		<cfset getBean("pluginManager").announceEvent("onBeforeImageManipulation",pluginEvent)>
 
 		<cfscript>
@@ -1131,6 +1143,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 	<cfset var pluginManager=getBean("pluginManager")>
 
 	<cfif rsMeta.recordcount and IsImageFile(source)>
+		<cfset pluginEvent.setValue('siteid',rsMeta.siteID)>
 		<cfset pluginManager.announceEvent("onBeforeImageManipulation",pluginEvent)>
 		<cfscript>
 			myImage=imageRead(source);

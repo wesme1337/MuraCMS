@@ -250,6 +250,15 @@
 		 			</cfif>
 
 					<cfif rc.renderMuraAlerts>
+						<cfset expirePasswordsIn=rc.$.getBean('configBean').getValue(property="expirePasswords", defaultValue=0)>
+						<cfif isNumeric(expirePasswordsIn) and expirePasswordsIn and rc.$.currentUser().get('passwordExpired') and not structKeyExists(session.mura.alerts['#session.siteID#'],'passwordexpirednotice')>
+							<div class="alert alert-error">
+								<span>
+									<a data-alertid="passwordexpirednotice" class="close alert-dismiss" data-dismiss="alert"><i class="mi-close"></i></a>
+										#rc.$.rbKey("layout.passwordexpirednotice")#
+								</span>
+							</div>
+						</cfif>
 						<cfif isdefined('session.hasdefaultpassword') and not structKeyExists(session.mura.alerts['#session.siteID#'],'defaultpasswordnotice')>
 							<div class="alert alert-error">
 								<span>
@@ -293,9 +302,11 @@
 			});
 
 			// set width of pane relative to side controls
-			var resizeTabPane = function(offsetVal=17){
+			var resizeTabPane = function(offsetVal){
 				if ($('##mura-content-body-block').length){
-
+					if (isNaN(offsetVal)){
+						offsetVal = 17;
+					}
 					var blockW = $('##mura-content-body-block').width();
 					var controlW = $('##mura-content-body-block .mura__edit__controls').width();
 					var newW = (blockW - controlW) - offsetVal;

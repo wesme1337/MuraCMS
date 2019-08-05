@@ -4,13 +4,13 @@
 	min-width: 20px !important;
 
 	.mura-editable-attribute {
-		outline: 1px dotted #ccc !important;
+		outline: 2px dotted #DBDBDB !important;
 
-		/*&:hover, 
+		&:hover, 
 		&.mura-active,
 		&:focus {
-			outline: 1px dotted red !important;
-		}*/
+			outline: 2px solid #BEBEBE !important;
+		}
 
 	}
 
@@ -22,21 +22,50 @@
 		.inline-block() !important;
 	}
 
+	&.mura-region-active{
+		outline: 2px solid #BEBEBE !important;
+	}
+
+	&.mura-region-active .mura-editable-label,
 	&:hover .mura-editable-label {
 		.inline-block() !important;
-		background: rgba(255, 0, 0, 0.75) !important;
-		color: #fff !important;
+		background: #BEBEBE !important;
+    border-radius: 3px 3px 0 0;
+		color: #000 !important;
 		font-size: 11px !important;
-		font-weight: normal !important;
-		line-height: 1 !important;
+		font-weight: 700 !important;
+		height: 24px !important;
+		letter-spacing: .025em;
+		line-height: 24px !important;
 		margin: 0 !important;
-		padding: 4px !important;
+		min-width: 64px;
+		opacity: .75;
+		padding: 1px 16px 2px 31px !important;
 		position: absolute !important;
-		left: -1px !important;
-		top: -20px !important;
+		left: 12px !important;
+		top: -24px !important;
 		text-align: left !important;
+		text-transform: uppercase !important;
 		width: auto !important;
 		z-index: 10001 !important;
+
+		&:before{
+			content: '\f05b';
+	    display: inline-block;
+	    font-family: FontAwesome;
+			font-size: 14px;
+			font-weight: normal;
+	    position: absolute;
+	    left: 12px;
+	    top: 1px;				
+		}
+	}
+
+	&>.mura-editable-attribute[data-attribute="title"] + .mura-editable-label:before{
+		content: '\f031';
+	}
+	&>.mura-editable-attribute[data-attribute="body"] + .mura-editable-label:before{
+		content: '\f15c';
 	}
 
 	&.mura-inactive,

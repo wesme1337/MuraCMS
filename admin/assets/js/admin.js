@@ -756,20 +756,25 @@ function setFinders(e,config) {
                 MuraFileBrowser.config.height = 600,
                 MuraFileBrowser.config.selectMode = 2,
                 MuraFileBrowser.config.resourcepath = "Application_Root";
-								if(typeof config != 'undefined'){
-									Mura.extend(MuraFileBrowser.config,config);
-								}
+                if(typeof config != 'undefined'){
+                    Mura.extend(MuraFileBrowser.config,config);
+                }
                 MuraFileBrowser.config.selectCallback = function(e) {
                     var t = $('input[name="' + a.data("target") + '"]');
-										var serverpath=a.attr('data-serverpath');
-										if(serverpath.toLowerCase()=='true'){
-											t.val(webroot + e.url);
-										} else {
-											t.val(e.url);
-										}
-										console.log(e)
-										t.trigger("change");
-										$(i).dialog("close");
+                    var serverpath=a.attr('data-serverpath');
+                    if(serverpath && serverpath.toLowerCase()=='true'){
+                        if(e.url.indexOf(rootpath) > -1){
+                            t.val(webroot + e.url.substring(rootpath.length,e.url.length));
+                        } else {
+                            t.val(webroot + e.url);
+                        }
+                       
+                    } else {
+                        t.val(e.url);
+                    }
+                    console.log(e)
+                    t.trigger("change");
+                    $(i).dialog("close");
                 }, MuraFileBrowser.render();
             },
             modal: !0,
@@ -785,7 +790,7 @@ function setFinders(e,config) {
 }
 
 function wireupExterndalUIWidgets() {
-    setFinders(".mura-ckfinder"), "undefined" != typeof dtLocale && setDatePickers(".datepicker", dtLocale),
+    setFinders(".mura-ckfinder, .mura-finder"), "undefined" != typeof dtLocale && setDatePickers(".datepicker", dtLocale),
     "undefined" != typeof activetab && setTabs(".mura-tabs", activetab), setHTMLEditors(),
     "undefined" != typeof activepanel && setAccordions(".accordion", activepanel), setCheckboxTrees(),
     setColorPickers(".mura-colorpicker"), setToolTips(".container"), setFileSelectors();

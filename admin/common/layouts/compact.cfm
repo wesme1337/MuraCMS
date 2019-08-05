@@ -106,8 +106,10 @@
 		#session.dateKey#
 		<script type="text/javascript">
 
-			var resizeTabPane = function(offsetVal=17){
-
+			var resizeTabPane = function(offsetVal){
+					if (isNaN(offsetVal)){
+						offsetVal = 17;
+					}
 				// set width of pane relative to side controls
 				if ($('##mura-content-body-block').length){
 

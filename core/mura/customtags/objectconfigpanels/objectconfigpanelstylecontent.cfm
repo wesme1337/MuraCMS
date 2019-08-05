@@ -260,7 +260,7 @@
 								<label>Background Image</label>
 								<input type="hidden" id="contentbackgroundimage" name="backgroundImage" class="contentStyle" value="#esapiEncode('html_attr',attributes.params.stylesupport.contentstyles.backgroundimage)#">
 								<input type="text" id="contentbackgroundimageurl" name="contentbackgroundimageurl" placeholder="URL" class="styleSupport" value="#esapiEncode('html_attr',attributes.params.styleSupport.contentbackgroundimageurl)#">
-								<button type="button" class="btn mura-ckfinder" data-target="contentbackgroundimageurl" data-completepath="false"><i class="mi-image"></i> Select Image</button>
+								<button type="button" class="btn mura-finder" data-target="contentbackgroundimageurl" data-completepath="false"><i class="mi-image"></i> Select Image</button>
 							</div>
 
 					<div class="mura-control-group mura-ui-grid content-css-bg-option bg-position" style="display:none;">

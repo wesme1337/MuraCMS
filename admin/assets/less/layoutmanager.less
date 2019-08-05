@@ -1,5 +1,8 @@
 /* variables */
+// color for active module frames
 @objectbordercolor: @mura-red;
+// z-index for front end tool elements
+@fetoolzindex: 999;
 
 // push the body padding around, transition
 body.mura-sidebar-state__hidden--left {
@@ -65,6 +68,11 @@ body.mura-sidebar-state__pushed--right .mura__layout-manager__controls {
 
 // clearfixes
 
+.mura-object {
+	box-sizing: border-box;
+	position: relative;
+}
+
 .mura-region::after,
 .mura-region > .mura-editable > .mura-region-local::after,
 .mura-region > .mura-region-inherited::after {
@@ -79,181 +87,242 @@ body.mura-sidebar-state__pushed--right .mura__layout-manager__controls {
    margin-top: 15px;
 }
 
-
 .mura-region-inherited + .mura-region-local.mura-editable-attribute {
     margin-top: 15px;
 }
 
 //a region that CAN be interacted with
 .mura-object.mura-active {
-	box-shadow: inset 0 0 0 1px #eee;
+	box-shadow: none;
+	/*box-shadow: inset 0 0 0 1px #eee;*/
 }
 
 .mura-region-inherited .mura-object.mura-active {
 	box-shadow: none;
 }
 
+.mura-region-inherited{
+	position: relative;
+}
+
+.mura-editing .mura-region-inherited:hover{
+	box-shadow: 0 0 0 2px #eee;
+
+	.frontEndToolsModal.mura{
+		opacity: 1;
+
+		span.mura-edit-label{
+	    background-color: #eee!important;
+	    color: #646464 !important;
+		}
+
+	}
+}
 
 //a region that IS being interacted with
-.mura-object.mura-active.mura-active-target,
+/*.mura-object.mura-active.mura-active-target,
 .mura-async-object.mura-active.mura-active-target[data-object="folder"],
 .mura-async-object.mura-active.mura-active-target[data-object="calendar"],
 .mura-async-object.mura-active.mura-active-target[data-object="gallery"] {
-	box-shadow: inset 0 0 0 1px @objectbordercolor !important;
-
-	.mura-edit-label{
-		cursor: move;
-	}
-
-}
+	box-shadow: inset 0 0 0 2px @objectbordercolor !important;
+}*/
 
 .mura-object.mura-active .mura-object.mura-active:not('.mura-drop-target') {
-	border: 1px solid transparent;
+	border: 2px solid transparent;
 }
 
-//a region that IS being currently selected
-.mura-object.mura-active.mura-object-selected,
-.mura-async-object.mura-active[data-object="folder"].mura-object-selected,
-.mura-async-object.mura-active[data-object="calendar"].mura-object-selected,
-.mura-async-object.mura-active[data-object="gallery"].mura-object-selected,
-.mura-object-content.mura-object-selected,
-.mura-object-meta.mura-object-selected {
-	box-shadow: inset 0 0 0 2px @objectbordercolor;
+.mura-object[data-object="component"] > .frontEndToolsModal.mura > .mura-edit-label,
+.mura-object[data-object="form"] > .frontEndToolsModal.mura > .mura-edit-label{
+	cursor: pointer;
+}
 
-	.mura-edit-label{
-		cursor: move;
-	}
+.mura-region-local .mura-object > .frontEndToolsModal.mura > .mura-edit-label{
+	cursor: move !important;
 }
 
 .mura-object-content.mura-object-selected,
 .mura-object-meta.mura-object-selected{
 	box-shadow: inset 0 0 0 1px @objectbordercolor;
+
 }
+	
+.mura-object-content.mura-object-selected:after,
+.mura-object-meta.mura-object-selected:after{
+	background-color:@objectbordercolor !important;
+ 	background-image:url(../images/pencil-fe@2x.png);
+ 	background-repeat:no-repeat;
+ 	background-size: 24px 24px;
+  border-bottom-left-radius: 3px;
+	color: #fff !important;
+	content: "";
+	display: block;
+ 	height: 24px !important;
+	padding: 0 6px !important;
+	position: absolute;
+	top: 0;
+	right: 0;
+ 	width: 24px !important;
+	}	
 
 .mura-drop-target.mura-append {
-	border-bottom: 1px dotted @objectbordercolor;
-	margin-bottom: -1px;
+	border-bottom: 2px dotted @objectbordercolor;
+	/*margin-bottom: -2px;*/
 }
 
 .mura-drop-target.mura-prepend {
-	border-top: 1px dotted @objectbordercolor;
-	margin-top: -1px;
+	border-top: 2px dotted @objectbordercolor;
+	/*margin-top: -2px;*/
 }
 
+.mura-object.mura-active.mura-container-active > .mura-fetborder,
+.mura-object.mura-active.mura-active-target > .mura-fetborder{
+	background-color: rgba(227, 74, 54, 0.66)!important;
+}
+
+.mura-object.mura-active.mura-container-active.mura-object-selected > .mura-fetborder,
+.mura-object.mura-active.mura-object-selected > .mura-fetborder{
+	background-color: rgba(227, 74, 54, 1)!important;
+}
+
+.mura-object.mura-active.mura-container-active > .frontEndToolsModal.mura,
 .mura-object.mura-active.mura-active-target > .frontEndToolsModal.mura{
-	opacity: .75;
+	opacity: .66;
 	}
+.mura-object.mura-active.mura-container-active.mura-object-selected > .frontEndToolsModal.mura,
 .mura-object.mura-active.mura-object-selected > .frontEndToolsModal.mura {
 	opacity: 1;
 	}
 
-.mura-object {
-	position: relative;
-}
-
 .frontEndToolsModal.mura {
+	/*box-shadow: inset 0 0 0 2px @objectbordercolor;*/
 	box-sizing: border-box;
 	color: #fff !important;
 	display: block !important;
-	font-size: 10.5px !important;
-	line-height: 24px !important;
-	min-height: 24px !important;
+	font-size: 10px !important;
 	opacity: 0;
 	position: absolute;
 	top: 0;
-	right: 0;
+	left: 0;
+	background:transparent;
 	width: 100%;
-	z-index: 10002;
+	z-index: @fetoolzindex; 
 
 	 > span.mura-edit-label{
 	    background-color: @objectbordercolor!important;
-	    border-top-left-radius: 3px;
-	    border-top-right-radius: 3px;
+	    border-bottom-left-radius: 3px;
+			color: #fff !important;
 	    font-family: @font-family-base;
 	    font-weight: 700;
-	    font-size: 10px;
+	    font-size: 11px;
+			line-height: 24px !important;
 	    min-width: 64px;
 	    height: 24px;
 	    letter-spacing: .025em;
-	    padding: 2px 16px 2px 33px;
+	    padding: 1px 16px 2px 31px;
 	    position: absolute;
-	    top: -24px;
-	    left: 6px;
-	    text-align: center;
+	    top: 2px;
+	    right: 2px;
+	    text-align: left;
 	    text-transform: uppercase;
 
 		&:before{
-			/* defaults to same content as .mi-cog */
-			content: '\f013';
 	    display: inline-block;
 	    font-family: FontAwesome;
 			font-size: 14px;
 			font-weight: normal;
 	    position: absolute;
 	    left: 12px;
-	    top: 1px;
+	    top: 0;
+		}
+
+		&:not([class*="mi-"]):before{
+		/* defaults to same content as .mi-cog */
+			content: '\f013';
 		}
 
 	 } /* /.mura-edit-label */
 
 	 > span.mura-edit-icon{
+	 	display: none !important;
 		background-color:@objectbordercolor !important;
 	 	background-image:url(../images/pencil-fe@2x.png);
 	 	background-repeat:no-repeat;
 	 	background-size: 24px 24px;
     border-bottom-left-radius: 3px;
 		color: #fff !important;
-	 	display: block !important;
-	 	float: right !important;
 	 	height: 24px !important;
 		padding: 0 6px !important;
+		position: absolute;
+		top: 0;
+		right: 0;
 	 	width: 24px !important;
 	 }
 
 } /* .frontEndToolsModal.mura */
 
-/* collection */
-div.mura-object[data-objecticonclass="mi-th-list"] span.mura-edit-label:before{
-	content: '\f00b';
-}
-/* container */
-div.mura-object[data-objecticonclass="mi-square-o"] span.mura-edit-label:before{
-	content: '\f096';
-}
-/* cta */
-div.mura-object[data-objecticonclass="mi-info"] span.mura-edit-label:before{
-	content: '\f129';
-}
-/* embed */
-div.mura-object[data-objecticonclass="mi-code"] span.mura-edit-label:before{
-	content: '\f121';
-}
-/* form */
-div.mura-object[data-objecticonclass="mi-code"] span.mura-edit-label:before{
-	content: '\f205';
-}
-/* navigation */
-div.mura-object[data-objecticonclass="mi-code"] span.mura-edit-label:before{
-	content: '\f039';
-}
-/* system (default) */
-div.mura-object[data-objecticonclass="mi-cog"] span.mura-edit-label:before{
-	content: '\f013';
-}
-/* text */
-div.mura-object[data-objecticonclass="mi-font"] span.mura-edit-label:before{
-	content: '\f031';
-}
 
+// inset outline 
+span.mura-fetborder{
+	background-color: transparent !important;
+	display: block;
+	position: absolute;
+	z-index: 1;
 
+	&.mura-fetborder-top{
+		height: 2px;
+		width: 100%;
+		top: 0;
+		left: 0;
+	}
+	&.mura-fetborder-right{
+		height: 100%;
+		width: 2px;
+		top: 0;
+		right: 0;			
+	}
+	&.mura-fetborder-bottom{
+		height: 2px;
+		width: 100%;
+		bottom: 0;
+		left: 0;
+	}
+	&.mura-fetborder-left{
+		height: 100%;
+		width: 2px;
+		top: 0;
+		left: 0;		
+	}
+} /* /.mura-fetborder */
 
+// special handling for containers
+div.mura-object[data-object="container"]:not(.mura-object-pin-tools) {
 
+	&> .frontEndToolsModal.mura {
+		z-index: @fetoolzindex;
+		top: -26px;
 
+		> span.mura-edit-label{
+			background-color: #646464 !important;
+			border-radius: 0;
+			border-top-right-radius: 3px;
+			border-top-left-radius: 3px;
+			line-height: 24px !important;
+		}
+	}
 
-div.mura-object[data-object="container"]:not(.mura-object-pin-tools) > .frontEndToolsModal.mura {
-	position: relative;
-	width: 100% !important;
-	z-index: 10002;
+	&> span.mura-fetborder{
+		background-color: transparent !important;
+	}
+
+	&.mura-active.mura-container-active.mura-object-selected > span.mura-fetborder{
+		background-color: #646464 !important;
+	}
+
+	&.mura-active.mura-active-target > span.mura-fetborder{
+		background-color: #646464 !important;
+		opacity: .66;
+	}
+
 }
 
 .mura-object-primary {

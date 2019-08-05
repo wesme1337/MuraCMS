@@ -43,7 +43,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 --->
 <cfset tabList=listAppend(tabList,"tabSchedule")>
 <cfoutput>
-<div class="mura-panel panel">
+<div class="mura-panel panel" id="tabSchedule">
 	<div class="mura-panel-heading" role="tab" id="heading-schedule">
 		<h4 class="mura-panel-title">
 			<!--- todo: rb key for scheduling --->

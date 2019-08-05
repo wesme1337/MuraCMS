@@ -91,6 +91,7 @@
 	var htmlEditorType='#application.configBean.getValue("htmlEditorType")#';
 	var context='#application.configBean.getContext()#';
 	var themepath='#application.settingsManager.getSite(rc.siteID).getThemeAssetPath()#';
+	var rootpath='#application.settingsManager.getSite(rc.siteID).getRootPath(complete=1)#';
 	var rb='#lcase(esapiEncode('javascript',session.rb))#';
 	var siteid='#esapiEncode('javascript',session.siteid)#';
 	var sessionTimeout=#evaluate("application.configBean.getValue('sessionTimeout') * 60")#;

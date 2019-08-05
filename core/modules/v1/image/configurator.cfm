@@ -42,22 +42,47 @@ modified version; it is your choice whether to do so, or to make such modified v
 version 2 without this exception.  You may, if you choose, apply this exception to your own modified versions of Mura CMS.
 --->
 <cfsilent>
-	<cfparam name="objectParams.sourcetype" default="custom">
-	<cfparam name="objectParams.source" default="">
-	<cfparam name="objectParams.render" default="server">
+	<cfparam name="objectParams.src" default="">
+	<cfparam name="objectParams.alt" default="">
+	<cfparam name="objectParams.caption" default="">
 </cfsilent>
-<cfif objectParams.sourcetype neq 'custom'>
+<cf_objectconfigurator params="#objectParams#">
 <cfoutput>
-<cfif objectParams.sourceType eq 'component'>
-	#$.dspObject(objectid=objectParams.source,object='component')#
-<cfelseif objectParams.sourceType eq 'boundattribute'>
-	#$.content(objectParams.source)#
-<cfelseif objectParams.sourcetype eq 'custom'>
-	#objectParams.source#
-<cfelse>
-	<p></p>
-</cfif>
+	<div>
+		<div class="mura-layout-row">
+			<div class="mura-control-group">
+				<label class="mura-control-label">Image Src</label>
+				<input type="text" placeholder="URL" name="src" class="objectParam" value="#esapiEncode('html_attr',objectparams.src)#"/>
+				<button type="button" class="btn mura-finder" data-target="src" data-completepath="false"><i class="mi-image"></i> Select Image</button>
+			</div>
+			<div class="mura-control-group">
+				<label class="mura-control-label">Alt Text</label>
+				<input type="text" name="alt" class="objectParam" value="#esapiEncode('html_attr',objectparams.alt)#"/>
+			</div>
+			<div class="mura-control-group">
+				<label class="mura-control-label">Caption Text</label>
+				<!---<div class="alert" id="captiondemo"><cfif objectparams.caption eq '' or objectparams.caption eq '<p></p>'>N/A<cfelse>#objectparams.caption#</cfif></div>--->
+				<button type="button" class="btn mura-html" data-target="caption" data-label="Edit Caption"><i class="mi-pencil"></i> Edit Caption</button>
+ 				<input type="hidden" class="objectParam" name="caption" value="#esapiEncode('html_attr',objectparams.caption)#">
+				<!---<script>
+				$('input[name="caption"]').on('change',
+					function(){
+						if(!this.value || this.value=='<p></p>'){
+							getElementById('captiondemo').innerHTML='N/A'
+						} else {
+							getElementById('captiondemo').innerHTML=this.value
+						}
+					}
+				)
+				</script>--->
+			</div>
+		</div>
+		<input type="hidden" class="objectParam" name="async" value="false">
+		<input type="hidden" class="objectParam" name="render" value="client">
+	</div>
+	<!--- Include global config object options --->
+	<cfinclude template="#$.siteConfig().lookupDisplayObjectFilePath('object/configurator.cfm')#">
+
 </cfoutput>
-<cfelse>
-<cfset objectParams.render="client">
-</cfif>
+</cf_objectconfigurator>
+

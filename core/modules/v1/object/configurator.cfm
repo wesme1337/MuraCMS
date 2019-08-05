@@ -33,6 +33,14 @@
 						</cfif>
 						<input id="labelText" name="label" type="text" class="objectParam" maxlength="50" value="#esapiEncode('html_attr',objectParams.label)#"/>
 					</div>
+					<div class="mura-control-group">
+						<label>Heading Tag</label>
+						<select name="labeltag" class="objectParam">
+							<cfloop list="h1,h2,h3,h4,h5,h6" item="tag">
+								<option value="#tag#" <cfif tag eq objectParams.labeltag> selected</cfif>>#ucase(tag)#</option>
+							</cfloop>
+						</select>
+					</div>
 				</div>
 	</cfoutput>
 </cfif>

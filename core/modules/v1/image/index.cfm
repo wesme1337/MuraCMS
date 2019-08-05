@@ -42,22 +42,10 @@ modified version; it is your choice whether to do so, or to make such modified v
 version 2 without this exception.  You may, if you choose, apply this exception to your own modified versions of Mura CMS.
 --->
 <cfsilent>
-	<cfparam name="objectParams.sourcetype" default="custom">
-	<cfparam name="objectParams.source" default="">
-	<cfparam name="objectParams.render" default="server">
+	<cfparam name="objectParams.src" default="">
+	<cfparam name="objectParams.alt" default="">
+	<cfparam name="objectParams.caption" default="">
+	<cfset objectParams.render="client">
 </cfsilent>
-<cfif objectParams.sourcetype neq 'custom'>
-<cfoutput>
-<cfif objectParams.sourceType eq 'component'>
-	#$.dspObject(objectid=objectParams.source,object='component')#
-<cfelseif objectParams.sourceType eq 'boundattribute'>
-	#$.content(objectParams.source)#
-<cfelseif objectParams.sourcetype eq 'custom'>
-	#objectParams.source#
-<cfelse>
-	<p></p>
-</cfif>
-</cfoutput>
-<cfelse>
-<cfset objectParams.render="client">
-</cfif>
+
+

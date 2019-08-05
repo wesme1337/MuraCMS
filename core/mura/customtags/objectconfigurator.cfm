@@ -30,6 +30,7 @@
 		<cfparam name="attributes.params.contentcssid" default="">
 		<cfparam name="attributes.params.cssid" default="">
 		<cfparam name="attributes.params.label" default="">
+		<cfparam name="attributes.params.labeltag" default="h2">
 		<cfparam name="attributes.params.object" default="">
 
 		<cfparam name="request.hasbasicoptions" default="false">

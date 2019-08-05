@@ -207,6 +207,10 @@
 	box-shadow: rgba(0, 0, 0, 0.14) 0 3px 32px 0;
 }
 
+.mura-cta__item__wrapper [data-mura-cta-type="inline"] {
+	box-shadow: none;
+}
+
 /* ------------------------------
 .mura-cta__item (data-size)
 ------------------------------ */

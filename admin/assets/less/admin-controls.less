@@ -13,7 +13,7 @@
 @controlsdivbgrd: hsla(0, 0%, 94%, 1);
 @controlspanelbgrd: transparent;
 @controlsgroupbgrd: #FCFCFC;
-@controlslabelcolor: #9A9A9A;
+@controlslabelcolor: hsla(0, 0%, 50%, 1);
 @controlslabelfontsize: 12px;
 @controlslabeliconcolor: #A4A4A4;
 @controlstextcolor: #333333;
@@ -70,6 +70,12 @@
     h1,
     h2 {
         margin-bottom: 8px;
+    }
+    h2{
+        color: @controlslabelcolor;
+        margin-left: 4px;
+        font-size: 13px;
+        font-weight: 600;
     }
     #mura__edit__settings__filter {
         margin: 0;
@@ -287,7 +293,7 @@
                 }
                 .mura-panel-body {
                     border-radius: 0;
-                    padding: 12px 12px 0;
+                    padding: 12px 15px 0;
                 }
                 .mura-panel-title {
                     color: @controlspanelhdrtext;
@@ -452,7 +458,7 @@
         .mura-control-group>label+textarea,
         .mura-control-group>label+*+textarea {
             box-shadow: @controlsinputshadow;
-            margin-bottom: 2px !important;
+            margin-bottom: 7px !important;
             padding: 0;
             &:focus {
                 box-shadow: @controlsinputfocusshadow;
@@ -557,7 +563,7 @@
         .mura-control-group input[type=radio],
         .mura-control-group input.checkbox,
         .mura-control-group input[type=checkbox] {
-            margin-top: 2px !important;
+            margin-top: 0 !important;
             border: none;
             outline: 0;
         }
@@ -1115,7 +1121,7 @@ body.sidebar-tab {
             border-top-color: transparent !important;
             box-shadow: none !important;
             /*box-shadow: 1px 2px 1px 1px rgba(68,68,68,.11);*/
-            font-size: 14px;
+            font-size: 13px;
             margin-top: 0;
             max-height: 196px;
             overflow-x: hidden;

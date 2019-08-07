@@ -2739,7 +2739,7 @@ component extends="mura.cfobject" hint="This provides JSON/REST API functionalit
 								} else if(propName=='or'){
 									relationship='or';
 								} else if(listFindNoCase('openGrouping,orOpenGrouping,andOpenGrouping,closeGrouping',propName)){
-									feed.addParam(relationship=p);
+									feed.addParam(relationship=propName);
 									relationship='and';
 								} else if(listFindNoCase('sum,avg,count,max,min,groupBy',propName)){
 									feed.aggregate(propName,params[p]);

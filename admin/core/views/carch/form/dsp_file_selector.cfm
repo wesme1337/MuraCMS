@@ -16,7 +16,7 @@
 	</cfif>
 
 	<cfif rc.type neq 'File'>
-		<div id="assocImagePreviewContainer">
+		<div id="assocImagePreviewContainer" class="bigui__preview">
 			<img id="assocImagePreview" src="" style="display: none;">
 		</div>
 	</cfif>

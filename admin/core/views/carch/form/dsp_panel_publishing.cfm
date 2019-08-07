@@ -66,7 +66,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 						<option value="2"  <cfif rc.contentBean.getisfeature() EQ 2> selected</CFIF>>#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.perschedule')#</option>
 					</select>
 
-					<div id="editFeatureDates" <cfif rc.contentBean.getisfeature() NEQ 2>style="display: none;"</cfif>>
+					<div id="editFeatureDates" class="bigui__preview"<cfif rc.contentBean.getisfeature() NEQ 2>style="display: none;"</cfif>>
 
 						<div id="featureschedule-label"></div>
 						<!--- 'big ui' flyout panel --->
@@ -316,7 +316,9 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 				<div class="mura-control-group">
 					<label>#esapiEncode('html_attr',application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.expires'))#</label>
 					<div class="mura-control justify">
-						<div id="expire-label">Expires: never</div>
+						<div class="bigui__preview">
+							<div id="expire-label">Expires: never</div>
+						</div>
 
 					<!--- 'big ui' flyout panel --->
 					<!--- todo: resource bundle key for 'manage expiration' --->

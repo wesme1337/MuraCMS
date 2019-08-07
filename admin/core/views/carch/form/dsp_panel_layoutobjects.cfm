@@ -144,16 +144,16 @@ version 2 without this exception.  You may, if you choose, apply this exception 
                 </div>
                 </cfif>
             </cfif>
-            <label for="ioi" class="radio inline">
-            <input type="radio" name="inheritObjects" id="ioi" value="Inherit" <cfif rc.contentBean.getinheritObjects() eq 'inherit' or rc.contentBean.getinheritObjects() eq ''>checked</cfif>>#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.inheritcascade')#
+            <label for="ior" class="radio inline">
+            <input type="radio" name="inheritObjects" id="ior" value="Reject" <cfif rc.contentBean.getinheritObjects() eq 'reject'>checked</cfif>>
+            #application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.donotinheritcascade')#
             </label>
             <label for="ioc" class="radio inline">
             <input type="radio" name="inheritObjects" id="ioc" value="Cascade" <cfif rc.contentBean.getinheritObjects() eq 'cascade'>checked</cfif>>
             #application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.startnewcascade')#
             </label>
-            <label for="ior" class="radio inline">
-            <input type="radio" name="inheritObjects" id="ior" value="Reject" <cfif rc.contentBean.getinheritObjects() eq 'reject'>checked</cfif>>
-            #application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.donotinheritcascade')#
+            <label for="ioi" class="radio inline">
+            <input type="radio" name="inheritObjects" id="ioi" value="Inherit" <cfif rc.contentBean.getinheritObjects() eq 'inherit' or rc.contentBean.getinheritObjects() eq ''>checked</cfif>>#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.inheritcascade')#
             </label>
           </div>
 					<div id="inheritanceRegionOptin" class="mura-control-group" style="display:none">

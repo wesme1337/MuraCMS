@@ -49,7 +49,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 			<!--- todo: rb key for placeholder --->
 			<!--- filter settings --->
 			<div id="mura__edit__settings__filter">
-	  		<input type="text" class="form-control" id="mura__edit__settings__filter__input" placeholder="Type to Find Settings">
+	  		<input type="text" class="form-control" id="mura__edit__settings__filter__input" placeholder="Search Settings">
 			</div>
 			<!--- settings --->
 			<div class="mura__edit__controls__objects">

@@ -55,11 +55,8 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 			<!--- todo: add these containers and this tab to available regions --->
 			<span id="extendset-container-tabremotetop" class="extendset-container"></span>
 
-			<!--- Remote Information --->
-	
-				<h2>#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.remoteinformation')#</h2>
-
-					<div class="mura-control-group">
+				<!--- Remote Information --->
+				<div class="mura-control-group">
 					<label>#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.remoteid')#</label>
 					<input type="text" id="remoteID" name="remoteID" value="#rc.contentBean.getRemoteID()#"  maxlength="255">
 					</div>

@@ -1,38 +1,43 @@
 /* variables */
 
 /* panel headers */
-@controlspanelhdrbgrd: #FFFFFF;
+@controlspanelhdrbgrd: hsla(0, 0%, 98%, 1);
 @controlspanelhdrtext: #545454;
 @controlspanelhdrhover: #FEFEFE;
 @controlspanelhdrhovertext: #212529;
-@controlspanelhdrborder: #EBEBEB;
-@controlsclosedicon: #9b9b9b;
-
+@controlspanelhdrborder: none;
+@controlsopeniconcolor: #8B8B8B;
+@controlsclosediconcolor: #BFBFBF;
 /* panels and elements */
-@controlsdivbgrd: #F9F9F9;
+
+@controlsdivbgrd: hsla(0, 0%, 94%, 1);
 @controlspanelbgrd: transparent;
 @controlsgroupbgrd: #FCFCFC;
-@controlslabelcolor: #999999;
-@controlslabeliconcolor: #e0e0e0;
+@controlslabelcolor: hsla(0, 0%, 50%, 1);
+@controlslabelfontsize: 12px;
+@controlslabeliconcolor: #A4A4A4;
 @controlstextcolor: #333333;
-@controlsselectbgrd: #EFEFEF;
+@controlsselectbgrd: #FCFCFC;
 @controlsinputbgrd: #FCFCFC;
+@controlsinputborder: 1px solid transparent;
+@controlsinputfocusborder: 1px solid #e6e6e6;
 @controlsinputtextcolor: #333333;
-@controlsinputfontsize: 16px;
-@controlsinputshadow: 0 1px 0 #e6e6e6;
-@controlsinputfocusshadow: 0 1px 0 #b1b1b1;
+@controlsinputfontsize: 13px;
+@controlsinputheight: 30px;
+@controlsinputshadow: none;
+@controlsinputfocusshadow: none;
+@controlsbiguihelpbgrd: hsla(0, 0%, 96%, 1);
 @cardshadow: none;
 @titleeditwidth: 100%;
-
 /* panels layout */
+
 @editcalcheight: ~"calc(100vh - 216px)";
 @editscrollheight: ~"calc(100vh - 260px)";
 @editcalcwidth: ~"calc(100% - 315px)";
-
 /* front end modal */
+
 @frontendcalcheight: ~"calc(100vh - 84px)";
 @frontendcontrolsheight: ~"calc(100vh - 170px)";
-
 .contentTitle {
     font-size: 26px;
     font-weight: bold;
@@ -55,15 +60,24 @@
     min-height: @editscrollheight !important;
     text-transform: none;
     z-index: 98!important;
-
-    h1, h2, h3, h4, p{
+    h1,
+    h2,
+    h3,
+    h4,
+    p {
         color: @controlstextcolor;
         font-weight: normal;
     }
-    h1, h2{
+    h1,
+    h2 {
         margin-bottom: 8px;
-    }    
-
+    }
+    h2{
+        color: @controlslabelcolor;
+        margin-left: 4px;
+        font-size: 13px;
+        font-weight: 600;
+    }
     #mura__edit__settings__filter {
         margin: 0;
         padding: 0;
@@ -75,7 +89,7 @@
             border-bottom-right-radius: 0;
             color: @controlsinputtextcolor;
             cursor: pointer;
-            font-size: 14px;
+            font-size: @controlsinputfontsize;
             margin: 0;
             outline: none;
             outline-offset: 0;
@@ -87,13 +101,12 @@
         width: 100%;
         min-width: 300px;
         overflow: auto;
-        padding-right: 2px;
     }
     .btn {
         border: 1px solid transparent !important;
         box-shadow: none !important;
         cursor: pointer !important;
-        font-size: 14px !important;
+        font-size: @controlsinputfontsize !important;
         height: 32px !important;
         letter-spacing: normal !important;
         line-height: 1.42857143 !important;
@@ -121,7 +134,8 @@
         .clearfix {
             clear: both !important;
         }
-        img+div, img+label {
+        img+div,
+        img+label {
             margin-top: 8px;
         }
         .mura-close {
@@ -135,7 +149,7 @@
             }
         }
         .btn {
-            font-size: 14px;
+            font-size: @controlsinputfontsize;
             padding: 6px 12px;
             -webkit-box-shadow: none;
             -moz-box-shadow: none;
@@ -159,10 +173,12 @@
             clear: left;
             margin-top: 8px;
         }
-        label+.btn:not([class*="btn-"]), label div+.btn:not([class*="btn-"]) {
+        label+.btn:not([class*="btn-"]),
+        label div+.btn:not([class*="btn-"]) {
             margin-top: 8px;
         }
-        label.checkbox.inline, label.radio.inline {
+        label.checkbox.inline,
+        label.radio.inline {
             width: auto;
             padding-left: 20px !important;
             margin-top: 0;
@@ -191,71 +207,68 @@
             margin: 0;
         }
         .mura-control-group {
-            margin: 0 auto 12px !important;
-            padding: 6px 12px 12px !important;
-            background-color: @controlsgroupbgrd !important;
-            position: relative !important;
-            min-height: 36px !important;
-
-            &.boolean{
+            margin: 0;
+            padding: 0 4px 12px!important;
+            background-color: transparent;
+            position: relative!important;
+            min-height: @controlsinputheight  !important;
+            &.boolean {
                 background-color: transparent !important;
                 padding-bottom: 0 !important;
                 margin: 0 auto 4px !important;
-                &+.mura-control-group:not(.boolean){
+                &+.mura-control-group:not(.boolean) {
                     margin-top: 16px !important;
                 }
             }
-
-            .mura-control-heading,
-            p.mura-control-heading{
-            	font-size: @controlsinputfontsize;
-            	font-weight: normal;
-            	padding-top: 8px !important;
+            .mura-control-group{
+                padding-left: 0 !important;
+                padding-right: 0 !important;
             }
-
-			label, 
-			.control-label, 
-			.mura-control-label {
-	            font-size: 14px !important;
-	            font-weight: normal !important;
-	            color: @controlslabelcolor !important;
-	            line-height: 1.2 !important;
-	            padding-top: 4px;
-
-                i{
+            .mura-control-heading,
+            p.mura-control-heading {
+                font-size: @controlsinputfontsize;
+                font-weight: normal;
+                padding-top: 8px !important;
+            }
+            label,
+            .control-label,
+            .mura-control-label {
+                color: @controlslabelcolor !important;
+                font-size: @controlslabelfontsize !important;
+                font-weight: normal !important;
+                line-height: 1.2 !important;
+                padding-top: 4px;
+                i {
                     color: @controlslabeliconcolor;
                 }
-
-	            &.checkbox, 
-	            &.radio{
-	            	color: @controlstextcolor !important;
-	            }
-				&.checkbox{
-				  padding-left: 22px !important;
-				}
-				&.radio{
-				  padding-left: 15px !important;
-				}
-				&.checkbox.inline,
-				&.radio.inline{
-				  width:auto !important;
-				  padding-left: 30px !important;
-				  margin-top: 0 !important;
-				}
-				&.radio.inline{
-				  padding-left: 22px !important;
-				}
-				&.time-repeat {
-        		  width: 75px !important;
- 			   }
+                &.checkbox,
+                &.radio {
+                    color: @controlstextcolor !important;
+                }
+                &.checkbox {
+                    padding-left: 22px !important;
+                }
+                &.radio {
+                    padding-left: 15px !important;
+                }
+                &.checkbox.inline,
+                &.radio.inline {
+                    width: auto !important;
+                    padding-left: 30px !important;
+                    margin-top: 0 !important;
+                }
+                &.radio.inline {
+                    padding-left: 22px !important;
+                }
+                &.time-repeat {
+                    width: 75px !important;
+                }
             }
-
             &>label+textarea:not([class*=mura-constrain]) {
                 min-height: 6em !important;
                 max-width: 100% !important;
                 min-width: 100% !important;
             }
-
         }
         .mura-panel-group {
             border-radius: 0;
@@ -272,7 +285,7 @@
                     background-color: @controlspanelhdrbgrd;
                     color: @controlspanelhdrtext;
                     padding: 0;
-                    border-bottom: 1px solid @controlspanelhdrborder;
+                    border-bottom: @controlspanelhdrborder;
                 }
                 .mura-panel-heading:hover {
                     background-color: @controlspanelhdrhover;
@@ -281,7 +294,7 @@
                 }
                 .mura-panel-body {
                     border-radius: 0;
-                    padding: 12px 18px 0;
+                    padding: 12px 15px 0;
                 }
                 .mura-panel-title {
                     color: @controlspanelhdrtext;
@@ -289,12 +302,12 @@
                     a {
                         display: block;
                         color: @controlspanelhdrtext;
-                        padding: 12px 16px 12px 32px;
+                        padding: 12px 16px 12px 12px;
                         font-weight: 400;
-                        font-size: 16px;
+                        font-size: 13px;
                         position: relative;
                         &:before {
-                            color: @mura-red;
+                            color: @controlsopeniconcolor;
                             content: "\f107";
                             display: inline-block;
                             position: absolute;
@@ -302,29 +315,50 @@
                             font-size: 15px;
                             font-weight: 700;
                             top: 50%;
-                            left: 12px;
+                            right: 12px;
                             transform: translateY(50%);
                             -webkit-transform: translateY(-50%);
                             -ms-transform: translateY(-50%);
                         }
                         &.collapsed:before {
-                            color: @controlsclosedicon;
+                            color: @controlsclosediconcolor;
                             content: "\f105";
-                            left: 16px;
+                            right: 16px;
                         }
                     }
-                    a:hover, a:active, a:focus {
+                    a:hover,
+                    a:active,
+                    a:focus {
                         color: @controlspanelhdrhovertext !important;
                     }
                 }
             }
             /* /mura-panel*/
-            .help-block, form .help-block {
-                background-color: #FFF !important;
+            .help-block,
+            form .help-block,
+            .bigui__preview {
+                background-color: @controlsbiguihelpbgrd !important;
                 box-shadow: @cardshadow;
                 border: none !important;
-                border-radius: 4px;
+                border-radius: 4px;                
+                 ul{
+                    margin-bottom: 0;
+                 }
             }
+            .bigui__preview{
+                clear: both !important;
+                overflow: hidden;
+                padding-left: 12px !important;
+                padding-right: 12px !important;
+                
+                &>*:first-child{
+                 margin-top: 12px;
+                }
+                &>*:last-child{
+                 margin-bottom: 12px;
+                }
+            }
+
             /* nested panels */
             .mura-control-group .mura-panel-group {
                 margin-bottom: 0 !important;
@@ -339,7 +373,7 @@
             }
             /* /nested panels */
             &.no-header {
-               &> .mura-panel .mura-panel-heading {
+                &>.mura-panel .mura-panel-heading {
                     display: none !important;
                     margin: 0 !important;
                     padding: 0 !important;
@@ -352,7 +386,7 @@
                 margin: 8px 0;
                 padding: 6px 10px;
             }
-            #panel-gds-object{
+            #panel-gds-object {
                 margin-top: -16px;
             }
             .panel-gds-box span {
@@ -369,8 +403,23 @@
             }
         }
         /* /mura-panel-group */
-
-        select, select:focus, input[type=date], input[type=file], input[type=datetime], input[type=datetime-local], input[type=image], input[type=email], input[type=month], input[type=number], input[type=tel], input[type=range], input[type=text], input[type=text].mura-repeat-option, input[type=url], input[type=week], textarea,
+        select,
+        select:focus,
+        input[type=date],
+        input[type=file],
+        input[type=datetime],
+        input[type=datetime-local],
+        input[type=image],
+        input[type=email],
+        input[type=month],
+        input[type=number],
+        input[type=tel],
+        input[type=range],
+        input[type=text],
+        input[type=text].mura-repeat-option,
+        input[type=url],
+        input[type=week],
+        textarea,
         .mura-control-group>label+textarea:not([class*="mura-constrain"]),
         .mura-control-group>label+*+textarea:not([class*="mura-constrain"]),
         .mura-control-group>label+input[type=text]:not([class*="datepicker"]):not([class*="mura-constrain"]),
@@ -384,71 +433,73 @@
         .mura-control-group>label+input:not([type]),
         .mura-control-group>label+*+input:not([type]),
         .mura-control-group>label+*+.nice-select {
-            margin: 0;
-            width: 100%;
             background-color: @controlsinputbgrd;
+            border: @controlsinputborder !important;
+            border-radius: 3px;
             color: @controlsinputtextcolor;
-            padding: 7px 0;
-            font-size: @controlsinputfontsize;
-            border: none;
             cursor: pointer;
-            outline: none;
-            outline-offset: 0;
+            font-size: @controlsinputfontsize;
+            height: @controlsinputheight;
+            margin: 0;
+            padding: 4px 8px;
+            transition: border-color .4s linear;
+            -webkit-transition: border-color .4s linear;
+            width: 100%;
+            &:focus{
+                border: @controlsinputfocusborder !important;
+            }
         }
-        .mura-control.justify select.multiSelect{
-            font-size: 14px;
+        .mura-control.justify select.multiSelect {
+            font-size: @controlsinputfontsize;
             height: auto !important;
             overflow: auto;
             padding-left: 32px;
         }
-        .mura-timeselectwrapper{
+        .mura-timeselectwrapper {
             max-width: 266px;
             min-width: 232px;
             margin: 0;
             padding: 0;
             float: left;
-
-            .nice-select.time{
+            .nice-select.time {
                 width: 30%;
-                padding: 7px 12px 8px 3px;
+                padding: 5px 12px 8px 3px;
                 margin-right: 6px;
                 max-width: 86px;
                 min-width: 66px;
                 clear: none;
             }
         }
-
         .mura-control-group>label+input[type=text],
         .mura-control-group>label+*+input[type=text],
         .mura-control-group>label+input[type=password],
         .mura-control-group>label+*+input[type=password],
         .mura-control-group>label+textarea,
-        .mura-control-group>label+*+textarea{
+        .mura-control-group>label+*+textarea {
             box-shadow: @controlsinputshadow;
-            border-bottom-right-radius: 0px;
-            border-bottom-left-radius: 0px;
-            margin-bottom: 8px !important;
+            margin-bottom: 7px !important;
             padding: 0;
-            &:focus{
+            &:focus {
                 box-shadow: @controlsinputfocusshadow;
+                border: @controlsinputfocusborder !important;
             }
         }
         .mura-control-group>label+textarea,
-        .mura-control-group>label+*+textarea{
+        .mura-control-group>label+*+textarea {
             min-height: 48px !important;
         }
-        .cke_bottom, 
-        .cke_chrome, 
-        .cke_top{
+        .cke_bottom,
+        .cke_chrome,
+        .cke_top {
             border-color: transparent !important;
             background-color: #fff;
         }
-        .cke_bottom{
+        .cke_bottom {
             border-top: 1px solid #f9f9f9!important;
             width: ~"calc(100% - 36px)" !important;
             margin: 0 0 0 12px;
         }
-        .cke_top{
+        .cke_top {
             border-bottom: 1px solid #f9f9f9!important;
             width: ~"calc(100% - 36px)" !important;
             margin: 0 0 0 12px;
@@ -468,36 +519,55 @@
         #assocImagePreview {
             height: 80px;
             width: auto;
-            margin: 12px 0 12px;
             cursor: pointer;
         }
         /* custom styles for date inputs */
-        input[type=date], input[type=datetime], input[type=datetime-local], input[type=month], input[type=week] {
+        input[type=date],
+        input[type=datetime],
+        input[type=datetime-local],
+        input[type=month],
+        input[type=week] {
             appearance: none;
             -webkit-appearance: none;
             display: inline-block !important;
             visibility: visible !important;
         }
         /* hide the clear button from date inputs */
-        input[type=date]::-webkit-clear-button, input[type=datetime]::-webkit-clear-button, input[type=datetime-local]::-webkit-clear-button, input[type=month]::-webkit-clear-button, input[type=week]::-webkit-clear-button {
+        input[type=date]::-webkit-clear-button,
+        input[type=datetime]::-webkit-clear-button,
+        input[type=datetime-local]::-webkit-clear-button,
+        input[type=month]::-webkit-clear-button,
+        input[type=week]::-webkit-clear-button {
             display: none;
         }
         /* hide the spin button */
-        input[type=date]::-webkit-inner-spin-button, input[type=datetime]::-webkit-inner-spin-button, input[type=datetime-local]::-webkit-inner-spin-button, input[type=month]::-webkit-inner-spin-button, input[type=week]::-webkit-inner-spin-button {
+        input[type=date]::-webkit-inner-spin-button,
+        input[type=datetime]::-webkit-inner-spin-button,
+        input[type=datetime-local]::-webkit-inner-spin-button,
+        input[type=month]::-webkit-inner-spin-button,
+        input[type=week]::-webkit-inner-spin-button {
             display: none;
         }
         /* always display the drop down caret */
-        input[type=date]::-webkit-calendar-picker-indicator, input[type=datetime]::-webkit-calendar-picker-indicator, input[type=datetime-local]::-webkit-calendar-picker-indicator, input[type=month]::-webkit-calendar-picker-indicator, input[type=week]::-webkit-calendar-picker-indicator {
+        input[type=date]::-webkit-calendar-picker-indicator,
+        input[type=datetime]::-webkit-calendar-picker-indicator,
+        input[type=datetime-local]::-webkit-calendar-picker-indicator,
+        input[type=month]::-webkit-calendar-picker-indicator,
+        input[type=week]::-webkit-calendar-picker-indicator {
             color: @controlsinputtextcolor;
         }
-        input[type=date]::-webkit-calendar-picker-indicator:hover, input[type=datetime]::-webkit-calendar-picker-indicator:hover, input[type=datetime-local]::-webkit-calendar-picker-indicator:hover, input[type=month]::-webkit-calendar-picker-indicator:hover, input[type=week]::-webkit-calendar-picker-indicator:hover {
+        input[type=date]::-webkit-calendar-picker-indicator:hover,
+        input[type=datetime]::-webkit-calendar-picker-indicator:hover,
+        input[type=datetime-local]::-webkit-calendar-picker-indicator:hover,
+        input[type=month]::-webkit-calendar-picker-indicator:hover,
+        input[type=week]::-webkit-calendar-picker-indicator:hover {
             background: none;
             color: @controlsinputtextcolor;
         }
         .colorpicker-element .add-on,
-        .colorpicker-element .input-group-addon{
+        .colorpicker-element .input-group-addon {
             border: none;
-            i{           
+            i {
                 display: inline-block;
                 cursor: pointer;
                 height: 16px;
@@ -506,12 +576,12 @@
                 vertical-align: text-top;
                 width: 16px;
             }
-        }        
+        }
         .mura-control-group input.radio,
         .mura-control-group input[type=radio],
         .mura-control-group input.checkbox,
         .mura-control-group input[type=checkbox] {
-            margin-top: 2px !important;
+            margin-top: 0 !important;
             border: none;
             outline: 0;
         }
@@ -536,17 +606,17 @@
                 }
             }
         }
-        .tagSelector{
-             input{
+        .tagSelector {
+            input {
                 margin-top: 0;
             }
-            .tag{
+            .tag {
                 background-color: @controlslabelcolor;
                 border-radius: 2px;
                 color: #FFF;
                 font-size: 14px;
                 height: 24px;
-                 a i{
+                a i {
                     color: #e0e0e0 !important;
                     float: right;
                     font-size: 12px;
@@ -554,8 +624,7 @@
                     margin: 6px 0px 0 6px;
                 }
             }
-         }   
-
+        }
         #feedCustomImageOptions .half {
             padding-right: 12px;
             +.half {
@@ -563,7 +632,8 @@
                 padding-left: 12px;
             }
         }
-        #availableFields, #availableGroups,
+        #availableFields,
+        #availableGroups,
         .dragMsg {
             color: @controlstextcolor;
             span {
@@ -571,13 +641,20 @@
             }
         }
         #sortableFields,
-        .sortableFields, #sortableGroups,
+        .sortableFields,
+        #sortableGroups,
         .sortableGroups {
             .dragMsg,
             .dragMsg span {
                 color: @controlstextcolor;
             }
-            #availableListSort, #contentAvailableListSort, #groupAvailableListSort, #contentDisplayListSort, #displayListSort, #groupAssignmentListSort, #groupAvailableListSort {
+            #availableListSort,
+            #contentAvailableListSort,
+            #groupAvailableListSort,
+            #contentDisplayListSort,
+            #displayListSort,
+            #groupAssignmentListSort,
+            #groupAvailableListSort {
                 li {
                     text-overflow: ellipsis;
                     width: 100%;
@@ -621,7 +698,7 @@
             color: @mura-red !important;
             margin: 0;
             position: absolute;
-            top: 8px;
+            top: 2px;
             right: 16px;
         }
     }
@@ -678,8 +755,8 @@
         .bigui__controls {
             background-color: #f8f8f8;
             border-radius: 2px;
-            margin-bottom: 24px;      
-            min-height: 54px; 
+            margin-bottom: 24px;
+            min-height: 54px;
             padding: 12px 18px 5px;
         }
         .bigui__close {
@@ -692,7 +769,8 @@
         .navZoom li {
             cursor: default;
         }
-        #availableObjectsContainer, #availableRegions {
+        #availableObjectsContainer,
+        #availableRegions {
             min-width: 380px;
             float: left;
         }
@@ -707,7 +785,7 @@
     .btn:active.focus,
     .btn:active:focus,
     .btn:focus {
-        outline: none !important !important;
+        outline: none !important;
     }
     .btn-secondary {
         background-color: @controlspanelhdrhover;
@@ -729,11 +807,15 @@
 }
 /* /.bigui */
 
+#bigui__layoutobjects .bigui__controls{
+    background-color: transparent;
+}
+
 #bigui__categories {
     .categoryAssignment li ul {
         margin: 0 !important;
     }
-    .bigui__wrapper{
+    .bigui__wrapper {
         overflow: visible;
     }
     .mura-grid {
@@ -759,7 +841,8 @@
             float: right;
         }
         .mura-grid-hdr {
-            dt, dd {
+            dt,
+            dd {
                 .bold-font;
             }
             dt {
@@ -827,7 +910,9 @@
 /* /#bigui_categories */
 
 /* selected item lists for big ui panels */
-#categories__selected, #relcontent__selected {
+
+#categories__selected,
+#relcontent__selected {
     p {
         padding: 12px 0 12px 0px;
     }
@@ -879,15 +964,15 @@ body.sidebar-tab {
 /* /mura-content-body-block */
 
 #mura-content-metadata {
-    padding: 12px;
+    padding: 8px;
 }
 .meta-label {
     clear: right;
     color: @controlslabelcolor;
     display: block;
     float: left;
-    font-size: 14px;
-    padding: 4px 12px 4px 0;
+    font-size: 12px;
+    padding: 2px 12px 2px 0;
     width: 100%;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -895,7 +980,7 @@ body.sidebar-tab {
     >span {
         color: @controlsinputtextcolor;
         font-weight: 100;
-        padding-left: 12px;
+        padding-left: 2px;
         display: inline-block;
     }
     &.meta-label-wide {
@@ -905,7 +990,7 @@ body.sidebar-tab {
     }
 }
 #mura-content-title-render {
-    .contentTitle; 
+    .contentTitle;
     color: @controlstextcolor;
     font-weight: 400;
     cursor: pointer;
@@ -918,11 +1003,11 @@ body.sidebar-tab {
     width: @titleeditwidth !important;
     background-color: transparent;
     padding-left: 12px;
-    border: @controlspanelhdrborder solid 1px!important;        
+    border: 1px solid #ebebeb !important;
     /*box-shadow: 0 1px 0 #e6e6e6;*/
-    &:hover{
-    /*border: #CDCDCD solid 1px!important;*/
-    } 
+    &:hover {
+        /*border: #CDCDCD solid 1px!important;*/
+    }
     &.editing {
         border: #CDCDCD solid 1px!important;
         /*border: @mura-red dashed 1px!important;*/
@@ -942,44 +1027,41 @@ body.sidebar-tab {
 }
 #mura-content-body-render {
     clear: left;
-
     #assocImage {
-      clear: none !important;
+        clear: none !important;
     }
-    #mura-content-body-inner{
+    #mura-content-body-inner {
         background: white;
-        padding: 24px;    
-        
-            h2{
-                font-size: 15px;
-                font-weight: 700;
-                margin-bottom: 15px;
-            }
+        padding: 24px;
+        h2 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
     }
-
-    .block>.nav-tabs>li>a{  
+    .block>.nav-tabs>li>a {
         font-weight: normal !important;
         color: @controlslabelcolor !important;
     }
-    .block>.nav-tabs>li.active>a{
+    .block>.nav-tabs>li.active>a {
         font-weight: bold;
         color: @controlstextcolor !important;
     }
-
-    #bodyContainer > label {
+    #bodyContainer>label {
         display: none;
     }
-    #noBodyContainer > .block{
-        padding: 12px 12px 1px;
+    #noBodyContainer>.block {
+        padding: 0;
+        background-color: transparent !important;
     }
 }
-
 /* modal window in legacy layout view */
+
 #carch .ui-dialog {
     .objectParam.nice-select {
         background-color: #fff;
         color: #646464;
-        border: 1px solid #e6e6e6;
+        border: @controlsinputborder !important;
         border-radius: 3px;
         ul.list,
         .option {
@@ -998,32 +1080,30 @@ body.sidebar-tab {
         background-color: @mura-red;
     }
 }
-
 /* nice-select overrides */
+
 .mura__edit__controls {
     select:not(#restrictGroups) {
         display: none;
     }
-    .nice-select, 
+    .nice-select,
     .mura-control-group>label+.nice-select {
         background-color: @controlsselectbgrd !important;
-        border-radius: 0;
-        border: none;
+        border: @controlsinputborder !important;
+        border-radius: 3px;
         color: @controlsinputtextcolor;
         font-size: @controlsinputfontsize;
-        height: 36px;   
-        line-height: 36px;
+        height: @controlsinputheight;
+        line-height: @controlsinputheight;
         margin: 0;
         outline-offset: 0;
-        -webkit-transition: all .1s ease-in-out;
-        transition: all .1s ease-in-out;
+        -webkit-transition: all .4s linear;
+        transition: all .4s linear;
         width: 100%;
-
-        .current{
+        .current {
             padding-left: 12px;
-            margin-top: -6px;
+            margin-top: -5px;
         }
-
         &.open,
         &:active,
         &:focus,
@@ -1057,14 +1137,14 @@ body.sidebar-tab {
             font-size: 13px;
             line-height: 34px
         }
-        .list, 
+        .list,
         ul.list {
             background-color: #FFF;
             border-radius: 0;
             border-top-color: transparent !important;
             box-shadow: none !important;
             /*box-shadow: 1px 2px 1px 1px rgba(68,68,68,.11);*/
-            font-size: 14px;
+            font-size: 13px;
             margin-top: 0;
             max-height: 196px;
             overflow-x: hidden;
@@ -1099,36 +1179,34 @@ body.sidebar-tab {
             cursor: default
         }
     }
-    .mura-timeselectwrapper{
+    .mura-timeselectwrapper {
         width: 75%;
-        float:left;
+        float: left;
     }
 }
-
 /* front end modal */
-body.modal-wrapper{
-    .mura-header{
+
+body.modal-wrapper {
+    .mura-header {
         padding-bottom: 2px;
-        .nav-module-specific{
+        .nav-module-specific {
             display: none;
         }
     }
-    .block-content{
+    .block-content {
         padding-bottom: 0;
     }
-    .body-container.mura-control-group{
+    .body-container.mura-control-group {
         padding-bottom: 0;
         margin-bottom: 0;
     }
-
     .block-constrain#mura-content-body-block {
         height: @frontendcalcheight;
         box-shadow: none !important;
-    }      
-    .mura__edit__controls{
+    }
+    .mura__edit__controls {
         height: @frontendcontrolsheight;
-
-         .mura__edit__controls__scrollable {
+        .mura__edit__controls__scrollable {
             height: @frontendcontrolsheight;
             min-height: @frontendcontrolsheight;
             width: 100%;
@@ -1136,12 +1214,12 @@ body.modal-wrapper{
             overflow: auto;
             padding-right: 0;
         }
-
     }
-    .mura-actions{
+    .mura-actions {
         padding-bottom: 0 !important;
     }
-    .alert, #mura-content .alert{
+    .alert,
+    #mura-content .alert {
         background-position: -13px center;
         background-repeat: no-repeat;
         background-size: 40px 40px;
@@ -1151,5 +1229,4 @@ body.modal-wrapper{
         min-height: 3em;
         padding: 1em 20px 1em 40px;
     }
-
 }

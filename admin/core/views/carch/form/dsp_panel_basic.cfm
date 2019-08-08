@@ -143,19 +143,19 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 				<!--- content parent --->
 				<cfif ((rc.parentid neq '00000000000000000000000000000000001' and application.settingsManager.getSite(rc.siteid).getlocking() neq 'all') or (rc.parentid eq '00000000000000000000000000000000001' and application.settingsManager.getSite(rc.siteid).getlocking() eq 'none')) and rc.contentid neq '00000000000000000000000000000000001'>
 
-
-
 					<cfif application.settingsManager.getSite(rc.siteid).getlocking() neq 'all'>
 						<div class="mura-control-group">
-				      		<label>
-					  			#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.contentparent')#
-			      			</label>
-			      			<div class="mura-control justify">
-				  				<cfif arrayLen(rc.crumbData) gt 1>
+			      		<label>
+				  			#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.contentparent')#
+		      			</label>
+		      			<div class="mura-control justify">
+			  				<cfif arrayLen(rc.crumbData) gt 1>
+			  					<div class="bigui__preview">
 				  					<div id="newparent-label">
 					      			"<span><cfif rc.contentBean.getIsNew()>#rc.crumbData[1].menutitle#<cfelse>#rc.crumbData[2].menutitle#</cfif></span>"
 					  				</div>
-				  				</cfif>
+			  					</div>
+			  				</cfif>
 
 								<!--- 'big ui' flyout panel --->
 								<div class="bigui" id="bigui__selectparent" data-label="#esapiEncode('html_attr',application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.selectnewparent'))#">
@@ -286,7 +286,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 						   <span id="extendset-container-tabprimarytop" class="extendset-container"></span>
 								<div class="block">
 									<div class="help-block-empty">
-									This content type does not include a body.
+									Body content unavailable for content type #$.content('type')#/#$.content('subtype')#
 									</div>
 								</div>
 						   <span id="extendset-container-primary" class="extendset-container"></span>

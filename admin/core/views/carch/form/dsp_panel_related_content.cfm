@@ -96,9 +96,9 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 
 					if (rcList.trim().length > 0){
 					<!--- todo: resource bundle values for text --->
-						$('#relcontent__selected').html('<label>Selected</label><ul>' + rcList + '</ul>');
+						$('#relcontent__selected').html('<label>Selected</label><div class="bigui__preview"><ul>' + rcList + '</ul></div>');
 					} else {
-						$('#relcontent__selected').html('<label>Selected</label><div>No related content selected</div>');
+						$('#relcontent__selected').html('<label>Selected</label><div class="bigui__preview"><div>No related content selected</div></div>');
 					}
 				}
 

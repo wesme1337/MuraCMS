@@ -86,7 +86,9 @@
 		<cfset displayInterval.endAfter = 1>
 	</cfif>
 
-	<div id="displayschedule-label"></div>
+	<div class="bigui__preview">
+		<div id="displayschedule-label"></div>
+	</div>
 
 	<!--- 'big ui' flyout panel --->
 	<!--- todo: resource bundle key for 'manage schedule' --->
@@ -94,7 +96,7 @@
 		<div class="bigui__title">#esapiEncode('html_attr',application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.displayinterval.schedule'))#</div>
 			<div class="bigui__controls">
 
-				<div id="displayschedule-selector">
+				<div id="displayschedule-selector">	
 
 					<!--- todo: rb key for 'starts' --->
 					<div class="mura-control-group">

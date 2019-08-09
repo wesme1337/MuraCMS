@@ -263,7 +263,7 @@ body.mura-sidebar-state__pushed--right .mura__layout-manager__controls {
 
 // inset outline 
 span.mura-fetborder{
-	background-color: transparent !important;
+	background-color: transparent;
 	display: block;
 	position: absolute;
 	z-index: 1;
@@ -311,9 +311,12 @@ div.mura-object[data-object="container"]:not(.mura-object-pin-tools) {
 	}
 
 	&> span.mura-fetborder{
-		background-color: transparent !important;
+		background-color: transparent;
 	}
 
+	&.mura-active.mura-container-active > span.mura-fetborder{
+		background-color: #BDBDBD !important;
+	}
 	&.mura-active.mura-container-active.mura-object-selected > span.mura-fetborder{
 		background-color: #646464 !important;
 	}

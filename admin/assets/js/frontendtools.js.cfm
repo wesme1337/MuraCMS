@@ -1276,6 +1276,7 @@
 					if(Mura.type =='Variation'){
 						objectParams=item.data();
 						item.children('.frontEndToolsModal').remove();
+						item.children('.mura-fetborder').remove();
 						item.prepend(window.Mura.layoutmanagertoolbar );
 						if(item.data('objectname')){
 							item.children('.frontEndToolsModal').children('.mura-edit-label').html(item.data('objectname'));
@@ -1305,6 +1306,7 @@
 								objectParams=item.data();
 								if(window.MuraInlineEditor.objectHasConfigurator(item) || (!window.Mura.layoutmanager && window.MuraInlineEditor.objectHasEditor(objectParams)) ){
 									item.children('.frontEndToolsModal').remove();
+									item.children('.mura-fetborder').remove();
 									item.prepend(window.Mura.layoutmanagertoolbar);
 
 									if(item.data('objectname')){
@@ -1337,6 +1339,7 @@
 									);
 									item.data('notconfigurable',true);
 									item.children('.frontEndToolsModal').remove();
+									item.children('.mura-fetborder').remove();
 									item.prepend(window.Mura.layoutmanagertoolbar);
 									if(item.data('objectname')){
 										item.children('.frontEndToolsModal').children('.mura-edit-label').html(item.data('objectname'));
@@ -1367,6 +1370,7 @@
 					var item=Mura(this);
 					item.addClass("mura-active");
 					item.children('.frontEndToolsModal').remove();
+					item.children('.mura-fetborder').remove();
 					item.prepend(window.Mura.layoutmanagertoolbar);
 					if(item.data('objectname')){
 						item.children('.frontEndToolsModal').children('.mura-edit-label').html(item.data('objectname'));

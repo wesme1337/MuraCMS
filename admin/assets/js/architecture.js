@@ -1268,8 +1268,10 @@ buttons: {
 		if(!r.hasassocfile) {
 			$('#assocFileContainer').hide();
 			$("input[name='newfile']").val('');
+			$('#tabAssoc').hide();
 		} else {
 			$('#assocFileContainer').show();
+			$('#tabAssoc').show();
 		}
 
 		this.checkExtendSetTargeting();

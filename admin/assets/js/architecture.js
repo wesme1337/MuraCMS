@@ -2991,7 +2991,7 @@ buttons: {
 		}
 	
 		if(!this.availableObject.params.label){
-			console.log(this.availableObject.params.labeltag)
+			//console.log(this.availableObject.params.labeltag)
 			this.availableObject.params.labeltag='';
 		}
 

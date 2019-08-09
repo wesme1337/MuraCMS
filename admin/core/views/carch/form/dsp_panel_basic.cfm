@@ -286,7 +286,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 						   <span id="extendset-container-tabprimarytop" class="extendset-container"></span>
 								<div class="block">
 									<div class="help-block-empty">
-									Body content unavailable for content type #$.content('type')#/#$.content('subtype')#
+									Content body unavailable for type #$.content('type')#/#$.content('subtype')#
 									</div>
 								</div>
 						   <span id="extendset-container-primary" class="extendset-container"></span>

@@ -61,7 +61,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 			<div class="mura-control-group">
 				<label class="mura-control-label">#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.contentsource')#</label>
 				<select class="objectParam" name="sourcetype">
-					<option <cfif objectParams.sourcetype eq 'custom'>selected </cfif>value="custom">#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.text')#</option>
+					<option <cfif objectParams.sourcetype eq 'custom'>selected </cfif>value="custom">#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.texteditor')#</option>
 					<option <cfif objectParams.sourcetype eq 'component'>selected </cfif>value="component">#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.component')#</option>
 					<option <cfif objectParams.sourcetype eq 'boundattribute'>selected </cfif>value="boundattribute">#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.boundattribute')#</option>
 				</select>

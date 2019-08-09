@@ -16,14 +16,18 @@ CKEDITOR.plugins.add( 'showprotected', {
 	requires: 'dialog,fakeobjects',
 	onLoad: function() {
 		// Add the CSS styles for protected source placeholders.
-		var iconPath = CKEDITOR.getUrl( this.path + 'images' + '/code.gif' ),
-			baseStyle = 'background:url(' + iconPath + ') no-repeat %1 center;border:1px dotted #00f;background-size:16px;';
+		// var iconPath = CKEDITOR.getUrl( this.path + 'images' + '/code.gif' ),
+			// baseStyle = 'background:url(' + iconPath + ') no-repeat %1 center;border:1px dotted #00f;background-size:16px;';
+		var iconPath = CKEDITOR.getUrl( this.path + 'images' + '/contentph.png' ),
+			baseStyle = 'background:url(' + iconPath + ') no-repeat center;border:1px dotted #BDBDBD;background-size:40px; margin: 8px auto;';
 
 		var template = '.%2 img.cke_protected' +
 			'{' +
 				baseStyle +
-				'width:16px;' +
-				'min-height:15px;' +
+				// 'width:16px;' +
+				'width:100%;' +
+				// 'min-height:15px;' +
+				'min-height:45px;' +
 				// The default line-height on IE.
 				'height:1.15em;' +
 				// Opera works better with "middle" (even if not perfect)

@@ -61,7 +61,7 @@
 													<input type="text" name="margin" id="metamarginall" class="numeric serial" value="<cfif len(trim(attributes.params.stylesupport.metastyles.marginall))>#val(esapiEncode('html_attr',attributes.params.stylesupport.metastyles.marginall))#</cfif>">
 												</label>
 												<select id="metamarginuom" name="metamarginuom" class="styleSupport">
-													<cfloop list="px,%,em,rem" index="u">
+													<cfloop list="px,%,em,rem,vw" index="u">
 														<option value="#u#"<cfif attributes.params.styleSupport.metamarginuom eq u> selected</cfif>>#u#</option>
 													</cfloop>
 												</select>
@@ -128,7 +128,7 @@
 													<input type="text" name="padding" id="metapaddingall" class="numeric serial" value="<cfif len(trim(attributes.params.stylesupport.metastyles.paddingall))>#val(esapiEncode('html_attr',attributes.params.stylesupport.metastyles.paddingall))#</cfif>">
 												</label>
 												<select id="metapaddinguom" name="metapaddinguom" class="styleSupport">
-													<cfloop list="px,%,em,rem" index="u">
+													<cfloop list="px,%,em,rem,vw" index="u">
 														<option value="#u#"<cfif attributes.params.styleSupport.metapaddinguom eq u> selected</cfif>>#u#</option>
 													</cfloop>
 												</select>

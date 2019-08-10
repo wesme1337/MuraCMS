@@ -59,6 +59,12 @@
 h3.mura-login-auth-heading {
   margin: 22px;
 }
+
+.mura-login-form {
+  max-width: 36rem;
+  margin-bottom: 2rem;
+}
+
 .mura-nav-sequential ul,
 .mura-next-n ul {
   margin: 0 0 1em;

@@ -386,6 +386,11 @@
 	};
 
 	var initFrontendUI=function(a,isnew){
+
+		if(typeof a=='undefined' || !a){
+			return false;
+		}
+
 		var src=a.href;
 		var editableObj=utility(a);
 		var targetFrame='modal';

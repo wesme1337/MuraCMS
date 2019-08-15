@@ -36,7 +36,7 @@
 												<input type="text" name="contentwidth" id="contentwidthnum" placeholder="100" class="numeric serial" value="<cfif len(trim(attributes.params.stylesupport.contentstyles.width))>#val(esapiEncode('html_attr',attributes.params.stylesupport.contentstyles.width))#</cfif>">
 											</label>
 											<select id="contentwidthuom" name="contentwidthuom" class="styleSupport">
-												<cfloop list="%,px,em,rem" index="u">
+												<cfloop list="%,px,em,rem,vh,vw" index="u">
 													<option value="#u#"<cfif attributes.params.stylesupport.contentwidthuom eq u> selected</cfif>>#u#</option>
 												</cfloop>
 											</select>
@@ -56,7 +56,7 @@
 												<input type="text" name="contentminheight" id="contentminheightnum" placeholder="0" class="numeric serial" value="<cfif len(trim(attributes.params.stylesupport.contentstyles.minheight))>#val(esapiEncode('html_attr',attributes.params.stylesupport.contentstyles.minheight))#</cfif>">
 											</label>
 											<select id="contentminheightuom" name="contentminheightuom" class="styleSupport">
-												<cfloop list="px,%,em,rem" index="u">
+												<cfloop list="px,%,em,rem,vh,vw" index="u">
 													<option value="#u#"<cfif attributes.params.stylesupport.contentminheightuom eq u> selected</cfif>>#u#</option>
 												</cfloop>
 											</select>
@@ -275,7 +275,7 @@
 											</label>
 
 											<select id="contentbackgroundpositiony" name="contentBackgroundPositionY" class="styleSupport" data-numfield="contentbackgroundpositionynum">
-												<cfloop list="Top,Center,Bottom,%,px" index="p">
+												<cfloop list="Top,Center,Bottom,%,px,vh,vw" index="p">
 													<option value="#lcase(p)#"<cfif attributes.params.stylesupport.contentstyles.backgroundpositiony contains p> selected</cfif>>#p#</option>
 												</cfloop>
 											</select>
@@ -295,7 +295,7 @@
 											</label>
 
 											<select id="contentbackgroundpositionx" name="contentBackgroundPositionX" class="styleSupport" data-numfield="contentbackgroundpositionxnum">
-												<cfloop list="Left,Center,Right,%,px" index="p">
+												<cfloop list="Left,Center,Right,%,px,vh,vw" index="p">
 													<option value="#lcase(p)#"<cfif attributes.params.stylesupport.contentstyles.backgroundpositionx contains p> selected</cfif>>#p#</option>
 												</cfloop>
 											</select>

@@ -686,7 +686,7 @@
 			function updatePositionSelection(sel){
 				var v = $(sel).val();
 				var el = $(sel).attr('data-numfield');
-				if (v == 'px' || v == '%'){
+				if (v == 'px' || v == '%' || v == 'vh' || v == 'vw'){
 					$('#' + el).show();
 				} else {
 					$('#' + el).hide();

@@ -64,6 +64,17 @@ html.mura-edit-mode > body {
     margin-top: @feToolBarHeight;
 }
 
+/* CSS Reset to prevent theme overrides */
+html.mura-edit-mode #frontEndTools {
+	div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, em, img, strong, i, dl, dt, dd, ol, ul, li, form, label, canvas, figure{
+		margin: 0;
+		padding: 0;
+		border: 0;
+		font-size: 100%;
+		vertical-align: baseline;
+	}
+}
+
 /* Dropdown adjustment */
 html.mura-edit-mode #frontEndTools > ul > li.dropdown:hover > ul.dropdown-menu {
 	display: block !important;

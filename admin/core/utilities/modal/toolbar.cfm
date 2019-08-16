@@ -429,6 +429,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 								<cfset previewData=$.currentUser("ChangesetPreviewData")>
 							</cfif>
 							<cfset rsChangesets=application.changesetManager.getQuery(siteID=$.event('siteID'),published=0,sortby="PublishDate")>
+							<cfif rsChangesets.recordCount>
 							<ul id="tools-changesets">
 								<li id="cs-title" class="dropdown"><a id="cs-title-text" class="dropdown-toggle" data-toggle="dropdown"><i>CS</i><cfif request.muraChangesetPreview>#esapiEncode('html',previewData.name)#<cfif isDate(previewData.publishDate)> (#LSDateFormat(previewData.publishDate,session.dateKeyFormat)#)</cfif><cfelse>None Selected</cfif><b class="caret"></b></a>
 									<ul class="dropdown-menu">
@@ -488,6 +489,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 									</li>
 								</cfif>
 							</ul>
+						</cfif>
 						</cfif>
 					</cfif>
 					<!--- Render additional toolbar menu items --->

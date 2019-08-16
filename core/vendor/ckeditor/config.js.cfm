@@ -139,13 +139,14 @@ CKEDITOR.editorConfig = function( config )
 		{name: 'group1', items: ['A11ychecker','Source']},
 		{name: 'group2', items: ['Bold','Italic','RemoveFormat','-','NumberedList','BulletedList','-','Link','Unlink','Format']}
 	];
-
+	<!--- front end text object editor --->
 	config.toolbar_htmlEditor = [
 		{name: 'group0', items:['Styles','Format']},
 		{name: 'group1', items: ['Bold','Italic','Underline','RemoveFormat','-','NumberedList','BulletedList','-','Link','Unlink']},
-		{name: 'group2', items: ['PasteText','PasteFromWord','-','Image','-','SpecialChar']},
-		{name: 'group3', items: ['Selectlink','SelectComponent','Templates']},
-		{name: 'group4', items: ['A11ychecker','Source']}
+		{name: 'group2', items:['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock']},	
+		{name: 'group3', items: ['PasteText','PasteFromWord','-','Image','-','SpecialChar']},
+		{name: 'group4', items: ['Selectlink','SelectComponent','Templates']},
+		{name: 'group5', items: ['A11ychecker','Source']}
 
 	];
 

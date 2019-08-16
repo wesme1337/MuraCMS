@@ -17,6 +17,17 @@
 						<cfset contentRendererUtility=$.getBean('contentRendererUtility')>
 						<cfset displayObjects=$.siteConfig('displayObjects')>
 						<cfset objectKeys=listSort(structKeylist(displayObjects),'textNoCase')>
+						
+						<!-- add priority object to front of list (inverse order) -->
+						<cfset priorityObjects = "collection,cta,form,image,text,container">
+						<cfloop list="#priorityObjects#" index="pkey">
+							<cfset listPos = listFind(objectKeys,pkey)>
+							<cfif listPos gt 0>
+								<cfset objectKeys = listDeleteAt(objectKeys,listFind(objectKeys,pkey))>
+								<cfset objectKeys = listPrepend(objectKeys,pkey)>
+							</cfif>
+						</cfloop>
+
 						<cfloop list="#objectKeys#" index="key">
 							<cftry>
 								<cfif (displayobjects['#key#'].contenttypes eq '*'

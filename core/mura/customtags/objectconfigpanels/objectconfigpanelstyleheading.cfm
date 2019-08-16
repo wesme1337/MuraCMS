@@ -16,9 +16,8 @@
 							<div class="mura-control-group">
 								<label>Label Position</label>
 								<select name="labelposition" class="classtoggle">
-								<option value="">--</option>
-								<option value="mura-object-label-left"<cfif listFind(attributes.params.class,'mura-object-label-left',' ')> selected</cfif>>Left</option>
 								<option value="mura-object-label-top"<cfif listFind(attributes.params.class,'mura-object-label-top',' ')> selected</cfif>>Top</option>
+								<option value="mura-object-label-left"<cfif listFind(attributes.params.class,'mura-object-label-left',' ')> selected</cfif>>Left</option>
 								<option value="mura-object-label-right"<cfif listFind(attributes.params.class,'mura-object-label-right',' ')> selected</cfif>>Right</option>
 								</select>
 							</div>
@@ -27,9 +26,8 @@
 							<div class="mura-control-group">
 								<label>Text Alignment</label>
 								<select name="float" class="metaStyle">
-									<option value="">--</option>
-									<option value="left"<cfif attributes.params.stylesupport.metastyles.float eq 'left'> selected</cfif>>#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.left')#</option>
 									<option value="none"<cfif attributes.params.stylesupport.metastyles.float eq 'none'> selected</cfif>>#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.center')#</option>
+									<option value="left"<cfif attributes.params.stylesupport.metastyles.float eq 'left'> selected</cfif>>#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.left')#</option>
 									<option value="right"<cfif attributes.params.stylesupport.metastyles.float eq 'right'> selected</cfif>>#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.right')#</option>
 								</select>
 							</div>

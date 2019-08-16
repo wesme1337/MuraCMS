@@ -282,7 +282,7 @@
 									<select name="moduletheme" class="classtoggle">
 										<option value="">--</option>
 										<cfloop array="#request.modulethemeoptions#" index="theme">
-											<option value="#theme.value#"<cfif  listFind(attributes.params.class,theme.value,' ')> selected</cfif>>#esapiEncode('html',theme.name)#</option>
+											<option value="#theme.value#"<cfif listFind(attributes.params.class,theme.value,' ') OR (listLen(theme.value,' ') gt 1 and attributes.params.class contains theme.value)> selected</cfif>>#esapiEncode('html',theme.name)#</option>
 										</cfloop>
 									</select>
 								</div>

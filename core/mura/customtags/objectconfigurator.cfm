@@ -858,6 +858,21 @@
 				$(el).val(str).trigger('change');
 			});
 
+			// reset breakpoint on width selection
+			$('#objectwidthsel').on('change',function(){
+				var curVal = $(this).val();
+				var bpSel =	$('#objectbreakpointsel');
+				var bpDiv = $('div.objectbreakpointcontainer');
+				if (curVal == '' || curVal == 'mura-expanded' || curVal == 'mura-twelve'){
+					$(bpSel).val('').niceSelect('update');
+					$(bpDiv).hide();
+				} else {
+					$(bpDiv).show();
+				}
+			})
+			// run on load
+			$('#objectwidthsel').trigger('change');
+
 			// numeric input - select on focus
 			$('#configuratorContainer input.numeric').on('click', function(){
 				$(this).select();
@@ -879,17 +894,6 @@
 				}
 				$(this).val(v);
 			});
-
-			// range sliders
-			<!--- todo: this or jquery-ui range slider --->
-			<!---
-			var rangeSlider = $("input.mura-rangeslider").bootstrapSlider();
-			$(rangeSlider).on('change',function(){
-				var v = rangeSlider.bootstrapSlider('getValue');
-				var targetEl = $(this).attr('data-slider-valuefield');
-				$(targetEl).val(v).hide();
-			});
-			--->
 
 			// colorpicker
 			$('.mura-colorpicker input[type=text]').on('keyup',function(){

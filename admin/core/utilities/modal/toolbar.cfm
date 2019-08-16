@@ -358,6 +358,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 								<cfif this.showInlineEditor>
 									<cfif $.content('type') eq 'Variation'>
 										<li id="adminQuickEdit">
+											<!--- todo rb key and correct current wording here --->
 											<a onClick="return MuraInlineEditor.init();"><i class="mi-pencil"></i>
 												Edit Content
 												<!---#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.edit-layout')#--->
@@ -367,7 +368,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 										<cfset tabAssignments=$.currentUser().getContentTabAssignments()>
 										<cfif not len(tabAssignments) or listFindNocase(tabAssignments,'Layout & Objects') or listFindNocase(tabAssignments,'Layout') or listFindNocase(tabAssignments,'Basic')>
 										<li id="adminQuickEdit">
-											<a onClick="return MuraInlineEditor.init();"><i class="mi-pencil"></i>
+											<a onClick="return MuraInlineEditor.init();"><i class="mi-th"></i>
 												#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.edit-layout')#
 											</a>
 										</li>
@@ -382,11 +383,11 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 									<li id="adminFullEdit">
 										<a href="#variables.editLink#"<cfif variables.dolockcheck> data-configurator="true"</cfif>>
 											<cfif $.content('type') eq 'Variation'>
-												<i class="mi-edit"></i> Edit Metadata <!--#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.edit-full')#--->
+												<i class="mi-pencil"></i> Edit Metadata <!--#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.edit-full')#--->
 											<cfelseif useLayoutManager()>
-												<i class="mi-edit"></i> #application.rbFactory.getKeyValue(session.rb,'sitemanager.content.edit-content')#
+												<i class="mi-pencil"></i> #application.rbFactory.getKeyValue(session.rb,'sitemanager.content.edit-content')#
 											<cfelse>
-												 <i class="mi-edit"></i> #application.rbFactory.getKeyValue(session.rb,'sitemanager.content.edit-full')#
+												 <i class="mi-pencil"></i> #application.rbFactory.getKeyValue(session.rb,'sitemanager.content.edit-full')#
 											</cfif></a>
 									</li>
 									</cfif>

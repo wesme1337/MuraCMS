@@ -558,20 +558,19 @@
 			cursor: pointer !important;
 			display: block !important;
 			margin: 0 !important;
-			padding: 0;
-
+	    padding: 3px 4px !important;
 			}
 
 		a {
-			color: #CCC !important;
-			padding: 5px 10px !important;
-			line-height: 1.2 !important;
-			float: none !important;
-			display: block !important;
-			height: auto !important;
-			cursor: pointer !important;
 			background: transparent !important;
 			.border-radius(0);
+			color: #CCC !important;
+			cursor: pointer !important;
+			display: block !important;
+			float: none !important;
+			height: auto !important;
+			line-height: 1.2 !important;
+    	padding: 5px 10px 5px 12px!important;
 			}
 
 		li > a:hover {
@@ -582,11 +581,16 @@
 		i {
 			display: inline-block !important;
 			margin-left: 0 !important;
-			margin-right: 2px !important;
+			margin-right: 4px !important;
 			min-width: 16px !important;
 			text-align: center !important;
 			top: 1px !important;
+				&.mi-th{
+					top: 2px !important;
+					margin-left: -2px !important;
+				}
 			}
+
 
 		li > a:hover i {
 			color: @white !important;
@@ -594,6 +598,10 @@
 
 	}
 
+	#frontEndTools #adminDelete{
+    border-top: 1px dotted rgba(255,255,255,.2);
+    margin-top: 2px !important;
+	}
 
 	#frontEndTools > ul li.dropdown-submenu {
 

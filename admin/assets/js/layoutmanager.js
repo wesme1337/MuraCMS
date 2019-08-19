@@ -208,28 +208,32 @@
 
 	function initDraggableObject(item) {
 		var obj=Mura(item);
+		var parentObj = obj.parent().closest('.mura-object');
+		
+		if(!parentObj.length || parentObj.length && parentObj.data('object')=='container'){
+			
+			if(obj.data('object')=='container'){
+				var EventListenerOptions=true;
+			} else {
+				var EventListenerOptions;
+			}
 
-		if(obj.data('object')=='container'){
-			var EventListenerOptions=true;
-		} else {
-			var EventListenerOptions;
-		}
-
-		obj
-			.off('dragenter', initDraggableObject_dragstart)
-			.off('dragover', initDraggableObject_dragover)
-			.off('drop', initDraggableObject_drop)
-			.off('dragleave', initDraggableObject_dragleave)
-			.on('dragstart', initDraggableObject_dragstart)
-			.on('dragend', initDraggableObject_dragend)
-			.on('dragover', initDraggableObject_dragover)
-			.on('dragleave', initDraggableObject_dragleave)
-			.on('drop', initDraggableObject_drop).attr('draggable', true)
-			.hover(
-				initDraggableObject_hoverin,
-				initDraggableObject_hoverout,
-				EventListenerOptions
-			);
+			obj
+				.off('dragenter', initDraggableObject_dragstart)
+				.off('dragover', initDraggableObject_dragover)
+				.off('drop', initDraggableObject_drop)
+				.off('dragleave', initDraggableObject_dragleave)
+				.on('dragstart', initDraggableObject_dragstart)
+				.on('dragend', initDraggableObject_dragend)
+				.on('dragover', initDraggableObject_dragover)
+				.on('dragleave', initDraggableObject_dragleave)
+				.on('drop', initDraggableObject_drop).attr('draggable', true)
+				.hover(
+					initDraggableObject_hoverin,
+					initDraggableObject_hoverout,
+					EventListenerOptions
+				);
+			}
 	}
 
 	function applyObjectTargetClass(item, e, This) {
@@ -709,7 +713,9 @@
 		Mura('body').removeClass('mura-editing')
 		Mura('body').removeClass('mura-sidebar-state__pushed--right');
 
+
 		Mura('.mura-region-local .mura-object, .mura-body-object').each(function(){
+			
 			Mura(this)
 				.off('dragenter', initDraggableObject_dragstart)
 				.off('dragover', initDraggableObject_dragover)
@@ -725,34 +731,35 @@
 				.removeClass('mura-active')
 				.removeClass('mura-object-selected')
 				.removeClass('mura-object-select')
-				.removeClass('mura-active-target')
+				.removeClass('mura-active-target')	
+		})
 
-				Mura('.mura-region-local')
-					.off('drop',initRegion_drop)
-					.off('dragover',initRegion_dragover)
-					.data('inited', 'false')
 
-				Mura('.mura-region-local .mura-object[data-object="container"], .mura-region-local div, .mura-region-local[data-loose="true"] p, .mura-region-local[data-loose="true"] h1, .mura-region-local[data-loose="true"] h2, .mura-region-local[data-loose="true"] h3, .mura-region-local[data-loose="true"] h4, .mura-region-local[data-loose="true"] img, .mura-region-local[data-loose="true"] table, .mura-region-local[data-loose="true"] article, .mura-region-local[data-loose="true"] dl')
-				.off('dragenter', initLooseDropTarget_dragenter)
-				.off('dragover', initLooseDropTarget_dragover)
-				.off('drop', initLooseDropTarget_drop)
-				.off('dragleave', initLooseDropTarget_dragleave);
+		Mura('.mura-region-local')
+		.off('drop',initRegion_drop)
+		.off('dragover',initRegion_dragover)
+		.data('inited', 'false')
 
-				Mura('.mura-editable-attribute')
-					.each(function(){
-					var attribute=Mura(this);
+		Mura('.mura-region-local .mura-object[data-object="container"], .mura-region-local div, .mura-region-local[data-loose="true"] p, .mura-region-local[data-loose="true"] h1, .mura-region-local[data-loose="true"] h2, .mura-region-local[data-loose="true"] h3, .mura-region-local[data-loose="true"] h4, .mura-region-local[data-loose="true"] img, .mura-region-local[data-loose="true"] table, .mura-region-local[data-loose="true"] article, .mura-region-local[data-loose="true"] dl')
+		.off('dragenter', initLooseDropTarget_dragenter)
+		.off('dragover', initLooseDropTarget_dragover)
+		.off('drop', initLooseDropTarget_drop)
+		.off('dragleave', initLooseDropTarget_dragleave);
 
-					if(typeof CKEDITOR != 'undefined' && CKEDITOR.instances[attribute.attr('id')]){
-						var instance =CKEDITOR.instances[attribute.attr('id')];
-						instance.updateElement();
-						instance.destroy(true)
-					}
+		Mura('.mura-editable-attribute')
+			.each(function(){
+			var attribute=Mura(this);
 
-					attribute.attr('contenteditable','false');
-					attribute.removeClass('mura-active');
-					attribute.data('manualedit',false);
-					attribute.off('dblclick')
-				})
+			if(typeof CKEDITOR != 'undefined' && CKEDITOR.instances[attribute.attr('id')]){
+				var instance =CKEDITOR.instances[attribute.attr('id')];
+				instance.updateElement();
+				instance.destroy(true)
+			}
+
+			attribute.attr('contenteditable','false');
+			attribute.removeClass('mura-active');
+			attribute.data('manualedit',false);
+			attribute.off('dblclick')
 		})
 	}
 

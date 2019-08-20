@@ -65,33 +65,20 @@
 									</select>
 								</div>
 
-								<!--- todo: bootstrap slider --->
-								<!--- 						<input
-									type="text"
-									data-slider-id="objectwidthslider"
-									name="objectwidthslider"
-									class="mura-rangeslider"
-									data-slider-ticks="[0,1,2,3,4,5,6,7,8,9,10,11,12,13]"
-									data-slider-ticks-labels="'[#attributes.positionlabels#]'"
-									data-slider-ticks-tooltip="true"
-									data-slider-tooltip="hide"
-									data-slider-valuefield="##objectwidthsel"
-								> --->
-
 								<cfif len(contentcontainerclass)>
 									<div class="mura-control-group constraincontentcontainer" style='display:none;'>
 											<label>Constrain Content</label>
-											<select name="constraincontent" class="classtoggle">
+											<select name="constraincontent" id="objectconstrainsel" class="classtoggle">
 											<option value=""<cfif not listFind(attributes.params.contentcssclass,contentcontainerclass,' ')> selected</cfif>>False</option>
 											<option value="constrain"<cfif listFind(attributes.params.contentcssclass,contentcontainerclass,' ')> selected</cfif>>True</option>
 											</select>
 									</div>
 								</cfif>
 
-								<div class="mura-control-group">
+								<div class="mura-control-group objectbreakpointcontainer" style="display:none;">
 									<!--- todo: rbkeys for label and options --->
 									<label>Full-Width Breakpoint</label>
-									<select name="breakpoint" class="classtoggle">
+									<select name="breakpoint"  id="objectbreakpointsel" class="classtoggle">
 									<option value="">Auto</option>
 									<option value="mura-sm"<cfif listFind(attributes.params.class,'mura-sm',' ')> selected</cfif>>768px (Tablet)</option>
 									<option value="mura-md"<cfif listFind(attributes.params.class,'mura-md',' ')> selected</cfif>>992px (Laptop)</option>

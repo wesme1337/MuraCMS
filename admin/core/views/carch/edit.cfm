@@ -230,8 +230,6 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 	</script>
 </cfoutput>
 
-
-
 <script type="text/javascript">
 	$(document).ready(function(){
 
@@ -366,6 +364,10 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 	<cfoutput>
 	<div class="mura-actions">
 		<div class="form-actions">
+
+			<cfif $.event('frontEnd')>
+			 <button type="button" class="btn" onclick="window.location.href='#rc.contentBean.getURL(secure=rc.$.getBean('utility').isHTTPs(),complete=1,queryString='previewid=#rc.contentBean.getContentHistID()#')#';"><i class="mi-ban"></i> #esapiEncode('html',application.rbFactory.getKeyValue(session.rb,"sitemanager.content.cancel"))#</button>
+			</cfif>
 
 			 <button type="button" class="btn" onclick="return saveDraftPrompt();"><i class="mi-edit"></i> #esapiEncode('html',application.rbFactory.getKeyValue(session.rb,"sitemanager.content.savedraft"))#</button>
 

@@ -143,7 +143,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 				  			#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.contentparent')#
 		      			</label>
 		      			<div class="mura-control justify">
-			  				<cfif arrayLen(rc.crumbData) gt 1>
+			  				<cfif arrayLen(rc.crumbData)>
 			  					<div class="bigui__preview">
 				  					<div id="newparent-label">
 					      			"<span><cfif rc.contentBean.getIsNew()>#rc.crumbData[1].menutitle#<cfelse>#rc.crumbData[2].menutitle#</cfif></span>"

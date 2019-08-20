@@ -224,9 +224,9 @@
                 <div class="mura-control-group">
                     <label class="mura-control-label">#application.rbFactory.getKeyValue(session.rb,'cta.type')#</label>
                     <select id="type" name="type" class="objectParam">
+                        <option value="drawer"<cfif "drawer" eq objectparams.type> selected</cfif>>#application.rbFactory.getKeyValue(session.rb,'cta.drawer')#</option>
                         <option value="modal"<cfif "modal" eq objectparams.type> selected</cfif>>#application.rbFactory.getKeyValue(session.rb,'cta.modal')#</option>
                         <option value="bar"<cfif "bar" eq objectparams.type> selected</cfif>>#application.rbFactory.getKeyValue(session.rb,'cta.bar')#</option>
-                        <option value="drawer"<cfif "drawer" eq objectparams.type> selected</cfif>>#application.rbFactory.getKeyValue(session.rb,'cta.drawer')#</option>
                         <option value="inline"<cfif "inline" eq objectparams.type> selected</cfif>>#application.rbFactory.getKeyValue(session.rb,'cta.inline')#</option>
                     </select>
                 </div>

@@ -1,4 +1,5 @@
 <cfparam name="objectParams.label" default="">
+<cfparam name="objectParams.labeltag" default="">
 <cfparam name="objectParams.isbodyobject" default="false">
 <cfparam name="objectParams.metacssstyles.textalign" default="">
 <cfparam name="request.hasbasicoptions" default="true">

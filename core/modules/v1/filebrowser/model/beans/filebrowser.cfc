@@ -516,11 +516,12 @@ component
 
 			response.uploaded = fileUploadAll(tempDir,'',"MakeUnique");
 			response.allowedExtensions = allowedExtensions;
-
+			response.success = 1;
+			
 			for(var i = 1; i lte ArrayLen(response.uploaded);i++ ) {
 				var item = response.uploaded[i];
 				var valid = false;
-				if(listFindNoCase(allowedExtensions,item.serverfileext)) {
+				if(m.currentUser().isSuperUser() || listFindNoCase(allowedExtensions,item.serverfileext)) {
 						try {
 							fileMove(item.serverdirectory & m.globalConfig().getFileDelim() & item.serverfile,conditionalExpandPath(filePath) & m.globalConfig().getFileDelim() & item.serverfile );
 							ArrayAppend(response.saved,item);
@@ -533,10 +534,11 @@ component
 				else {
 					fileDelete(item.serverdirectory & m.globalConfig().getFileDelim() & item.serverfile);
 					ArrayAppend(response.failed,item);
+					response.success = 0;
 				}
 			}
 
-			response.success = 1;
+
 			return response;
 		}
 

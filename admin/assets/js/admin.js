@@ -373,11 +373,12 @@ function setColorPickers(e) {
 }
 
 function setToolTips(e) {
+
     "function" == typeof $(e).tooltip && $(e).tooltip({
         selector: "a[rel=tooltip]"
     }), $(e + " a[rel=tooltip]").click(function(e) {
         return e.preventDefault(), !1;
-    }), $(e + ' [data-toggle="popover"]').popover("destroy").popover({
+    }), "function" == typeof $(e).popover && $(e + ' [data-toggle="popover"]').popover("destroy").popover({
         trigger: "hover",
         html: !0
     });

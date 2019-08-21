@@ -2388,7 +2388,7 @@
 				Mura.currentObjectInstanceID='';
 				Mura('#mura-sidebar-container').fadeIn();
 				Mura('body').addClass('mura-sidebar-state__pushed--right');
-				Mura('body').raddClass('mura-editing')
+				Mura('body').addClass('mura-editing')
 				Mura('.mura-object').removeClass('mura-active-min').addClass("mura-active");
 				Mura('.mura-container-active').removeClass('mura-container-active');
 

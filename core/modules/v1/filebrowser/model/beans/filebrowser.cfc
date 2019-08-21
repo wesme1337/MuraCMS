@@ -31,7 +31,7 @@ component
 				
 				pathRoot = currentSite.getAssetDir() & '/assets';
 			}
-
+		
 			return pathRoot;
 		}
 
@@ -514,7 +514,7 @@ component
 				throw(message="Illegal file path",errorcode ="invalidParameters");
 			}
 
-			response.uploaded = fileUploadAll(tempDir);
+			response.uploaded = fileUploadAll(tempDir,'',"MakeUnique");
 			response.allowedExtensions = allowedExtensions;
 
 			for(var i = 1; i lte ArrayLen(response.uploaded);i++ ) {
@@ -803,8 +803,9 @@ component
 
 			var baseFilePath = getBaseFileDir( arguments.siteid,arguments.resourcePath );
 			var filePath = baseFilePath  & m.globalConfig().getFileDelim() & rereplace(arguments.directory,"\.{1,}","\.","all");
+			
 			var expandedFilePath = conditionalExpandPath(filePath);
-
+		
 			if(!isPathLegal(arguments.siteid,arguments.resourcepath,conditionalExpandPath(filepath))){
 				throw(message="Illegal file path",errorcode ="invalidParameters");
 			}
@@ -918,22 +919,24 @@ component
 		if(arguments.resourcepath != 'User_Assets' && !listFind(sessionData.mura.memberships,'S2')){
 			return false;
 		}
-		var rootPath=replace(conditionalExpandPath(getBaseFileDir( arguments.siteid,arguments.resourcePath )), "\", "/", "ALL");
+		var rootPath=replaceNoCase(conditionalExpandPath(getBaseFileDir( arguments.siteid,arguments.resourcePath )), "\", "/", "ALL");
 
-		arguments.path=replace(arguments.path, "\", "/", "ALL");
+		arguments.path=replaceNoCase(arguments.path, "\", "/", "ALL");
 
 		var s3assets=getBean('configBean').get('s3assets');
 
 		if(len(s3assets)){
-			rootPath=replace(rootPath,s3assets,"/s3assets/");
-			arguments.path=replace(arguments.path,s3assets,"/s3assets/");
+			rootPath=replaceNoCase(rootPath,s3assets,"/s3assets/");
+			arguments.path=replaceNoCase(arguments.path,s3assets,"/s3assets/");
 		}
 
 		var result = (
-			len(arguments.path) >= len(rootPath) && left(arguments.path,len(rootPath)) == rootPath
+			len(arguments.path) >= len(rootPath) && lcase(left(arguments.path,len(rootPath)) )== lcase(rootPath)
 		);
 
 		if(!result){
+			writeDump(lcase(left(arguments.path,len(rootPath)) ));
+			writeDump(lcase(rootPath));
 			WriteDump(arguments);
 			abort;
 		}
@@ -946,7 +949,11 @@ component
 		if(find(":",arguments.path)){
 			return path;
 		} else {
-			return expandPath(arguments.path)
+			if(directoryExists(path)){
+				return path;
+			} else{
+				return expandPath(arguments.path)
+			}
 		}
 	}
 

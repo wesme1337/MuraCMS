@@ -2,6 +2,7 @@
 body.MuraFileBrowserWindow{
   background-color: #fff;
 }
+
 /* also see jquery-ui-override where breadcrumb is styled for ui-dialog */
 body.MuraFileBrowserWindow .mura-header ul.breadcrumb{
   background-color: #FAFAFA;
@@ -68,7 +69,7 @@ body.MuraFileBrowserWindow .mura-header ul.breadcrumb{
   border-top: 1px solid #dbdbdb;
   display: block;
   clear: both;
-  height: 1px;
+  height: 16px;
   margin: 0;
 }
 
@@ -466,16 +467,20 @@ a.folder-item {
 .fileviewer-gallery {
   background-color:#fff;
   display: block;
-  height: 70%;
-  margin: 10% auto;
+  height: 80%;
+  margin: 3% auto;
   position: relative;
-  padding-top: 12px;
-  width: 70%;
+  padding-top: 2%;
+  width: 80%;
 }
 
 body.modal-wrapper .fileviewer-gallery{
   width: 92%;
 }
+body.MuraFileBrowserWindow .fileviewer-gallery{
+  margin-top: 1.5%;
+}
+
 
 .fileviewer-image {
   display: block;
@@ -556,10 +561,10 @@ body.modal-wrapper .fileviewer-gallery-menu.mura-actions .form-actions > a.btn i
 
 .actionwindow-left,
 .actionwindow-right {
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.15);
   cursor: pointer;
   font-size: 3em;
-  padding: 5px;
+  padding: 0 10px;
   position: absolute;
   top: 48%;
 }
@@ -569,9 +574,17 @@ body.modal-wrapper .fileviewer-gallery-menu.mura-actions .form-actions > a.btn i
   left: 0;
 }
 
+.actionwindow-left i{
+  margin-right: 5px;
+}
+
 .actionwindow-right {
   float: right;
   right: 0;
+}
+
+.actionwindow-right i{
+  margin-left: 5px;
 }
 
 .fileviewer-icon-jpg {

@@ -9,7 +9,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html class="mura">
 <head>
-	<title>Mura File Browser</title>
+	<title>Mura File Manager</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="robots" content="noindex, nofollow" />
 	<cfoutput>
@@ -42,7 +42,7 @@
 <body class="mura-admin MuraFileBrowserWindow">
 	<div class="content">
 		<div class="mura-header">
-		<h1>File Browser</h1>
+		<h1>File Manager</h1>
 		</div>
 		<div id="MuraFileBrowserContainer"></div>
 	</div>

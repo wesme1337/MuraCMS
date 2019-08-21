@@ -403,10 +403,25 @@ input.filebrowser-filter {
 
 .fileviewer-item-meta-details {
   bottom: 10px;
+  font-size: 11px;
+  line-height: 1.4em;
   position: absolute;
   right: 20px;
 }
 
+.fileviewer-item-meta-date,
+.fileviewer-item-meta-size{
+  float: right;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 80%;
+  width: auto;
+  text-align: right;
+}
+.fileviewer-item-meta-details div > span > i{
+  opacity: .5;
+}
 .fileviewer-item-actions{
   position: absolute;
   bottom: 10px;

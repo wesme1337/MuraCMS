@@ -1610,6 +1610,9 @@ config: {
                 <div v-if="parseInt(file.isfile)" class="fileviewer-item-meta-size">
                   {{file.size}}kb
                 </div>
+                <div class="fileviewer-item-meta-date">
+                  {{file.lastmodifiedshort}}
+                </div>
               </div>
               <div class="fileviewer-item-actions">
                 <a href="#" :id="'fileitem-'+index" class="show-actions" @click="openMenu($event,file,index)"><i class="mi-ellipsis-v"></i></a>

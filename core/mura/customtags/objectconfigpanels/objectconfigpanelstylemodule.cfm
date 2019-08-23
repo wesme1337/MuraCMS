@@ -63,7 +63,20 @@
 											<cfset attributes.positionValues = listAppend(attributes.positionvalues, v)>
 										</cfloop>
 									</select>
+
+									<div id="object-widthsel-ui">
+										<div id="object-widthsel-wrapper">
+										<cfloop from="1" to="#arrayLen(attributes.positionoptions)#" index="i">
+											<cfset p = attributes.positionoptions[i]>
+											<cfif structKeyExists(p,'cols') and val(p["cols"])>
+											<div class="object-widthsel-option" data-value="#p["value"]#"><span>#p["cols"]#</span></div>
+											</cfif>
+										</cfloop>
+										</div>
+									</div>
+
 								</div>
+
 
 								<cfif len(contentcontainerclass)>
 									<div class="mura-control-group constraincontentcontainer" style='display:none;'>

@@ -78,18 +78,18 @@
 		<cfscript>
 			attributes.positionoptions = [
 					{value='',label='Auto'}
-					,{value='mura-one', label='1/12',percent='8.33%'}
-					,{value='mura-two', label='1/6',percent='16.66%'}
-					,{value='mura-three', label='1/4',percent='25%'}
-					,{value='mura-four', label='1/3',percent='33.33%'}
-					,{value='mura-five', label='5/12',percent='41.66%'}
-					,{value='mura-six', label='1/2',percent='50%'}
-					,{value='mura-seven', label='7/12',percent='58.33%'}
-					,{value='mura-eight', label='2/3',percent='66.66%'}
-					,{value='mura-nine', label='3/4',percent='75%'}
-					,{value='mura-ten', label='5/6',percent='41.66%'}
-					,{value='mura-eleven', label='11/12',percent='91.66%'}
-					,{value='mura-twelve', label='Full',percent='100%'}
+					,{value='mura-one', label='1/12',percent='8.33%', cols='1'}
+					,{value='mura-two', label='1/6',percent='16.66%', cols='2'}
+					,{value='mura-three', label='1/4',percent='25%', cols='3'}
+					,{value='mura-four', label='1/3',percent='33.33%', cols='4'}
+					,{value='mura-five', label='5/12',percent='41.66%', cols='5'}
+					,{value='mura-six', label='1/2',percent='50%', cols='6'}
+					,{value='mura-seven', label='7/12',percent='58.33%', cols='7'}
+					,{value='mura-eight', label='2/3',percent='66.66%', cols='8'}
+					,{value='mura-nine', label='3/4',percent='75%', cols='9'}
+					,{value='mura-ten', label='5/6',percent='41.66%', cols='10'}
+					,{value='mura-eleven', label='11/12',percent='91.66%', cols='11'}
+					,{value='mura-twelve', label='Full',percent='100%', cols='12'}
 					,{value='mura-expanded', label='Expanded',percent='100%'}
 				];
 		</cfscript>
@@ -207,6 +207,32 @@
 				$(gdstarget).addClass('in');
 				return false;
 			})
+
+			$('#object-widthsel-ui .object-widthsel-option').hover(
+				function(){
+					previewGridWidth($(this));
+				}, 
+				function(){
+					$(this).removeClass('active').siblings('.object-widthsel-option').not('.set').removeClass('active');
+				}
+			)
+			
+			$('#object-widthsel-ui .object-widthsel-option').on('click',function(){
+				selectGridWidth($(this));
+			})
+
+
+			function selectGridWidth(activeOption){
+				var optionValue = $(activeOption).attr('data-value');
+				$(activeOption).siblings('.object-widthsel-option').removeClass('set');
+				$(activeOption).addClass('set').prevAll('.object-widthsel-option').addClass('set');
+				$('#objectwidthsel').val(optionValue).trigger('change').niceSelect('update');
+			}
+
+			function previewGridWidth(activeOption){
+				$(activeOption).siblings('.object-widthsel-option').removeClass('active');
+				$(activeOption).addClass('active').prevAll('.object-widthsel-option').addClass('active');
+			}
 
 			function setActiveGDSpanel(){
 				var visiblekids = $('#style-panels > .mura-panel > .panel-collapse.in');

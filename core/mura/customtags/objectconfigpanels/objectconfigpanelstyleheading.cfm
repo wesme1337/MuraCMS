@@ -12,9 +12,10 @@
         <div id="panel-style-meta-1" class="panel-collapse collapse">
             <div class="mura-panel-body">
             <!--- panel contents --->
+            <!--- todo: rbkeys --->
 							<!--- label position --->
 							<div class="mura-control-group">
-								<label>Label Position</label>
+								<label>Position</label>
 								<select name="labelposition" class="classtoggle">
 								<option value="mura-object-label-top"<cfif listFind(attributes.params.class,'mura-object-label-top',' ')> selected</cfif>>Top</option>
 								<option value="mura-object-label-left"<cfif listFind(attributes.params.class,'mura-object-label-left',' ')> selected</cfif>>Left</option>
@@ -24,7 +25,7 @@
 
 							<!--- label alignment --->
 							<div class="mura-control-group">
-								<label>Text Alignment</label>
+								<label>Align</label>
 								<select name="float" class="metaStyle">
 									<option value="none"<cfif attributes.params.stylesupport.metastyles.float eq 'none'> selected</cfif>>#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.center')#</option>
 									<option value="left"<cfif attributes.params.stylesupport.metastyles.float eq 'left'> selected</cfif>>#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.left')#</option>

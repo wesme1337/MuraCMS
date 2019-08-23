@@ -17,7 +17,7 @@ currentUser=application.usermanager.read(session.mura.userID);
 currrentSite=application.settingsManager.getSite(session.siteid);
 
 // This function must check the user session to be sure that he/she is
-// authorized to upload and access files in the File Browser. '
+// authorized to upload and access files in the File Manager. '
 function CheckAuthentication()
 {
 

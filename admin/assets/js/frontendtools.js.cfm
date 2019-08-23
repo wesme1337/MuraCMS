@@ -541,7 +541,7 @@
 			if(ispreview){
 				utility("##frontEndToolsModalTarget").html('<div id="frontEndToolsModalContainer">' +
 				'<div id="frontEndToolsModalBody">' + $tools +
-				'<iframe src="' + src + '" id="frontEndToolsModaliframe" scrolling="false" frameborder="0" style="overflow:hidden" name="frontEndToolsModaliframe"></iframe>' +
+				'<iframe src="' + src + '" id="frontEndToolsModaliframe" class="frontEndToolsPreview" scrolling="false" frameborder="0" style="overflow:hidden" name="frontEndToolsModaliframe"></iframe>' +
 				'</div>' +
 				'</div>');
 

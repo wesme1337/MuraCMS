@@ -1,7 +1,7 @@
 component
 	entityname="filebrowser"
 	extends="mura.bean.bean"
-	displayname="Mura File Browser"
+	displayname="Mura File Manager"
 	table="m_filebrowser"
 	public="true"
   {

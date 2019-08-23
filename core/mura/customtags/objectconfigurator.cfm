@@ -213,20 +213,30 @@
 					previewGridWidth($(this));
 				}, 
 				function(){
-					$(this).removeClass('active').siblings('.object-widthsel-option').not('.set').removeClass('active');
+					resetGridWidth();
 				}
 			)
 			
 			$('#object-widthsel-ui .object-widthsel-option').on('click',function(){
 				selectGridWidth($(this));
+				setGridWidth($(this));
 			})
 
+			function unsetGridWidth(){
+				$('#object-widthsel-ui .object-widthsel-option').removeClass('set');
+			}	
+			function resetGridWidth(){
+				$('#object-widthsel-ui .object-widthsel-option').removeClass('active');
+			}
 
 			function selectGridWidth(activeOption){
 				var optionValue = $(activeOption).attr('data-value');
+				$('#objectwidthsel').val(optionValue).trigger('change').niceSelect('update');
+			}
+
+			function setGridWidth(activeOption){
 				$(activeOption).siblings('.object-widthsel-option').removeClass('set');
 				$(activeOption).addClass('set').prevAll('.object-widthsel-option').addClass('set');
-				$('#objectwidthsel').val(optionValue).trigger('change').niceSelect('update');
 			}
 
 			function previewGridWidth(activeOption){
@@ -889,12 +899,18 @@
 				var curVal = $(this).val();
 				var bpSel =	$('#objectbreakpointsel');
 				var bpDiv = $('div.objectbreakpointcontainer');
+
 				if (curVal == '' || curVal == 'mura-expanded' || curVal == 'mura-twelve'){
 					$(bpSel).val('').niceSelect('update');
 					$(bpDiv).hide();
+					setGridWidth($('#object-widthsel-ui .object-widthsel-option[data-value="mura-twelve"]'));
 				} else {
 					$(bpDiv).show();
+					setGridWidth($('#object-widthsel-ui .object-widthsel-option[data-value="' + curVal + '"]'));
 				}
+
+				// set gridwidth indicator
+
 			})
 			// run on load
 			$('#objectwidthsel').trigger('change');

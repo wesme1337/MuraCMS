@@ -51,19 +51,6 @@
 
 								<div class="mura-control-group">
 									<label>#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.width')#</label>
-									<cfset attributes.positionlabels = ''>
-									<cfset attributes.positionvalues = ''>
-									<select name="width" id="objectwidthsel" class="classtoggle">
-										<cfloop from="1" to="#arrayLen(attributes.positionoptions)#" index="i">
-											<cfset p = attributes.positionoptions[i]>
-											<option value="#p['value']#"<cfif listFind(attributes.params.class,'#p['value']#',' ')> selected</cfif>>#p['label']#</option>
-											<cfset l = "'#p["label"]#'">
-											<cfset v = "'#p["value"]#'">
-											<cfset attributes.positionLabels = listAppend(attributes.positionlabels, l)>
-											<cfset attributes.positionValues = listAppend(attributes.positionvalues, v)>
-										</cfloop>
-									</select>
-
 									<div id="object-widthsel-ui">
 										<div id="object-widthsel-wrapper">
 										<cfloop from="1" to="#arrayLen(attributes.positionoptions)#" index="i">
@@ -74,9 +61,15 @@
 										</cfloop>
 										</div>
 									</div>
-
+									<select name="width" id="objectwidthsel" class="classtoggle">
+										<cfloop from="1" to="#arrayLen(attributes.positionoptions)#" index="i">
+											<cfset p = attributes.positionoptions[i]>
+											<option value="#p['value']#"<cfif listFind(attributes.params.class,'#p['value']#',' ')> selected</cfif>>#p['label']#</option>
+											<cfset l = "'#p["label"]#'">
+											<cfset v = "'#p["value"]#'">
+										</cfloop>
+									</select>
 								</div>
-
 
 								<cfif len(contentcontainerclass)>
 									<div class="mura-control-group constraincontentcontainer" style='display:none;'>

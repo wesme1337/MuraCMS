@@ -21,13 +21,14 @@ component
 				pathRoot = "/murawrm";
 			}
 			else {
-
+				/*
 				if(!directoryExists(conditionalExpandPath(pathRoot & "/File"))){
 					directoryCreate(conditionalExpandPath(pathRoot & "/File"));
 				}
 				if(!directoryExists(conditionalExpandPath(pathRoot & "/Image"))){
 					directoryCreate(conditionalExpandPath(pathRoot & "/Image"));
 				}
+				*/
 				
 				pathRoot = currentSite.getAssetDir() & '/assets';
 			}

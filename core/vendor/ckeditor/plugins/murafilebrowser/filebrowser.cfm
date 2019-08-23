@@ -53,7 +53,7 @@
 		MuraFileBrowser.config.height=600;
 		MuraFileBrowser.config.selectMode=1;
 		MuraFileBrowser.config.resourcepath='#esapiEncode("javascript",url.resourcepath)#';
-		MuraFileBrowser.config.directory='#esapiEncode("javascript",url.directory)#';
+		//MuraFileBrowser.config.directory='#esapiEncode("javascript",url.directory)#';
 		MuraFileBrowser.config.displaymode='#esapiEncode("javascript",url.displaymode)#';
 		MuraFileBrowser.render();
 	});

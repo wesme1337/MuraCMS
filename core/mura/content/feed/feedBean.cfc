@@ -647,27 +647,68 @@ component extends="mura.bean.beanFeed" entityName="feed" table="tcontentfeeds" o
 	public function getDisplayList() output=false {
 		var hasRating=false;
 		var hasComments=false;
+
 		if ( !len(variables.instance.displayList) ) {
 			variables.instance.displayList="Date,Title,Image,Summary,Credits";
+
 			hasRating=listFindNoCase(variables.instance.displayList,"Rating");
 			hasComments=listFindNoCase(variables.instance.displayList,"Comments");
+
 			if ( variables.instance.displayComments && !hasComments ) {
 				variables.instance.displayList=listAppend(variables.instance.displayList,"Comments");
 			} else if ( !variables.instance.displayComments && hasComments ) {
 				variables.instance.displayList=listDeleteAt(variables.instance.displayList,hasComments);
 			}
+
 			variables.instance.displayList=listAppend(variables.instance.displayList,"Tags");
+
 			if ( variables.instance.displayRatings && !hasRating ) {
 				variables.instance.displayList=listAppend(variables.instance.displayList,"Rating");
 			} else if ( !variables.instance.displayRatings && hasRating ) {
 				variables.instance.displayList=listDeleteAt(variables.instance.displayList,hasRating);
 			}
+
 		}
 		return variables.instance.displayList;
 	}
 
-	public function getAvailableDisplayList() output=false {
-		var returnList="Date,Title,Image,Summary,Body,ReadMore,Credits,Comments,Tags,Rating";
+	public function getDisplayLabels(string attrList=variables.instance.displayList) output=false {
+
+		var labelList='';
+		var rsExtend=variables.configBean.getClassExtensionManager().getExtendedAttributeList(variables.instance.siteid,"tcontent");
+		var aa = [];
+
+		if (!(len(arguments.attrList))){
+			arguments.attrList = getDisplayList();
+		}
+
+		aa = listToArray(arguments.attrList);
+
+			for(i in aa){
+
+				var qs=new Query();
+				qs.setDbType('query');
+				qs.setAttributes(rsExtend=rsExtend);
+
+				rsLabel=qs.execute(sql="select label from rsExtend
+				where attribute = '#i#'").getResult();
+
+				if (len(rsLabel.label)){
+					labelList=listAppend(labelList,rsLabel.label);
+				} else {
+					labelList=listAppend(labelList,i);
+				}
+
+			}	
+
+		return labelList;
+
+	}
+
+	public function getAvailableDisplayList(listCol="attribute") output=false {
+		var attrList="Date,Title,Image,Summary,Body,ReadMore,Credits,Comments,Tags,Rating";
+		var labelList="Date,Title,Image,Summary,Body,Read More,Credits,Comments,Tags,Rating";
+
 		var i=0;
 		var finder=0;
 		var rsExtend=variables.configBean.getClassExtensionManager().getExtendedAttributeList(variables.instance.siteid,"tcontent");
@@ -677,21 +718,27 @@ component extends="mura.bean.beanFeed" entityName="feed" table="tcontentfeeds" o
 			qs.setDbType('query');
 			qs.setAttributes(rsExtend=rsExtend);
 
-			rsExtend=qs.execute(sql="select attribute from rsExtend
-				group by attribute
-				order by attribute").getResult();
+			rsExtend=qs.execute(sql="select attribute,label from rsExtend
+				group by attribute,label
+				order by attribute,label").getResult();
 
-			returnList=returnList & "," & valueList(rsExtend.attribute);
+			attrList=attrList & "," & valueList(rsExtend.attribute);
+			labelList=labelList & "," & valueList(rsExtend.label);
 		}
 
 		for(i in ListToArray(variables.instance.displayList)){
-			finder=listFindNoCase(returnList,i);
+			finder=listFindNoCase(attrList,i);
 			if (finder){
-				returnList=listDeleteAt(returnList,finder);
+				attrList=listDeleteAt(attrList,finder);
+				labelList=listDeleteAt(labelList,finder);
 			}
 		}
 
-		return returnList;
+		if (arguments.listCol eq 'label'){
+			return labelList;
+		} else {
+			return attrList;
+		}
 	}
 
 	public function getPrimaryKey() output=false {

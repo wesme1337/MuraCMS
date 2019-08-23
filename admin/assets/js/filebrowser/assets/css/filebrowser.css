@@ -2,6 +2,7 @@
 body.MuraFileBrowserWindow{
   background-color: #fff;
 }
+
 /* also see jquery-ui-override where breadcrumb is styled for ui-dialog */
 body.MuraFileBrowserWindow .mura-header ul.breadcrumb{
   background-color: #FAFAFA;
@@ -65,7 +66,7 @@ body.MuraFileBrowserWindow .mura-header ul.breadcrumb{
 }
 
 .filewindow-hideappbar {
-  border-top: 1px solid #dbdbdb;
+  border-top: none;
   display: block;
   clear: both;
   height: 1px;
@@ -403,10 +404,25 @@ input.filebrowser-filter {
 
 .fileviewer-item-meta-details {
   bottom: 10px;
+  font-size: 11px;
+  line-height: 1.4em;
   position: absolute;
   right: 20px;
 }
 
+.fileviewer-item-meta-date,
+.fileviewer-item-meta-size{
+  float: right;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 80%;
+  width: auto;
+  text-align: right;
+}
+.fileviewer-item-meta-details div > span > i{
+  opacity: .5;
+}
 .fileviewer-item-actions{
   position: absolute;
   bottom: 10px;
@@ -451,15 +467,21 @@ a.folder-item {
 .fileviewer-gallery {
   background-color:#fff;
   display: block;
-  height: 70%;
-  margin: 10% auto;
+  height: 80%;
+  margin: 3% auto;
   position: relative;
-  padding-top: 12px;
-  width: 70%;
+  padding-top: 2%;
+  width: 80%;
 }
 
 body.modal-wrapper .fileviewer-gallery{
   width: 92%;
+}
+body.MuraFileBrowserWindow .fileviewer-gallery{
+  margin-top: 1.5%;
+}
+body.modal-wrapper #MuraFileBrowserContainer{
+  margin-bottom: 16px !important;
 }
 
 .fileviewer-image {
@@ -489,8 +511,11 @@ body.modal-wrapper .fileviewer-gallery{
   background-color: #fff;
 }
 
+.mura body.modal-wrapper .fileviewer-gallery-menu.mura-actions,
 body.modal-wrapper .fileviewer-gallery-menu.mura-actions{
-  bottom: -90px;
+  bottom: -80px;
+  padding-top: 5px !important;
+  padding-bottom: 6px !important;
 }
 
 .fileviewer-gallery-menu.mura-actions label{
@@ -502,7 +527,7 @@ body.modal-wrapper .fileviewer-gallery-menu.mura-actions{
   width: 100%;
   display: block;
   margin: 0;
-  padding: 0 0 8px 0;
+  padding: 0 0 2px 0;
 }
 
 .fileviewer-gallery-menu.mura-actions label input {
@@ -541,10 +566,10 @@ body.modal-wrapper .fileviewer-gallery-menu.mura-actions .form-actions > a.btn i
 
 .actionwindow-left,
 .actionwindow-right {
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.15);
   cursor: pointer;
   font-size: 3em;
-  padding: 5px;
+  padding: 0 10px;
   position: absolute;
   top: 48%;
 }
@@ -554,9 +579,17 @@ body.modal-wrapper .fileviewer-gallery-menu.mura-actions .form-actions > a.btn i
   left: 0;
 }
 
+.actionwindow-left i{
+  margin-right: 5px;
+}
+
 .actionwindow-right {
   float: right;
   right: 0;
+}
+
+.actionwindow-right i{
+  margin-left: 5px;
 }
 
 .fileviewer-icon-jpg {

@@ -366,8 +366,11 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 		<div class="form-actions">
 
 			<cfif $.event('frontEnd')>
-			 <button type="button" class="btn" onclick="window.location.href='#rc.contentBean.getURL(secure=rc.$.getBean('utility').isHTTPs(),complete=1,queryString='previewid=#rc.contentBean.getContentHistID()#')#';"><i class="mi-ban"></i> #esapiEncode('html',application.rbFactory.getKeyValue(session.rb,"sitemanager.content.cancel"))#</button>
+				<cfset rs.cancelhref="#rc.contentBean.getURL(secure=rc.$.getBean('utility').isHTTPs(),complete=1,queryString='previewid=#rc.contentBean.getContentHistID()#')#">
+			<cfelse>
+				<cfset rc.cancelhref="#application.configBean.getContext()##application.configBean.getAdminDir()#/?muraAction=cArch.list&amp;siteid=#esapiEncode('url',session.siteid)#">
 			</cfif>
+			 <button type="button" class="btn" onclick="window.location.href='#rc.cancelhref#';"><i class="mi-ban"></i> #esapiEncode('html',application.rbFactory.getKeyValue(session.rb,"sitemanager.content.cancel"))#</button>
 
 			 <button type="button" class="btn" onclick="return saveDraftPrompt();"><i class="mi-edit"></i> #esapiEncode('html',application.rbFactory.getKeyValue(session.rb,"sitemanager.content.savedraft"))#</button>
 

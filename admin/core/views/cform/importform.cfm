@@ -46,10 +46,6 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 	<h1>#rc.$.rbKey('sitemanager.content.importform')#</h1>
 
 	<div class="nav-module-specific btn-group">
-		<a class="btn" href="./?muraAction=cArch.list&amp;siteid=#esapiEncode('url',rc.siteid)#">
-			<i class="mi-arrow-circle-left"></i>
-			#rc.$.rbKey('sitemanager.backtositemanager')#
-		</a>
 	</div>
 </div> <!-- /.mura-header -->
 </cfoutput>

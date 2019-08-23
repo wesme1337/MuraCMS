@@ -46,6 +46,13 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 <cfset feed=$.getBean("feed")>
 <cfset feed.set(url)>
 
+<cfset displayList=feed.getDisplayList()>
+<cfset displayLabels=feed.getDisplayLabels(displayList)>
+<cfset availableList=feed.getAvailableDisplayList()>
+<cfset availableLabels=feed.getAvailableDisplayList(listCol="label")>
+<cfset availListArr = listToArray(availableList)>
+<cfset availLabelArr = listToArray(availableLabels)>
+
 </cfsilent>
 <cfinclude template="js.cfm">
 <cfoutput>
@@ -63,25 +70,28 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 						<span class="dragFrom half">Drag Fields from Here&hellip;</span><span class="half">&hellip;and Drop Them Here.</span>
 					</p>
 
-					<cfset displayList=feed.getDisplayList()>
-					<cfset availableList=feed.getAvailableDisplayList()>
-					<cfset availableLabels=feed.getAvailableDisplayList(listCol="label")>
-					
 					<ul id="availableListSort" class="displayListSortOptions">
-						<cfloop list="#availableList#" index="i">
-							<cfif not listFind(displayList,i)>
-								<cfset attrLabel = listGetAt(availableLabels,listFind(availableList,i))>
-								<li class="ui-state-default" data-attributecol="#trim(i)#">#attrLabel#</li>
-							</cfif>
-						</cfloop>
+						<cfif arrayLen(availListArr)>
+							<cfloop from="1" to="#arrayLen(availListArr)#" index="i">
+								<cfif not listFind(displayList,availListArr[i])>
+									<li class="ui-state-default" data-attributecol="#availListArr[i]#">#availLabelArr[i]#</li>
+								</cfif>
+							</cfloop>
+						</cfif>
 					</ul>
 
 					<ul id="displayListSort" class="displayListSortOptions">
 						<cfloop list="#displayList#" index="i">
-							<li class="ui-state-highlight" data-attributecol="#trim(i)#">#trim(i)#</li>
+								<cftry>
+								<cfset attrLabel = listGetAt(displayLabels,listFind(displayList,i))>
+									<cfcatch>
+										<cfset attrLabel = i>
+									</cfcatch>
+								</cftry>
+							<li class="ui-state-highlight" data-attributecol="#trim(i)#">#attrLabel#</li>
 						</cfloop>
 					</ul>
-					<input type="text" id="displayList" class="objectParam" value="#displayList#" name="displayList"  data-displayobjectparam="displayList"/>
+					<input type="hidden" id="displayList" class="objectParam" value="#displayList#" name="displayList"  data-displayobjectparam="displayList"/>
 				</div>
 			</div>
 			<div class="mura-actions">

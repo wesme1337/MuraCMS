@@ -647,23 +647,62 @@ component extends="mura.bean.beanFeed" entityName="feed" table="tcontentfeeds" o
 	public function getDisplayList() output=false {
 		var hasRating=false;
 		var hasComments=false;
+
 		if ( !len(variables.instance.displayList) ) {
 			variables.instance.displayList="Date,Title,Image,Summary,Credits";
+
 			hasRating=listFindNoCase(variables.instance.displayList,"Rating");
 			hasComments=listFindNoCase(variables.instance.displayList,"Comments");
+
 			if ( variables.instance.displayComments && !hasComments ) {
 				variables.instance.displayList=listAppend(variables.instance.displayList,"Comments");
 			} else if ( !variables.instance.displayComments && hasComments ) {
 				variables.instance.displayList=listDeleteAt(variables.instance.displayList,hasComments);
 			}
+
 			variables.instance.displayList=listAppend(variables.instance.displayList,"Tags");
+
 			if ( variables.instance.displayRatings && !hasRating ) {
 				variables.instance.displayList=listAppend(variables.instance.displayList,"Rating");
 			} else if ( !variables.instance.displayRatings && hasRating ) {
 				variables.instance.displayList=listDeleteAt(variables.instance.displayList,hasRating);
 			}
+
 		}
 		return variables.instance.displayList;
+	}
+
+	public function getDisplayLabels(string attrList=variables.instance.displayList) output=false {
+
+		var labelList='';
+		var rsExtend=variables.configBean.getClassExtensionManager().getExtendedAttributeList(variables.instance.siteid,"tcontent");
+		var aa = [];
+
+		if (!(len(arguments.attrList))){
+			arguments.attrList = getDisplayList();
+		}
+
+		aa = listToArray(arguments.attrList);
+
+			for(i in aa){
+
+				var qs=new Query();
+				qs.setDbType('query');
+				qs.setAttributes(rsExtend=rsExtend);
+
+				rsLabel=qs.execute(sql="select label from rsExtend
+				where attribute = '#i#'").getResult();
+
+				if (len(rsLabel.label)){
+					labelList=listAppend(labelList,rsLabel.label);
+				} else {
+					labelList=listAppend(labelList,i);
+				}
+
+			}	
+
+		return labelList;
+
 	}
 
 	public function getAvailableDisplayList(listCol="attribute") output=false {
@@ -679,16 +718,11 @@ component extends="mura.bean.beanFeed" entityName="feed" table="tcontentfeeds" o
 			qs.setDbType('query');
 			qs.setAttributes(rsExtend=rsExtend);
 
-			rsExtend=qs.execute(sql="select attribute from rsExtend
-				group by attribute
-				order by attribute").getResult();
+			rsExtend=qs.execute(sql="select attribute,label from rsExtend
+				group by attribute,label
+				order by attribute,label").getResult();
 
 			attrList=attrList & "," & valueList(rsExtend.attribute);
-
-			rsExtend=qs.execute(sql="select label from rsExtend
-				group by label
-				order by label").getResult();
-
 			labelList=labelList & "," & valueList(rsExtend.label);
 		}
 

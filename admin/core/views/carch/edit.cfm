@@ -366,7 +366,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 		<div class="form-actions">
 
 			<cfif $.event('frontEnd')>
-				<cfset rs.cancelhref="#rc.contentBean.getURL(secure=rc.$.getBean('utility').isHTTPs(),complete=1,queryString='previewid=#rc.contentBean.getContentHistID()#')#">
+				<cfset rc.cancelhref="#rc.contentBean.getURL(secure=rc.$.getBean('utility').isHTTPs(),complete=1,queryString='previewid=#rc.contentBean.getContentHistID()#')#">
 			<cfelse>
 				<cfset rc.cancelhref="#application.configBean.getContext()##application.configBean.getAdminDir()#/?muraAction=cArch.list&amp;siteid=#esapiEncode('url',session.siteid)#">
 			</cfif>

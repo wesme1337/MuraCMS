@@ -21,7 +21,7 @@
   	<script src="#m.siteConfig().getAdminPath(complete=1)#/assets/js/filebrowser/filebrowser.js"></script>
 	<link href="#m.siteConfig().getAdminPath(complete=1)#/assets/css/admin.min.css" rel="stylesheet" type="text/css" />
 	<link href="#m.siteConfig().getAdminPath(complete=1)#/assets/js/filebrowser/assets/css/filebrowser.css" link rel="stylesheet" type="text/css">
-	<link rel="stylesheet" href="#m.siteConfig().getAdminPath(complete=1)#/assets/css/fonts.min.css">
+	<!---<link rel="stylesheet" href="#m.siteConfig().getAdminPath(complete=1)#/assets/css/fonts.min.css">--->
   <script>
 	Mura.init({
 		context:'#esapiEncode("javascript",m.globalConfig('context'))#',

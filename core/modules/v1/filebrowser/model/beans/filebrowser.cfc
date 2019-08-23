@@ -954,7 +954,12 @@ component
 			if(directoryExists(path)){
 				return path;
 			} else{
-				return expandPath(arguments.path)
+				var expandedPath=expandPath(arguments.path);
+				if(directoryExists(expandedPath)){
+					return expandedPath;
+				} else {
+					return arguments.path;
+				}
 			}
 		}
 	}

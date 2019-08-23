@@ -59,26 +59,29 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 			<div class="mura-control-group" id="availableFields">
 				<div id="sortableFields" class="mura-control justify">
 					<p class="dragMsg">
+						<!--- todo: rb keys for drag messages, here and other locations --->
 						<span class="dragFrom half">Drag Fields from Here&hellip;</span><span class="half">&hellip;and Drop Them Here.</span>
 					</p>
 
 					<cfset displayList=feed.getDisplayList()>
 					<cfset availableList=feed.getAvailableDisplayList()>
+					<cfset availableLabels=feed.getAvailableDisplayList(listCol="label")>
 					
 					<ul id="availableListSort" class="displayListSortOptions">
 						<cfloop list="#availableList#" index="i">
 							<cfif not listFind(displayList,i)>
-								<li class="ui-state-default">#trim(i)#</li>
+								<cfset attrLabel = listGetAt(availableLabels,listFind(availableList,i))>
+								<li class="ui-state-default" data-attributecol="#trim(i)#">#attrLabel#</li>
 							</cfif>
 						</cfloop>
 					</ul>
 
 					<ul id="displayListSort" class="displayListSortOptions">
 						<cfloop list="#displayList#" index="i">
-							<li class="ui-state-highlight">#trim(i)#</li>
+							<li class="ui-state-highlight" data-attributecol="#trim(i)#">#trim(i)#</li>
 						</cfloop>
 					</ul>
-					<input type="hidden" id="displayList" class="objectParam" value="#displayList#" name="displayList"  data-displayobjectparam="displayList"/>
+					<input type="text" id="displayList" class="objectParam" value="#displayList#" name="displayList"  data-displayobjectparam="displayList"/>
 				</div>
 			</div>
 			<div class="mura-actions">
@@ -123,9 +126,9 @@ $(function(){
 				var current = $("##displayList").val();
 
 				if(current != '') {
-					$("##displayList").val(current + "," + $(this).html());
+					$("##displayList").val(current + "," + $(this).attr('data-attributecol'));
 				} else {
-					$("##displayList").val($(this).html());
+					$("##displayList").val($(this).attr('data-attributecol'));
 				}
 
 			});

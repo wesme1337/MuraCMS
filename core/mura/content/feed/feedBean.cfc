@@ -666,8 +666,10 @@ component extends="mura.bean.beanFeed" entityName="feed" table="tcontentfeeds" o
 		return variables.instance.displayList;
 	}
 
-	public function getAvailableDisplayList() output=false {
-		var returnList="Date,Title,Image,Summary,Body,ReadMore,Credits,Comments,Tags,Rating";
+	public function getAvailableDisplayList(listCol="attribute") output=false {
+		var attrList="Date,Title,Image,Summary,Body,ReadMore,Credits,Comments,Tags,Rating";
+		var labelList="Date,Title,Image,Summary,Body,Read More,Credits,Comments,Tags,Rating";
+
 		var i=0;
 		var finder=0;
 		var rsExtend=variables.configBean.getClassExtensionManager().getExtendedAttributeList(variables.instance.siteid,"tcontent");
@@ -681,17 +683,28 @@ component extends="mura.bean.beanFeed" entityName="feed" table="tcontentfeeds" o
 				group by attribute
 				order by attribute").getResult();
 
-			returnList=returnList & "," & valueList(rsExtend.attribute);
+			attrList=attrList & "," & valueList(rsExtend.attribute);
+
+			rsExtend=qs.execute(sql="select label from rsExtend
+				group by label
+				order by label").getResult();
+
+			labelList=labelList & "," & valueList(rsExtend.label);
 		}
 
 		for(i in ListToArray(variables.instance.displayList)){
-			finder=listFindNoCase(returnList,i);
+			finder=listFindNoCase(attrList,i);
 			if (finder){
-				returnList=listDeleteAt(returnList,finder);
+				attrList=listDeleteAt(attrList,finder);
+				labelList=listDeleteAt(labelList,finder);
 			}
 		}
 
-		return returnList;
+		if (arguments.listCol eq 'label'){
+			return labelList;
+		} else {
+			return attrList;
+		}
 	}
 
 	public function getPrimaryKey() output=false {

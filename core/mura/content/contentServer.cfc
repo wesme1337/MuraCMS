@@ -208,7 +208,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 		</cfif>
 
 		<cfif not structKeyExists(request,"preformated")>
-			<cfif find(".",last) and (application.configBean.getAllowedIndexFiles() eq '*' or listFind(application.configBean.getAllowedIndexFiles(),last))>
+			<cfif find(".",last) and (application.configBean.getAllowedIndexFiles() eq '*' or listFindNoCase(application.configBean.getAllowedIndexFiles(),last))>
 				<cfif last eq 'index.json'>
 		 			<cfset request.returnFormat="JSON">
 		 		</cfif>
@@ -241,12 +241,12 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 			<cfset theLen=listLen(tempfilename,'/')/>
 			<cfloop from="2" to="#theLen#" index="n">
 			<cfset item=listgetat(tempfilename,n,"/")/>
-			<cfif not (find(".",item) and listFind(application.configBean.getAllowedIndexFiles(),item))>
+			<cfif not (find(".",item) and (application.configBean.getAllowedIndexFiles() eq '*' or listFindNoCase(application.configBean.getAllowedIndexFiles(),last)))>
 				<cfset request.currentFilename=listappend(request.currentFilename,item,"/") />
 			</cfif>
 			</cfloop>
 		</cfif>
-
+		<cfdump var="#request.currentfilename#" abort=true>
 		<cfif right(request.currentFilename,1) eq "/">
 			<cfset request.currentFilename=left(request.currentFilename,len(request.currentFilename)-1)/>
 		</cfif>
@@ -338,8 +338,8 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 
 	<cfset request.preformated=true/>
 	<cfset var last=listLast(url.path,'/')>
-
-	<cfif find(".",last) and (application.configBean.getAllowedIndexFiles() eq '*' or listFind(application.configBean.getAllowedIndexFiles(),last))>
+	
+	<cfif find(".",last) and (application.configBean.getAllowedIndexFiles() eq '*' or listFindNoCase(application.configBean.getAllowedIndexFiles(),last))>
 		<cfif last eq 'index.json'>
 			<cfset request.returnFormat="JSON">
 		</cfif>
@@ -375,7 +375,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 	<cfif len(url.path)>
 		<cfset last=listLast(url.path,"/") />
 
-		<cfif find(".",last) and (application.configBean.getAllowedIndexFiles() eq '*' or listFind(application.configBean.getAllowedIndexFiles(),last))>
+		<cfif find(".",last) and (application.configBean.getAllowedIndexFiles() eq '*' or listFindNoCase(application.configBean.getAllowedIndexFiles(),last))>
 			<cfif last eq 'index.json'>
 	 			<cfset request.returnFormat="JSON">
 	 		</cfif>
@@ -428,8 +428,8 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 
 	<cfset url.path=arguments.filename>
 	<cfset var last=listLast(arguments.filename,"/")>
-
- 	<cfif find(".",last) and (application.configBean.getAllowedIndexFiles() eq '*' or listFind(application.configBean.getAllowedIndexFiles(),last))>
+	
+ 	<cfif find(".",last) and (application.configBean.getAllowedIndexFiles() eq '*' or listFindNoCase(application.configBean.getAllowedIndexFiles(),last))>
  		<cfif last eq 'index.json'>
  			<cfset request.returnFormat="JSON">
  		</cfif>

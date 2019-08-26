@@ -246,7 +246,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 			</cfif>
 			</cfloop>
 		</cfif>
-		<cfdump var="#request.currentfilename#" abort=true>
+		
 		<cfif right(request.currentFilename,1) eq "/">
 			<cfset request.currentFilename=left(request.currentFilename,len(request.currentFilename)-1)/>
 		</cfif>

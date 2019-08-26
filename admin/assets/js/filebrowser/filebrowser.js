@@ -23,7 +23,7 @@ config: {
 	if(folderState){
 		try{
 			folderState=JSON.parse(folderState);
-			if(folderState.resourcepath != MuraFileBrowser.config.resourcepath){
+			if(folderState.resourcepath != MuraFileBrowser.config.resourcepath || folderState.siteid != Mura.siteid){
 				Mura.createCookie( 'mura_fbfolder','');
 			}
 		}catch(e){}
@@ -2002,6 +2002,7 @@ config: {
         this.spinnermodal = 1;
 
         var fdata = {
+          siteid: Mura.siteid,
           foldertree: JSON.parse(JSON.stringify(this.foldertree)),
           itemsper: this.itemsper,
 					resourcepath: MuraFileBrowser.config.resourcepath
@@ -2116,25 +2117,31 @@ config: {
 
         var cFolder = Mura.readCookie( 'mura_fbfolder');
         if(cFolder) {
-          var cFolderJSON = JSON.parse(cFolder);
+          try{
+            var cFolderJSON = JSON.parse(cFolder);
 
-          if(cFolderJSON.itemsper)
-            this.itemsper = cFolderJSON.itemsper;
+            if(cFolderJSON.itemsper)
+              this.itemsper = cFolderJSON.itemsper;
 
-          if(cFolderJSON.resourcepath != self.config.resourcepath) {
-            var fdata = {
-              foldertree: [],
-              itemsper: this.itemsper,
-              resourcepath: self.config.resourcepath
+            if(cFolderJSON.resourcepath != self.config.resourcepath || cFolderJSON.siteid != mura.siteid) {
+              var fdata = {
+                siteid: Mura.siteid,
+                foldertree: [],
+                itemsper: this.itemsper,
+                resourcepath: self.config.resourcepath
+              }
+              Mura.createCookie( 'fbFolderTree',JSON.stringify(fdata),1);
             }
-            Mura.createCookie( 'fbFolderTree',JSON.stringify(fdata),1);
-          }
-          else if(cFolderJSON.foldertree) {
-            this.$root.foldertree = cFolderJSON.foldertree;
+            else if(cFolderJSON.foldertree) {
+              this.$root.foldertree = cFolderJSON.foldertree;
 
-            for(var i=0;i<this.foldertree.length;i++) {
-              dir = dir + "/" + this.foldertree[i];
+              for(var i=0;i<this.foldertree.length;i++) {
+                dir = dir + "/" + this.foldertree[i];
+              }
             }
+          } catch(e){
+            console.log("error reading cookie json:" + cFolderJSON);
+            Mura.createCookie( 'fbFolderTree','',1);
           }
         }
 

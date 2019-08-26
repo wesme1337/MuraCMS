@@ -900,18 +900,20 @@
 				var bpSel =	$('#objectbreakpointsel');
 				var bpDiv = $('div.objectbreakpointcontainer');
 
-				if (curVal == '' || curVal == 'mura-expanded' || curVal == 'mura-twelve'){
+				if (curVal == '' || curVal == 'mura-expanded'){
 					$(bpSel).val('').niceSelect('update');
 					$(bpDiv).hide();
-					setGridWidth($('#object-widthsel-ui .object-widthsel-option[data-value="mura-twelve"]'));
+					resetGridWidth();
+					unsetGridWidth();
 				} else {
-					$(bpDiv).show();
+					if (curVal == 'mura-twelve'){
+						$(bpDiv).hide();
+					} else {
+						$(bpDiv).show();					}
+					}
 					setGridWidth($('#object-widthsel-ui .object-widthsel-option[data-value="' + curVal + '"]'));
-				}
-
-				// set gridwidth indicator
-
-			})
+			});
+			
 			// run on load
 			$('#objectwidthsel').trigger('change');
 

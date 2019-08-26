@@ -51,16 +51,22 @@
 
 								<div class="mura-control-group">
 									<label>#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.width')#</label>
-									<cfset attributes.positionlabels = ''>
-									<cfset attributes.positionvalues = ''>
+									<div id="object-widthsel-ui">
+										<div id="object-widthsel-wrapper">
+										<cfloop from="1" to="#arrayLen(attributes.positionoptions)#" index="i">
+											<cfset p = attributes.positionoptions[i]>
+											<cfif structKeyExists(p,'cols') and val(p["cols"])>
+											<div class="object-widthsel-option" data-value="#p["value"]#"><span>#p["cols"]#</span></div>
+											</cfif>
+										</cfloop>
+										</div>
+									</div>
 									<select name="width" id="objectwidthsel" class="classtoggle">
 										<cfloop from="1" to="#arrayLen(attributes.positionoptions)#" index="i">
 											<cfset p = attributes.positionoptions[i]>
 											<option value="#p['value']#"<cfif listFind(attributes.params.class,'#p['value']#',' ')> selected</cfif>>#p['label']#</option>
 											<cfset l = "'#p["label"]#'">
 											<cfset v = "'#p["value"]#'">
-											<cfset attributes.positionLabels = listAppend(attributes.positionlabels, l)>
-											<cfset attributes.positionValues = listAppend(attributes.positionvalues, v)>
 										</cfloop>
 									</select>
 								</div>

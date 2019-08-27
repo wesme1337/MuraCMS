@@ -251,10 +251,12 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 					  <ul class="dropdown-menu drop-right">
 				<cfif (rc.contentBean.getfilename() neq '' or rc.contentid eq '00000000000000000000000000000000001')>
 					<cfswitch expression="#rc.type#">
-					<cfcase value="Page,Folder,Calendar,Gallery,Link">
+					<cfcase value="Page,Folder,Calendar,Gallery">
+						<!---<li><a href="#rc.contentBean.getURL(secure=rc.$.getBean('utility').isHTTPs(),complete=1)#"><i class="mi-eye"></i> #application.rbFactory.getKeyValue(session.rb,"sitemanager.view")#</a></li>--->
 						<li><a href="#rc.contentBean.getURL(secure=rc.$.getBean('utility').isHTTPs(),complete=1,queryString='previewid=#rc.contentBean.getContentHistID()#')#"><i class="mi-eye"></i> #application.rbFactory.getKeyValue(session.rb,"sitemanager.content.viewversion")#</a></li>
 					</cfcase>
 					<cfcase value="File">
+						<!---<li><a href="##" href="##" onclick="return preview('#rc.contentBean.getURL(secure=rc.$.getBean('utility').isHTTPs(),complete=1)#');"><i class="mi-eye"></i> #application.rbFactory.getKeyValue(session.rb,"sitemanager.view")#</a></li>--->
 						<li><a href="##" href="##" onclick="return preview('#application.settingsManager.getSite(rc.siteid).getResourcePath(complete=1)#/index.cfm/_api/render/file/?fileID=#rc.contentBean.getFileID()#');"><i class="mi-eye"></i> #application.rbFactory.getKeyValue(session.rb,"sitemanager.content.viewversion")#</a></li>
 					</cfcase>
 					</cfswitch>

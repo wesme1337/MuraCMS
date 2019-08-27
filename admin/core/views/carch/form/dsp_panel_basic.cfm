@@ -43,6 +43,29 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 --->
 <cfset started=false>
 <cfset tabList=listAppend(tabList,"tabBasic")>
+
+<!--- AltURLs --->
+<!--- Load up redirect iterator --->
+<cfset altURLit = $.content().getalturlIterator() />
+<!--- Set up helper to display path --->
+<cfset httpProtocol = len(cgi.https) ? 'https://' : 'http://' />
+<cfset altURLHelper = httpProtocol & cgi.server_name & '/' />
+<!--- Begin check for ismuracontent --->
+<!--- set isMuraContentCheck variable to set radio buttons --->
+<cfset isMuraContentCheck = 0 />
+<!--- we need to check the redirect iterator for the value of ismuracontent
+			there can only be one redirect to Mura Content so we don't need to loop to get the 1 or 0
+ --->
+<cfif altURLit.hasNext()>
+	<cfset muracheck = altURLit.next()>
+	<cfif muracheck.get('ismuracontent') >
+		<cfset isMuraContentCheck = 1 />
+	</cfif>
+</cfif>
+<!--- reset the iterator for use below. --->
+<cfset altURLit.reset() />
+<!--- /end AltURLs --->
+
 <cfoutput>
 <div class="mura-panel panel" id="tabBasic">
 	<div class="mura-panel-heading" role="tab" id="heading-basic">
@@ -133,6 +156,95 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 					</cfdefaultcase>
 				</cfswitch>
 				<!--- /title --->
+
+
+			<!-- todo: remove this feature flag -->
+		  <cfif $.globalConfig().getValue(property='alturls',defaultValue=false)>
+				<!--- AltURLs --->
+				<!--- todo: rb keys --->
+				<div class="mura-control-group">
+					<label>URL Redirection</label>
+					<div class="mura-control justify">
+						
+						<div class="bigui__preview">
+							<div id="alturls__selected"><span>No alternate URLs defined</span></div>
+						</div>
+						<!--- 'big ui' flyout panel --->
+						<!--- todo: resource bundle key for 'manage related content' --->
+						<div class="bigui" id="bigui__alturl" data-label="Manage Redirects">
+							<div class="bigui__title">Alternate URL Redirection</div>
+							<div class="bigui__controls">
+
+								<div class="mura-control-group">
+									<label>
+										<span data-toggle="popover" title="" data-placement="right" data-content="Define multiple URLs that will redirect to this content, or redirect from this content to a single URL of another page or Mura content node." data-original-title="Altermate URL Direction">
+									URL Direction <i class="mi-question-circle"></i></span>
+									</label>
+									<div class="radio-group">
+										<label for="isMura" class="radio">
+											<input type="radio" name="ismuracontent" id="isMura" <cfif isMuraContentCheck == 1>checked</cfif> value="1">
+										Redirect from this content node to an alternate content node
+										</label>
+										<label for="notMura" class="radio">
+											<input type="radio" name="ismuracontent" id="notMura" <cfif isMuraContentCheck == 0>checked</cfif> value="0">
+										Allow alternate URLs for this content node
+										</label>
+									</div>
+								</div>
+
+								<div class="mura-control-group">
+									<div class="input_fields_wrap">
+										<cfif altURLit.hasNext()>
+											<cfloop condition="altURLit.hasNext()">
+												<cfset item = altURLit.next() />
+												<div class="mura-control-group <cfif altURLit.getCurrentIndex() eq 1>first</cfif>">
+													<span>#altURLHelper#</span>
+													<input type="text" name="alturl_#item.get('alturlid')#" value="#item.get('alturl')#" placeholder="url-here">
+													<span class="altstatuscode">
+														<select class="altstatuscode" name="altstatuscode_#item.get('alturlid')#">
+															<option value="302"<cfif item.get('statuscode') eq 302> selected</cfif>>Temporary (302)</option>
+															<option value="301"<cfif item.get('statuscode') eq 301> selected</cfif>>Permanent (301)</option>
+															<option value=""<cfif not listFind('301,302',item.get('statuscode'))> selected</cfif>>No redirection</option>
+														</select>
+														<cfif altURLit.getCurrentIndex() gt 1>
+															<button class="btn remove_field" title="Remove Alternate URL">
+																<i class="fa fa-trash"></i>
+															</button>
+														</cfif>
+													</span>
+												</div>
+											</cfloop>
+										<cfelse>
+											<cfset newid=createUUID()>
+											<div class="mura-control-group first">
+												<span>#altURLHelper#</span>
+												<input type="text" name="alturl_#newid#" placeholder="url-here">
+												<span class="altstatuscode">
+													<select  name="altstatuscode_#newid#">
+														<option value="302">Temporary (302)</option>
+														<option value="301">Permanent (301)</option>
+														<option value="">No redirection</option>
+													</select>
+												</span>
+											</div>
+										</cfif>
+									</div> <!--- /.input_fields_wrap --->
+
+									<input type="hidden" name="numberOfAltURLs" class="numberOfAltURLs" value="1"/>
+									<input type="hidden" name="alturluiid" value="#$.content().getContentID()#"/>
+								</div> <!--- /.mura-control-group --->
+
+								<div class="mura-control-group" id="add_field_button_wrapper">
+									<label class="sr-only">Alternate URL</label>
+									<button class="add_field_button btn"><i class="fa fa-plus"></i> Add Alternate URL</button>
+								</div>
+
+							</div> <!--- /.bigui__controls --->
+						</div> <!--- /.bigui --->
+					</div> <!--- /end mura-control .justify --->
+				</div> <!--- /end mura-control-group --->
+				<!--- /AltURLs --->
+				</cfif>
 
 				<!--- content parent --->
 				<cfif ((rc.parentid neq '00000000000000000000000000000000001' and application.settingsManager.getSite(rc.siteid).getlocking() neq 'all') or (rc.parentid eq '00000000000000000000000000000000001' and application.settingsManager.getSite(rc.siteid).getlocking() eq 'none')) and rc.contentid neq '00000000000000000000000000000000001'>
@@ -409,6 +521,76 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 				return true;
 			});
 		});
+
+		// altURLs
+		 Mura(function (m) {
+
+				var max_fields = 10; //maximum input boxes allowed
+				var wrapper = $(".input_fields_wrap"); //fields wrapper
+				var add_button = $(".add_field_button"); //add button ID
+				var button_wrapper = $("##add_field_button_wrapper"); //add wrapper div
+				var totalAltURLs = $(".numberOfAltURLs"); //hidden for count
+				var ismuracontent = $("input[name='ismuracontent']");
+
+				var x = 1; //initlal text box count
+				
+				if ($("input[name='ismuracontent']:checked").val() == 1 ) {
+					$(add_button).attr('disabled','disabled');
+					$(button_wrapper).hide();
+				}
+
+				$(ismuracontent).on('change',function(e){
+					if ($(this).val() == 1) {
+						max_fields = 1;
+						//$('.altstatuscode').hide();
+						$(add_button).attr('disabled','disabled');
+						$(button_wrapper).hide();
+						$(wrapper).find('input[name^="alturl_"]').each(function(){
+							$(this).val('');
+						});
+						$(wrapper).find('div.mura-control-group').not('.first').remove();
+					} else {
+						max_fields = 10;
+						//$('.altstatuscode').show();
+						$(add_button).removeAttr('disabled');
+						$(button_wrapper).show();
+						$(wrapper).find('input[name^="alturl_"]').each(function(){
+							$(this).val('');
+						});
+					}
+				})
+
+				$(add_button).click(function(e){ //on add input button click
+					e.preventDefault();
+					if(x < max_fields){ //max input box allowed
+						var newID=m.createUUID();
+						newForm = '<div class="mura-control-group">#altURLHelper# <input type="text" name="alturl_'+ newID +'" placeholder="url-here"/> <span class="altstatuscode"><select  name="altstatuscode_' + newID +'"><option value="302">Temporary (302)</option><option value="301">Permanent (301)</option><option value="">No redirection</option></select> <button class="btn remove_field" title="Remove Alternate URL"> <i class="fa fa-trash"></i> </button></span></div>';
+						$(wrapper).append(newForm); //add input box
+						x++; //text box increment
+						totalAltURLs.val(x);
+						$(add_button).removeAttr('disabled');
+						// $('[name="altstatuscode_' + newID +'"]').niceSelect();
+						if (x == max_fields) {
+							$(add_button).attr('disabled','disabled');
+						}
+					}
+				});
+
+				$(wrapper).on("click",".remove_field", function(e){ 
+					e.preventDefault();
+					var parent=$(this).closest('div.mura-control-group');
+					if($(".input_fields_wrap").children('div:visible').length > 1){
+						parent.hide();
+						$(add_button).removeAttr('disabled');
+					}
+					parent.find('input[name^="alturl_"]').val('');
+					x--;
+					if(x > 1){
+						totalAltURLs.val(x);
+					}
+				});
+			}); // end Mura function(m)
+
 	</script>
 
 </cfoutput>

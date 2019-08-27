@@ -70,15 +70,16 @@
 				<!--- loope that list field names --->
 				<cfloop index="thefield" list="#sortedFormFields#">
 					<!--- filter by the "alturl_" for each redirect added--->
-					<cfif FindNoCase("alturl_", thefield) NEQ 0>
+					<cfif FindNoCase("alturl_", thefield)>
 						<cfoutput>
 							<cfscript>
-								// if we find a match above an it has a value set it to the redirect bean
+
+
+								// if we find a match above, and it has a value
+								// set it to the redirect bean
 								if(len(m.event('#thefield#'))){
 									// load the bean by the redirect id portion of the input name
 									var alturlid=listLast(#thefield#,'_');
-
-
 									var theAltURL = $.getBean('alturl');
 									// set the form value as a var for replacing logic below
 									var	altURLFormValue = trim(form['#thefield#']);
@@ -88,7 +89,6 @@
 									if(structKeyExists(form,'altstatuscode_#alturlid#')){
 										altstatuscode=form['altstatuscode_#alturlid#'];
 									}
-
 									// If the user added a trailing slash remove it
 									if (right(altURLFormValue,1) == '/') {
 										altURLFormValue = left(altURLFormValue,len(altURLFormValue)-1);
@@ -102,12 +102,12 @@
 									altURLFormValue = $.stripHTML(altURLFormValue);
 									altURLFormValue = replaceNoCase(altURLFormValue,' ', '-','ALL');
 
-									theAltURL.set(	{
-											alturlid=listLast(#thefield#,'_'),
-											alturl= altURLFormValue,
-											ismuracontent= $.event('ismuracontent'),
+									theAltURL.set({
+											alturlid=alturlid,
+											alturl=altURLFormValue,
+											ismuracontent=$.event('ismuracontent'),
 											statuscode=altstatuscode,
-											datecreated= createODBCDateTime(now()),
+											datecreated=createODBCDateTime(now()),
 											lastUpdateById=$.currentUser('userid')
 										});
 

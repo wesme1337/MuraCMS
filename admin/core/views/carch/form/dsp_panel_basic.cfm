@@ -158,8 +158,6 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 				<!--- /title --->
 
 
-			<!-- todo: remove this feature flag -->
-		  <cfif $.globalConfig().getValue(property='alturls',defaultValue=false)>
 				<!--- AltURLs --->
 				<!--- todo: rb keys --->
 				<div class="mura-control-group">
@@ -244,7 +242,6 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 					</div> <!--- /end mura-control .justify --->
 				</div> <!--- /end mura-control-group --->
 				<!--- /AltURLs --->
-				</cfif>
 
 				<!--- content parent --->
 				<cfif ((rc.parentid neq '00000000000000000000000000000000001' and application.settingsManager.getSite(rc.siteid).getlocking() neq 'all') or (rc.parentid eq '00000000000000000000000000000000001' and application.settingsManager.getSite(rc.siteid).getlocking() eq 'none')) and rc.contentid neq '00000000000000000000000000000000001'>

@@ -617,7 +617,7 @@ if(len($.siteConfig('customTagGroups'))){
 							<li class="download"><a title="#application.rbFactory.getKeyValue(session.rb,'sitemanager.download')#" href="#application.configBean.getContext()#/index.cfm/_api/render/file/?fileID=#item.getFileID()#&method=attachment" onclick="return confirmDialog('#esapiEncode('javascript',application.rbFactory.getKeyValue(session.rb,'sitemanager.downloadconfirm'))#',this.href)"><i class="mi-download"></i></a></li>
 							</cfcase>
 							<cfdefaultcase>
-							<li class="preview"><a title="#application.rbFactory.getKeyValue(session.rb,'sitemanager.preview')#" href="#item.getURL(complete=1)#"><i class="mi-globe"></i></a></li>
+							<li class="preview"><a title="#application.rbFactory.getKeyValue(session.rb,'sitemanager.view')#" href="#item.getURL(complete=1)#"><i class="mi-globe"></i></a></li>
 							</cfdefaultcase>
 						</cfswitch>
 						</cfif>

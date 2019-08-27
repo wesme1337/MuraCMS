@@ -22,7 +22,7 @@ component extends="mura.bean.beanORMVersioned" table="tcontentalturl" entityname
 			if(!get('ismuracontent')
 				&& (
 					(
-						redirectCheck.exists() && redirectCheck.get('alturlid') == get('alturlid')
+						redirectCheck.exists() && redirectCheck.get('alturlid') != get('alturlid')
 					)
 					|| contentCheck.exists()
 				)

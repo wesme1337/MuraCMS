@@ -160,69 +160,86 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 
 				<!--- AltURLs --->
 				<!--- todo: rb keys --->
-				<div class="help-block-inline">
-					<span>Here you can add urls that will be directed to this content or define a redirect from this content to a Mura Content node.</span>
-				</div>
 				<div class="mura-control-group">
-				<label>
-					<span data-toggle="popover" title="" data-placement="right" data-content="For an alternate url that redirects to this content from a url that doesn't exist, select From New Link.  For a redirect to existing Mura content select Mura Link (only one per content node)" data-original-title="Altermate URL Direction">
-						URL Direction <i class="mi-question-circle"></i></span>
-				</label>
-
-				<label for="notMura" class="radio inline">
-				<input type="radio" name="ismuracontent" id="notMura" <cfif isMuraContentCheck == 0>checked</cfif> value="0">
-					Alternate URL(s) for this content node
-				</label>
-				<label for="isMura" class="radio inline">
-				<input type="radio" name="ismuracontent" id="isMura" <cfif isMuraContentCheck == 1>checked</cfif> value="1">
-					Redirect from this content node to alternate url
-				</label>
-				</div>
-				<div class="mura-control-group">
-					<label class="sr-only">Alternate URL</label>
-					<button class="add_field_button btn"><i class="fa fa-plus"></i> Add Alternate URL</button>
-					<div class="input_fields_wrap">
-
-
-					<cfif altURLit.hasNext()>
-						<cfloop condition="altURLit.hasNext()">
-							<cfset item = altURLit.next() />
-							<div class="mura-control-group <cfif altURLit.getCurrentIndex() eq 1>first</cfif>">
-								<span class="" style="color:##999">#altURLHelper#</span>
-								<input style="width:200px" type="text" name="alturl_#item.get('alturlid')#" value="#item.get('alturl')#" placeholder="your-new/redirect/here">
-								<div class="altstatuscode">
-									<select class="altstatuscode" name="altstatuscode_#item.get('alturlid')#">
-										<option value="302"<cfif item.get('statuscode') eq 302> selected</cfif>>Temporary redirect</option>
-										<option value="301"<cfif item.get('statuscode') eq 301> selected</cfif>>Permanent redirect</option>
-										<option value=""<cfif not listFind('301,302',item.get('statuscode'))> selected</cfif>>Do not redirect</option>
-									</select>
-								</div>
-								<cfif altURLit.getCurrentIndex() gt 1>
-									<button class="btn remove_field" title="Remove Alternate URL">
-										<i class="fa fa-trash"></i>
-									</button>
-								</cfif>
-							</div>
-						</cfloop>
-					<cfelse>
-						<div class="mura-control-group first">
-							<span class="" style="color:##999">#altURLHelper#</span>
-							<cfset var newid=createUUID()>
-							<input style="width:200px" type="text" name="alturl_#newid#" placeholder="your-new/redirect/here">
-							<div class="altstatuscode">
-								<select  name="altstatuscode_#newid#">
-									<option value="302">Temporary redirect</option>
-									<option value="301">Permanent Redirect</option>
-									<option value="">Do not redirect</option>
-								</select>
-							</div>
+					<label>Alternate URLs</label>
+					<div class="mura-control justify">
+						
+						<div class="bigui__preview">
+							<div id="alturls__selected"><span>No alternate URLs defined</span></div>
 						</div>
-					</cfif>
+						<!--- 'big ui' flyout panel --->
+						<!--- todo: resource bundle key for 'manage related content' --->
+						<div class="bigui" id="bigui__alturl" data-label="Manage Alternate URLs">
+							<div class="bigui__title">Alternate URLs</div>
+							<div class="bigui__controls">
 
-					</div>
-					<input type="hidden" name="numberOfAltURLs" class="numberOfAltURLs" value="1"/>
-					<input type="hidden" name="alturluiid" value="#$.content().getContentID()#"/>
-				</div>
+								<div class="help-block-inline">
+									<span>Here you can add urls that will be directed to this content or define a redirect from this content to a Mura Content node.</span>
+								</div>
+								<div class="mura-control-group">
+									<label>
+										<span data-toggle="popover" title="" data-placement="right" data-content="For an alternate url that redirects to this content from a url that doesn't exist, select From New Link.  For a redirect to existing Mura content select Mura Link (only one per content node)" data-original-title="Altermate URL Direction">
+									URL Direction <i class="mi-question-circle"></i></span>
+									</label>
+
+									<label for="notMura" class="radio inline">
+										<input type="radio" name="ismuracontent" id="notMura" <cfif isMuraContentCheck == 0>checked</cfif> value="0">
+									Alternate URL(s) for this content node
+									</label>
+									<label for="isMura" class="radio inline">
+										<input type="radio" name="ismuracontent" id="isMura" <cfif isMuraContentCheck == 1>checked</cfif> value="1">
+									Redirect from this content node to alternate url
+									</label>
+
+									<label class="sr-only">Alternate URL</label>
+										<button class="add_field_button btn"><i class="fa fa-plus"></i> Add Alternate URL</button>
+
+									<div class="input_fields_wrap">
+										<cfif altURLit.hasNext()>
+											<cfloop condition="altURLit.hasNext()">
+												<cfset item = altURLit.next() />
+												<div class="mura-control-group <cfif altURLit.getCurrentIndex() eq 1>first</cfif>">
+													<span class="" style="color:##999">#altURLHelper#</span>
+													<input style="width:200px" type="text" name="alturl_#item.get('alturlid')#" value="#item.get('alturl')#" placeholder="your-new/redirect/here">
+													<div class="altstatuscode">
+														<select class="altstatuscode" name="altstatuscode_#item.get('alturlid')#">
+															<option value="302"<cfif item.get('statuscode') eq 302> selected</cfif>>Temporary redirect</option>
+															<option value="301"<cfif item.get('statuscode') eq 301> selected</cfif>>Permanent redirect</option>
+															<option value=""<cfif not listFind('301,302',item.get('statuscode'))> selected</cfif>>Do not redirect</option>
+														</select>
+													</div>
+													<cfif altURLit.getCurrentIndex() gt 1>
+														<button class="btn remove_field" title="Remove Alternate URL">
+															<i class="fa fa-trash"></i>
+														</button>
+													</cfif>
+												</div>
+											</cfloop>
+										<cfelse>
+											<div class="mura-control-group first">
+												<span class="" style="color:##999">#altURLHelper#</span>
+												<cfset var newid=createUUID()>
+												<input style="width:200px" type="text" name="alturl_#newid#" placeholder="your-new/redirect/here">
+												<div class="altstatuscode">
+													<select  name="altstatuscode_#newid#">
+														<option value="302">Temporary redirect</option>
+														<option value="301">Permanent Redirect</option>
+														<option value="">Do not redirect</option>
+													</select>
+												</div>
+											</div>
+										</cfif>
+									</div> <!--- /.input_fields_wrap --->
+
+									<input type="hidden" name="numberOfAltURLs" class="numberOfAltURLs" value="1"/>
+									<input type="hidden" name="alturluiid" value="#$.content().getContentID()#"/>
+								</div> <!--- /.mura-control-group --->
+
+
+							</div> <!--- /.bigui__controls --->
+						</div> <!--- /.bigui --->
+					</div> <!--- /end mura-control .justify --->
+				</div> <!--- /end mura-control-group --->
 				<!--- /AltURLs --->
 
 				<!--- content parent --->

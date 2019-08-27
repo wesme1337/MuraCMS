@@ -161,7 +161,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 				<!--- AltURLs --->
 				<!--- todo: rb keys --->
 				<div class="mura-control-group">
-					<label>Alternate URLs</label>
+					<label>URL Redirection</label>
 					<div class="mura-control justify">
 						
 						<div class="bigui__preview">
@@ -169,64 +169,61 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 						</div>
 						<!--- 'big ui' flyout panel --->
 						<!--- todo: resource bundle key for 'manage related content' --->
-						<div class="bigui" id="bigui__alturl" data-label="Manage Alternate URLs">
-							<div class="bigui__title">Alternate URLs</div>
+						<div class="bigui" id="bigui__alturl" data-label="Manage Redirects">
+							<div class="bigui__title">Alternate URL Redirection</div>
 							<div class="bigui__controls">
 
-								<div class="help-block-inline">
-									<span>Here you can add urls that will be directed to this content or define a redirect from this content to a Mura Content node.</span>
-								</div>
 								<div class="mura-control-group">
 									<label>
-										<span data-toggle="popover" title="" data-placement="right" data-content="For an alternate url that redirects to this content from a url that doesn't exist, select From New Link.  For a redirect to existing Mura content select Mura Link (only one per content node)" data-original-title="Altermate URL Direction">
+										<span data-toggle="popover" title="" data-placement="right" data-content="Define multiple URLs that will redirect to this content, or redirect from this content to a single URL of another page or Mura content node." data-original-title="Altermate URL Direction">
 									URL Direction <i class="mi-question-circle"></i></span>
 									</label>
+									<div class="radio-group">
+										<label for="isMura" class="radio">
+											<input type="radio" name="ismuracontent" id="isMura" <cfif isMuraContentCheck == 1>checked</cfif> value="1">
+										Redirect from this content node to an alternate content node
+										</label>
+										<label for="notMura" class="radio">
+											<input type="radio" name="ismuracontent" id="notMura" <cfif isMuraContentCheck == 0>checked</cfif> value="0">
+										Allow alternate URLs for this content node
+										</label>
+									</div>
+								</div>
 
-									<label for="notMura" class="radio inline">
-										<input type="radio" name="ismuracontent" id="notMura" <cfif isMuraContentCheck == 0>checked</cfif> value="0">
-									Alternate URL(s) for this content node
-									</label>
-									<label for="isMura" class="radio inline">
-										<input type="radio" name="ismuracontent" id="isMura" <cfif isMuraContentCheck == 1>checked</cfif> value="1">
-									Redirect from this content node to alternate url
-									</label>
-
-									<label class="sr-only">Alternate URL</label>
-										<button class="add_field_button btn"><i class="fa fa-plus"></i> Add Alternate URL</button>
-
+								<div class="mura-control-group">
 									<div class="input_fields_wrap">
 										<cfif altURLit.hasNext()>
 											<cfloop condition="altURLit.hasNext()">
 												<cfset item = altURLit.next() />
 												<div class="mura-control-group <cfif altURLit.getCurrentIndex() eq 1>first</cfif>">
-													<span class="" style="color:##999">#altURLHelper#</span>
-													<input style="width:200px" type="text" name="alturl_#item.get('alturlid')#" value="#item.get('alturl')#" placeholder="your-new/redirect/here">
-													<div class="altstatuscode">
+													<span>#altURLHelper#</span>
+													<input type="text" name="alturl_#item.get('alturlid')#" value="#item.get('alturl')#" placeholder="url-here">
+													<span class="altstatuscode">
 														<select class="altstatuscode" name="altstatuscode_#item.get('alturlid')#">
-															<option value="302"<cfif item.get('statuscode') eq 302> selected</cfif>>Temporary redirect</option>
-															<option value="301"<cfif item.get('statuscode') eq 301> selected</cfif>>Permanent redirect</option>
-															<option value=""<cfif not listFind('301,302',item.get('statuscode'))> selected</cfif>>Do not redirect</option>
+															<option value="302"<cfif item.get('statuscode') eq 302> selected</cfif>>Temporary (302)</option>
+															<option value="301"<cfif item.get('statuscode') eq 301> selected</cfif>>Permanent (301)</option>
+															<option value=""<cfif not listFind('301,302',item.get('statuscode'))> selected</cfif>>No redirection</option>
 														</select>
-													</div>
-													<cfif altURLit.getCurrentIndex() gt 1>
-														<button class="btn remove_field" title="Remove Alternate URL">
-															<i class="fa fa-trash"></i>
-														</button>
-													</cfif>
+														<cfif altURLit.getCurrentIndex() gt 1>
+															<button class="btn remove_field" title="Remove Alternate URL">
+																<i class="fa fa-trash"></i>
+															</button>
+														</cfif>
+													</span>
 												</div>
 											</cfloop>
 										<cfelse>
+											<cfset newid=createUUID()>
 											<div class="mura-control-group first">
-												<span class="" style="color:##999">#altURLHelper#</span>
-												<cfset var newid=createUUID()>
-												<input style="width:200px" type="text" name="alturl_#newid#" placeholder="your-new/redirect/here">
-												<div class="altstatuscode">
+												<span>#altURLHelper#</span>
+												<input type="text" name="alturl_#newid#" placeholder="url-here">
+												<span class="altstatuscode">
 													<select  name="altstatuscode_#newid#">
-														<option value="302">Temporary redirect</option>
-														<option value="301">Permanent Redirect</option>
-														<option value="">Do not redirect</option>
+														<option value="302">Temporary (302)</option>
+														<option value="301">Permanent (301)</option>
+														<option value="">No redirection</option>
 													</select>
-												</div>
+												</span>
 											</div>
 										</cfif>
 									</div> <!--- /.input_fields_wrap --->
@@ -235,6 +232,10 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 									<input type="hidden" name="alturluiid" value="#$.content().getContentID()#"/>
 								</div> <!--- /.mura-control-group --->
 
+								<div class="mura-control-group" id="add_field_button_wrapper">
+									<label class="sr-only">Alternate URL</label>
+									<button class="add_field_button btn"><i class="fa fa-plus"></i> Add Alternate URL</button>
+								</div>
 
 							</div> <!--- /.bigui__controls --->
 						</div> <!--- /.bigui --->
@@ -518,36 +519,38 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 			});
 		});
 
+		// altURLs
 		 Mura(function (m) {
 
 				var max_fields = 10; //maximum input boxes allowed
-				var wrapper = $(".input_fields_wrap"); //Fields wrapper
-				var add_button = $(".add_field_button"); //Add button ID
+				var wrapper = $(".input_fields_wrap"); //fields wrapper
+				var add_button = $(".add_field_button"); //add button ID
+				var button_wrapper = $("##add_field_button_wrapper"); //add wrapper div
 				var totalAltURLs = $(".numberOfAltURLs"); //hidden for count
 				var ismuracontent = $("input[name='ismuracontent']");
 
 				var x = 1; //initlal text box count
-
-
+				
 				if ($("input[name='ismuracontent']:checked").val() == 1 ) {
 					$(add_button).attr('disabled','disabled');
+					$(button_wrapper).hide();
 				}
 
 				$(ismuracontent).on('change',function(e){
 					if ($(this).val() == 1) {
-						console.log('ismura')
 						max_fields = 1;
 						//$('.altstatuscode').hide();
 						$(add_button).attr('disabled','disabled');
+						$(button_wrapper).hide();
 						$(wrapper).find('input[name^="alturl_"]').each(function(){
 							$(this).val('');
 						});
 						$(wrapper).find('div.mura-control-group').not('.first').remove();
 					} else {
-						console.log('isnotmura')
 						max_fields = 10;
 						//$('.altstatuscode').show();
 						$(add_button).removeAttr('disabled');
+						$(button_wrapper).show();
 						$(wrapper).find('input[name^="alturl_"]').each(function(){
 							$(this).val('');
 						});
@@ -556,34 +559,34 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 
 				$(add_button).click(function(e){ //on add input button click
 					e.preventDefault();
-					if (x == max_fields) {
-						$(add_button).attr('disabled','disabled');
-					}
 					if(x < max_fields){ //max input box allowed
+						var newID=m.createUUID();
+						newForm = '<div class="mura-control-group">#altURLHelper# <input type="text" name="alturl_'+ newID +'" placeholder="url-here"/> <span class="altstatuscode"><select  name="altstatuscode_' + newID +'"><option value="302">Temporary (302)</option><option value="301">Permanent (301)</option><option value="">No redirection</option></select> <button class="btn remove_field" title="Remove Alternate URL"> <i class="fa fa-trash"></i> </button></span></div>';
+						$(wrapper).append(newForm); //add input box
 						x++; //text box increment
 						totalAltURLs.val(x);
-						var newID=m.createUUID();
-						newForm = '<div class="mura-control-group"><span class="pull-left mura-control-inline" style="color:##999">#altURLHelper#</span> <input style="width:200px" type="text" name="alturl_'+ newID +'" placeholder="your-new/redirect/here"/> <div class="altstatuscode"><select  name="altstatuscode_' + newID +'"><option value="302">Temporary redirect</option><option value="301">Permanent redirect</option><option value="">Do not redirect</option></select></div> <button class="btn remove_field" title="Remove Alternate URL"> <i class="fa fa-trash"></i> </button></div>';
-						$(wrapper).append(newForm); //add input box
-						$('[name="altstatuscode_' + newID +'"]').niceSelect();
+						$(add_button).removeAttr('disabled');
+						// $('[name="altstatuscode_' + newID +'"]').niceSelect();
+						if (x == max_fields) {
+							$(add_button).attr('disabled','disabled');
+						}
 					}
 				});
 
-				$(wrapper).on("click",".remove_field", function(e){ //user click on remove text
+				$(wrapper).on("click",".remove_field", function(e){ 
 					e.preventDefault();
-					var parent=$(this).parent('div');
+					var parent=$(this).closest('div.mura-control-group');
 					if($(".input_fields_wrap").children('div:visible').length > 1){
 						parent.hide();
+						$(add_button).removeAttr('disabled');
 					}
 					parent.find('input[name^="alturl_"]').val('');
-
 					x--;
 					if(x > 1){
 						totalAltURLs.val(x);
 					}
-				})
-
-			});
+				});
+			}); // end Mura function(m)
 
 	</script>
 

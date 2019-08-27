@@ -197,7 +197,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 												<cfset item = altURLit.next() />
 												<div class="mura-control-group <cfif altURLit.getCurrentIndex() eq 1>first</cfif>">
 													<span>#altURLHelper#</span>
-													<input type="text" name="alturl_#item.get('alturlid')#" value="#item.get('alturl')#" placeholder="url-here">
+													<input type="text" class="alturl-input" name="alturl_#item.get('alturlid')#" value="#item.get('alturl')#" placeholder="url-here">
 													<span class="altstatuscode">
 														<select class="altstatuscode" name="altstatuscode_#item.get('alturlid')#">
 															<option value="302"<cfif item.get('statuscode') eq 302> selected</cfif>>Temporary (302)</option>
@@ -216,7 +216,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 											<cfset newid=createUUID()>
 											<div class="mura-control-group first">
 												<span>#altURLHelper#</span>
-												<input type="text" name="alturl_#newid#" placeholder="url-here">
+												<input type="text" class="alturl-input" name="alturl_#newid#" placeholder="url-here">
 												<span class="altstatuscode">
 													<select  name="altstatuscode_#newid#">
 														<option value="302">Temporary (302)</option>
@@ -517,6 +517,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 				$('##alertTitleSuccess').fadeIn();
 				return true;
 			});
+
 		});
 
 		// altURLs
@@ -534,6 +535,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 				if ($("input[name='ismuracontent']:checked").val() == 1 ) {
 					$(add_button).attr('disabled','disabled');
 					$(button_wrapper).hide();
+					showSelectedAltUrls();
 				}
 
 				$(ismuracontent).on('change',function(e){
@@ -555,13 +557,14 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 							$(this).val('');
 						});
 					}
+					showSelectedAltUrls();
 				})
 
 				$(add_button).click(function(e){ //on add input button click
 					e.preventDefault();
 					if(x < max_fields){ //max input box allowed
 						var newID=m.createUUID();
-						newForm = '<div class="mura-control-group">#altURLHelper# <input type="text" name="alturl_'+ newID +'" placeholder="url-here"/> <span class="altstatuscode"><select  name="altstatuscode_' + newID +'"><option value="302">Temporary (302)</option><option value="301">Permanent (301)</option><option value="">No redirection</option></select> <button class="btn remove_field" title="Remove Alternate URL"> <i class="fa fa-trash"></i> </button></span></div>';
+						newForm = '<div class="mura-control-group">#altURLHelper# <input type="text" class="alturl-input" name="alturl_'+ newID +'" placeholder="url-here"/> <span class="altstatuscode"><select  name="altstatuscode_' + newID +'"><option value="302">Temporary (302)</option><option value="301">Permanent (301)</option><option value="">No redirection</option></select> <button class="btn remove_field" title="Remove Alternate URL"> <i class="fa fa-trash"></i> </button></span></div>';
 						$(wrapper).append(newForm); //add input box
 						x++; //text box increment
 						totalAltURLs.val(x);
@@ -571,6 +574,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 							$(add_button).attr('disabled','disabled');
 						}
 					}
+					showSelectedAltUrls();
 				});
 
 				$(wrapper).on("click",".remove_field", function(e){ 
@@ -585,7 +589,28 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 					if(x > 1){
 						totalAltURLs.val(x);
 					}
+					showSelectedAltUrls();
 				});
+
+				var showSelectedAltUrls = function(){
+					var selStr = '';
+					var pv = $('##alturls__selected');
+					var inputs = $('.alturl-input');
+
+					$(inputs).each(function(){
+						selStr = selStr + '<div>' + $(this).val() +  '</div>';
+					})
+
+					$(pv).html(selStr);
+
+				}
+
+				$('.alturl-input').on('keyup',function(){
+					showSelectedAltUrls();
+				})
+					// run on load
+					showSelectedAltUrls();
+
 			}); // end Mura function(m)
 
 	</script>

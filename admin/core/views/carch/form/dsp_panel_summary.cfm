@@ -166,7 +166,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 					</div>
 
 					<!--- meta description, keywords, canonical URL --->
-					<cfif rc.moduleid eq '00000000000000000000000000000000000' and not len(tabAssignments) or listFindNocase(tabAssignments,'SEO')>
+					<cfif rc.moduleid eq '00000000000000000000000000000000000'>
 						<div class="mura-control-group">
 							<label>#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.description')#</label>
 							<textarea name="metadesc" id="metadesc">#esapiEncode('html',rc.contentBean.getMETADesc())#</textarea>
@@ -188,7 +188,6 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 				<!--- notes --->
 				<div class="mura-control-group">
 					<label>
-						<!--- todo: change this rb key to simply 'Notes' --->
 						#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.addnotes')#
 					</label>
 					<textarea name="notes" rows="3" id="abstract">#esapiEncode('html',rc.contentBean.getNotes())#</textarea>
@@ -200,7 +199,4 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 		</div>
 	</div>
 </div>
-
-
-
 </cfoutput>

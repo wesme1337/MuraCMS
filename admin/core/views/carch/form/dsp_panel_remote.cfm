@@ -52,7 +52,6 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 	</div>
 	<div id="panel-remote" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-remote" aria-expanded="false" style="height: 0px;">
 		<div class="mura-panel-body">
-			<!--- todo: add these containers and this tab to available regions --->
 			<span id="extendset-container-tabremotetop" class="extendset-container"></span>
 
 				<!--- Remote Information --->

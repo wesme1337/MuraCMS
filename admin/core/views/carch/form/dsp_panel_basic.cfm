@@ -158,8 +158,6 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 				<!--- /title --->
 
 
-			<!-- todo: remove this feature flag -->
-		  <cfif $.globalConfig().getValue(property='alturls',defaultValue=false)>
 				<!--- AltURLs --->
 				<!--- todo: rb keys --->
 				<div class="mura-control-group">
@@ -167,7 +165,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 					<div class="mura-control justify">
 						
 						<div class="bigui__preview">
-							<div id="alturls__selected"><span>No alternate URLs defined</span></div>
+							<div id="alturls__selected"></div>
 						</div>
 						<!--- 'big ui' flyout panel --->
 						<!--- todo: resource bundle key for 'manage related content' --->
@@ -199,11 +197,11 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 												<cfset item = altURLit.next() />
 												<div class="mura-control-group <cfif altURLit.getCurrentIndex() eq 1>first</cfif>">
 													<span>#altURLHelper#</span>
-													<input type="text" name="alturl_#item.get('alturlid')#" value="#item.get('alturl')#" placeholder="url-here">
+													<input type="text" class="alturl-input" name="alturl_#item.get('alturlid')#" value="#item.get('alturl')#" placeholder="url-here">
 													<span class="altstatuscode">
 														<select class="altstatuscode" name="altstatuscode_#item.get('alturlid')#">
-															<option value="302"<cfif item.get('statuscode') eq 302> selected</cfif>>Temporary (302)</option>
 															<option value="301"<cfif item.get('statuscode') eq 301> selected</cfif>>Permanent (301)</option>
+															<option value="302"<cfif item.get('statuscode') eq 302> selected</cfif>>Temporary (302)</option>
 															<option value=""<cfif not listFind('301,302',item.get('statuscode'))> selected</cfif>>No redirection</option>
 														</select>
 														<cfif altURLit.getCurrentIndex() gt 1>
@@ -218,11 +216,11 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 											<cfset newid=createUUID()>
 											<div class="mura-control-group first">
 												<span>#altURLHelper#</span>
-												<input type="text" name="alturl_#newid#" placeholder="url-here">
+												<input type="text" class="alturl-input" name="alturl_#newid#" placeholder="url-here">
 												<span class="altstatuscode">
 													<select  name="altstatuscode_#newid#">
-														<option value="302">Temporary (302)</option>
 														<option value="301">Permanent (301)</option>
+														<option value="302">Temporary (302)</option>
 														<option value="">No redirection</option>
 													</select>
 												</span>
@@ -244,7 +242,6 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 					</div> <!--- /end mura-control .justify --->
 				</div> <!--- /end mura-control-group --->
 				<!--- /AltURLs --->
-				</cfif>
 
 				<!--- content parent --->
 				<cfif ((rc.parentid neq '00000000000000000000000000000000001' and application.settingsManager.getSite(rc.siteid).getlocking() neq 'all') or (rc.parentid eq '00000000000000000000000000000000001' and application.settingsManager.getSite(rc.siteid).getlocking() eq 'none')) and rc.contentid neq '00000000000000000000000000000000001'>
@@ -520,6 +517,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 				$('##alertTitleSuccess').fadeIn();
 				return true;
 			});
+
 		});
 
 		// altURLs
@@ -533,10 +531,32 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 				var ismuracontent = $("input[name='ismuracontent']");
 
 				var x = 1; //initlal text box count
+
+				var showSelectedAltUrls = function(){
+					var selStr = '';
+					var defaultStr = '<div>No alternate URLs defined</div>';
+					var pv = $('##alturls__selected');
+					var inputs = $('.alturl-input');
+
+					if (inputs.length){
+						$(inputs).each(function(){
+							if ($(this).val().length){
+								selStr = selStr + '<div>' + $(this).val() +  '</div>';
+							}
+						})						
+					} 
+
+					if (selStr == ''){
+						selStr = defaultStr;
+					}
+
+					$(pv).html(selStr);
+				}
 				
 				if ($("input[name='ismuracontent']:checked").val() == 1 ) {
 					$(add_button).attr('disabled','disabled');
 					$(button_wrapper).hide();
+					showSelectedAltUrls();
 				}
 
 				$(ismuracontent).on('change',function(e){
@@ -558,14 +578,23 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 							$(this).val('');
 						});
 					}
+					showSelectedAltUrls();
 				})
 
 				$(add_button).click(function(e){ //on add input button click
 					e.preventDefault();
 					if(x < max_fields){ //max input box allowed
 						var newID=m.createUUID();
-						newForm = '<div class="mura-control-group">#altURLHelper# <input type="text" name="alturl_'+ newID +'" placeholder="url-here"/> <span class="altstatuscode"><select  name="altstatuscode_' + newID +'"><option value="302">Temporary (302)</option><option value="301">Permanent (301)</option><option value="">No redirection</option></select> <button class="btn remove_field" title="Remove Alternate URL"> <i class="fa fa-trash"></i> </button></span></div>';
+						newForm = '<div class="mura-control-group">#altURLHelper# <input type="text" class="alturl-input" name="alturl_'+ newID +'" placeholder="url-here"/> <span class="altstatuscode"><select  name="altstatuscode_' + newID +'"><option value="301">Permanent (301)</option><option value="302">Temporary (302)</option><option value="">No redirection</option></select> <button class="btn remove_field" title="Remove Alternate URL"> <i class="fa fa-trash"></i> </button></span></div>';
 						$(wrapper).append(newForm); //add input box
+						// focus new input and handle 'enter' keypress
+						$('input[name="alturl_'+ newID +'"]').focus().on("keypress", function(event){
+							if (event.keyCode === 13) {
+							    event.preventDefault();
+							    
+							    $(add_button).trigger('click');
+							  }
+						});
 						x++; //text box increment
 						totalAltURLs.val(x);
 						$(add_button).removeAttr('disabled');
@@ -574,6 +603,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 							$(add_button).attr('disabled','disabled');
 						}
 					}
+					showSelectedAltUrls();
 				});
 
 				$(wrapper).on("click",".remove_field", function(e){ 
@@ -588,7 +618,15 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 					if(x > 1){
 						totalAltURLs.val(x);
 					}
+					showSelectedAltUrls();
 				});
+
+				$(wrapper).on('keyup','.alturl-input',function(){
+					showSelectedAltUrls();
+				})
+					// run on load
+					showSelectedAltUrls();
+
 			}); // end Mura function(m)
 
 	</script>

@@ -545,10 +545,11 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 	</div>
 	</cfoutput>
 <cfelse>
-	<!--- todo: test this --->
 	<cfoutput>
-	<h1>#application.rbFactory.getKeyValue(session.rb,'sitemanager.quickedit.hasdraftstitle')# </h1>
+	<h3 class="popover-title">#application.rbFactory.getKeyValue(session.rb,'sitemanager.quickedit.hasdraftstitle')# </h3>
 	<span class="cancel" onclick="siteManager.closeQuickEdit();" title="#application.rbFactory.getKeyValue(session.rb,'sitemanager.quickedit.cancel')#"><i class="mi-close"></i></span>
-		<p id="hasDraftsMessage">#application.rbFactory.getKeyValue(session.rb,'sitemanager.quickedit.hasdraftsmessage')#</p>
+		<div class="popover-content" id="hasDraftsMessage">
+			#application.rbFactory.getKeyValue(session.rb,'sitemanager.quickedit.hasdraftsmessage')#
+		</div>
 	</cfoutput>
 </cfif>

@@ -157,7 +157,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 					</cfcase>
 					</cfswitch>
 
-					 <li class="audit-trail"><a href="./?muraAction=cArch.audit&contentid=#rc.item.getContentID()#&contenthistid=#rc.item.getContentHistID()#&type=#rc.item.gettype()#&parentid=#rc.item.getparentID()#&topid=#esapiEncode('url',rc.topid)#&siteid=#esapiEncode('url',rc.item.getsiteid())#&moduleid=#rc.item.getmoduleid()#&compactDisplay=#esapiEncode('url',rc.compactDisplay)#"><i class="mi-sitemap"></i>#application.rbFactory.getKeyValue(session.rb,"sitemanager.content.audittrail")#</a></li>
+					 <li class="audit-trail"><a href="./?muraAction=cArch.audit&contentid=#rc.item.getContentID()#&contenthistid=#rc.item.getContentHistID()#&type=#rc.item.gettype()#&parentid=#rc.item.getparentID()#&topid=#esapiEncode('url',rc.topid)#&siteid=#esapiEncode('url',rc.item.getsiteid())#&moduleid=#rc.item.getmoduleid()#&compactDisplay=#esapiEncode('url',rc.compactDisplay)#"><i class="mi-tasks"></i>#application.rbFactory.getKeyValue(session.rb,"sitemanager.content.audittrail")#</a></li>
 
 						<!--- Delete --->
 						<cfif not rc.item.getactive() and not isLockedBySomeoneElse and (rc.perm eq 'editor' or (listFind(session.mura.memberships,'Admin;#application.settingsManager.getSite(rc.siteid).getPrivateUserPoolID()#;0') or listFind(session.mura.memberships,'S2') ) )>

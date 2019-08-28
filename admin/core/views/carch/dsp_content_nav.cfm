@@ -48,7 +48,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
     <li id="newZoom"><a href="" id="newZoomLink"><i class="mi-search-plus"></i>#application.rbFactory.getKeyValue(session.rb,"sitemanager.zoom")#</a></li>
     <li id="newContent"><a href="" id="newContentLink"><i class="mi-plus"></i>#application.rbFactory.getKeyValue(session.rb,"sitemanager.addcontent")#</a></li>
     <li id="newCopy"><a href="" id="newCopyLink"><i class="mi-copy"></i>#application.rbFactory.getKeyValue(session.rb,"sitemanager.copy")#</a></li>
-    <li id="newCopyAll"><a href="" id="newCopyAllLink"><i class="mi-sitemap"></i>#application.rbFactory.getKeyValue(session.rb,"sitemanager.copyall")#</a></li>
+    <li id="newCopyAll"><a href="" id="newCopyAllLink"><i class="mi-clone"></i>#application.rbFactory.getKeyValue(session.rb,"sitemanager.copyall")#</a></li>
 	  <li id="newPaste"><a href="" id="newPasteLink"><i class="mi-paste"></i>#application.rbFactory.getKeyValue(session.rb,"sitemanager.paste")#</a></li>
   </ul>
 </div>

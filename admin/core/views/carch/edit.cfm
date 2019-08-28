@@ -264,8 +264,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 		<cfoutput>
 		<cfif len($.event('bigui'))>
 		setTimeout(function(){
-			var panel = '##panel-#$.event('bigui')#';
-			$(panel).find('.bigui__launch').trigger('click');
+			$('a.bigui__launch[data-rel="bigui__#$.event('bigui')#"]').trigger('click').closest('.mura-panel').find('.mura-panel-title a.collapsed').trigger('click');
 			<cfif $.event('bigui') is 'schedule'>
 				$('##editDates').show();
 			</cfif>
@@ -465,12 +464,15 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 	<cfif hasChangesets and (not currentChangeset.getIsNew() or pendingChangesets.recordcount)>
 		<div class="alert alert-info">
 			<span>
-				<cfif pendingChangesets.recordcount>#application.rbFactory.getKeyValue(session.rb,"sitemanager.content.changesetnodenotify")#:<br>
-				<ul class="alert-list">
-				<cfloop query="pendingChangesets"><li><a href="?muraAction=cArch.edit&moduleID=#esapiEncode('url',rc.moduleID)#&siteID=#esapiEncode('url',rc.siteID)#&topID=#esapiEncode('url',rc.topID)#&contentID=#esapiEncode('url',rc.contentID)#&return=#esapiEncode('url',rc.return)#&contentHistID=#pendingChangesets.contentHistID#&parentID=#esapiEncode('url',rc.parentID)#&startrow=#esapiEncode('url',rc.startrow)#&type=#esapiEncode('url',rc.type)#&compactDisplay=#esapiEncode('url',rc.compactDisplay)#">#esapiEncode('html',pendingChangesets.changesetName)#</a></li></cfloop>
-				</ul>
+				<cfif pendingChangesets.recordcount>#application.rbFactory.getKeyValue(session.rb,"sitemanager.content.changesetnodenotify")#:
+				<cfset loopCt = 0>				
+				<cfloop query="pendingChangesets">
+					<strong><a href="?muraAction=cArch.edit&moduleID=#esapiEncode('url',rc.moduleID)#&siteID=#esapiEncode('url',rc.siteID)#&topID=#esapiEncode('url',rc.topID)#&contentID=#esapiEncode('url',rc.contentID)#&return=#esapiEncode('url',rc.return)#&contentHistID=#pendingChangesets.contentHistID#&parentID=#esapiEncode('url',rc.parentID)#&startrow=#esapiEncode('url',rc.startrow)#&type=#esapiEncode('url',rc.type)#&compactDisplay=#esapiEncode('url',rc.compactDisplay)#">#esapiEncode('html',pendingChangesets.changesetName)#</a></strong>
+					<cfset loopct += 1>
+					<cfif loopct lt pendingChangesets.recordCount>,</cfif>
+				</cfloop>
 				</cfif>
-				<cfif not currentChangeset.getIsNew()>#application.rbFactory.getKeyValue(session.rb,"sitemanager.content.changesetversionnotify")#: <strong>#esapiEncode('html',currentChangeset.getName())#</strong></cfif>
+				<cfif not currentChangeset.getIsNew()><br>#application.rbFactory.getKeyValue(session.rb,"sitemanager.content.changesetversionnotify")#: <strong>#esapiEncode('html',currentChangeset.getName())#</strong></cfif>
 			</span>
 		</div>
 	</cfif>
@@ -516,7 +518,6 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 		<div class="block-content tab-content">
 
 			<!--- todo: rb key placeholder text for "Content Title" --->
-			<!--- todo: style for placeholder see end of custom.less --->
 			<div id="mura-content-title-render" data-placeholder="#esapiEncode('html_attr', rc.contentbean.getType())# Title">#esapiEncode('html_attr',rc.contentBean.gettitle())#</div>
 
 			<cfif listFindNoCase("Link,File,",rc.contentBean.getType())>

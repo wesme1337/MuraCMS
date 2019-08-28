@@ -91,7 +91,7 @@
                     </cfif>
                     <!--- Content --->
                     <li>
-                      <a id="navContentAdmin" <cfif rc.originalcircuit eq 'carch' or rc.originalcircuit eq 'scaffold' or rc.originalcircuit eq 'cform' or (rc.originalcircuit eq 'cperm' and (rc.originalfuseaction eq 'main' or rc.moduleid eq '00000000000000000000000000000000016' or rc.moduleid eq '00000000000000000000000000000000000' ))> class="active"</cfif> href="#application.configBean.getContext()##application.configBean.getAdminDir()#/?muraAction=cArch.list&amp;siteid=#esapiEncode('url',session.siteid)#"><i class="mi-edit"></i><span class="sidebar-mini-hide">#rc.$.rbKey("layout.contentmanager")#</span></a>
+                      <a id="navContentAdmin" <cfif rc.originalcircuit eq 'carch' or rc.originalcircuit eq 'scaffold' or rc.originalcircuit eq 'cform' or (rc.originalcircuit eq 'cperm' and (rc.originalfuseaction eq 'main' or rc.moduleid eq '00000000000000000000000000000000016' or rc.moduleid eq '00000000000000000000000000000000000' ))> class="active"</cfif> href="#application.configBean.getContext()##application.configBean.getAdminDir()#/?muraAction=cArch.list&amp;siteid=#esapiEncode('url',session.siteid)#"><i class="mi-sitemap"></i><span class="sidebar-mini-hide">#rc.$.rbKey("layout.contentmanager")#</span></a>
                     </li>
                     <cfif structKeyExists(rc,'$')>
                         #rc.$.renderEvent('onAdminNavMainRender')#

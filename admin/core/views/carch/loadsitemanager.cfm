@@ -294,11 +294,6 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 		   <cfif perm eq 'editor' and request.hasLayoutObjectsTab></a></cfif>
 	   </dd>
 
-		<dd class="display<cfif rc.rstop.Display eq 2 and rc.rstop.approved> scheduled</cfif>">
-			<i class="mi-check" title="#application.rbFactory.getKeyValue(session.rb,"sitemanager.true")#"></i><span>#application.rbFactory.getKeyValue(session.rb,"sitemanager.true")#</span>
-		</dd>
-
-<!---
  		<dd class="display<cfif rc.rstop.Display eq 2 and rc.rstop.approved> scheduled</cfif>">
 			<cfif request.hasPublishingTab and rc.topid neq '00000000000000000000000000000000001'>
 				<a class="mura-quickEditItem" data-attribute="display">
@@ -308,7 +303,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 				</a>
 			</cfif>
 		</dd>
- --->
+ 
 		<dd class="template">
 		 <cfif perm eq 'editor' and request.hasLayoutObjectsTab><a class="mura-quickEditItem<cfif len(rc.rstop.template) or len(rc.rstop.childtemplate)> template-set</cfif>" data-attribute="template"></cfif>
 	   <cfif len(rc.rstop.template) or len(rc.rstop.childTemplate)>

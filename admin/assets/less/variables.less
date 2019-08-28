@@ -21,18 +21,41 @@
 
 // Accent colors
 // -------------------------
-@mura-blue:             #4485f1;
 @mura-red:              #E34A36;
+
+@mura-black:            #2c2c2c;
+@mura-blue:             #4485f1;
+@mura-orange:           #fd7334;
+@mura-azul:             #00b7e3;
+@mura-sea-foam:         #5fd18c;
+@mura-teal:             #00c8b2;
+@mura-green:            #93c220;
+@mura-cranberry:        #da2048;
+@mura-goldenrod:        #e9ad01;
+@mura-violet:           #984ac1;
+@mura-purple:           #6565df;
+
+
 @blue:                  @mura-blue;
 @blueDark:              darken(@blue, 20%);
 @blueDarker:            darken(@blueDark, 10%);
-@green:                 #46a546;
+@green:                 @mura-green;
 @red:                   @mura-red;
-@yellow:                #ffc40d;
-@orange:                #ff3a00;
+@yellow:                @mura-goldenrod;
+@orange:                @mura-orange;
 @orangeDark:            darken(@orange, 20%);
-@pink:                  #c3325f;
-@purple:                #7a43b6;
+@pink:                  lighten(@mura-red,50%);
+@purple:                @mura-purple;
+
+
+// Alerts
+// -------------------------
+@alerttextcolor:        @white;
+@alertbgrd-danger:      lighten(@mura-red,5%);
+@alertbgrd-info:        lighten(@mura-blue,5%);
+@alertbgrd-warning:     lighten(@mura-orange,5%);
+@alertbgrd-success:     lighten(@mura-green,5%);
+
 
 // Gradients
 // -------------------------

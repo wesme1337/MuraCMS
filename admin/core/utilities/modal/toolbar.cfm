@@ -347,12 +347,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 				<cfif not request.contentBean.getIsNew()>
 					<cfif ListFindNoCase('editor,author',request.r.perm)>
 						<ul id="tools-version">
-							<!---
-							<cfif $.content('type') eq 'Variation'>
-							<li id="adminEditPage" class="dropdown"><a onClick="return MuraInlineEditor.init();"><i class="mi-pencil"></i></a></li>
-							<li id="adminVersionHistory"><a href="#variables.historyLink#" title="#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.versionhistory')#"><i class="mi-history"></i></a></li>
-							<cfelse>
-							--->
+
 							<li id="adminEditPage" class="dropdown"><a class="dropdown-toggle"><i class="mi-pencil"></i><b class="caret"></b></a>
 								<ul class="dropdown-menu">
 								<cfif this.showInlineEditor>
@@ -366,7 +361,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 										</li>
 									<cfelseif useLayoutManager()>
 										<cfset tabAssignments=$.currentUser().getContentTabAssignments()>
-										<cfif not len(tabAssignments) or listFindNocase(tabAssignments,'Layout & Objects') or listFindNocase(tabAssignments,'Layout') or listFindNocase(tabAssignments,'Basic')>
+										<cfif not len(tabAssignments) or listFindNocase(tabAssignments,'Layout') or listFindNocase(tabAssignments,'Basic')>
 										<li id="adminQuickEdit">
 											<a onClick="return MuraInlineEditor.init();"><i class="mi-th"></i>
 												#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.edit-layout')#
@@ -392,8 +387,8 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 									</li>
 									</cfif>
 									<cfif request.r.perm eq 'editor' and $.content('type') eq 'Variation'>
-										<li id="clientVariationTargeting"><a id="mura-edit-var-targetingjs"><i class="mi-bullseye"></i> Edit Targeting<!--#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.edit-variationtargeting')#---></a></li>
-										<li id="adminVariationTargeting"><a id="mura-edit-var-initjs" href="#variables.initJSLink#" #variables.targethook#><i class="mi-code"></i> Edit Custom JS<!---#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.edit-initjs')#---></a></li>
+										<li id="clientVariationTargeting"><a id="mura-edit-var-targetingjs"><i class="mi-bullseye"></i> Edit Targeting</a></li>
+										<li id="adminVariationTargeting"><a id="mura-edit-var-initjs" href="#variables.initJSLink#" #variables.targethook#><i class="mi-code"></i> Edit Custom JS</a></li>
 									</cfif>
 									<cfif (request.r.perm eq 'editor' or listFind(session.mura.memberships,'S2')) and request.contentBean.getFilename() neq "" and not request.contentBean.getIslocked()>
 										<cfif request.contentBean.getType() eq 'Variation'>
@@ -401,7 +396,6 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 										<cfelse>
 											<li id="adminDelete"><a href="#variables.deleteLink#" title="#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.delete')#" onClick="return confirm('#esapiEncode('javascript',application.rbFactory.getResourceBundle(session.rb).messageFormat(application.rbFactory.getKeyValue(session.rb,'sitemanager.content.deletecontentrecursiveconfirm'),request.contentBean.getMenutitle()))#');"><i class="mi-trash"></i> #application.rbFactory.getKeyValue(session.rb,'sitemanager.content.delete')#</a></li>
 										</cfif>
-
 									</cfif>
 								</ul>
 							</li>
@@ -416,7 +410,6 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 								'html_attr',variables.$.getCurrentURL())#" data-modal-preview="true" title="#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.multidevicepreview')#" #variables.targethook#><i class="mi-mobile"></i></a></li>
 							<li id="adminPreview-suspend" class="suspend" style="display:none;"<!--- class="dropdown"--->><a href="##" title="" onClick="return false;"><i class="mi-mobile"></i></a></li>
 							</cfif>
-							<!---</cfif>--->
 							<li><a href="#variables.adminLink#" title="#application.rbFactory.getKeyValue(session.rb,'layout.sitemanager')#"><i class="mi-sitemap"></i></a></li>
 						</ul>
 					</cfif>

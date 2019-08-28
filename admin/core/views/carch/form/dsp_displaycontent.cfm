@@ -92,7 +92,7 @@
 
 	<!--- 'big ui' flyout panel --->
 	<!--- todo: resource bundle key for 'manage schedule' --->
-	<div class="bigui" id="bigui__displayschedule" data-label="#esapiEncode('html_attr', 'Manage Schedule')#">
+	<div class="bigui" id="bigui__schedule" data-label="#esapiEncode('html_attr', 'Manage Schedule')#">
 		<div class="bigui__title">#esapiEncode('html_attr',application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.displayinterval.schedule'))#</div>
 			<div class="bigui__controls">
 

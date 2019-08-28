@@ -264,8 +264,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 		<cfoutput>
 		<cfif len($.event('bigui'))>
 		setTimeout(function(){
-			var panel = '##panel-#$.event('bigui')#';
-			$(panel).find('.bigui__launch').trigger('click');
+			$('a.bigui__launch[data-rel="bigui__#$.event('bigui')#"]').trigger('click').closest('.mura-panel').find('.mura-panel-title a.collapsed').trigger('click');
 			<cfif $.event('bigui') is 'schedule'>
 				$('##editDates').show();
 			</cfif>

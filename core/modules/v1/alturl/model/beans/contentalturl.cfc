@@ -31,8 +31,7 @@ component extends="mura.bean.beanORMVersioned" table="tcontentalturl" entityname
 				// else set the custom error to display
 				var errors=getErrors();
 				
-				/* TODO: rb key */
-				errors["alturl_#get('alturlid')#"]="The alternative url '" & get('alturl') & "' is already in use";
+				errors["alturl_#get('alturlid')#"]="#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.alturlwarningstart')# '" & get('alturl') & "' #application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.alturlwarningend')#";
 			}
 
 			return this;

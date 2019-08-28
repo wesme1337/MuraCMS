@@ -200,8 +200,8 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 													<input type="text" class="alturl-input" name="alturl_#item.get('alturlid')#" value="#item.get('alturl')#" placeholder="url-here">
 													<span class="altstatuscode">
 														<select class="altstatuscode" name="altstatuscode_#item.get('alturlid')#">
-															<option value="302"<cfif item.get('statuscode') eq 302> selected</cfif>>Temporary (302)</option>
 															<option value="301"<cfif item.get('statuscode') eq 301> selected</cfif>>Permanent (301)</option>
+															<option value="302"<cfif item.get('statuscode') eq 302> selected</cfif>>Temporary (302)</option>
 															<option value=""<cfif not listFind('301,302',item.get('statuscode'))> selected</cfif>>No redirection</option>
 														</select>
 														<cfif altURLit.getCurrentIndex() gt 1>
@@ -219,8 +219,8 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 												<input type="text" class="alturl-input" name="alturl_#newid#" placeholder="url-here">
 												<span class="altstatuscode">
 													<select  name="altstatuscode_#newid#">
-														<option value="302">Temporary (302)</option>
 														<option value="301">Permanent (301)</option>
+														<option value="302">Temporary (302)</option>
 														<option value="">No redirection</option>
 													</select>
 												</span>
@@ -564,8 +564,16 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 					e.preventDefault();
 					if(x < max_fields){ //max input box allowed
 						var newID=m.createUUID();
-						newForm = '<div class="mura-control-group">#altURLHelper# <input type="text" class="alturl-input" name="alturl_'+ newID +'" placeholder="url-here"/> <span class="altstatuscode"><select  name="altstatuscode_' + newID +'"><option value="302">Temporary (302)</option><option value="301">Permanent (301)</option><option value="">No redirection</option></select> <button class="btn remove_field" title="Remove Alternate URL"> <i class="fa fa-trash"></i> </button></span></div>';
+						newForm = '<div class="mura-control-group">#altURLHelper# <input type="text" class="alturl-input" name="alturl_'+ newID +'" placeholder="url-here"/> <span class="altstatuscode"><select  name="altstatuscode_' + newID +'"><option value="301">Permanent (301)</option><option value="302">Temporary (302)</option><option value="">No redirection</option></select> <button class="btn remove_field" title="Remove Alternate URL"> <i class="fa fa-trash"></i> </button></span></div>';
 						$(wrapper).append(newForm); //add input box
+						// focus new input and handle 'enter' keypress
+						$('input[name="alturl_'+ newID +'"]').focus().on("keypress", function(event){
+							if (event.keyCode === 13) {
+							    event.preventDefault();
+							    
+							    $(add_button).trigger('click');
+							  }
+						});
 						x++; //text box increment
 						totalAltURLs.val(x);
 						$(add_button).removeAttr('disabled');

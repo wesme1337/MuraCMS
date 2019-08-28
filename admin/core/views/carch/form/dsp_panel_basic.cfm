@@ -165,7 +165,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 					<div class="mura-control justify">
 						
 						<div class="bigui__preview">
-							<div id="alturls__selected"><span>No alternate URLs defined</span></div>
+							<div id="alturls__selected"></div>
 						</div>
 						<!--- 'big ui' flyout panel --->
 						<!--- todo: resource bundle key for 'manage related content' --->
@@ -594,18 +594,26 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 
 				var showSelectedAltUrls = function(){
 					var selStr = '';
+					var defaultStr = '<div>No alternate URLs defined</div>';
 					var pv = $('##alturls__selected');
 					var inputs = $('.alturl-input');
 
-					$(inputs).each(function(){
-						selStr = selStr + '<div>' + $(this).val() +  '</div>';
-					})
+					if (inputs.length){
+						$(inputs).each(function(){
+							if ($(this).val().length){
+								selStr = selStr + '<div>' + $(this).val() +  '</div>';
+							}
+						})						
+					} 
+
+					if (selStr == ''){
+						selStr = defaultStr;
+					}
 
 					$(pv).html(selStr);
-
 				}
 
-				$('.alturl-input').on('keyup',function(){
+				$(wrapper).on('keyup','.alturl-input',function(){
 					showSelectedAltUrls();
 				})
 					// run on load

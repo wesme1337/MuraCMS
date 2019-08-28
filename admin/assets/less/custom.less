@@ -2305,6 +2305,13 @@ div[data-placeholder]:not([data-placeholder=""]):empty::before {
   opacity: .25;
 }
 
+.mura-control-group{
+  ::-moz-placeholder { color: @placeholderText; opacity: 1; }
+  :-ms-input-placeholder { color: @placeholderText; } 
+  ::-ms-input-placeholder { color: @placeholderText; } 
+  ::-webkit-input-placeholder  { color: @placeholderText; } 
+}
+
 .clicktocopy{
   cursor:pointer;
   > i {

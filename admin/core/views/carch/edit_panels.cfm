@@ -182,7 +182,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 								<cfif listFind(session.mura.memberships,'S2IsPrivate')>
 									<cfinclude template="form/dsp_panel_Remote.cfm">
 								<cfelse>
-									<input type="hidden" name="omitRemoteTab" value="true">
+									<input type="hidden" name="ommitRemoteTab" value="true">
 								</cfif>
 							</cfif>
 						</cfif>

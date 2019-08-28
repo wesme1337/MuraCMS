@@ -518,7 +518,6 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 		<div class="block-content tab-content">
 
 			<!--- todo: rb key placeholder text for "Content Title" --->
-			<!--- todo: style for placeholder see end of custom.less --->
 			<div id="mura-content-title-render" data-placeholder="#esapiEncode('html_attr', rc.contentbean.getType())# Title">#esapiEncode('html_attr',rc.contentBean.gettitle())#</div>
 
 			<cfif listFindNoCase("Link,File,",rc.contentBean.getType())>

@@ -83,8 +83,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 						<!--- /publishing --->
 
 						<!--- scheduling --->
-						<!--- todo: add Scheduling to tab assignments list, change value here --->
-						<cfif (not len(tabAssignments) or listFindNocase(tabAssignments,'Publishing')) and rc.contentBean.getcontentID() neq '00000000000000000000000000000000001'>
+						<cfif (not len(tabAssignments) or listFindNocase(tabAssignments,'Scheduling')) and rc.contentBean.getcontentID() neq '00000000000000000000000000000000001'>
 								<cfinclude template="form/dsp_panel_scheduling.cfm">
 						</cfif>
 						<!--- /scheduling --->
@@ -183,8 +182,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 								<cfif listFind(session.mura.memberships,'S2IsPrivate')>
 									<cfinclude template="form/dsp_panel_Remote.cfm">
 								<cfelse>
-									<!--- todo correct "ommit" --> "omit" --->
-									<input type="hidden" name="ommitRemoteTab" value="true">
+									<input type="hidden" name="omitRemoteTab" value="true">
 								</cfif>
 							</cfif>
 						</cfif>

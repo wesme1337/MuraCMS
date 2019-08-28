@@ -62,7 +62,6 @@
   	</label>
 		<select name="display" id="mura-display" onchange="javascript: this.selectedIndex==2?toggleDisplay2('editDates',true):toggleDisplay2('editDates',false);">
 			<!--- todo: rb keys for 'always', 'never' --->
-			<!--- todo: should 'always' be an option for calendar items (formerly "yes")? What schedule does it set? --->
 		<option value="1"  <cfif rc.contentBean.getdisplay() EQ 1> selected</cfif>>Always<!--- #application.rbFactory.getKeyValue(session.rb,'sitemanager.yes')# ---></option>
 		<option value="0"  <cfif rc.contentBean.getdisplay() EQ 0> selected</cfif>>Never<!--- #application.rbFactory.getKeyValue(session.rb,'sitemanager.no')# ---></option>
 		<option value="2"  <cfif rc.contentBean.getdisplay() EQ 2 or $.event('bigui') is 'schedule'> selected</CFIF>>
@@ -114,7 +113,6 @@
 					<!--- /end starts --->
 
 					<!--- timezone --->
-					<!--- todo: enable and test --->
 					<cfif len(rc.$.globalConfig('tzRegex'))>
 					<div id="mura-tz-container" class="mura-control-group span4" style="display:none">
 						<label>#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.displayinterval.timezone')#</label>

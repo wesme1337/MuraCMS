@@ -42,18 +42,21 @@
 				.where()
 				.prop('alturl').isEQ(request.currentfilename)
 				.andProp('ismuracontent').isEQ(0)
+				.addJoin('inner','tcontent','tcontentalturl.contenthistid=tcontent.contenthistid')
+				.andProp('content.active').isEQ(1)
 				.getIterator();
 
 			if (altURLit.hasNext()) {
 				var altURL=altURLit.next();
-
-				var content=m.getBean('content').loadBy(contentid=altURL.get('contentid'));
-				if(len(altURL.get('statuscode')) && listFind('301,302',altURL.get('statuscode'))) {
-					m.redirect(location=content.getURL(complete=true),addToken=false,statusCode=altURL.getstatuscode());
-				} else {
-					content.set('canonicalURL',content.getURL(complete=true));
-					m.event('muraForceFilename',false);
-					m.event('contentBean',content);
+				var content=m.getBean('content').loadBy(contenthistid=altURL.get('contenthistid'));
+				if(content.get('active')){
+					if(len(altURL.get('statuscode')) && listFind('301,302',altURL.get('statuscode'))) {
+						m.redirect(location=content.getURL(complete=true),addToken=false,statusCode=altURL.getstatuscode());
+					} else {
+						content.set('canonicalURL',content.getURL(complete=true));
+						m.event('muraForceFilename',false);
+						m.event('contentBean',content);
+					}
 				}
 			}
 		}

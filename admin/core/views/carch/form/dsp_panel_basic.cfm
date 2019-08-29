@@ -553,7 +553,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 
 					$(pv).html(selStr);
 
-					$(".altstatuscode > select").niceSelect();
+					//$(".altstatuscode > select").niceSelect();
 				}
 				
 				if ($("input[name='ismuracontent']:checked").val() == 1 ) {

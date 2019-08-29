@@ -16,21 +16,20 @@
 				// have Mura content with redirect -- temporary "link"
 				if (isStruct(altURLit) && altURLit.hasNext()) {
 					item = altURLit.next();
-						//WriteDump(altURLit.getQuery());abort;
-						if (item.get('ismuracontent')) {
-						var content = m.getBean('content').loadBy(filename=item.get('alturl'));
-						if(len(item.get('statuscode')) && listFind('301,302',item.get('statuscode'))) {
-							if(content.get('type') == 'Link'){
-								m.redirect(location=content.get('body'),addToken=false,statusCode=item.getstatuscode());
-							} else {
-								m.redirect(location=content.getURL(complete=true),addToken=false,statusCode=item.getstatuscode());
-							}
+						
+					var content = m.getBean('content').loadBy(filename=item.get('alturl'));
+					if(len(item.get('statuscode')) && listFind('301,302',item.get('statuscode'))) {
+						if(content.get('type') == 'Link'){
+							m.redirect(location=content.get('body'),addToken=false,statusCode=item.getstatuscode());
 						} else {
-							content.set('canonicalURL',content.getURL(complete=true));
-							m.event('muraForceFilename',false);
-							m.event('contentBean',content);
+							m.redirect(location=content.getURL(complete=true),addToken=false,statusCode=item.getstatuscode());
 						}
+					} else {
+						content.set('canonicalURL',content.getURL(complete=true));
+						m.event('muraForceFilename',false);
+						m.event('contentBean',content);
 					}
+					
 				}
 			}
 		}
@@ -49,7 +48,7 @@
 			if (altURLit.hasNext()) {
 				var altURL=altURLit.next();
 				var content=m.getBean('content').loadBy(contenthistid=altURL.get('contenthistid'));
-				if(content.get('active') && content.getIsOnDisplay()){
+				if(content.getIsOnDisplay()){
 					if(len(altURL.get('statuscode')) && listFind('301,302',altURL.get('statuscode'))) {
 						m.redirect(location=content.getURL(complete=true),addToken=false,statusCode=altURL.getstatuscode());
 					} else {
@@ -76,7 +75,6 @@
 					<cfif FindNoCase("alturl_", thefield)>
 						<cfoutput>
 							<cfscript>
-
 
 								// if we find a match above, and it has a value
 								// set it to the redirect bean

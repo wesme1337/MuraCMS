@@ -432,7 +432,8 @@
         .mura-control-group>label+*+select:not([class*="time"]):not([class*="mura-constrain"]),
         .mura-control-group>label+input:not([type]),
         .mura-control-group>label+*+input:not([type]),
-        .mura-control-group>label+*+.nice-select {
+        .mura-control-group>label+*+.nice-select,
+        span.altstatuscode .nice-select {
             background-color: @controlsinputbgrd;
             border: @controlsinputborder !important;
             border-radius: 3px;
@@ -813,6 +814,10 @@
 
 #bigui__layoutobjects .bigui__controls{
     background-color: transparent;
+}
+
+#bigui_alturl span.altstatuscode{
+    display: inline-block;
 }
 
 #bigui__categories {

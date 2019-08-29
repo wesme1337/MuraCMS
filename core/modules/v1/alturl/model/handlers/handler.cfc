@@ -6,7 +6,7 @@
 
 		public any function onRenderStart(m) {
 			// no Mura Content
-			if (m.content().exists()) {
+			if (m.content().exists() && m.content().getIsOnDisplay()) {
 				var altURLit = m.getFeed('alturl')
 					.where()
 					.prop('contenthistid').isEQ(m.content('contenthistid'))
@@ -49,7 +49,7 @@
 			if (altURLit.hasNext()) {
 				var altURL=altURLit.next();
 				var content=m.getBean('content').loadBy(contenthistid=altURL.get('contenthistid'));
-				if(content.get('active')){
+				if(content.get('active') && content.getIsOnDisplay()){
 					if(len(altURL.get('statuscode')) && listFind('301,302',altURL.get('statuscode'))) {
 						m.redirect(location=content.getURL(complete=true),addToken=false,statusCode=altURL.getstatuscode());
 					} else {

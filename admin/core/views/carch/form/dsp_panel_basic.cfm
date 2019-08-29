@@ -530,13 +530,14 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 				var totalAltURLs = $(".numberOfAltURLs"); //hidden for count
 				var ismuracontent = $("input[name='ismuracontent']");
 
-				var x = 1; //initlal text box count
 
 				var showSelectedAltUrls = function(){
 					var selStr = '';
 					var defaultStr = '<div>No alternate URLs defined</div>';
 					var pv = $('##alturls__selected');
 					var inputs = $('.alturl-input');
+	
+					var x = 1; //initlal text box count
 
 					if (inputs.length){
 						$(inputs).each(function(){
@@ -600,7 +601,6 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 						x++; //text box increment
 						totalAltURLs.val(x);
 						$(add_button).removeAttr('disabled');
-						// $('[name="altstatuscode_' + newID +'"]').niceSelect();
 						if (x == max_fields) {
 							$(add_button).attr('disabled','disabled');
 						}

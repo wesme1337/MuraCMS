@@ -140,6 +140,17 @@
 				);
 			} else if(parameters["cmd"] == "close"){
 				closeFrontEndToolsModal();
+
+			} else if(parameters["cmd"] == "cloneobject"){
+				var source=Mura('div[data-instanceid="' + parameters["instanceid"] + '"]');
+				var newinstanceid=Mura.createUUID();
+				source
+					.parent()
+					.appendDisplayObject(Mura.extend(source.data(),{instanceid:newinstanceid,stylesupport:source.attr('data-stylesupport')}))
+					.then(function(obj){
+						obj.trigger('click')
+					});
+
 			} else if(parameters["cmd"] == "setLocation"){
 				var newLocation=decodeURIComponent(parameters["location"]);
 				window.location=newLocation;

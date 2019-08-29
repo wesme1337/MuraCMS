@@ -1644,10 +1644,14 @@
 		<cfswitch expression="#arguments.type#">
 			<cfcase value="Link,File">
 				<cfif not request.muraExportHTML>
-					<cfif arguments.hashURLS>
-						<cfset href=HTMLEditFormat("#begin##arguments.renderer.getURLStem(arguments.siteid,'#arguments.filename##arguments.querystring#')#") />
+					<cfif arguments.renderer.directLinks and arguments.type eq "Link">
+						<cfset href=arguments.bean.getBody()>
 					<cfelse>
-						<cfset href=HTMLEditFormat("#begin##arguments.renderer.getURLStem(arguments.siteid,'#arguments.filename#')##arguments.querystring#") />
+						<cfif arguments.hashURLS>
+							<cfset href=HTMLEditFormat("#begin##arguments.renderer.getURLStem(arguments.siteid,'#arguments.filename##arguments.querystring#')#") />
+						<cfelse>
+							<cfset href=HTMLEditFormat("#begin##arguments.renderer.getURLStem(arguments.siteid,'#arguments.filename#')##arguments.querystring#") />
+						</cfif>
 					</cfif>
 				<cfelseif arguments.type eq "Link">
 					<cfset href=arguments.bean.getBody()>

@@ -242,7 +242,7 @@
 						<div class="mura-panel panel">
 							<div class="mura-panel-heading" role="tab" id="heading-style-object">
 								<h4 class="mura-panel-title">
-									<a class="collapse collapsed" role="button" data-toggle="collapse" data-parent="#configurator-panels" href="#panel-style-object" aria-expanded="false" aria-controls="panel-style-object">
+									<a class="collapse collapsed" role="button" data-toggle="collapse" data-parent="##configurator-panels" href="##panel-style-object" aria-expanded="false" aria-controls="panel-style-object">
 										Module
 									</a>
 								</h4>
@@ -250,7 +250,7 @@
 							<div id="panel-style-object" class="panel-collapse collapse" role="tabpanel" aria-labeledby="heading-style-object">
 								<div class="mura-panel-body">
 									<div class="container">
-										<cfinclude template="objectconfigpanelstylemodule.cfm">
+										<cfinclude template="objectconfigpanels/objectconfigpanelstylemodule.cfm">
 									</div> <!--- /end container --->
 								</div> <!--- /end mura-panel-body --->
 							</div> <!--- /end panel-collapse --->
@@ -262,7 +262,7 @@
 						<div class="mura-panel panel">
 							<div class="mura-panel-heading" role="tab" id="heading-style-label">
 								<h4 class="mura-panel-title">
-									<a class="collapse collapsed" role="button" data-toggle="collapse" data-parent="#configurator-panels" href="#panel-style-label" aria-expanded="false" aria-controls="panel-style-label">
+									<a class="collapse collapsed" role="button" data-toggle="collapse" data-parent="##configurator-panels" href="##panel-style-label" aria-expanded="false" aria-controls="panel-style-label">
 										Label
 									</a>
 								</h4>
@@ -270,7 +270,7 @@
 							<div id="panel-style-label" class="panel-collapse collapse" role="tabpanel" aria-labeledby="heading-style-label">
 								<div class="mura-panel-body">
 									<div class="container" id="labelContainer">
-										<cfinclude template="objectconfigpanelstyleheading.cfm">
+										<cfinclude template="objectconfigpanels/objectconfigpanelstyleheading.cfm">
 									</div> <!--- /end container --->
 								</div> <!--- /end mura-panel-body --->
 							</div> <!--- /end panel-collapse --->
@@ -281,7 +281,7 @@
 						<div class="mura-panel panel">
 							<div class="mura-panel-heading" role="tab" id="heading-style-content">
 								<h4 class="mura-panel-title">
-									<a class="collapse collapsed" role="button" data-toggle="collapse" data-parent="#configurator-panels" href="#panel-style-content" aria-expanded="false" aria-controls="panel-style-content">
+									<a class="collapse collapsed" role="button" data-toggle="collapse" data-parent="##configurator-panels" href="##panel-style-content" aria-expanded="false" aria-controls="panel-style-content">
 										Content
 									</a>
 								</h4>
@@ -289,7 +289,7 @@
 							<div id="panel-style-content" class="panel-collapse collapse" role="tabpanel" aria-labeledby="heading-style-content">
 								<div class="mura-panel-body">
 									<div class="container">
-										<cfinclude template="objectconfigpanelstylecontent.cfm">
+										<cfinclude template="objectconfigpanels/objectconfigpanelstylecontent.cfm">
 									</div> <!--- /end container --->
 								</div> <!--- /end mura-panel-body --->
 							</div> <!--- /end panel-collapse --->

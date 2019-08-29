@@ -146,7 +146,7 @@
 				var newinstanceid=Mura.createUUID();
 				source
 					.parent()
-					.appendDisplayObject(Mura.extend(source.data(),{instanceid:newinstanceid}))
+					.appendDisplayObject(Mura.extend(source.data(),{instanceid:newinstanceid,stylesupport:source.attr('data-stylesupport')}))
 					.then(function(obj){
 						obj.trigger('click')
 					});

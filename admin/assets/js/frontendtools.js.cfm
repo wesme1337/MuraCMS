@@ -144,11 +144,15 @@
 			} else if(parameters["cmd"] == "cloneobject"){
 				var source=Mura('div[data-instanceid="' + parameters["instanceid"] + '"]');
 				var newinstanceid=Mura.createUUID();
+				var newparams=Mura.extend(source.data(),{instanceid:newinstanceid,stylesupport:source.attr('data-stylesupport')})
+				delete newparams.inited;
+				
 				source
 					.parent()
-					.appendDisplayObject(Mura.extend(source.data(),{instanceid:newinstanceid,stylesupport:source.attr('data-stylesupport')}))
+					.appendDisplayObject(newparams)
 					.then(function(obj){
-						obj.trigger('click')
+						obj.on('click',Mura.handleObjectClick);
+						initFrontendUI(obj.node,true)
 					});
 
 			} else if(parameters["cmd"] == "setLocation"){

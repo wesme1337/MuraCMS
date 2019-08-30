@@ -52,7 +52,7 @@ this["Mura"]["templates"]["cta"] = window.mura.Handlebars.template({"compiler":[
         this.context.resetinterval = this.context.resetinterval || 'session';
         this.context.resetqty = parseInt(this.context.resetqty) ||  1;
 
-        this.context.type = this.context.type || 'modal';
+        this.context.type = this.context.type || 'drawer';
         this.context.animatespeed = this.context.animatespeed ||  'fast';
         this.context.anchorx = this.context.anchorx || 'center';
         this.context.anchory = this.context.anchory || 'center';

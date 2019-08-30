@@ -537,7 +537,6 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 					var pv = $('##alturls__selected');
 					var inputs = $('.alturl-input');
 	
-
 					if (inputs.length){
 						$(inputs).each(function(){
 							if ($(this).val().length){
@@ -572,7 +571,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 						});
 						$(wrapper).find('div.mura-control-group').not('.first').remove();
 					} else {
-						max_fields = 10;
+						max_fields = max_fields;
 						//$('.altstatuscode').show();
 						$(add_button).removeAttr('disabled');
 						$(button_wrapper).show();
@@ -584,6 +583,8 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 				})
 
 				$(add_button).click(function(e){ //on add input button click
+					var inputs = $('.alturl-input');
+					var x = inputs.length;
 					e.preventDefault();
 					if(x < max_fields){ //max input box allowed
 						var newID=m.createUUID();

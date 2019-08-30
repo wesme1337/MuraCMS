@@ -56,130 +56,115 @@ li .cke_skin_mura {
     padding: 0 20px;
     box-sizing: border-box
 }
-
 .mura-column:last-child, .mura-object:last-child {
-		margin-right: 0;
+    margin-right: 0;
 }
 /* Utilities
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+
 .mura-full-width {
-		width: 100%;
-		box-sizing: border-box;
+    width: 100%;
+    box-sizing: border-box;
 }
 .mura-max-full-width {
-		max-width: 100%;
-		box-sizing: border-box;
+    max-width: 100%;
+    box-sizing: border-box;
 }
-
 .mura-center {
-		margin: 0 auto;
+    margin: 0 auto;
 }
-
 /* Utilities
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+
 .mura-full-width {
-		width: 100%;
-		box-sizing: border-box;
+    width: 100%;
+    box-sizing: border-box;
 }
 .mura-max-full-width {
-		max-width: 100%;
-		box-sizing: border-box;
+    max-width: 100%;
+    box-sizing: border-box;
 }
-
 .mura-center {
-		margin: 0 auto;
+    margin: 0 auto;
 }
 .mura-center.mura-object {
-		float: none;
+    float: none;
 }
-
-.mura-object[data-object="container"] > .mura-object-content		{
-	width: 100%;
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	align-items: stretch;
-	justify-content: flex-start;
-	align-content: flex-start;
-	flex-grow: 1;
-
-	.mura-pull-right:not(.mura-expanded), .mura-right:not(.mura-expanded) {
-			justify-self: flex-end;
-	}
-
-	.mura-pull-left:not(.mura-expanded), .mura-left:not(.mura-expanded) {
-			justify-self: flex-start;
-	}
+.mura-object[data-object="container"]>.mura-object-content {
+    width: 100%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: flex-start;
+    align-content: flex-start;
+    flex-grow: 1;
+    .mura-pull-right:not(.mura-expanded), .mura-right:not(.mura-expanded) {
+        justify-self: flex-end;
+    }
+    .mura-pull-left:not(.mura-expanded), .mura-left:not(.mura-expanded) {
+        justify-self: flex-start;
+    }
 }
-
 .mura-object-content {
-	width:100%;
+    width: 100%;
 }
-
 .mura-object-meta-wrapper {
-	justify-content: center;
-	width: 100%;
+    justify-content: center;
+    width: 100%;
 }
-
 .mura-object {
-		width: 100%;
+    width: 100%;
 }
-
-.mura-region-loose > .mura-region-local {
-		width: 100%;
-		margin-right: 0;
-		box-sizing: border-box;
-		-moz-box-sizing: border-box;
-		display: block;
-
-		.mura-pull-right:not(.mura-expanded), .mura-right:not(.mura-expanded) {
-				float: right;
-				margin-left: auto;
-		}
-		.mura-pull-left:not(.mura-expanded), .mura-left:not(.mura-expanded) {
-				float: left;
-				margin-right: auto;
-	}
+.mura-region-loose>.mura-region-local {
+    width: 100%;
+    margin-right: 0;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    display: block;
+    .mura-pull-right:not(.mura-expanded), .mura-right:not(.mura-expanded) {
+        float: right;
+        margin-left: auto;
+    }
+    .mura-pull-left:not(.mura-expanded), .mura-left:not(.mura-expanded) {
+        float: left;
+        margin-right: auto;
+    }
 }
-
 .mura-region-inherited, .mura-region-local {
-		width: 100%;
-		margin-right: 0;
-		box-sizing: border-box;
-		-moz-box-sizing: border-box;
-		display: flex;
-		flex-direction: row;
-		flex-wrap: wrap;
-		align-items: stretch;
-		align-content: flex-start;
-
-		.mura-pull-right:not(.mura-expanded), .mura-right:not(.mura-expanded) {
-				justify-self: flex-end;
-		}
-
-		.mura-pull-left:not(.mura-expanded), .mura-left:not(.mura-expanded) {
-				justify-self: flex-start;
-		}
-
-		.mura-object {
-				width: 100%;
-				box-sizing: border-box;
-				-moz-box-sizing: border-box;
-				display: flex;
-				flex-direction: row;
-				flex-wrap: wrap;
-				align-items: stretch;
-				justify-content: flex-start;
-				align-content: flex-start;
-				flex-grow: 0;
-		}
-
+    width: 100%;
+    margin-right: 0;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: stretch;
+    align-content: flex-start;
+    .mura-pull-right:not(.mura-expanded), .mura-right:not(.mura-expanded) {
+        justify-self: flex-end;
+    }
+    .mura-pull-left:not(.mura-expanded), .mura-left:not(.mura-expanded) {
+        justify-self: flex-start;
+    }
+    .mura-object {
+        align-content: flex-start;
+        align-items: stretch;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        display: flex;
+        flex-direction: row;
+        flex-grow: 0;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        min-height: 54px;
+        width: 100%;
+    }
     box-sizing:border-box .svAsset+.mura-region .mura-region-local, .svAsset+.mura-region .mura-region-local {
         float: none;
     }
-
     /* For devices larger than 400px */
     @media (min-width: 400px) {
         .mura-container {
@@ -187,193 +172,180 @@ li .cke_skin_mura {
             padding: 0;
         }
     }
-
-		/* Extra small doesn't get anything */
-
+    /* Extra small doesn't get anything */
     /* For devices larger than 550px */
-
-		/* small  < 768 If less than force 100%*/
-		@media (max-width: 767px) {
-
-			.mura-object	{
-				width: 100% !important;
-				display: flex !important;
-			}
-
-			.mura-object[data-object="container"] {
-				min-height: 0px !important;
-			}
-
-			.mura-object > .mura-object-content		{
-				width: 100% !important;
-				margin-left: 0px !important;
-				margin-right: 0px !important;
-			}
-
-			.mura-object > .mura-object-meta	{
-				margin-left: 0px !important;
-				margin-right: 0px !important;
-			}
-
-		}
-
-		/* default: small 768 - 991 */
+    /* small  < 768 If less than force 100%*/
+    @media (max-width: 767px) {
+        .mura-object {
+            width: 100% !important;
+            display: flex !important;
+        }
+        .mura-object[data-object="container"] {
+            min-height: 0px !important;
+        }
+        .mura-object>.mura-object-content {
+            width: 100% !important;
+            margin-left: 0px !important;
+            margin-right: 0px !important;
+        }
+        .mura-object>.mura-object-meta {
+            margin-left: 0px !important;
+            margin-right: 0px !important;
+        }
+    }
+    /* default: small 768 - 991 */
     @media (min-width: 768px) {
-
         .mura-container {
             width: 80%;
         }
-
         .mura-column:last-child, .mura-object:last-child {
             margin-right: 0;
         }
-
-				.mura-one.mura-object                    { width: 8.33%; }
-				.mura-two.mura-object                    { width: 16.66%; }
-				.mura-three.mura-object                  { width: 25%;  }
-				.mura-four.mura-object                   { width: 33.33%; }
-				.mura-five.mura-object                   { width: 41.66%; }
-				.mura-six.mura-object                    { width: 50%; }
-				.mura-seven.mura-object                  { width: 58.33%; }
-				.mura-eight.mura-object                  { width: 66.66%; }
-				.mura-nine.mura-object                   { width: 75%; }
-				.mura-ten.mura-object                    { width: 83.33%; }
-				.mura-eleven.mura-object                 { width: 91.66%; }
-				.mura-twelve.mura-object                 { width: 100%;}
-				.mura-one-third.mura-object              { width: 33.33%; }
-				.mura-two-thirds.mura-object             { width: 66.66%; }
-				.mura-one-half.mura-object               { width: 50%; }
+        .mura-one.mura-object {
+            width: 8.33%;
+        }
+        .mura-two.mura-object {
+            width: 16.66%;
+        }
+        .mura-three.mura-object {
+            width: 25%;
+        }
+        .mura-four.mura-object {
+            width: 33.33%;
+        }
+        .mura-five.mura-object {
+            width: 41.66%;
+        }
+        .mura-six.mura-object {
+            width: 50%;
+        }
+        .mura-seven.mura-object {
+            width: 58.33%;
+        }
+        .mura-eight.mura-object {
+            width: 66.66%;
+        }
+        .mura-nine.mura-object {
+            width: 75%;
+        }
+        .mura-ten.mura-object {
+            width: 83.33%;
+        }
+        .mura-eleven.mura-object {
+            width: 91.66%;
+        }
+        .mura-twelve.mura-object {
+            width: 100%;
+        }
+        .mura-one-third.mura-object {
+            width: 33.33%;
+        }
+        .mura-two-thirds.mura-object {
+            width: 66.66%;
+        }
+        .mura-one-half.mura-object {
+            width: 50%;
+        }
     }
-
-		/* medium 992 - 1199  If less than force 100% */
-		@media (max-width: 991px) {
-				.mura-object.mura-md	{
-					display: flex !important;
-					width: 100% !important;
-				}
-				.mura-object.mura-md > .mura-object-content {
-					width: 100%;
-					margin-left: 0px !important;
-					margin-right: 0px !important;
-				}
-				.mura-object.mura-md > .mura-object-meta {
-					margin-left: 0px !important;
-					margin-right: 0px !important;
-				}
-		}
-
-		/* large  1200+ If less than force 100%*/
-		@media (max-width: 1199px) {
-				.mura-object.mura-lg	{
-					display: flex !important;
-					width: 100% !important;
-				}
-
-				.mura-object.mura-lg > .mura-object-content		{
-					width: 100% !important;
-					margin-left: 0px !important;
-					margin-right: 0px !important;
-				}
-
-				.mura-object.mura-lg > .mura-object-meta	{
-					margin-left: 0px !important;
-					margin-right: 0px !important;
-				}
-		}
-
-
+    /* medium 992 - 1199  If less than force 100% */
+    @media (max-width: 991px) {
+        .mura-object.mura-md {
+            display: flex !important;
+            width: 100% !important;
+        }
+        .mura-object.mura-md>.mura-object-content {
+            width: 100%;
+            margin-left: 0px !important;
+            margin-right: 0px !important;
+        }
+        .mura-object.mura-md>.mura-object-meta {
+            margin-left: 0px !important;
+            margin-right: 0px !important;
+        }
+    }
+    /* large  1200+ If less than force 100%*/
+    @media (max-width: 1199px) {
+        .mura-object.mura-lg {
+            display: flex !important;
+            width: 100% !important;
+        }
+        .mura-object.mura-lg>.mura-object-content {
+            width: 100% !important;
+            margin-left: 0px !important;
+            margin-right: 0px !important;
+        }
+        .mura-object.mura-lg>.mura-object-meta {
+            margin-left: 0px !important;
+            margin-right: 0px !important;
+        }
+    }
     .mura-expanded {
         width: ~"calc(100vw)" !important;
-        left:  ~"calc(-1 * (100vw - 100%) / 2)";
+        left: ~"calc(-1 * (100vw - 100%) / 2)";
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: center;
         position: relative;
-
-				.mura-object-content {
-					text-align: center;
-				}
+        .mura-object-content {
+            text-align: center;
+        }
     }
-
-
 }
-
-
-
 /* Turn off parallax scrolling for all tablets and phones. Increase/decrease the pixels if needed */
+
 @media only screen and (max-device-width: 1366px) {
-	.mura-object {
-		background-attachment: scroll !important;
-	}
+    .mura-object {
+        background-attachment: scroll !important;
+    }
 }
-
 /* For devices larger than 550px */
+
 @media (min-width: 768px) {
-
-
-	.mura-object.mura-object-label-right > .mura-object-meta-wrapper,
-	.mura-object.mura-object-label-right > .mura-object-content,
-	.mura-object.mura-object-label-left > .mura-object-meta-wrapper,
-	.mura-object.mura-object-label-left > .mura-object-content {
-		position: relative;
-		width: 50%;
-		box-sizing: border-box;
-	}
-
-	.mura-object.mura-object-label-left {
-			flex-direction: row;
-		}
-
-	.mura-object.mura-object-label-right{
-		flex-direction: row-reverse;
-	}
-
-	.mura-expanded.mura-object.mura-object-label-right > .mura-object-meta-wrapper,
-	.mura-expanded.mura-object.mura-object-label-right > .mura-object-content,
-	.mura-expanded.mura-object.mura-object-label-left > .mura-object-meta-wrapper,
-	.mura-expanded.mura-object.mura-object-label-left > .mura-object-content {
-		flex-grow: 1;
-		width: 50%;
-	}
-
+    .mura-object.mura-object-label-right>.mura-object-meta-wrapper, .mura-object.mura-object-label-right>.mura-object-content, .mura-object.mura-object-label-left>.mura-object-meta-wrapper, .mura-object.mura-object-label-left>.mura-object-content {
+        position: relative;
+        width: 50%;
+        box-sizing: border-box;
+    }
+    .mura-object.mura-object-label-left {
+        flex-direction: row;
+    }
+    .mura-object.mura-object-label-right {
+        flex-direction: row-reverse;
+    }
+    .mura-expanded.mura-object.mura-object-label-right>.mura-object-meta-wrapper, .mura-expanded.mura-object.mura-object-label-right>.mura-object-content, .mura-expanded.mura-object.mura-object-label-left>.mura-object-meta-wrapper, .mura-expanded.mura-object.mura-object-label-left>.mura-object-content {
+        flex-grow: 1;
+        width: 50%;
+    }
 }
-
 .mura-object-content, .mura-object-meta-wrapper, .mura-object-meta {
-	position: relative;
-	display: block;
-	box-sizing: border-box;
+    position: relative;
+    display: block;
+    box-sizing: border-box;
 }
-
-.mura-object:not(.mura-object-label-left) > .mura-object-meta-wrapper:after {
-  visibility: hidden;
-  display: block;
-  content: "";
-  clear: both;
-  height: 0;
+.mura-object:not(.mura-object-label-left)>.mura-object-meta-wrapper:after {
+    visibility: hidden;
+    display: block;
+    content: "";
+    clear: both;
+    height: 0;
 }
-
 .mura-object-meta-wrapper {
-	text-align: center;
+    text-align: center;
 }
-
 .mura-object-meta {
-	display: inline-block;
+    display: inline-block;
 }
-
-
 /* set full width for expanded containers */
+
 .mura-sidebar-state__pushed--right {
-
-	.mura-object.mura-expanded {
-	    width: ~"calc(100vw - 300px)" !important;
-	    left: ~"calc(-1 *(100vw - 100% - 300px) / 2)" !important;
-	}
-
-	.mura-object.mura-expanded>.mura-object-content,
-	.mura-object.mura-expanded>.mura-object-meta {
-		opacity: 1;
-	}
+    .mura-object.mura-expanded {
+        width: ~"calc(100vw - 300px)" !important;
+        left: ~"calc(-1 *(100vw - 100% - 300px) / 2)" !important;
+    }
+    .mura-object.mura-expanded>.mura-object-content, .mura-object.mura-expanded>.mura-object-meta {
+        opacity: 1;
+    }
 }
 /* Misc
 –––––––––––––––––––––––––––––––––––––––––––––––––– */

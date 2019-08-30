@@ -61,7 +61,7 @@
 
 					<a href="##" class="btn mura-primary" id="closeConfigurator" onclick="frontEndProxy.post({cmd:'showobjects'});"><i class="mi-check"></i> Done</a>
 
-					<a href="##" class="btn mura-primary" id="closeConfigurator" onclick="frontEndProxy.post({cmd:'cloneobject',instanceid:'#esapiEncode('javascript',rc.instanceid)#'});"><i class="mi-clone"></i> Clone</a>
+					<a href="##" class="btn mura-clone " id="closeConfigurator" onclick="frontEndProxy.post({cmd:'cloneobject',instanceid:'#esapiEncode('javascript',rc.instanceid)#'});"><i class="mi-clone"></i> Clone</a>
 				</cfif>
 
 				<a href="##" class="btn mura-delete" id="deleteObject"><i class="mi-trash"></i> #esapiEncode('html_attr',application.rbFactory.getKeyValue(session.rb,"sitemanager.content.delete"))#</a>

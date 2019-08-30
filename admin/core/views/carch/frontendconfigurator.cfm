@@ -55,16 +55,14 @@
 			<cfif not listFindNoCase('folder,calendar,gallery',rc.object) and not isdefined('rc.isBody')>
 			<div class="form-actions" style="display:none">
 
+				<a href="##" class="btn mura-delete" id="deleteObject"><i class="mi-trash"></i> #esapiEncode('html_attr',application.rbFactory.getKeyValue(session.rb,"sitemanager.content.delete"))#</a>
+
 				<cfif rc.sourceFrame eq 'modal'>
 					<a href="##" class="btn mura-primary" id="saveConfigDraft"><i class="mi-check"></i> #esapiEncode('html_attr',application.rbFactory.getKeyValue(session.rb,"sitemanager.content.apply"))#</a>
 				<cfelse>
-
-					<a href="##" class="btn mura-primary" id="closeConfigurator" onclick="frontEndProxy.post({cmd:'showobjects'});"><i class="mi-check"></i> Done</a>
-
 					<a href="##" class="btn mura-clone " id="closeConfigurator" onclick="frontEndProxy.post({cmd:'cloneobject',instanceid:'#esapiEncode('javascript',rc.instanceid)#'});"><i class="mi-clone"></i> Clone</a>
+					<a href="##" class="btn mura-primary" id="closeConfigurator" onclick="frontEndProxy.post({cmd:'showobjects'});"><i class="mi-check"></i> Done</a>
 				</cfif>
-
-				<a href="##" class="btn mura-delete" id="deleteObject"><i class="mi-trash"></i> #esapiEncode('html_attr',application.rbFactory.getKeyValue(session.rb,"sitemanager.content.delete"))#</a>
 
 			</div>
 			</cfif>

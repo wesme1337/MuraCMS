@@ -971,40 +971,32 @@ body.configurator-wrapper {
 
 		.form-actions {
 			clear: both;
-			margin: 0;
+			margin: 20px 0 0 0;
 			padding: 0;
+			display: flex;
 
 			.btn {
 				background-image: none !important;
 				clear: none !important;
-				float: left !important;
+	  		flex-grow: 1;	
+	    	flex-basis: 0;
 				font-size: 12px;
-				margin: 0 4px 0 0;
-				padding: 2px 12px;
+				margin: 0 8px 0 0;
+				min-width: 72px;
+				padding: 6px 12px;
 
 				&.mura-primary {
 					background-color: @mura-red !important;
-					float: right !important;
-					margin: 36px -15px 0 26px;
-					padding: 6px 12px;
 				}
 
-				&.mura-delete {
-					background-color: #6f6f6f;
-					float: right !important;
-					margin: 36px 10px 0 0;
-					padding: 6px 12px;
-				}
+				&.mura-delete,
 				&.mura-clone {
 					background-color: #6f6f6f;
-					float: right !important;
-					margin: 36px -15px 0 0;
-					padding: 6px 12px;
+					min-width: 80px;
 				}
 
 			}
-
-		}
+		} /* /.form-actions */
 
 		#sortableFields #displayListSort {
 			padding: 0 !important;

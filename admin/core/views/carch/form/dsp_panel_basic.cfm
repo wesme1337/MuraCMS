@@ -529,7 +529,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 				var button_wrapper = $("##add_field_button_wrapper"); //add wrapper div
 				var totalAltURLs = $(".numberOfAltURLs"); //hidden for count
 				var ismuracontent = $("input[name='ismuracontent']");
-
+				var x = 1; //initlal text box count
 
 				var showSelectedAltUrls = function(){
 					var selStr = '';
@@ -537,7 +537,6 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 					var pv = $('##alturls__selected');
 					var inputs = $('.alturl-input');
 	
-					var x = 1; //initlal text box count
 
 					if (inputs.length){
 						$(inputs).each(function(){

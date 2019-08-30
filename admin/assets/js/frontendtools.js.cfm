@@ -147,9 +147,7 @@
 				var newparams=Mura.extend(source.data(),{instanceid:newinstanceid,stylesupport:source.attr('data-stylesupport')})
 				delete newparams.inited;
 				
-				source
-					.parent()
-					.appendDisplayObject(newparams)
+				source.insertDisplayObjectAfter(newparams)
 					.then(function(obj){
 						obj.on('click',Mura.handleObjectClick);
 						initFrontendUI(obj.node,true)

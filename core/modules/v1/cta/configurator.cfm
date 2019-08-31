@@ -11,7 +11,7 @@
 
     <cfparam name="rc.isnew" default="false">
 
-    <cfparam name="objectparams.type" default="modal">
+    <cfparam name="objectparams.type" default="drawer">
     <cfparam name="objectparams.anchorx" default="center">
     <cfparam name="objectparams.anchory" default="center">
     <cfparam name="objectparams.animate" default="ttb">

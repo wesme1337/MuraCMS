@@ -584,8 +584,8 @@ body.configurator-wrapper {
 	  		flex-grow: 1;	
 	    	flex-basis: 0;
 				font-size: 8px;
-				height: 28px;
-				line-height: 28px;
+				height: @configInputH;
+				line-height: @configInputH;
 				text-align: center;
 			}
 			.object-widthsel-option.active{
@@ -618,7 +618,7 @@ body.configurator-wrapper {
 			.ui-inset-icon {
 				color: #333;
 				display: block;
-				line-height: 28px;
+				line-height: @configInputH;
 				margin: 0 auto;
 				text-align: center;
 				width: 24px;
@@ -651,6 +651,10 @@ body.configurator-wrapper {
 						border-top-right-radius: 0;
 						border-bottom-right-radius: 0;
 						border-right: 1px solid #454545;
+					}
+
+					&.input-auto{
+						height: @configInputH;
 					}
 
 				}
@@ -719,9 +723,11 @@ body.configurator-wrapper {
 
 				&.btn.ui-advanced {
 					margin: 0 0 0 3px;
+					height: @configInputH;
 		
 					i{
 						margin: 0;
+						margin: 4px 0 0 0;
 					}
 
 				}
@@ -971,17 +977,16 @@ body.configurator-wrapper {
 
 		.form-actions {
 			clear: both;
-			margin: 20px 0 0 0;
-			padding: 0;
 			display: flex;
+			justify-content: space-between;
+			margin-top: 20px;
+			padding: 0;
+			width: 107%;
 
 			.btn {
 				background-image: none !important;
 				clear: none !important;
-	  		flex-grow: 1;	
-	    	flex-basis: 0;
 				font-size: 12px;
-				margin: 0 8px 0 0;
 				min-width: 72px;
 				padding: 6px 12px;
 

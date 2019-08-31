@@ -587,6 +587,15 @@ body.configurator-wrapper {
 				height: @configInputH;
 				line-height: @configInputH;
 				text-align: center;
+				> span{
+					opacity: 0;
+				}
+				&.selected{
+			    box-shadow: -1px 0px 0px #4e4e4e inset !important;
+				}
+				&.indicator{
+			    box-shadow: -1px 0px 0px #454545 inset;
+				}
 			}
 			.object-widthsel-option.active{
 					background-color:#5f5f5f;				

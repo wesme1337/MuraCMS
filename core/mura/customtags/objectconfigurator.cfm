@@ -378,6 +378,8 @@
 			$('#object-widthsel-ui .object-widthsel-option').on('click',function(){
 				selectGridWidth($(this));
 				setGridWidth($(this));
+				setGridIndicators($(this));
+				$(this).addClass('selected').siblings().removeClass('selected');
 			})
 
 			function unsetGridWidth(){
@@ -400,6 +402,27 @@
 			function previewGridWidth(activeOption){
 				$(activeOption).siblings('.object-widthsel-option').removeClass('active');
 				$(activeOption).addClass('active').prevAll('.object-widthsel-option').addClass('active');
+			}
+
+			function setGridIndicators(activeOption){
+				var optionValue = $(activeOption).attr('data-value');
+				var markers = '';
+
+				if (optionValue == 'mura-two' || optionValue == 'mura-ten'){
+					markers = ['2','4','6','8','10'];
+				} else if (optionValue == 'mura-three' || optionValue == 'mura-six' || optionValue == 'mura-nine'){
+					markers = ['3','6','9'];
+				} else if (optionValue == 'mura-four' || optionValue == 'mura-eight'){
+					markers = ['4','8'];
+				} else {
+					markers = ['1','2','3','4','5','6','7','8','9','10','11'];
+				} 
+
+				$('#object-widthsel-wrapper .indicator').removeClass('indicator');
+
+				for (m in markers){
+					$('#object-widthsel-wrapper > .object-widthsel-option:nth-child(' + markers[m] + ')').addClass('indicator');
+				}
 			}
 
 			function setActiveGDSpanel(){
@@ -1055,6 +1078,7 @@
 			// reset breakpoint on width selection
 			$('#objectwidthsel').on('change',function(){
 				var curVal = $(this).val();
+				var	curOption = $('#object-widthsel-ui .object-widthsel-option[data-value="' + curVal + '"]');
 				var bpSel =	$('#objectbreakpointsel');
 				var bpDiv = $('div.objectbreakpointcontainer');
 
@@ -1067,9 +1091,11 @@
 					if (curVal == 'mura-twelve'){
 						$(bpDiv).hide();
 					} else {
-						$(bpDiv).show();					}
+						$(bpDiv).show();					
 					}
-					setGridWidth($('#object-widthsel-ui .object-widthsel-option[data-value="' + curVal + '"]'));
+				}
+				setGridWidth(curOption);
+				setGridIndicators(curOption);
 			});
 			
 			// run on load

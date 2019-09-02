@@ -556,7 +556,7 @@
 							contentcssclass.val(contentcssclassArray.join(' '));
 							hasExpandedContainerClass=false;
 						}
-					} else  if (hasExpandedContainerClass){
+					} else if (hasExpandedContainerClass){
 						$('.constraincontentcontainer').hide();
 						if(contentcssclassArray.indexOf(expandedContentContainerClass) > -1){
 							for( var i = 0; i < contentcssclassArray.length; i++){
@@ -568,6 +568,7 @@
 						contentcssclass.val(contentcssclassArray.join(' '));
 						hasExpandedContainerClass=false;
 					}
+
 					contentcssclass.val($.trim(contentcssclass.val()));
 				}
 				if(typeof updateDraft == 'function'){

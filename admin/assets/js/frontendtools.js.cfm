@@ -2631,7 +2631,7 @@
 		});
 	</cfif>
 	
-	//This in on until we remove bs dropdowns from mura-toolbar
+	//This is only until we remove bs dropdowns from mura-toolbar
 	if(typeof $ !='undefined'){
 		$(function(){
 			$(".mura-toolbar .dropdown").hover(function(){

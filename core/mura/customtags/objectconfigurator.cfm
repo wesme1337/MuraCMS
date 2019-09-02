@@ -519,6 +519,12 @@
 
 				classInput.val($.trim(classInput.val()));
 
+			<cfif len(contentcontainerclass) and listFind(attributes.params.class,'mura-expanded',' ') and listFind(attributes.params.contentcssclass,contentcontainerclass,' ')>
+				var hasExpandedContainerClass=true;
+			<cfelse>
+				var hasExpandedContainerClass=false;
+			</cfif>
+			
 	  		var contentcssclass=$('input[name="contentcssclass"]');
 				var expandedContentContainerClass='<cfoutput>#contentcontainerclass#</cfoutput>';
 				var contentcssclassArray=[];
@@ -527,7 +533,7 @@
 				}
 				var constraincontent=$('select[name="constraincontent"]');
 
-				if(constraincontent.length){
+				if(expandedContentContainerClass && constraincontent.length){
 					if($('select[name="width"].classtoggle').val()=='mura-expanded'){
 						$('.constraincontentcontainer').show();
 						if(constraincontent.val()=='constrain'){
@@ -538,6 +544,7 @@
 									contentcssclass.val(expandedContentContainerClass);
 								}
 							}
+							hasExpandedContainerClass=true;
 						} else {
 							if(contentcssclassArray.indexOf(expandedContentContainerClass) > -1){
 								for( var i = 0; i < contentcssclassArray.length; i++){
@@ -547,8 +554,9 @@
 								}
 							}
 							contentcssclass.val(contentcssclassArray.join(' '));
+							hasExpandedContainerClass=false;
 						}
-					} else {
+					} else  if (hasExpandedContainerClass){
 						$('.constraincontentcontainer').hide();
 						if(contentcssclassArray.indexOf(expandedContentContainerClass) > -1){
 							for( var i = 0; i < contentcssclassArray.length; i++){
@@ -558,6 +566,7 @@
 							}
 						}
 						contentcssclass.val(contentcssclassArray.join(' '));
+						hasExpandedContainerClass=false;
 					}
 					contentcssclass.val($.trim(contentcssclass.val()));
 				}

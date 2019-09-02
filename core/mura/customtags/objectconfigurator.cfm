@@ -504,6 +504,12 @@
 				}
 			});
 
+			<cfif len(contentcontainerclass) and listFind(attributes.params.class,'mura-expanded',' ') and listFind(attributes.params.contentcssclass,contentcontainerclass,' ')>
+				var hasExpandedContainerClass=true;
+			<cfelse>
+				var hasExpandedContainerClass=false;
+			</cfif>
+
 			function updateDynamicClasses(){
 				var classInput=$('input[name="class"]');
 				classInput.val('');
@@ -518,14 +524,8 @@
 				})
 
 				classInput.val($.trim(classInput.val()));
-
-			<cfif len(contentcontainerclass) and listFind(attributes.params.class,'mura-expanded',' ') and listFind(attributes.params.contentcssclass,contentcontainerclass,' ')>
-				var hasExpandedContainerClass=true;
-			<cfelse>
-				var hasExpandedContainerClass=false;
-			</cfif>
 			
-	  		var contentcssclass=$('input[name="contentcssclass"]');
+				var contentcssclass=$('input[name="contentcssclass"]');
 				var expandedContentContainerClass='<cfoutput>#contentcontainerclass#</cfoutput>';
 				var contentcssclassArray=[];
 				if(typeof contentcssclass.val() =='string'){

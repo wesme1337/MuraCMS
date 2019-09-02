@@ -2630,4 +2630,13 @@
 			})
 		});
 	</cfif>
+	
+	//This in on until we remove bs dropdowns from mura-toolbar
+	if(typeof $ !='undefined'){
+		$(function(){
+			$(".mura-toolbar .dropdown").hover(function(){
+				$(this).toggleClass("show");
+			});
+		})
+	}
 })(window);

@@ -2634,7 +2634,6 @@
 	//This is only until we remove bs dropdowns from mura-toolbar
 	if(typeof $ !='undefined'){
 		$(function(){
-			$("#frontEndTools #tools-version #adminEditPage a.dropdown-toggle").attr("data-toggle","dropdown");
 			$("#frontEndTools .dropdown").hover(function(){
 				$(this).toggleClass("show");
 			});

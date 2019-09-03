@@ -6,7 +6,7 @@
 </cfsilent>
 <cf_objectconfigurator>
 	<cfoutput>
-	<div class="mura-layout-row">
+
 			<cfif not len(objectparams.fileid)>
 				<div class="mura-control-group">
 					<button class="btn" id="selectMedia"><i class="mi-image"></i> Select Image</button>
@@ -46,8 +46,6 @@
 					</div>
 				</div>
 			</cfif>
-		</div>
-	</div>
 	<input class="objectParam" data-displayobjectparam="fileid" name="fileid" type="hidden" value="#esapiEncode('html_attr',objectparams.fileid)#" />
 	<script>
 		$(function(){

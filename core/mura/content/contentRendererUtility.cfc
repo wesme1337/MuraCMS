@@ -1630,7 +1630,7 @@
 						and arguments.contentid neq '00000000000000000000000000000000001'
 					)
 				or
-					request.muraExportHTML and listFindNoCase("Link,File",arguments.type)
+					(arguments.renderer.directLinks or request.muraExportHTML) and listFindNoCase("Link,File",arguments.type)
 				)
 			>
 			<cfset arguments.bean=getBean("content").loadBy(contentID=arguments.contentID,siteID=arguments.siteID)>

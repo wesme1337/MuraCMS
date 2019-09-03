@@ -110,17 +110,12 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 <script>
 $(function(){
  $('.image-option').click(function(){
-	 //alert($('input[name="fileid"]').val())
-	 //return;
-	 frontEndProxy.post({
-		 cmd:'setObjectParams',
-		 reinit:true,
-		 instanceid:'#esapiEncode("javascript",rc.instanceid)#',
-		 params:{
-			 fileid:$(this).data('fileid')
-		 },
-		 complete:false
-		 });
+	siteManager.updateDisplayObjectParams(
+		{
+			fileid:$(this).data('fileid')
+		},
+		false
+	);
  });
 
  if($("##ProxyIFrame").length){

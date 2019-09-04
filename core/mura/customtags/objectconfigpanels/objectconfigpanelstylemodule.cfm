@@ -321,8 +321,21 @@
 							<label>Background Image</label>
 							<input type="hidden" id="objectbackgroundimage" name="backgroundImage" class="objectStyle" value="#esapiEncode('html_attr',attributes.params.stylesupport.objectstyles.backgroundimage)#">
 							<input type="text" id="objectbackgroundimageurl" name="objectbackgroundimageurl" placeholder="URL" class="styleSupport" value="#esapiEncode('html_attr',attributes.params.styleSupport.objectbackgroundimageurl)#">
-							<button type="button" class="btn mura-finder" data-target="objectbackgroundimageurl" data-completepath="false"><i class="mi-image"></i> Select Image</button>
-							<!---<button type="button" class="btn mura-associmage" data-target="objectbackgroundimageurl" data-completepath="false"><i class="mi-image"></i> Associated Image</button>--->
+							<button class="btn mura-finder" data-target="objectbackgroundimageurl" data-completepath="false"><i class="mi-image"></i> Select Image</button>
+
+							<!---
+							<div class="btn-group btn-group-sm" role="group" aria-label="Select Image">
+							<div class="btn-group">
+							<button type="button" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<i class="mi-image"></i> Select Image <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu">
+								<li><a class="mura-finder" data-target="objectbackgroundimageurl" data-completepath="false" href="javascript:return false;">File Manager</a></li>
+								<li><a class="mura-associmage" data-target="objectbackgroundimageurl" data-completepath="false" href="javascript:return false;">Associated Image</a></li>
+							</ul>
+							</div>
+							</div>
+							--->
 						</div>
 						<div class="mura-control-group mura-ui-grid object-css-bg-option bg-position" style="display:none;">
 							<label>Background Position</label>

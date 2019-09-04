@@ -133,7 +133,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
     Mura(function(m){
 		var target='#esapiEncode('javascript',$.event('target'))#';
 
-        siteManager.setDisplayObjectModalWidth(800);
+        //siteManager.setDisplayObjectModalWidth(800);
         siteManager.requestDisplayObjectParams(function(params){});
 
         m('.image-option').click(function(){

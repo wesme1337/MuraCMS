@@ -3319,6 +3319,13 @@ buttons: {
 						});
 					})
 
+					$('.mura-associmage').each(function(){
+						var self=$(this);
+						self.click(function(){
+							siteManager.openDisplayObjectModal('object/associmage.cfm',self.data());
+						});
+					})
+
 					//if(siteManager.layoutmanager){
 						if(config.title.indexOf("<i class=") > -1){
 							$("#configuratorHeader").html(config.title);

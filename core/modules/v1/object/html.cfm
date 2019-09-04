@@ -41,5 +41,5 @@
             siteManager.updateDisplayObjectParams(params,false);
         });
     });
-   </script>
+</script>
 </cfoutput>

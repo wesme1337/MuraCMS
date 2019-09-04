@@ -322,8 +322,8 @@
 							<input type="hidden" id="objectbackgroundimage" name="backgroundImage" class="objectStyle" value="#esapiEncode('html_attr',attributes.params.stylesupport.objectstyles.backgroundimage)#">
 							<input type="text" id="objectbackgroundimageurl" name="objectbackgroundimageurl" placeholder="URL" class="styleSupport" value="#esapiEncode('html_attr',attributes.params.styleSupport.objectbackgroundimageurl)#">
 							<button type="button" class="btn mura-finder" data-target="objectbackgroundimageurl" data-completepath="false"><i class="mi-image"></i> Select Image</button>
+							<!---<button type="button" class="btn mura-associmage" data-target="objectbackgroundimageurl" data-completepath="false"><i class="mi-image"></i> Associated Image</button>--->
 						</div>
-
 						<div class="mura-control-group mura-ui-grid object-css-bg-option bg-position" style="display:none;">
 							<label>Background Position</label>
 

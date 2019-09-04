@@ -307,7 +307,45 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 			placeholderImgID in (<cfqueryparam list="true" cfsqltype="cf_sql_varchar" value="#arguments.fileID#">)
 			</cfquery>
 
-			<cfif not rs1.recordcount and not rs2.recordcount and not rs3.recordcount and not rs4.recordcount>
+			<cfquery attributeCollection="#variables.configBean.getReadOnlyQRYAttrs(name='rs5')#">
+			SELECT contentid FROM tcontent where
+			<cfset local.started=false>
+			(<cfloop list="#arguments.fileid#" index="local.f">
+				tcontent.body like <cfqueryparam list="true" cfsqltype="cf_sql_varchar" value="%#local.f#%">
+				<cfif not local.started>or </cfif>
+				<cfset local.started=true>
+			 </cfloop>
+			)
+			and tcontent.contenthistId not in (<cfqueryparam list="true" cfsqltype="cf_sql_varchar" value="#arguments.baseID#">)
+			</cfquery>
+
+			<cfset var contentGateway=getBean('contentGateway')>
+
+			<cfquery attributeCollection="#variables.configBean.getReadOnlyQRYAttrs(name='rs5')#">
+			SELECT contentid FROM tcontent where
+			<cfset local.started=false>
+			(<cfloop list="#arguments.fileid#" index="local.f">
+				tcontent.body like <cfqueryparam  cfsqltype="cf_sql_varchar" value="%#contentGateway.serializeJSONParam(local.f)#%">
+				<cfif not local.started>or </cfif>
+				<cfset local.started=true>
+			 </cfloop>
+			)
+			and tcontent.contenthistId not in (<cfqueryparam list="true" cfsqltype="cf_sql_varchar" value="#arguments.baseID#">)
+			</cfquery>
+
+			<cfquery attributeCollection="#variables.configBean.getReadOnlyQRYAttrs(name='rs6')#">
+			SELECT contentid FROM tcontentobjects where
+			<cfset local.started=false>
+			(<cfloop list="#arguments.fileid#" index="local.f">
+				tcontentobjects.params like <cfqueryparam cfsqltype="cf_sql_varchar" value="%#contentGateway.serializeJSONParam(local.f)#%">
+				<cfif not local.started>or </cfif>
+				<cfset local.started=true>
+			 </cfloop>
+			)
+			and tcontentobjects.contenthistId not in (<cfqueryparam list="true" cfsqltype="cf_sql_varchar" value="#arguments.baseID#">)
+			</cfquery>
+
+			<cfif not rs1.recordcount and not rs2.recordcount and not rs3.recordcount and not rs4.recordcount and not rs5.recordcount and not rs6.recordcount>
 				<cfset deleteVersion(arguments.fileID) />
 			</cfif>
 		</cfif>

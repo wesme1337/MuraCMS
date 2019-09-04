@@ -1289,8 +1289,6 @@
 					var objectParams;
 					item.addClass("mura-active");
 
-
-
 					if(Mura.type =='Variation'){
 						objectParams=item.data();
 						item.children('.frontEndToolsModal').remove();
@@ -1416,15 +1414,16 @@
 					<cfif $.getContentRenderer().useLayoutManager()>
 					if(attribute.attr('data-attribute')){
 						MuraInlineEditor.initEditableObjectData.call(this);
-
-						utility(this)
-						.off('dblclick')
-						.on('dblclick',
-							function(){
-								MuraInlineEditor.initEditableAttribute.call(this);
-								Mura(this).focus();
-							}
-						);
+						if(!utility(this).closest('.mura-object').length){
+							utility(this)
+							.off('dblclick')
+							.on('dblclick',
+								function(){
+									MuraInlineEditor.initEditableAttribute.call(this);
+									Mura(this).focus();
+								}
+							);
+						}
 					}
 
 					<cfelse>
@@ -1615,12 +1614,16 @@
 		},
 		getAttributeValue: function(attribute){
 			var attributeid='mura-editable-attribute-' + attribute;
-			if(typeof(CKEDITOR.instances[attributeid]) != 'undefined') {
+
+			if(typeof MuraInlineEditor.attributes[attribute].innerHTML == 'undefined'){
+				MuraInlineEditor.attributes[attribute]=document.getElementById(attributeid);
+			}
+			if(typeof CKEDITOR.instances[attributeid] != 'undefined') {
 				CKEDITOR.instances[attributeid].updateElement();
 				return CKEDITOR.instances[attributeid].getData();
-			} else if(MuraInlineEditor.attributes[attribute].getAttribute('data-type').toLowerCase() == 'htmleditor') {
+			} else if (MuraInlineEditor.attributes[attribute].getAttribute('data-type').toLowerCase() == 'htmleditor') {
 				return MuraInlineEditor.attributes[attribute].innerHTML;
-			} else{
+			} else {
 				return MuraInlineEditor.stripHTML(MuraInlineEditor.attributes[attribute].innerHTML.trim());
 			}
 		},

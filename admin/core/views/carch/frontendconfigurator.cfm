@@ -151,7 +151,9 @@
 								if(parameters["params"].hasOwnProperty(p)){
 									item=$('[name="' + p + '"]');
 									if(item.length){
-										$('.objectParam[name="' + p + '"],.objectparam[name="' + p + '"],.styleSupport[name="' + p + '"],.stylesupport[name="' + p + '"],.objectStyle[name="' + p + '"],.objectstyle[name="' + p + '"],.contentStyle[name="' + p + '"],.contentstyle[name="' + p + '"],.metaStyle[name="' + p + '"],.metastyle[name="' + p + '"]').val(parameters["params"][p]).trigger('change');
+										var propTarget=$('.objectParam[name="' + p + '"],.objectparam[name="' + p + '"],.styleSupport[name="' + p + '"],.stylesupport[name="' + p + '"],.objectStyle[name="' + p + '"],.objectstyle[name="' + p + '"],.contentStyle[name="' + p + '"],.contentstyle[name="' + p + '"],.metaStyle[name="' + p + '"],.metastyle[name="' + p + '"]');
+										propTarget.val(parameters["params"][p]);
+										setTimeout(function(){propTarget.trigger('change')},10);
 									}
 
 								}

@@ -153,10 +153,7 @@
 									console.log(item.length)
 									if(item.length){
 										var propTarget=$('.objectParam[name="' + p + '"],.objectparam[name="' + p + '"],.styleSupport[name="' + p + '"],.stylesupport[name="' + p + '"],.objectStyle[name="' + p + '"],.objectstyle[name="' + p + '"],.contentStyle[name="' + p + '"],.contentstyle[name="' + p + '"],.metaStyle[name="' + p + '"],.metastyle[name="' + p + '"]');
-										propTarget.val(parameters["params"][p]);
-										if(propTarget.length){
-											setTimeout(updateDraft,10);
-										}			
+										propTarget.val(parameters["params"][p]).trigger('change');		
 									}
 									
 								}

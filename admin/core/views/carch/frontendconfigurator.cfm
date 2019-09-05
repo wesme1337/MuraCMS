@@ -121,7 +121,7 @@
 						reload=siteManager.getPluginConfigurator(siteManager.availableObject.params.objectid);
 					}
 
-//					console.log(siteManager.availableObject.params);
+					//console.log(siteManager.availableObject.params);
 
 					frontEndProxy.post(
 					{
@@ -150,12 +150,15 @@
 							for(var p in parameters["params"]){
 								if(parameters["params"].hasOwnProperty(p)){
 									item=$('[name="' + p + '"]');
+									console.log(item.length)
 									if(item.length){
 										var propTarget=$('.objectParam[name="' + p + '"],.objectparam[name="' + p + '"],.styleSupport[name="' + p + '"],.stylesupport[name="' + p + '"],.objectStyle[name="' + p + '"],.objectstyle[name="' + p + '"],.contentStyle[name="' + p + '"],.contentstyle[name="' + p + '"],.metaStyle[name="' + p + '"],.metastyle[name="' + p + '"]');
 										propTarget.val(parameters["params"][p]);
-										setTimeout(function(){propTarget.trigger('change')},10);
+										if(propTarget.length){
+											setTimeout(updateDraft,10);
+										}			
 									}
-
+									
 								}
 							}
 						} else {

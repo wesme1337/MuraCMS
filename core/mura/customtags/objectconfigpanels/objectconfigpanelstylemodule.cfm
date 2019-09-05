@@ -326,8 +326,8 @@
 									<i class="mi-image"></i> Select Image <span class="caret"></span>
 								</button>
 								<ul class="dropdown-menu">
-									<li><a class="mura-finder" data-target="objectbackgroundimageurl" data-completepath="false" href="javascript:return false;"><i class="mi-globe"></i> File Manager</a></li>
-									<li><a class="mura-associmage" data-target="objectbackgroundimageurl" data-completepath="false" href="javascript:return false;"> <i class="mi-th"></i> Associated Image</a></li>
+									<li><a class="mura-finder" data-target="objectbackgroundimageurl" data-completepath="false" href="javascript:void(0);"><i class="mi-globe"></i> File Manager</a></li>
+									<li><a class="mura-associmage" data-target="objectbackgroundimageurl" data-completepath="false" href="javascript:void(0);"> <i class="mi-th"></i> Associated Image</a></li>
 								</ul>
 							</div>
 						</div>

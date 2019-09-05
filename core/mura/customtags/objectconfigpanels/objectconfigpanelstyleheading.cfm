@@ -235,7 +235,15 @@
 								<label>Background Image</label>
 								<input type="hidden" id="metabackgroundimage" name="backgroundImage" class="metaStyle" value="#esapiEncode('html_attr',attributes.params.stylesupport.metastyles.backgroundimage)#">
 								<input type="text" id="metabackgroundimageurl" name="metabackgroundimageurl" placeholder="URL" class="styleSupport" value="#esapiEncode('html_attr',attributes.params.styleSupport.metabackgroundimageurl)#">
-								<button type="button" class="btn mura-finder" data-target="metabackgroundimageurl" data-completepath="false"><i class="mi-image"></i> Select Image</button>
+								<div class="btn-group btn-group-sm" role="group" aria-label="Select Image">
+									<button type="button" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										<i class="mi-image"></i> Select Image <span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu">
+										<li><a class="mura-finder" data-target="metabackgroundimageurl" data-completepath="false" href="javascript:return false;"><i class="mi-globe"></i> File Manager</a></li>
+										<li><a class="mura-associmage" data-target="metabackgroundimageurl" data-completepath="false" href="javascript:return false;"> <i class="mi-th"></i> Associated Image</a></li>
+									</ul>
+								</div>
 							</div>
 
 							<div class="mura-control-group mura-ui-grid meta-css-bg-option bg-position" style="display:none;">

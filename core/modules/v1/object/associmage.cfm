@@ -57,7 +57,6 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 
  and (
 	 tcontent.contentid=<cfqueryparam cfsqltype="cf_sql_varchar" value="#rc.contentid#">
-<!---
 	 or tcontent.parentid=<cfqueryparam cfsqltype="cf_sql_varchar" value="#rc.contentid#">
 
 	 or tcontent.parentid in (select tcontent.contentid from tcontent
@@ -65,7 +64,6 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 							 and tcontent.siteid=<cfqueryparam cfsqltype="cf_sql_varchar" value="#$.siteConfig().getSiteID()#">
 							 and tcontent.active=1
 							 )
---->
 	 )
 
  group by tfiles.fileid, tcontent.title, tcontent.contentid

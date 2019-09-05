@@ -211,6 +211,49 @@
 		</div> <!--- /end panel --->
 		</cfif>
 
+		<style>
+			.btn-group, .btn-group button, .btn-group ul {
+				background-color:##333;
+				color:##f3f3f3;
+			}
+
+			.btn-group button {
+				border-radius: 2px;
+				background-image: none;
+				text-shadow: none;
+				color: ##f3f3f3;
+				background-color: ##333;
+				border-color: transparent;
+				border-radius: 2px;
+				font-size: 13px;
+    			padding: 3px 12px 3px;
+				font-family: "Inter UI","Helvetica Neue",Helvetica,Arial,sans-serif;
+    			font-weight: 400;
+			}
+
+			.btn-group li, .btn-group li:hover {
+				border-radius: 2px !important;
+				background-image: none !important;
+				text-shadow: none !important;
+				background-color: ##333 !important;
+				font-size: 13px !important;
+    			padding: 3px 12px 3px!important;
+				font-family: "Inter UI","Helvetica Neue",Helvetica,Arial,sans-serif;
+    			
+			}
+
+			.btn-group a, .btn-group a:active{
+				background-color: ##333 !important;
+				font-weight: 400 !important;
+				font-size: 13px !important;
+    			padding: 0px 0px !important;
+    			padding-left: 0px !important;
+			}
+
+			.btn-group a:active, .btn-group a:hover { 
+				color: ##f3f3f3 !important;
+			}
+		</style>
 		<!--- style --->
 		<div class="mura-panel panel">
 			<div class="mura-panel-heading" role="tab" id="heading-style">
@@ -1139,6 +1182,13 @@
 					$(this).parents('.mura-colorpicker').find('.mura-colorpicker-swatch').css('background-color','transparent');
 				}
 			})
+
+			$('.btn-group').hover(function(){ 
+				$(this).addClass('open'); 
+			},
+			function(){ 
+				$(this).removeClass('open'); 
+			});
 
 			window.configuratorInited=true;
 		});

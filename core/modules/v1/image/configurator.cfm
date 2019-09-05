@@ -53,7 +53,15 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 			<div class="mura-control-group">
 				<label class="mura-control-label">Image Src</label>
 				<input type="text" placeholder="URL" name="src" class="objectParam" value="#esapiEncode('html_attr',objectparams.src)#"/>
-				<button type="button" class="btn mura-finder" data-target="src" data-completepath="false"><i class="mi-image"></i> Select Image</button>
+				<div class="btn-group btn-group-sm" role="group" aria-label="Select Image">
+					<button type="button" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="mi-image"></i> Select Image <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu">
+						<li><a class="mura-finder" data-target="src" data-completepath="false" href="javascript:return false;"><i class="mi-globe"></i> File Manager</a></li>
+						<li><a class="mura-associmage" data-target="src" data-completepath="false" href="javascript:return false;"> <i class="mi-th"></i> Associated Image</a></li>
+					</ul>
+				</div>
 			</div>
 			<div class="mura-control-group">
 				<label class="mura-control-label">Alt Text</label>

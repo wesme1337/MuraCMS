@@ -52,20 +52,25 @@
 					</div>
 					--->
 			</div>
-			<cfif not listFindNoCase('folder,calendar,gallery',rc.object) and not isdefined('rc.isBody')>
+		
 			<div class="form-actions" style="display:none">
+				<cfif  not (isdefined('rc.hasTargetAttr') and rc.hasTargetAttr)>
+					<a href="##" class="btn mura-delete" id="deleteObject"><i class="mi-trash"></i> #esapiEncode('html_attr',application.rbFactory.getKeyValue(session.rb,"sitemanager.content.delete"))#</a>
 
-				<a href="##" class="btn mura-delete" id="deleteObject"><i class="mi-trash"></i> #esapiEncode('html_attr',application.rbFactory.getKeyValue(session.rb,"sitemanager.content.delete"))#</a>
-
-				<cfif rc.sourceFrame eq 'modal'>
-					<a href="##" class="btn mura-primary" id="saveConfigDraft"><i class="mi-check"></i> #esapiEncode('html_attr',application.rbFactory.getKeyValue(session.rb,"sitemanager.content.apply"))#</a>
+					<cfif rc.sourceFrame eq 'modal'>
+						<a href="##" class="btn mura-primary" id="saveConfigDraft"><i class="mi-check"></i> #esapiEncode('html_attr',application.rbFactory.getKeyValue(session.rb,"sitemanager.content.apply"))#</a>
+					<cfelse>
+						<a href="##" class="btn mura-clone " id="cloneConfigurator" onclick="frontEndProxy.post({cmd:'cloneobject',instanceid:'#esapiEncode('javascript',rc.instanceid)#'});"><i class="mi-clone"></i> Clone</a>
+						<a href="##" class="btn mura-primary" id="closeConfigurator" onclick="frontEndProxy.post({cmd:'showobjects'});"><i class="mi-check"></i> Done</a>
+					</cfif>
 				<cfelse>
-					<a href="##" class="btn mura-clone " id="cloneConfigurator" onclick="frontEndProxy.post({cmd:'cloneobject',instanceid:'#esapiEncode('javascript',rc.instanceid)#'});"><i class="mi-clone"></i> Clone</a>
+				<!---
 					<a href="##" class="btn mura-primary" id="closeConfigurator" onclick="frontEndProxy.post({cmd:'showobjects'});"><i class="mi-check"></i> Done</a>
+				--->
 				</cfif>
 
 			</div>
-			</cfif>
+			
 		</div><!-- /configuratorContainer -->
 <cfif rc.sourceFrame eq 'modal'>
 		</div> <!-- /.block-content -->

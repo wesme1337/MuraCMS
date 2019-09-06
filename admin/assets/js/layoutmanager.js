@@ -647,8 +647,8 @@
 				).each(function() {
 					initLooseDropTarget(this)
 				});
-
-				obj.find('.mura-body-object')
+				
+				obj.find('div.mura-object[data-targetattr]')
 					.hover(
 						initDraggableObject_hoverin,
 						initDraggableObject_hoverout
@@ -714,7 +714,7 @@
 		Mura('body').removeClass('mura-sidebar-state__pushed--right');
 
 
-		Mura('.mura-region-local .mura-object, .mura-body-object').each(function(){
+		Mura('.mura-region-local .mura-object').each(function(){
 			
 			Mura(this)
 				.off('dragenter', initDraggableObject_dragstart)

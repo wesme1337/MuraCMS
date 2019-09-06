@@ -108,8 +108,8 @@
 
 								delete data.runtime;
 
-								if(item.hasClass('mura-body-object')){
-									data.isbodyobject=true;
+								if(item.is('div.mura-object[data-targetattr]')){
+									data.hasTargetAttr=true;
 								}
 
 								if(parameters["targetFrame"]=='sidebar' && document.getElementById('mura-sidebar-editor').style.display=='none'){
@@ -186,8 +186,8 @@
 
 				delete data.runtime;
 
-				if(item.hasClass('mura-body-object')){
-					data.isbodyobject=true;
+				if(item.is('div.mura-object[data-targetattr]')){
+					data.hasTargetAttr=true;
 				}
 
 				if(parameters["targetFrame"]=='sidebar' && document.getElementById('mura-sidebar-editor').style.display=='none'){
@@ -491,8 +491,8 @@
 
 			var src= adminLoc + '?muraAction=cArch.frontEndConfigurator&compactDisplay=true&siteid=' + Mura.siteid + '&instanceid=' +  editableObj.data('instanceid') + '&contenthistid=' + Mura.contenthistid + '&contentid=' + Mura.contentid + '&parentid=' + Mura.parentid + '&object=' +  editableObj.data('object') + '&objectid=' +  editableObj.data('objectid') + '&layoutmanager=' +  Mura.layoutmanager + '&objectname=' + encodeURIComponent(editableObj.data('objectname')) + '&contenttype=' + Mura.type + '&contentsubtype=' +encodeURIComponent(Mura.subtype) + '&sourceFrame=' + targetFrame + '&objecticonclass=' + encodeURIComponent(editableObj.data('objecticonclass')) + '&isnew=' + isnew ;
 
-			if(editableObj.is(".mura-body-object")){
-				src+='&isbody=true';
+			if(editableObj.is("div.mura-object[data-targetattr]")){
+				src+='&hasTargetAttr=true';
 			}
 		}
 
@@ -1382,7 +1382,7 @@
 
 				Mura(".mura-object").each(initObject);
 
-				Mura('.mura-body-object').each(function(){
+				Mura('div.mura-object[data-targetattr]').each(function(){
 					var item=Mura(this);
 					item.addClass("mura-active");
 					item.children('.frontEndToolsModal').remove();
@@ -1722,34 +1722,37 @@
 							}
 						);
 
-						utility('.mura-body-object').each(function(){
+						utility('div.mura-object[data-targetattr]').each(function(){
 							var item=utility(this);
 
-							if(item.data('displaylist')){
-								MuraInlineEditor.data['displaylist']=item.data('displaylist');
-							}
-							if(item.data('imagesize')){
-								MuraInlineEditor.data['imagesize']=item.data('imagesize');
-							}
-							if(item.data('imagewidth')){
-								MuraInlineEditor.data['imagewidth']=item.data('imagewidth');
-							}
-							if(item.data('imageheight')){
-								MuraInlineEditor.data['imageheight']=item.data('imageheight');
-							}
-							if(item.data('nextn')){
-								MuraInlineEditor.data['nextn']=item.data('nextn');
-							}
-							if(item.data('sortby')){
-								MuraInlineEditor.data['sortby']=item.data('sortby');
-							}
-							if(item.data('sortdirection')){
-								MuraInlineEditor.data['sortdirection']=item.data('sortdirection');
+							if(item.data('targetattr')=='objectparams'){
+								if(item.data('displaylist')){
+									MuraInlineEditor.data['displaylist']=item.data('displaylist');
+								}
+								if(item.data('imagesize')){
+									MuraInlineEditor.data['imagesize']=item.data('imagesize');
+								}
+								if(item.data('imagewidth')){
+									MuraInlineEditor.data['imagewidth']=item.data('imagewidth');
+								}
+								if(item.data('imageheight')){
+									MuraInlineEditor.data['imageheight']=item.data('imageheight');
+								}
+								if(item.data('nextn')){
+									MuraInlineEditor.data['nextn']=item.data('nextn');
+								}
+								if(item.data('sortby')){
+									MuraInlineEditor.data['sortby']=item.data('sortby');
+								}
+								if(item.data('sortdirection')){
+									MuraInlineEditor.data['sortdirection']=item.data('sortdirection');
+								}
 							}
 
-							MuraInlineEditor.data['objectparams']=encodeURIComponent(JSON.stringify(item.data()));
+							MuraInlineEditor.data[item.data('targetattr')]=encodeURIComponent(JSON.stringify(item.data()));
 
 						});
+
 
 						//objectlistarguments.regionID=rs.object~rs.name~rs.objectID~rs.params^
 
@@ -2259,7 +2262,7 @@
 			if(!displayObject.hasClass){
 				return true;
 			}
-			if(displayObject.hasClass('mura-body-object')){
+			if(displayObject.hasClass('mura-body-object') || displayObject.is('div.mura-object[data-targetattr]')){
 				return true;
 			}
 

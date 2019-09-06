@@ -910,10 +910,12 @@
 		<cfparam name="arguments.objectparams.instanceid" default="#createUUID()#">
 		<cfparam name="arguments.objectparams.render" default="server">
 
+		<!---
 		<cfif arguments.bodyRender or structKeyExists(arguments.objectParams,'isBodyObject')>
 			<cfset openingDiv=openingDiv & ' mura-body-object'>
 			<cfset structDelete(arguments.objectParams,'isBodyObject')>
 		</cfif>
+		--->
 
 		<cfset structDelete(arguments.objectParams,'undefined')>
 
@@ -2090,7 +2092,7 @@
 
 		<cfif arguments.$.siteConfig().hasDisplayObject(displayObjectKey)>
 			<cfset var params=$.content().getObjectParams()>
-			<cfset params.isBodyObject=true>
+			<cfset params.targetattr='objectparams'>
 			<cfif not isdefined('params.objectname')>
 				<cfset var objectDef=arguments.$.siteConfig().getDisplayObject(displayObjectKey)>
 				<cfset params.objectname=objectDef.name>
@@ -2103,7 +2105,7 @@
 
 		<cfif arguments.$.siteConfig().hasDisplayObject(displayObjectKey)>
 		<cfset var params=$.content().getObjectParams()>
-		<cfset params.isBodyObject=true>
+		<cfset params.targetattr='objectparams'>
 		<cfif not isdefined('params.objectname')>
 			<cfset var objectDef=arguments.$.siteConfig().getDisplayObject(displayObjectKey)>
 			<cfset params.objectname=objectDef.name>
@@ -2115,7 +2117,7 @@
 
 		<cfif arguments.$.siteConfig().hasDisplayObject(displayObjectKey) and arguments.$.siteConfig().getDisplayObject(displayObjectKey).custom>
 		<cfset var params=$.content().getObjectParams()>
-		<cfset params.isBodyObject=true>
+		<cfset params.targetattr='objectparams'>
 		<cfif not isdefined('params.objectname')>
 			<cfset var objectDef=arguments.$.siteConfig().getDisplayObject(displayObjectKey)>
 			<cfset params.objectname=objectDef.name>

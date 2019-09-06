@@ -276,6 +276,9 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 		<cfset var rs2 = "" />
 		<cfset var rs3 = "" />
 		<cfset var rs4 = "" />
+		<cfset var rs5 = "" />
+		<cfset var rs5 = "" />
+		<cfset var contentGateway=getBean('contentGateway')>
 
 		<cfif len(arguments.fileID)>
 			<cfquery attributeCollection="#variables.configBean.getReadOnlyQRYAttrs(name='rs1')#">
@@ -292,7 +295,13 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 
 			<cfquery attributeCollection="#variables.configBean.getReadOnlyQRYAttrs(name='rs3')#">
 			SELECT attributeValue FROM tclassextenddatauseractivity where
-			stringValue in (<cfqueryparam list="true" cfsqltype="cf_sql_varchar" value="#arguments.fileID#">)
+			<cfset local.started=false>
+			(<cfloop list="#arguments.fileid#" index="local.f">
+				<cfif local.started>or </cfif>
+				tclassextenddatauseractivity.attributeValue like <cfqueryparam  cfsqltype="cf_sql_varchar" value="%#contentGateway.serializeJSONParam(local.f)#%">
+				<cfset local.started=true>
+			 </cfloop>
+			)
 			and baseId not in (<cfqueryparam list="true" cfsqltype="cf_sql_varchar" value="#arguments.baseID#">)
 			</cfquery>
 
@@ -311,22 +320,20 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 			SELECT contentid FROM tcontent where
 			<cfset local.started=false>
 			(<cfloop list="#arguments.fileid#" index="local.f">
+				<cfif local.started>or </cfif>
 				tcontent.body like <cfqueryparam list="true" cfsqltype="cf_sql_varchar" value="%#local.f#%">
-				<cfif not local.started>or </cfif>
 				<cfset local.started=true>
 			 </cfloop>
 			)
 			and tcontent.contenthistId not in (<cfqueryparam list="true" cfsqltype="cf_sql_varchar" value="#arguments.baseID#">)
 			</cfquery>
 
-			<cfset var contentGateway=getBean('contentGateway')>
-
 			<cfquery attributeCollection="#variables.configBean.getReadOnlyQRYAttrs(name='rs5')#">
 			SELECT contentid FROM tcontent where
 			<cfset local.started=false>
 			(<cfloop list="#arguments.fileid#" index="local.f">
+				<cfif local.started>or </cfif>
 				tcontent.body like <cfqueryparam  cfsqltype="cf_sql_varchar" value="%#contentGateway.serializeJSONParam(local.f)#%">
-				<cfif not local.started>or </cfif>
 				<cfset local.started=true>
 			 </cfloop>
 			)
@@ -337,8 +344,8 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 			SELECT contentid FROM tcontentobjects where
 			<cfset local.started=false>
 			(<cfloop list="#arguments.fileid#" index="local.f">
+				<cfif local.started>or </cfif>
 				tcontentobjects.params like <cfqueryparam cfsqltype="cf_sql_varchar" value="%#contentGateway.serializeJSONParam(local.f)#%">
-				<cfif not local.started>or </cfif>
 				<cfset local.started=true>
 			 </cfloop>
 			)

@@ -1802,7 +1802,7 @@ Display Objects
 					<cfoutput>#bodyLookup.eventOutput#</cfoutput>
 				<cfelseif isDefined('bodyLookup.filepath')>
 					<cfset var objectParams=$.content().getObjectParams()>
-					<cfset objectParams.isBodyObject=true>
+					<cfset objectParams.targetattr="objectparams">
 					<cfinclude template="#bodyLookup.filepath#">
 
 				<!---
@@ -1948,7 +1948,7 @@ Display Objects
 			#bodyLookup.eventOutput#
 		<cfelseif isDefined('bodyLookup.filepath')>
 			<cfset var objectParams=arguments.params>
-			<cfset objectParams.isBodyObject=true>
+			<cfset objectParams.targetattr="objectparams">
 			<cfinclude template="#bodyLookup.filepath#">
 		<cfelse>
 			<cfif arguments.renderKids>

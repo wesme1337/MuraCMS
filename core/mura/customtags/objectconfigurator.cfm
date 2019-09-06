@@ -36,7 +36,7 @@
 		<cfparam name="request.hasbasicoptions" default="false">
 		<cfparam name="request.hasmetaoptions" default="false">
 		<cfparam name="request.haspositionoptions" default="false">
-		<cfparam name="attributes.params.isbodyobject" default="false">
+		<cfparam name="attributes.params.hasTargetAttr" default="false">
 
 		<cfscript>
 			if(!isStruct(attributes.params)){
@@ -151,7 +151,7 @@
 		<cfset request.hasbasicoptions=attributes.basictab>
 		</cfif>
 
-		<cfif not listFindNoCase('folder,gallery,calendar',attributes.params.object) and not (isBoolean(attributes.params.isbodyobject) and attributes.params.isbodyobject)>
+		<cfif not listFindNoCase('folder,gallery,calendar',attributes.params.object) and not (isBoolean(attributes.params.hasTargetAttr) and attributes.params.hasTargetAttr)>
 			<cfset request.haspositionoptions = true>
 		</cfif>
 
@@ -205,7 +205,7 @@
 	<cfoutput>
 
 		<!--- close the basic or style panel --->
-		<cfif request.hasbasicoptions or request.hasmetaoptions and not (IsBoolean(attributes.params.isbodyobject) and attributes.params.isbodyobject)>
+		<cfif request.hasbasicoptions or request.hasmetaoptions and not (IsBoolean(attributes.params.hasTargetAttr) and attributes.params.hasTargetAttr)>
 				</div> <!--- /end  mura-panel-collapse --->
 			</div> <!--- /end  mura-panel-body --->
 		</div> <!--- /end panel --->
@@ -300,7 +300,7 @@
 						</div> <!--- /end object panel --->
 
 					<!--- meta/label style panel --->
-					<cfif request.hasmetaoptions and not (IsBoolean(attributes.params.isbodyobject) and attributes.params.isbodyobject)>
+					<cfif request.hasmetaoptions and not (IsBoolean(attributes.params.hasTargetAttr) and attributes.params.hasTargetAttr)>
 						<!--- label --->
 						<div class="mura-panel panel">
 							<div class="mura-panel-heading" role="tab" id="heading-style-label">
@@ -746,7 +746,7 @@
 			//End Object Margin and Padding
 
 			// Begin Meta Margin and Padding
-			<cfif request.hasmetaoptions and not (IsBoolean(attributes.params.isbodyobject) and attributes.params.isbodyobject)>
+			<cfif request.hasmetaoptions and not (IsBoolean(attributes.params.hasTargetAttr) and attributes.params.hasTargetAttr)>
 			function updateMetaPadding(){
 				var t = $('#metapaddingtop').val().replace(numRE,'');
 				var r = $('#metapaddingright').val().replace(numRE,'');

@@ -39,8 +39,8 @@ CKEDITOR.editorConfig = function( config )
 	lite.userId='#JSStringFormat($.currentUser().getUserID())#';
 	--->
 
-	CKEditorBasePath='#application.configBean.getContext()#/core/modules/v1';
-	CKFinderBasePath='#application.configBean.getContext()#/core/modules/v1';
+	CKEditorBasePath='#$.siteConfig().getRootPath()#/core/modules/v1';
+	CKFinderBasePath='#$.siteConfig().getRootPath()#/core/modules/v1';
 	</cfoutput>
 
 	<cfoutput>
@@ -281,8 +281,8 @@ CKEDITOR.editorConfig = function( config )
 		// filebrowser settings needed for inline edit mode
     	// config.removePlugins = 'imageuploader';
     	// config.removePlugins = 'ckfinder';
-    	var connectorpath = '#application.configBean.getContext()#/core/vendor/ckeditor/plugins/murafilebrowser/filebrowser.cfm';
-		var uploadpath = '#application.Mura.getBean('settingsManager').getSite(session.siteid).getApi().getEndPoint()#/filebrowser/ckeditor_quick_upload?resourcepath=User_Assets&directory=/';
+    	var connectorpath = '#$.siteConfig().getRootPath()#/core/vendor/ckeditor/plugins/murafilebrowser/filebrowser.cfm';
+		var uploadpath = '#$.siteConfig().getApi().getEndPoint()#/filebrowser/ckeditor_quick_upload?resourcepath=User_Assets&directory=/';
 		config.filebrowserBrowseUrl = connectorpath + '?resourcepath=User_Assets&displaymode=2';
 		config.filebrowserImageBrowseUrl = connectorpath + '?resourcepath=User_Assets&directory=/&displaymode=1';
     	config.filebrowserUploadUrl = uploadpath + "File";

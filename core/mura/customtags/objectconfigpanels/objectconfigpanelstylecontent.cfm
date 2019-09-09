@@ -260,6 +260,8 @@
 								<label>Background Image</label>
 								<input type="hidden" id="contentbackgroundimage" name="backgroundImage" class="contentStyle" value="#esapiEncode('html_attr',attributes.params.stylesupport.contentstyles.backgroundimage)#">
 								<input type="text" id="contentbackgroundimageurl" name="contentbackgroundimageurl" placeholder="URL" class="styleSupport" value="#esapiEncode('html_attr',attributes.params.styleSupport.contentbackgroundimageurl)#">
+								<button type="button" class="btn mura-finder" data-target="contentbackgroundimageurl" data-completepath="false"><i class="mi-image"></i> Select Image</button>
+								<!---
 								<div class="btn-group btn-group-sm" role="group" aria-label="Select Image">		
 									<button type="button" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 										<i class="mi-image"></i> Select Image <span class="caret"></span>
@@ -269,6 +271,7 @@
 										<li><a class="mura-associmage" data-target="contentbackgroundimageurl" data-completepath="false" href="javascript:void(0);"> <i class="mi-th"></i> Associated Image</a></li>
 									</ul>
 								</div>
+								--->
 							</div>
 
 					<div class="mura-control-group mura-ui-grid content-css-bg-option bg-position" style="display:none;">

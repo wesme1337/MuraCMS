@@ -1882,6 +1882,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 	<cfset var w = "">
 	<cfset var c = "">
 	<cfset var categoryListLen=listLen(arguments.categoryID)>
+	<cfset var contentPoolId=getBean('settingsManager').getSite(arguments.siteid).getContentPoolID()>
 
 	<cfquery attributeCollection="#variables.configBean.getReadOnlyQRYAttrs(name='rsPublicSearch',maxrows=1000)#">
 	<!--- Find direct matches with no releasedate --->
@@ -1914,7 +1915,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 
 	         			(tcontent.Active = 1
 						AND tcontent.Approved = 1
-				  		AND tcontent.siteid = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.siteID#"/> )
+				  		AND tcontent.siteid in (<cfqueryparam list="true" cfsqltype="cf_sql_varchar" value="#contentPoolId#"/>) )
 
 						AND
 
@@ -2039,7 +2040,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 
 	         			(tcontent.Active = 1
 						AND tcontent.Approved = 1
-				  		AND tcontent.siteid = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.siteID#"/> )
+				  		AND tcontent.siteid in (<cfqueryparam list="true" cfsqltype="cf_sql_varchar" value="#contentPoolId#"/>) )
 
 						AND
 

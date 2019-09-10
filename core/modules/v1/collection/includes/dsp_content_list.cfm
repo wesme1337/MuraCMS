@@ -170,7 +170,7 @@
 						#variables.$.getContentListPropertyValue(arguments.field,"openingInnerMarkUp")#
 							#variables.$.getContentListLabel(arguments.field)#
 							<cfif arguments.type eq "Search" && this.searchShowNumbers eq 1><span class="record-index">#arguments.iterator.getRecordIndex()#.</span> </cfif>
-							<a href="#arguments.item.getURL()#"<cfif arguments.item.getTarget() eq '_blank'> target="_blank"</cfif>>#HTMLEditFormat(arguments.item.getMenuTitle())#</a>
+							<a href="#arguments.item.getURL(complete=true)#"<cfif arguments.item.getTarget() eq '_blank'> target="_blank"</cfif>>#HTMLEditFormat(arguments.item.getMenuTitle())#</a>
 						#variables.$.getContentListPropertyValue(arguments.field,"closingInnerMarkUp")#
 						</#variables.$.getContentListPropertyValue(arguments.field,'tag')#>
 					</cfcase>
@@ -183,7 +183,7 @@
 							<cfelseif arguments.modalimages>
 							<a href="#arguments.item.getImageURL(size='large')#" title="#HTMLEditFormat(arguments.item.getValue('title'))#" data-rel="shadowbox[gallery]" class="#this.contentListItemImageLinkClass#"><img src="#arguments.item.getImageURL(size=arguments.imageSize,width=arguments.imageWidth,height=arguments.imageHeight)#" alt="#HTMLEditFormat(arguments.item.getValue('title'))#"/></a>
 							<cfelse>
-							<a href="#arguments.item.getURL()#"<cfif arguments.item.getTarget() eq '_blank'> target="_blank"</cfif> title="#HTMLEditFormat(arguments.item.getValue('title'))#" class="#this.contentListItemImageLinkClass#"><img src="#arguments.item.getImageURL(size=arguments.imageSize,width=arguments.imageWidth,height=arguments.imageHeight)#"  alt="#htmlEditFormat(arguments.item.getValue('title'))#"/></a>
+							<a href="#arguments.item.getURL(complete=true)#"<cfif arguments.item.getTarget() eq '_blank'> target="_blank"</cfif> title="#HTMLEditFormat(arguments.item.getValue('title'))#" class="#this.contentListItemImageLinkClass#"><img src="#arguments.item.getImageURL(size=arguments.imageSize,width=arguments.imageWidth,height=arguments.imageHeight)#"  alt="#htmlEditFormat(arguments.item.getValue('title'))#"/></a>
 							</cfif>
 						#variables.$.getContentListPropertyValue(arguments.field,"closingInnerMarkUp")#
 						</#variables.$.getContentListPropertyValue(arguments.field,'tag')#>

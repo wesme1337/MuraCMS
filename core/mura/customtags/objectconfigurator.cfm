@@ -1146,6 +1146,7 @@
 			$('#objectwidthsel').on('change',function(){
 				var curVal = $(this).val();
 				var	curOption = $('#object-widthsel-ui .object-widthsel-option[data-value="' + curVal + '"]');
+				var defaultOption = $('#object-widthsel-ui .object-widthsel-option[data-value="mura-twelve"]');
 				var bpSel =	$('#objectbreakpointsel');
 				var bpDiv = $('div.objectbreakpointcontainer');
 
@@ -1161,11 +1162,13 @@
 						$(bpDiv).show();					
 					}
 				}
-				if (curOption == 'mura-expanded'){
-					curOption = 'mura-twelve';
+				if (curOption.length){
+					setGridWidth(curOption);
+					setGridIndicators(curOption);					
+				} else {
+					setGridWidth(defaultOption);
+					setGridIndicators(defaultOption);					
 				}
-				setGridWidth(curOption);
-				setGridIndicators(curOption);
 			});
 			
 			// run on load

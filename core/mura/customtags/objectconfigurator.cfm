@@ -22,7 +22,7 @@
 
 		<cfparam name="attributes.configurable" default="true">
 	 	<cfparam name="attributes.basictab" default="true">
-		<cfparam name="attributes.params.class" default="">
+		<cfparam name="attributes.params.class" default="mura-twelve">
 		<cfparam name="attributes.params.cssclass" default="">
 		<cfparam name="attributes.params.metacssclass" default="">
 		<cfparam name="attributes.params.metacssid" default="">
@@ -157,8 +157,7 @@
 
 		<cfscript>
 			attributes.positionoptions = [
-					{value='',label='Auto'}
-					,{value='mura-one', label='1/12',percent='8.33%', cols='1'}
+					{value='mura-one', label='1/12',percent='8.33%', cols='1'}
 					,{value='mura-two', label='1/6',percent='16.66%', cols='2'}
 					,{value='mura-three', label='1/4',percent='25%', cols='3'}
 					,{value='mura-four', label='1/3',percent='33.33%', cols='4'}
@@ -169,7 +168,7 @@
 					,{value='mura-nine', label='3/4',percent='75%', cols='9'}
 					,{value='mura-ten', label='5/6',percent='41.66%', cols='10'}
 					,{value='mura-eleven', label='11/12',percent='91.66%', cols='11'}
-					,{value='mura-twelve', label='Full',percent='100%', cols='12'}
+					,{value='mura-twelve', label='100%',percent='100%', cols='12'}
 					,{value='mura-expanded', label='Expanded',percent='100%'}
 				];
 		</cfscript>

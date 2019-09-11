@@ -547,7 +547,9 @@
 				}
 			});
 
-			<cfif len(contentcontainerclass) and listFind(attributes.params.class,'mura-expanded',' ') and listFind(attributes.params.contentcssclass,contentcontainerclass,' ')>
+			<cfif len(contentcontainerclass) 
+				and listFind(attributes.params.contentcssclass,contentcontainerclass,' ')
+				and listFind(attributes.params.class,'mura-expanded',' ')>
 				var hasExpandedContainerClass=true;
 			<cfelse>
 				var hasExpandedContainerClass=false;
@@ -575,12 +577,19 @@
 					contentcssclassArray=contentcssclass.val().split(' ');
 				}
 				var constraincontent=$('select[name="constraincontent"]');
+				var currentwidth = $('select[name="width"].classtoggle').val();
 
 				if(expandedContentContainerClass && constraincontent.length){
-					if($('select[name="width"].classtoggle').val()=='mura-expanded'){
+
+					// if selecting expanded class
+					if(currentwidth == 'mura-expanded' || currentwidth == 'mura-twelve'){
 						$('.constraincontentcontainer').show();
+
+						// if constraining content
 						if(constraincontent.val()=='constrain'){
+							// if expanded class not present yet
 							if(contentcssclassArray.indexOf(expandedContentContainerClass)==-1){
+								// apply container class
 								if(contentcssclassArray.length){
 									contentcssclass.val(contentcssclass.val() + ' ' + expandedContentContainerClass);
 								} else {
@@ -588,6 +597,8 @@
 								}
 							}
 							hasExpandedContainerClass=true;
+						
+						// if not constraining
 						} else {
 							if(contentcssclassArray.indexOf(expandedContentContainerClass) > -1){
 								for( var i = 0; i < contentcssclassArray.length; i++){
@@ -598,7 +609,8 @@
 							}
 							contentcssclass.val(contentcssclassArray.join(' '));
 							hasExpandedContainerClass=false;
-						}
+						} // end if constraining
+
 					} else if (hasExpandedContainerClass){
 						$('.constraincontentcontainer').hide();
 						if(contentcssclassArray.indexOf(expandedContentContainerClass) > -1){
@@ -1137,17 +1149,20 @@
 				var bpSel =	$('#objectbreakpointsel');
 				var bpDiv = $('div.objectbreakpointcontainer');
 
-				if (curVal == '' || curVal == 'mura-expanded'){
+				if (curVal == ''){
 					$(bpSel).val('').niceSelect('update');
 					$(bpDiv).hide();
 					resetGridWidth();
 					unsetGridWidth();
 				} else {
-					if (curVal == 'mura-twelve'){
+					if (curVal == 'mura-twelve' || curVal == 'mura-expanded'){
 						$(bpDiv).hide();
 					} else {
 						$(bpDiv).show();					
 					}
+				}
+				if (curOption == 'mura-expanded'){
+					curOption = 'mura-twelve';
 				}
 				setGridWidth(curOption);
 				setGridIndicators(curOption);

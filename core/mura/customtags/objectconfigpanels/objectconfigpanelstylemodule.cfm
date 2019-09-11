@@ -51,6 +51,7 @@
 
 								<div class="mura-control-group">
 									<label>#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.width')#</label>
+									
 									<div id="object-widthsel-ui">
 										<div id="object-widthsel-wrapper">
 										<cfloop from="1" to="#arrayLen(attributes.positionoptions)#" index="i">
@@ -61,6 +62,7 @@
 										</cfloop>
 										</div>
 									</div>
+
 									<select name="width" id="objectwidthsel" class="classtoggle">
 										<cfloop from="1" to="#arrayLen(attributes.positionoptions)#" index="i">
 											<cfset p = attributes.positionoptions[i]>
@@ -69,7 +71,10 @@
 											<cfset v = "'#p["value"]#'">
 										</cfloop>
 									</select>
+
 								</div>
+
+<!--- mark: todo, change to toggle, show on expanded or mura-twelve --->
 
 								<cfif len(contentcontainerclass)>
 									<div class="mura-control-group constraincontentcontainer" style='display:none;'>

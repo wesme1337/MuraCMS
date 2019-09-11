@@ -610,6 +610,8 @@
 						}
 						contentcssclass.val(contentcssclassArray.join(' '));
 						hasExpandedContainerClass=false;
+					} else {
+						$('.constraincontentcontainer').hide();
 					}
 
 					contentcssclass.val($.trim(contentcssclass.val()));

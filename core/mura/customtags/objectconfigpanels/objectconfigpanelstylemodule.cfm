@@ -74,15 +74,30 @@
 
 								</div>
 
-<!--- mark: todo, change to toggle, show on expanded or mura-twelve --->
-
+								<!--- todo: add toggle for 'expanded' to control expanded vs 100%--->
 								<cfif len(contentcontainerclass)>
 									<div class="mura-control-group constraincontentcontainer" style='display:none;'>
-											<label>Constrain Content</label>
-											<select name="constraincontent" id="objectconstrainsel" class="classtoggle">
-											<option value=""<cfif not listFind(attributes.params.contentcssclass,contentcontainerclass,' ')> selected</cfif>>False</option>
-											<option value="constrain"<cfif listFind(attributes.params.contentcssclass,contentcontainerclass,' ')> selected</cfif>>True</option>
-											</select>
+
+											<!--- todo: rb keys --->
+											<div class="mura-input-group">
+
+												<label class="css-input switch switch-sm switch-primary">
+    				              <input type="checkbox" id="expanded" class="classtoggle" name="expanded" value="true"><span></span> Expanded
+      				          </label>
+
+												<label class="css-input switch switch-sm switch-primary">
+    				              <input name="constraincontenttoggle" type="checkbox" id="constraincontenttoggle" class="classtoggle" value="true"<cfif listFind(attributes.params.contentcssclass,contentcontainerclass,' ')> checked</cfif>><span></span> Constrain Content
+      				          </label>
+
+												<div style="display:none;">		
+													<select name="constraincontent" id="objectconstrainsel" class="classtoggle">
+														<option value=""<cfif not listFind(attributes.params.contentcssclass,contentcontainerclass,' ')> selected</cfif>>False</option>
+														<option value="constrain"<cfif listFind(attributes.params.contentcssclass,contentcontainerclass,' ')> selected</cfif>>True</option>
+													</select> 
+												</div>									 								
+
+											</div>									 							
+										
 									</div>
 								</cfif>
 

@@ -1143,7 +1143,7 @@
 			});
 
 			// reset breakpoint on width selection
-			$('#objectwidthsel').on('change',function(){
+			$('#objectwidthsel').on('change', function(){
 				var curVal = $(this).val();
 				var	curOption = $('#object-widthsel-ui .object-widthsel-option[data-value="' + curVal + '"]');
 				var defaultOption = $('#object-widthsel-ui .object-widthsel-option[data-value="mura-twelve"]');
@@ -1170,6 +1170,15 @@
 					setGridIndicators(defaultOption);					
 				}
 			});
+
+			// constrain content
+			$('#constraincontenttoggle').change(function(){
+				if ($(this).is(':checked')){
+					$('#objectconstrainsel').val('constrain').trigger('change').niceSelect('update');
+				} else {
+					$('#objectconstrainsel').val('').trigger('change').niceSelect('update');
+				}
+			})
 			
 			// run on load
 			$('#objectwidthsel').trigger('change');

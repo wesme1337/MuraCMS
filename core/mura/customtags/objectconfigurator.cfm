@@ -419,10 +419,10 @@
 			)
 			
 			$('#object-widthsel-ui .object-widthsel-option').on('click',function(){
-				selectGridWidth($(this));
 				setGridWidth($(this));
 				setGridIndicators($(this));
 				$(this).addClass('selected').siblings().removeClass('selected');
+				selectGridWidth($(this));
 			})
 
 			function unsetGridWidth(){
@@ -434,6 +434,12 @@
 
 			function selectGridWidth(activeOption){
 				var optionValue = $(activeOption).attr('data-value');
+				if (optionValue == 'mura-twelve' && $('#expandedwidthtoggle').is(':checked')){
+					optionValue = 'mura-expanded';
+				} else if (optionValue == 'mura-expanded' && !($('#expandedwidthtoggle').is(':checked'))){
+					optionValue = 'mura-twelve';
+				}
+
 				$('#objectwidthsel').val(optionValue).trigger('change').niceSelect('update');
 			}
 
@@ -1184,12 +1190,17 @@
 			})
 			
 			// expanded width
-			$('#expandedwidthtoggle').change(function(){
-				if ($(this).is(':checked')){
+			function toggleExpandedWidth(){
+				var expToggle = $('#expandedwidthtoggle');
+				if ($(expToggle).is(':checked')){
 					$('#objectwidthsel').val('mura-expanded').trigger('change').niceSelect('update');
 				} else {
 					$('#objectwidthsel').val('mura-twelve').trigger('change').niceSelect('update');
 				}
+			}
+
+			$('#expandedwidthtoggle').change(function(){
+				toggleExpandedWidth();
 			})
 
 			// numeric input - select on focus

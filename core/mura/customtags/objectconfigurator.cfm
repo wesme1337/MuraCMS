@@ -1148,9 +1148,10 @@
 				$(el).val(str).trigger('change');
 			});
 
-			// reset breakpoint on width selection
-			$('#objectwidthsel').on('change', function(){
-				var curVal = $(this).val();
+
+			// update width UI controls 
+			function updateObjectWidthSelection(){
+				var curVal = $('#objectwidthsel').val();
 				var	curOption = $('#object-widthsel-ui .object-widthsel-option[data-value="' + curVal + '"]');
 				var defaultOption = $('#object-widthsel-ui .object-widthsel-option[data-value="mura-twelve"]');
 				var bpSel =	$('#objectbreakpointsel');
@@ -1175,8 +1176,11 @@
 					setGridWidth(defaultOption);
 					setGridIndicators(defaultOption);					
 				}
+			}
+			// run on change of hidden dropdown
+			$('#objectwidthsel').on('change', function(){
+					updateObjectWidthSelection();
 			});
-
 			// run on load
 			$('#objectwidthsel').trigger('change');
 

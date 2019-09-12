@@ -571,7 +571,7 @@ body.configurator-wrapper {
 
 			#object-widthsel-ui{
 				clear: both;
-				margin-bottom: 12px;
+				margin-bottom: 6px;
 				width: 100%;
 			}	
 			#object-widthsel-wrapper{
@@ -854,9 +854,35 @@ body.configurator-wrapper {
 				width: 16px;
 			}
 
-		}
+			input.radio,
+			input[type=radio],
+			input.checkbox,
+			input[type=checkbox] {
+				margin-top: 1px;
+				border: none;
+				outline: 0;
+			}
 
-		// .mura-control-group 
+			label.switch{
+		    margin-left: 0;
+
+		    &>input + span{
+		    	background-color: #333;
+		    	margin-right: 4px;
+					
+					&:after{
+		    		background-color: #AFAFAF;
+		    	}
+		    }
+		  }
+
+			.css-radio-primary input:checked+span:after,
+			.switch-primary input:checked+span {
+				background-color: #646464;
+			}
+
+		}	// .mura-control-group 
+		
 		label,
 		.control-label,
 		.mura-control-label {
@@ -958,15 +984,6 @@ body.configurator-wrapper {
 		input[type=week]::-webkit-calendar-picker-indicator:hover {
 			background: none;
 			color: #d8d8d8;
-		}
-
-		.mura-control-group input.radio,
-		.mura-control-group input[type=radio],
-		.mura-control-group input.checkbox,
-		.mura-control-group input[type=checkbox] {
-			margin-top: 1px;
-			border: none;
-			outline: 0;
 		}
 
 		textarea {

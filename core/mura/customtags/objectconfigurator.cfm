@@ -26,7 +26,7 @@
 		<cfparam name="attributes.params.cssclass" default="">
 		<cfparam name="attributes.params.metacssclass" default="">
 		<cfparam name="attributes.params.metacssid" default="">
-		<cfparam name="attributes.params.contentcssclass" default="">
+		<cfparam name="attributes.params.contentcssclass" default="#esapiEncode("javascript",$.getContentRenderer().expandedContentContainerClass)#">
 		<cfparam name="attributes.params.contentcssid" default="">
 		<cfparam name="attributes.params.cssid" default="">
 		<cfparam name="attributes.params.label" default="">

@@ -1171,6 +1171,9 @@
 				}
 			});
 
+			// run on load
+			$('#objectwidthsel').trigger('change');
+
 			// constrain content
 			$('#constraincontenttoggle').change(function(){
 				if ($(this).is(':checked')){
@@ -1180,8 +1183,14 @@
 				}
 			})
 			
-			// run on load
-			$('#objectwidthsel').trigger('change');
+			// expanded width
+			$('#expandedwidthtoggle').change(function(){
+				if ($(this).is(':checked')){
+					$('#objectwidthsel').val('mura-expanded').trigger('change').niceSelect('update');
+				} else {
+					$('#objectwidthsel').val('mura-twelve').trigger('change').niceSelect('update');
+				}
+			})
 
 			// numeric input - select on focus
 			$('#configuratorContainer input.numeric').on('click', function(){

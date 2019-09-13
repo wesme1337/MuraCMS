@@ -51,6 +51,7 @@
 
 								<div class="mura-control-group">
 									<label>#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.width')#</label>
+									<!--- width selector widget --->
 									<div id="object-widthsel-ui">
 										<div id="object-widthsel-wrapper">
 										<cfloop from="1" to="#arrayLen(attributes.positionoptions)#" index="i">
@@ -61,23 +62,35 @@
 										</cfloop>
 										</div>
 									</div>
-									<select name="width" id="objectwidthsel" class="classtoggle">
-										<cfloop from="1" to="#arrayLen(attributes.positionoptions)#" index="i">
-											<cfset p = attributes.positionoptions[i]>
-											<option value="#p['value']#"<cfif listFind(attributes.params.class,'#p['value']#',' ')> selected</cfif>>#p['label']#</option>
-											<cfset l = "'#p["label"]#'">
-											<cfset v = "'#p["value"]#'">
-										</cfloop>
-									</select>
+									<!--- hidden select tied to js logic in objectconfigurator.cfm --->
+									<div style="display: none">
+										<select name="width" id="objectwidthsel" class="classtoggle">
+											<cfloop from="1" to="#arrayLen(attributes.positionoptions)#" index="i">
+												<cfset p = attributes.positionoptions[i]>
+												<option value="#p['value']#"<cfif listFind(attributes.params.class,'#p['value']#',' ')> selected</cfif>>#p['label']#</option>
+												<cfset l = "'#p["label"]#'">
+												<cfset v = "'#p["value"]#'">
+											</cfloop>
+										</select>
+									</div>
 								</div>
 
 								<cfif len(contentcontainerclass)>
 									<div class="mura-control-group constraincontentcontainer" style='display:none;'>
-											<label>Constrain Content</label>
-											<select name="constraincontent" id="objectconstrainsel" class="classtoggle">
-											<option value=""<cfif not listFind(attributes.params.contentcssclass,contentcontainerclass,' ')> selected</cfif>>False</option>
-											<option value="constrain"<cfif listFind(attributes.params.contentcssclass,contentcontainerclass,' ')> selected</cfif>>True</option>
-											</select>
+												<!--- todo: rb keys --->
+												<label class="css-input switch switch-sm switch-primary">
+    				              <input type="checkbox" id="expandedwidthtoggle" name="expandedwidthtoggle" value="true"<cfif listFind(attributes.params.class,'mura-expanded',' ')> selected</cfif>><span></span> Expand Width
+      				          </label>
+												<label class="css-input switch switch-sm switch-primary">
+    				              <input name="constraincontenttoggle" type="checkbox" id="constraincontenttoggle" class="classtoggle" value="true"<cfif listFind(attributes.params.contentcssclass,contentcontainerclass,' ')> checked</cfif>><span></span> Constrain Content
+      				          </label>
+      									<!--- hidden select tied to js logic in objectconfigurator.cfm --->
+												<div style="display:none;">	
+													<select name="constraincontent" id="objectconstrainsel" class="classtoggle">
+														<option value=""<cfif not listFind(attributes.params.contentcssclass,contentcontainerclass,' ')> selected</cfif>>False</option>
+														<option value="constrain"<cfif listFind(attributes.params.contentcssclass,contentcontainerclass,' ')> selected</cfif>>True</option>
+													</select> 
+												</div>									 								
 									</div>
 								</cfif>
 

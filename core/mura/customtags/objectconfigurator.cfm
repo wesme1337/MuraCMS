@@ -22,7 +22,7 @@
 
 		<cfparam name="attributes.configurable" default="true">
 	 	<cfparam name="attributes.basictab" default="true">
-		<cfparam name="attributes.params.class" default="">
+		<cfparam name="attributes.params.class" default="mura-twelve">
 		<cfparam name="attributes.params.cssclass" default="">
 		<cfparam name="attributes.params.metacssclass" default="">
 		<cfparam name="attributes.params.metacssid" default="">
@@ -157,8 +157,7 @@
 
 		<cfscript>
 			attributes.positionoptions = [
-					{value='',label='Auto'}
-					,{value='mura-one', label='1/12',percent='8.33%', cols='1'}
+					{value='mura-one', label='1/12',percent='8.33%', cols='1'}
 					,{value='mura-two', label='1/6',percent='16.66%', cols='2'}
 					,{value='mura-three', label='1/4',percent='25%', cols='3'}
 					,{value='mura-four', label='1/3',percent='33.33%', cols='4'}
@@ -169,7 +168,7 @@
 					,{value='mura-nine', label='3/4',percent='75%', cols='9'}
 					,{value='mura-ten', label='5/6',percent='41.66%', cols='10'}
 					,{value='mura-eleven', label='11/12',percent='91.66%', cols='11'}
-					,{value='mura-twelve', label='Full',percent='100%', cols='12'}
+					,{value='mura-twelve', label='100%',percent='100%', cols='12'}
 					,{value='mura-expanded', label='Expanded',percent='100%'}
 				];
 		</cfscript>
@@ -420,10 +419,10 @@
 			)
 			
 			$('#object-widthsel-ui .object-widthsel-option').on('click',function(){
-				selectGridWidth($(this));
 				setGridWidth($(this));
 				setGridIndicators($(this));
 				$(this).addClass('selected').siblings().removeClass('selected');
+				selectGridWidth($(this));
 			})
 
 			function unsetGridWidth(){
@@ -435,6 +434,12 @@
 
 			function selectGridWidth(activeOption){
 				var optionValue = $(activeOption).attr('data-value');
+				if (optionValue == 'mura-twelve' && $('#expandedwidthtoggle').is(':checked')){
+					optionValue = 'mura-expanded';
+				} else if (optionValue == 'mura-expanded' && !($('#expandedwidthtoggle').is(':checked'))){
+					optionValue = 'mura-twelve';
+				}
+
 				$('#objectwidthsel').val(optionValue).trigger('change').niceSelect('update');
 			}
 
@@ -548,7 +553,9 @@
 				}
 			});
 
-			<cfif len(contentcontainerclass) and listFind(attributes.params.class,'mura-expanded',' ') and listFind(attributes.params.contentcssclass,contentcontainerclass,' ')>
+			<cfif len(contentcontainerclass) 
+				and listFind(attributes.params.contentcssclass,contentcontainerclass,' ')
+				and listFind(attributes.params.class,'mura-expanded',' ')>
 				var hasExpandedContainerClass=true;
 			<cfelse>
 				var hasExpandedContainerClass=false;
@@ -576,12 +583,19 @@
 					contentcssclassArray=contentcssclass.val().split(' ');
 				}
 				var constraincontent=$('select[name="constraincontent"]');
+				var currentwidth = $('select[name="width"].classtoggle').val();
 
 				if(expandedContentContainerClass && constraincontent.length){
-					if($('select[name="width"].classtoggle').val()=='mura-expanded'){
+
+					// if selecting expanded class
+					if(currentwidth == 'mura-expanded' || currentwidth == 'mura-twelve'){
 						$('.constraincontentcontainer').show();
+
+						// if constraining content
 						if(constraincontent.val()=='constrain'){
+							// if expanded class not present yet
 							if(contentcssclassArray.indexOf(expandedContentContainerClass)==-1){
+								// apply container class
 								if(contentcssclassArray.length){
 									contentcssclass.val(contentcssclass.val() + ' ' + expandedContentContainerClass);
 								} else {
@@ -589,6 +603,8 @@
 								}
 							}
 							hasExpandedContainerClass=true;
+						
+						// if not constraining
 						} else {
 							if(contentcssclassArray.indexOf(expandedContentContainerClass) > -1){
 								for( var i = 0; i < contentcssclassArray.length; i++){
@@ -599,7 +615,8 @@
 							}
 							contentcssclass.val(contentcssclassArray.join(' '));
 							hasExpandedContainerClass=false;
-						}
+						} // end if constraining
+
 					} else if (hasExpandedContainerClass){
 						$('.constraincontentcontainer').hide();
 						if(contentcssclassArray.indexOf(expandedContentContainerClass) > -1){
@@ -611,6 +628,8 @@
 						}
 						contentcssclass.val(contentcssclassArray.join(' '));
 						hasExpandedContainerClass=false;
+					} else {
+						$('.constraincontentcontainer').hide();
 					}
 
 					contentcssclass.val($.trim(contentcssclass.val()));
@@ -1129,31 +1148,64 @@
 				$(el).val(str).trigger('change');
 			});
 
-			// reset breakpoint on width selection
-			$('#objectwidthsel').on('change',function(){
-				var curVal = $(this).val();
+
+			// update width UI controls 
+			function updateObjectWidthSelection(){
+				var curVal = $('#objectwidthsel').val();
 				var	curOption = $('#object-widthsel-ui .object-widthsel-option[data-value="' + curVal + '"]');
+				var defaultOption = $('#object-widthsel-ui .object-widthsel-option[data-value="mura-twelve"]');
 				var bpSel =	$('#objectbreakpointsel');
 				var bpDiv = $('div.objectbreakpointcontainer');
 
-				if (curVal == '' || curVal == 'mura-expanded'){
+				if (curVal == ''){
 					$(bpSel).val('').niceSelect('update');
 					$(bpDiv).hide();
 					resetGridWidth();
 					unsetGridWidth();
 				} else {
-					if (curVal == 'mura-twelve'){
+					if (curVal == 'mura-twelve' || curVal == 'mura-expanded'){
 						$(bpDiv).hide();
 					} else {
 						$(bpDiv).show();					
 					}
 				}
-				setGridWidth(curOption);
-				setGridIndicators(curOption);
+				if (curOption.length){
+					setGridWidth(curOption);
+					setGridIndicators(curOption);					
+				} else {
+					setGridWidth(defaultOption);
+					setGridIndicators(defaultOption);					
+				}
+			}
+			// run on change of hidden dropdown
+			$('#objectwidthsel').on('change', function(){
+					updateObjectWidthSelection();
 			});
-			
 			// run on load
 			$('#objectwidthsel').trigger('change');
+
+			// constrain content
+			$('#constraincontenttoggle').change(function(){
+				if ($(this).is(':checked')){
+					$('#objectconstrainsel').val('constrain').trigger('change').niceSelect('update');
+				} else {
+					$('#objectconstrainsel').val('').trigger('change').niceSelect('update');
+				}
+			})
+			
+			// expanded width
+			function toggleExpandedWidth(){
+				var expToggle = $('#expandedwidthtoggle');
+				if ($(expToggle).is(':checked')){
+					$('#objectwidthsel').val('mura-expanded').trigger('change').niceSelect('update');
+				} else {
+					$('#objectwidthsel').val('mura-twelve').trigger('change').niceSelect('update');
+				}
+			}
+
+			$('#expandedwidthtoggle').change(function(){
+				toggleExpandedWidth();
+			})
 
 			// numeric input - select on focus
 			$('#configuratorContainer input.numeric').on('click', function(){

@@ -64,23 +64,6 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 	 editSummary = function(){
 	 		<cfif application.configBean.getValue("htmlEditorType") neq "none">
 	 		if(!summaryLoaded){
-	 		<cfif application.configBean.getValue("htmlEditorType") eq "fckeditor">
-		   		FCKeditor_OnComplete=htmlEditorOnComplete;
-		     	var oFCKeditor = new FCKeditor( 'summary' ) ;
-			  	//oFCKeditor.instanceName	= "summary";
-				oFCKeditor.value			= document.contentForm.summary.value;
-				oFCKeditor.BasePath		= "#application.configBean.getContext()#/wysiwyg/";
-				oFCKeditor.Config.EditorAreaCSS	= '#application.settingsManager.getSite(rc.siteid).getThemeAssetPath()#/css/editor.css';
-				oFCKeditor.Config.StylesXmlPath = '#application.settingsManager.getSite(rc.siteid).getThemeAssetPath()#/css/fckstyles.xml';
-				<cfif fileExists("#expandPath(application.settingsManager.getSite(rc.siteid).getThemeIncludePath())#/js/fckconfig.js.cfm")>
-				oFCKeditor.Config.CustomConfigurationsPath='#application.settingsManager.getSite(rc.siteid).getThemeAssetPath()#/js/fckconfig.js.cfm?EditorType=Summary,';
-				</cfif>
-				oFCKeditor.width			= "98%";
-				oFCKeditor.ToolbarSet			= "Summary";
-				oFCKeditor.Config.DefaultLanguage='#lcase(session.rb)#';
-				oFCKeditor.Config.AutoDetectLanguage=false;
-		     	oFCKeditor.ReplaceTextarea();
-		     <cfelse>
 			     if(jQuery('##summary').html()==''){
 			     	jQuery('##summary').html('<p></p>');
 			     }
@@ -90,8 +73,6 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 		     		htmlEditorOnComplete
 		     	);
 	    		summaryLoaded=true;
-		     </cfif>
-
 			}
 			</cfif>
 		}

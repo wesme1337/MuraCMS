@@ -103,7 +103,7 @@
 						<cf_datetimeselector name="displayStart" datetime="#rc.contentBean.getDisplayStart(timezone=displayInterval.timezone)#" timeselectwrapper="true">
 
 							<label id="displayIntervalToLabel" class="time"<cfif rc.ptype neq 'Calendar'> style=
-							display:none;"</cfif>>#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.displayinterval.to')#</label>
+							"display:none;"</cfif>>#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.displayinterval.to')#</label>
 
 						<cfif rc.ptype eq 'Calendar'>
 							<cf_datetimeselector name="displayStop" datetime="#rc.contentBean.getDisplayStop(timezone=displayInterval.timezone)#" defaulthour="23" defaultminute="59"  timeselectwrapper="true">

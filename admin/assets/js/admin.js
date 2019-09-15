@@ -305,21 +305,42 @@ function eraseCookie(e) {
 
 newWindow = null;
 
+function setMarkdownEditors(selector) {
+    selector=selector || "textarea.mura-markdown, tecta.markdownEditor";
+    var editors=Mura(selector);
+
+    editors.forEach(function(e){
+        if(!e[i].getAttribute("mura-inprocess")){
+            e[i].setAttribute("mura-inprocess", "true");
+            var t = CKEDITOR.instances[e[i].id];
+            void 0 !== t && null != t && CKEDITOR.remove(t), "" == Mura(document.getElementById(e[i].id)).val() && Mura(document.getElementById(e[i].id)).val("<p></p>");
+            var a = e[i].getAttribute("data-toolbar") || "Default";
+            $(document.getElementById(e[i].id)).ckeditor({
+                toolbar: a,
+                customConfig: "config.js.cfm"
+            }, htmlEditorOnComplete);
+        }
+    })
+}
+
 var HTMLEditorLoadCount = 0;
 
-function setHTMLEditors() {
-    var e = document.getElementsByTagName("textarea");
-    new Array();
-    for (i = 0; i < e.length; i++) if ("htmlEditor" == e[i].className && !e[i].getAttribute("mura-inprocess")) {
-        e[i].setAttribute("mura-inprocess", "true");
-        var t = CKEDITOR.instances[e[i].id];
-        void 0 !== t && null != t && CKEDITOR.remove(t), "" == $(document.getElementById(e[i].id)).val() && $(document.getElementById(e[i].id)).val("<p></p>");
-        var a = e[i].getAttribute("data-toolbar") || "Default";
-        $(document.getElementById(e[i].id)).ckeditor({
-            toolbar: a,
-            customConfig: "config.js.cfm"
-        }, htmlEditorOnComplete);
-    }
+function setHTMLEditors(selector) {
+    selector=selector || "textarea.mura-html, tecta.htmlEditor";
+    var editors=Mura(selector);
+
+    editors.forEach(function(e){
+        if(!e[i].getAttribute("mura-inprocess")){
+            e[i].setAttribute("mura-inprocess", "true");
+            var t = CKEDITOR.instances[e[i].id];
+            void 0 !== t && null != t && CKEDITOR.remove(t), "" == Mura(document.getElementById(e[i].id)).val() && Mura(document.getElementById(e[i].id)).val("<p></p>");
+            var a = e[i].getAttribute("data-toolbar") || "Default";
+            $(document.getElementById(e[i].id)).ckeditor({
+                toolbar: a,
+                customConfig: "config.js.cfm"
+            }, htmlEditorOnComplete);
+        }
+    })
 }
 
 function htmlEditorOnComplete(e) {

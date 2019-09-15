@@ -1230,7 +1230,7 @@ buttons: {
 
 		$.each(r, function(name, value) {
 			if (value.length){
-				console.log(name + ": " + value);
+				//console.log(name + ": " + value);
 			}
 			$('#extendset-container-' + name + ' .load-inline').spin(false);
 			$('#extendset-container-' + name).html(value);
@@ -1275,7 +1275,8 @@ buttons: {
 		}
 
 		this.checkExtendSetTargeting();
-		setHTMLEditors();
+		setHTMLEditors(".mura-html, .htmlEditor");
+		setMarkdownEditors(".mura-markdown, .markdownEditor");
 		setDatePickers(".tab-content .datepicker", dtLocale);
 		setColorPickers(".tab-content .mura-colorpicker");
 		setFinders(".tab-content .mura-ckfinder, .tab-content .mura-finder");

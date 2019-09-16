@@ -117,7 +117,7 @@ CKEDITOR.editorConfig = function( config )
 	config.toolbar_Summary = [
 		{name: 'group0', items: ['Bold','Italic','Underline','RemoveFormat','-','NumberedList','BulletedList','-','Link','Unlink']},
 		{name: 'group1', items: ['PasteText','PasteFromWord','-','Image','-','SpecialChar']},
-		{name: 'group2', items: ['A11ychecker','Source']}
+		{name: 'group2', items: ['A11ychecker','Source','Markdown']}
 	];
 
 	config.toolbar_Form = [
@@ -132,7 +132,7 @@ CKEDITOR.editorConfig = function( config )
 	];
 
 	config.toolbar_Basic = [
-		{name: 'group1', items: ['Bold','Italic','RemoveFormat','-','NumberedList','BulletedList','-','Link','Unlink']}
+		{name: 'group1', items: ['Bold','Italic','RemoveFormat','-','NumberedList','BulletedList','-','Link','Unlink','Markdown']}
 	];
 
 	config.toolbar_FormBuilder = [

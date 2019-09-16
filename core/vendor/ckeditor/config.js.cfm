@@ -100,7 +100,7 @@ CKEDITOR.editorConfig = function( config )
 		{name: 'group3', items:['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock']},
 		{name: 'group4', items:['Link','Unlink','Anchor']},
 		{name: 'group5', items:['PasteText','PasteFromWord','-','Image','oembed','leaflet','-','Table','HorizontalRule','SpecialChar','-','Selectlink','SelectComponent','Templates'<cfif application.configBean.getEnableMuraTag()>,'muratag'</cfif>]},
-		{name: 'group6', items:['Find','A11ychecker','Source','Maximize']}
+		{name: 'group6', items:['Find','A11ychecker','Source','Markdown','Maximize']}
 	];
 
 	config.toolbar_QuickEdit = [
@@ -146,7 +146,7 @@ CKEDITOR.editorConfig = function( config )
 		{name: 'group2', items:['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock']},	
 		{name: 'group3', items: ['PasteText','PasteFromWord','-','Image','-','SpecialChar']},
 		{name: 'group4', items: ['Selectlink','SelectComponent','Templates']},
-		{name: 'group5', items: ['A11ychecker','Source']}
+		{name: 'group5', items: ['A11ychecker','Source','Markdown']}
 
 	];
 
@@ -215,7 +215,7 @@ CKEDITOR.editorConfig = function( config )
 
 	<!--- /Toolbars --->
 
-	config.extraPlugins = 'SelectComponent,Selectlink,leaflet,tableresize,onchange,justify,find,bidi,div,showblocks,forms,templates,pagebreak,codemirror,widget,lineutils,dialog,oembed,sourcedialog,fakeobjects,dialogui,showprotected,balloonpanel,dialogadvtab,a11ychecker,image2';
+	config.extraPlugins = 'SelectComponent,Selectlink,leaflet,tableresize,onchange,justify,find,bidi,div,showblocks,forms,templates,pagebreak,codemirror,widget,lineutils,dialog,oembed,sourcedialog,fakeobjects,dialogui,showprotected,balloonpanel,dialogadvtab,a11ychecker,image2,markdown';
 
 	if(typeof jQuery == 'undefined'){
 		config.toolbar_QuickEdit[0].items.shift()

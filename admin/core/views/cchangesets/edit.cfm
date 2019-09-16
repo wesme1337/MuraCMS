@@ -179,25 +179,32 @@ version 2 without this exception.  You may, if you choose, apply this exception 
           <label>
           #application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.tags')#
           </label>
-          <input type="text" name="tags">
-            <div id="tags" class="mura-control justify tagSelector">
-              <cfif len(rc.changeset.getTags())>
-                <cfloop list="#rc.changeset.getTags()#" index="i">
-                  <span class="tag">
+          <div id="tags" class="mura-control justify tagSelector">
+            <input type="text" name="tags">
+            <cfif len(rc.changeset.getTags())>
+              <cfloop list="#rc.changeset.getTags()#" index="i">
+                <span class="tag">
                   #esapiEncode('html',i)# <a><i class="mi-times-circle"></i></a>
                   <input name="tags" type="hidden" value="#esapiEncode('html_attr',i)#">
-                  </span>
-                </cfloop>
-              </cfif>
+                </span>
+              </cfloop>
+            </cfif>
           </div>
 
           <script>
-          $(document).ready(function(){
-            $.get('?muraAction=cChangesets.loadtagarray&siteid=' + siteid).done(function(data){
-            var tagArray=eval('(' + data + ')');
-            $('##tags').tagSelector(tagArray, 'tags');
-            });
-          });
+          	$(document).ready(function(){
+						$.ajax({
+							url: '?muraAction=cchangesets.loadtagarray&siteid=' + siteid,
+							dataType: 'text',
+							success:function(data){
+                var tagArray=[];
+                if(data){
+							       tagArray=eval('(' + data + ')');
+		            }
+								$('##tags').tagSelector(tagArray, 'tags');
+							}
+						});
+					});
         </script>
       </div>
     </div>

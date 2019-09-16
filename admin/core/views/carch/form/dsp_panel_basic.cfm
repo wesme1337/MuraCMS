@@ -320,7 +320,21 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 
 								<cfif application.configBean.getValue("htmlEditorType") eq "none">
 									<textarea name="body" id="body">#esapiEncode('html',rc.contentBean.getBody())#</textarea>
-								<cfelse>
+								<cfelseif application.configBean.getValue("htmlEditorType") eq "markdown">
+									<div id="body-markdown-wrapper">
+										<textarea class="mura-markdown" data-height="calc(100vh - 380px)" name="body" id="body">#esapiEncode('html',rc.contentBean.getBody())#</textarea>
+									</div>
+									<script>
+									hideBodyEditor=function(){	
+										jQuery("##body-markdown-wrapper").hide();
+										jQuery(".no-body-container").show();
+									}
+									showBodyEditor=function(){
+										jQuery("##body-markdown-wrapper").show();
+										jQuery(".no-body-container").hide();
+									}
+									</script>
+								<cfelse>	
 									<textarea name="body" id="body"><cfif len(rc.contentBean.getBody())>#esapiEncode('html',rc.contentBean.getBody())#<cfelse><p></p></cfif></textarea>
 									<script type="text/javascript">
 									var loadEditorCount = 0;

@@ -305,22 +305,26 @@ eraseCookie=function(e) {
 
 newWindow = null;
 
-setMarkdownEditors=function(selector) {
-    selector=selector || "textarea.mura-markdown, tecta.markdownEditor";
-    var editors=Mura(selector);
+markdownInstances={};
 
-    editors.forEach(function(e){
-        if(!e[i].getAttribute("mura-inprocess")){
-            e[i].setAttribute("mura-inprocess", "true");
-            var t = CKEDITOR.instances[e[i].id];
-            void 0 !== t && null != t && CKEDITOR.remove(t), "" == Mura(document.getElementById(e[i].id)).val() && Mura(document.getElementById(e[i].id)).val("<p></p>");
-            var a = e[i].getAttribute("data-toolbar") || "Default";
-            $(document.getElementById(e[i].id)).ckeditor({
-                toolbar: a,
-                customConfig: "config.js.cfm"
-            }, htmlEditorOnComplete);
+setMarkdownEditors=function(selector) {
+    selector=selector || "textarea.mura-markdown, textarea.markdownEditor";
+    Mura(selector).forEach(function(){
+        var input=Mura(this);
+        input.hide();
+        var id='mura-markdown-' + input.attr('name');
+        if(!Mura('#' + id).length){
+            input.after('<div class="mura-markdown-editor" id="'+ id + '" data-target="' + input.attr('name') + '">' + input.val() + '</div>');
+            var height= editor.data('height') || '300px';
+            new markdownEditor({
+                el: document.getElementById(id),
+                initialEditType: 'markdown',
+                previewStyle: 'tabs',
+                height: height
+            });
         }
-    })
+    });
+   
 }
 
  HTMLEditorLoadCount = 0;
@@ -816,7 +820,7 @@ setFinders=function(e,config) {
 
 wireupExterndalUIWidgets=function() {
     setFinders(".mura-ckfinder, .mura-finder"), "undefined" != typeof dtLocale && setDatePickers(".datepicker", dtLocale),
-    "undefined" != typeof activetab && setTabs(".mura-tabs", activetab), setHTMLEditors(),
+    "undefined" != typeof activetab && setTabs(".mura-tabs", activetab), setHTMLEditors(),setMarkdownEditors(),
     "undefined" != typeof activepanel && setAccordions(".accordion", activepanel), setCheckboxTrees(),
     setColorPickers(".mura-colorpicker"), setToolTips(".container"), setFileSelectors();
 }

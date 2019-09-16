@@ -100,7 +100,7 @@ CKEDITOR.editorConfig = function( config )
 		{name: 'group3', items:['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock']},
 		{name: 'group4', items:['Link','Unlink','Anchor']},
 		{name: 'group5', items:['PasteText','PasteFromWord','-','Image','oembed','leaflet','-','Table','HorizontalRule','SpecialChar','-','Selectlink','SelectComponent','Templates'<cfif application.configBean.getEnableMuraTag()>,'muratag'</cfif>]},
-		{name: 'group6', items:['Find','A11ychecker','Source','Markdown','Maximize']}
+		{name: 'group6', items:['Find','A11ychecker','Source','Maximize']}
 	];
 
 	config.toolbar_QuickEdit = [
@@ -117,7 +117,7 @@ CKEDITOR.editorConfig = function( config )
 	config.toolbar_Summary = [
 		{name: 'group0', items: ['Bold','Italic','Underline','RemoveFormat','-','NumberedList','BulletedList','-','Link','Unlink']},
 		{name: 'group1', items: ['PasteText','PasteFromWord','-','Image','-','SpecialChar']},
-		{name: 'group2', items: ['A11ychecker','Source','Markdown']}
+		{name: 'group2', items: ['A11ychecker','Source']}
 	];
 
 	config.toolbar_Form = [
@@ -132,7 +132,7 @@ CKEDITOR.editorConfig = function( config )
 	];
 
 	config.toolbar_Basic = [
-		{name: 'group1', items: ['Bold','Italic','RemoveFormat','-','NumberedList','BulletedList','-','Link','Unlink','Markdown']}
+		{name: 'group1', items: ['Bold','Italic','RemoveFormat','-','NumberedList','BulletedList','-','Link','Unlink']}
 	];
 
 	config.toolbar_FormBuilder = [
@@ -146,7 +146,7 @@ CKEDITOR.editorConfig = function( config )
 		{name: 'group2', items:['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock']},	
 		{name: 'group3', items: ['PasteText','PasteFromWord','-','Image','-','SpecialChar']},
 		{name: 'group4', items: ['Selectlink','SelectComponent','Templates']},
-		{name: 'group5', items: ['A11ychecker','Source','Markdown']}
+		{name: 'group5', items: ['A11ychecker','Source']}
 
 	];
 
@@ -215,7 +215,7 @@ CKEDITOR.editorConfig = function( config )
 
 	<!--- /Toolbars --->
 
-	config.extraPlugins = 'SelectComponent,Selectlink,leaflet,tableresize,onchange,justify,find,bidi,div,showblocks,forms,templates,pagebreak,codemirror,widget,lineutils,dialog,oembed,sourcedialog,fakeobjects,dialogui,showprotected,balloonpanel,dialogadvtab,a11ychecker,image2,markdown';
+	config.extraPlugins = 'SelectComponent,Selectlink,leaflet,tableresize,onchange,justify,find,bidi,div,showblocks,forms,templates,pagebreak,codemirror,widget,lineutils,dialog,oembed,sourcedialog,fakeobjects,dialogui,showprotected,balloonpanel,dialogadvtab,a11ychecker,image2';
 
 	if(typeof jQuery == 'undefined'){
 		config.toolbar_QuickEdit[0].items.shift()

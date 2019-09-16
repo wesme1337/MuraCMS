@@ -13,11 +13,10 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="robots" content="noindex, nofollow" />
 	<cfoutput>
-	<script src="#m.siteConfig().getAdminPath(complete=1)#/assets/js/jquery/jquery.js"></script>
-	<script src="#m.siteConfig().getAdminPath(complete=1)#/assets/js/spin.min.js" type="text/javascript"></script>
-	<script src="#m.siteConfig().getAdminPath(complete=1)#/assets/js/jquery/jquery.spin.js" type="text/javascript"></script>
-	<script src="#m.siteConfig().getAdminPath(complete=1)#/assets/js/admin.min.js" type="text/javascript"></script>
-  	<script src="#m.siteConfig().getAdminPath(complete=1)#/assets/js/mura.js"></script>
+	<script src="#m.siteConfig().getRootPath(complete=1)#/core/vendor/jquery/jquery.min.js"></script>
+	<script src="#m.siteConfig().getAdminPath(complete=1)#/dist/theme.bundle.js" type="text/javascript"></script>
+	<script src="#m.siteConfig().getAdminPath(complete=1)#/dist/jquery.bundle.js" type="text/javascript"></script>
+	<script src="#m.siteConfig().getAdminPath(complete=1)#/dist/mura.bundle.js" type="text/javascript"></script>
   	<script src="#m.siteConfig().getAdminPath(complete=1)#/assets/js/filebrowser/filebrowser.js"></script>
 	<link href="#m.siteConfig().getAdminPath(complete=1)#/assets/css/admin.min.css" rel="stylesheet" type="text/css" />
 	<link href="#m.siteConfig().getAdminPath(complete=1)#/assets/js/filebrowser/assets/css/filebrowser.css" link rel="stylesheet" type="text/css">

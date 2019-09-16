@@ -82,34 +82,18 @@
 			</script>
 		</cfif>
 
-		<cfif cgi.http_user_agent contains 'msie'>
-			<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-			<!--[if lt IE 9]>
-			   <script src="#application.configBean.getContext()##application.configBean.getAdminDir()#/assets/js/html5.js"></script>
-			<![endif]-->
-		</cfif>
-
 		<!--- global admin scripts --->
 		<cfinclude template="includes/html_head.cfm">
 
-		<!-- nice-select: select box replacement (sidebar controls) -->
-		<cfif rc.sourceFrame neq 'modal'>
-			<script src="#application.configBean.getContext()##application.configBean.getAdminDir()#/assets/js/jquery.nice-select.min.js" type="text/javascript"></script>
-		</cfif>
-		<!-- /nice-select -->
-
 		<!-- Utilities to support iframe communication -->
-		<script src="#application.configBean.getContext()##application.configBean.getAdminDir()#/assets/js/jquery/jquery-resize.min.js?coreversion=#application.coreversion#" type="text/javascript"></script>
 		<script src="#application.configBean.getContext()##application.configBean.getAdminDir()#/assets/js/porthole/porthole.min.js?coreversion=#application.coreversion#" type="text/javascript"></script>
-
 		<link href="#application.configBean.getContext()##application.configBean.getAdminDir()#/assets/css/admin.min.css" rel="stylesheet" type="text/css" />
 		#session.dateKey#
 		<script type="text/javascript">
-
 			var resizeTabPane = function(offsetVal){
-					if (isNaN(offsetVal)){
-						offsetVal = 17;
-					}
+				if (isNaN(offsetVal)){
+					offsetVal = 17;
+				}
 				// set width of pane relative to side controls
 				if ($('##mura-content-body-block').length){
 
@@ -164,9 +148,8 @@
 			});
 
 			var frontEndProxy;
+
 			jQuery(document).ready(function(){
-
-
 				//nice-select
 				$('.mura__edit__controls .mura-control-group select:not(.multiSelect)').niceSelect();
 
@@ -182,7 +165,7 @@
 					// run on page load
 					triggerTabDrop();
 					// run on resize
-					$(window).on('resize',function(){
+					$(window).resize(function(){
 						$('.nav-tabs').css('overflow-y','hidden').find('li.tabdrop').removeClass('open').find('.dropdown-backdrop').remove();
 							triggerTabDrop();
 					});
@@ -193,7 +176,6 @@
 				// /tabdrop
 
 				if (top.location != self.location) {
-
 					function getHeight(){
 						if(document.all){
 							return Math.max(document.body.scrollHeight, document.body.offsetHeight,160);
@@ -203,17 +185,17 @@
 					}
 
 					frontEndProxy = new Porthole.WindowProxy("#esapiEncode('javascript',session.frontEndProxyLoc)##application.configBean.getContext()##application.configBean.getAdminDir()#/assets/js/porthole/proxy.html");
-					frontEndProxy.post({cmd:
-											'setHeight',
-											height:getHeight(),
-											'targetFrame': '#esapiEncode("javascript",rc.sourceFrame)#'
-										});
+					frontEndProxy.post({
+						cmd:'setHeight',
+						height:getHeight(),
+						'targetFrame': '#esapiEncode("javascript",rc.sourceFrame)#'
+					});
 					jQuery(this).resize(function(e){
 						frontEndProxy.post({cmd:
-											'setHeight',
-											height:getHeight(),
-											'targetFrame': '#esapiEncode("javascript",rc.sourceFrame)#'
-										});
+							'setHeight',
+							height:getHeight(),
+							'targetFrame': '#esapiEncode("javascript",rc.sourceFrame)#'
+						});
 					});
 
 					if(typeof siteManager != 'undefined'){
@@ -223,22 +205,22 @@
 
 				// click to close new table actions, category selector filter
 				document.onclick = function(e) {
-				if (jQuery('##newContentMenu').length > 0){
-				  if(!(jQuery(e.target).parents().hasClass('addNew')) && !(jQuery(e.target).parents().hasClass('add')) && !(jQuery(e.target).hasClass('add'))){
-			     	jQuery('##newContentMenu').addClass('hide');
-		    	}
-				};
+					if (jQuery('##newContentMenu').length > 0){
+						if(!(jQuery(e.target).parents().hasClass('addNew')) && !(jQuery(e.target).parents().hasClass('add')) && !(jQuery(e.target).hasClass('add'))){
+							jQuery('##newContentMenu').addClass('hide');
+						}
+					};
 
-				if (jQuery('.actions-menu').length > 0){
-			    if(!(jQuery(e.target).parents().hasClass('actions-menu')) && !(jQuery(e.target).parents().hasClass('actions-list')) && !(jQuery(e.target).parents().hasClass('show-actions')) && !(jQuery(e.target).hasClass('actions-list'))){
-			       jQuery('.actions-menu').addClass('hide');
-		     	}
-				};
+					if (jQuery('.actions-menu').length > 0){
+						if(!(jQuery(e.target).parents().hasClass('actions-menu')) && !(jQuery(e.target).parents().hasClass('actions-list')) && !(jQuery(e.target).parents().hasClass('show-actions')) && !(jQuery(e.target).hasClass('actions-list'))){
+							jQuery('.actions-menu').addClass('hide');
+						}
+					};
 
-				if(jQuery('##category-select-list').length > 0){
-			    if(!(jQuery(e.target).parents().hasClass('category-select')) && !(jQuery(e.target).parents().hasClass('categories'))){
-			    	jQuery('##category-select-list').slideUp('fast');
-				    }
+					if(jQuery('##category-select-list').length > 0){
+					if(!(jQuery(e.target).parents().hasClass('category-select')) && !(jQuery(e.target).parents().hasClass('categories'))){
+							jQuery('##category-select-list').slideUp('fast');
+						}
 					}
 				};
 				// /click to close
@@ -250,6 +232,7 @@
 			<cfelse>
 				<cfset site=$.getBean('settingsManager').getSite('default')>
 			</cfif>
+
 			Mura.init({
 				context:'#esapiEncode("javascript",rc.$.globalConfig('context'))#',
 				themepath:'#esapiEncode("javascript",site.getThemeAssetPath(complete=1))#',

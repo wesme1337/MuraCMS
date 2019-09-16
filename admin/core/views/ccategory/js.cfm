@@ -43,7 +43,6 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 --->
 <cfsavecontent variable="rc.ajax">
 <cfoutput>
-<script src="assets/js/category.min.js?coreversion=#application.coreversion#" type="text/javascript">
 </script>
 
 <div id="newContentMenu" class="addNew hide">

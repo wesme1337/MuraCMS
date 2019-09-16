@@ -52,36 +52,27 @@
 	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="#application.configBean.getContext()##application.configBean.getAdminDir()#/assets/ico/apple-touch-icon-72-precomposed.png">
 	<link rel="apple-touch-icon-precomposed" href="#application.configBean.getContext()##application.configBean.getAdminDir()#/assets/ico/apple-touch-icon-57-precomposed.png">
 
-	<!-- Spinner JS -->
-	<script src="#application.configBean.getContext()##application.configBean.getAdminDir()#/assets/js/spin.min.js" type="text/javascript"></script>
-
 	<!-- jQuery -->
-	<script src="#application.configBean.getContext()##application.configBean.getAdminDir()#/assets/js/jquery/jquery.min.js?coreversion=#application.coreversion#" type="text/javascript"></script>
+	<script type="text/javascript" src="#application.configBean.getContext()#/core/vendor/jquery/jquery.min.js?coreversion=#application.coreversion#"></script>
 
 	<!-- OneUI Core JS: Bootstrap, slimScroll, scrollLock, Appear, CountTo, Placeholder, Cookie and App.js -->
-	<script src="#application.configBean.getContext()##application.configBean.getAdminDir()#/assets/js/oneui.min.js"></script>
+	<script src="#application.configBean.getContext()##application.configBean.getAdminDir()#/dist/theme.bundle.js?coreversion=#application.coreversion#" type="text/javascript"></script>
 
 	<!-- jQuery UI components -->
-	<script src="#application.configBean.getContext()##application.configBean.getAdminDir()#/assets/js/jquery/jquery-ui.min.js?coreversion=#application.coreversion#" type="text/javascript"></script>
-	<script src="#application.configBean.getContext()##application.configBean.getAdminDir()#/assets/js/jquery/jquery-ui-i18n.min.js?coreversion=#application.coreversion#" type="text/javascript"></script>
-	<script src="#application.configBean.getContext()##application.configBean.getAdminDir()#/assets/js/jquery/jquery.collapsibleCheckboxTree.js?coreversion=#application.coreversion#" type="text/javascript"></script>
-	<script src="#application.configBean.getContext()##application.configBean.getAdminDir()#/assets/js/jquery/jquery.spin.js" type="text/javascript"></script>
+	<script src="#application.configBean.getContext()##application.configBean.getAdminDir()#/dist/jquery.bundle.js?coreversion=#application.coreversion#" type="text/javascript"></script>
 
-	<!-- Mura js -->
-	<script src="#application.configBean.getContext()##application.configBean.getAdminDir()#/assets/js/mura.min.js?coreversion=#application.coreversion#" type="text/javascript"></script>
+	<!-- Mura.js components -->
+	<script src="#application.configBean.getContext()##application.configBean.getAdminDir()#/dist/mura.bundle.js?coreversion=#application.coreversion#" type="text/javascript"></script>
 
-	<!-- Mura Admin JS -->
-	<script src="#application.configBean.getContext()##application.configBean.getAdminDir()#/assets/js/admin.min.js?coreversion=#application.coreversion#" type="text/javascript"></script>
+	<!-- Mura Admin modules components -->
+	<script src="#application.configBean.getContext()##application.configBean.getAdminDir()#/dist/modules.bundle.js?coreversion=#application.coreversion#" type="text/javascript"></script>
 
 	<!-- CK Editor -->
-	<script type="text/javascript" src="#application.configBean.getContext()#/core/vendor/ckeditor/ckeditor.js"></script>
-	<script type="text/javascript" src="#application.configBean.getContext()#/core/vendor/ckeditor/adapters/jquery.js"></script>
+	<script type="text/javascript" src="#application.configBean.getContext()#/core/vendor/ckeditor/ckeditor.js?coreversion=#application.coreversion#"></script>
+	<script type="text/javascript" src="#application.configBean.getContext()#/core/vendor/ckeditor/adapters/jquery.js?coreversion=#application.coreversion#"></script>
 
-	<script src="#application.configBean.getContext()##application.configBean.getAdminDir()#/assets/js/filebrowser/filebrowser.js"></script>
-	<link href="#application.configBean.getContext()##application.configBean.getAdminDir()#/assets/js/filebrowser/assets/css/filebrowser.css" link rel="stylesheet" type="text/css"></script>
-
-	<!-- JSON -->
-	<script src="#application.configBean.getContext()##application.configBean.getAdminDir()#/assets/js/json2.js" type="text/javascript"></script>
+	<script src="#application.configBean.getContext()##application.configBean.getAdminDir()#/assets/js/filebrowser/filebrowser.js?coreversion=#application.coreversion#"></script>
+	<link href="#application.configBean.getContext()##application.configBean.getAdminDir()#/assets/js/filebrowser/assets/css/filebrowser.css?coreversion=#application.coreversion#" link rel="stylesheet" type="text/css"></script>
 
 	<!-- Color Picker -->
 	<script type="text/javascript" src="#application.configBean.getContext()#/core/vendor/colorpicker/js/bootstrap-colorpicker.js?coreversion=#application.coreversion#"></script>
@@ -102,8 +93,5 @@
 	var themeColorOptions=#serializeJSON($.siteConfig().getContentRenderer().getColorOptions())#;
 	var moduleThemeOptions=#serializeJSON($.siteConfig().getContentRenderer().getModuleThemeOptions())#;
 	</script>
-
-	<!-- nice-select: select box replacement (sidebar controls) -->
-	<script src="#application.configBean.getContext()##application.configBean.getAdminDir()#/assets/js/jquery.nice-select.min.js" type="text/javascript"></script>
 
 </cfoutput>

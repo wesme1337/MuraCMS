@@ -54,6 +54,9 @@
 
 	<!-- jQuery -->
 	<script type="text/javascript" src="#application.configBean.getContext()#/core/vendor/jquery/jquery.min.js?coreversion=#application.coreversion#"></script>
+	
+	<!-- Mura.js -->
+	<script type="text/javascript" src="#application.configBean.getContext()#/core/modules/v1/core_assets/js/mura.min.js?coreversion=#application.coreversion#"></script>
 
 	<!-- OneUI Core JS: Bootstrap, slimScroll, scrollLock, Appear, CountTo, Placeholder, Cookie and App.js -->
 	<script src="#application.configBean.getContext()##application.configBean.getAdminDir()#/dist/theme.bundle.js?coreversion=#application.coreversion#" type="text/javascript"></script>
@@ -61,8 +64,7 @@
 	<!-- jQuery UI components -->
 	<script src="#application.configBean.getContext()##application.configBean.getAdminDir()#/dist/jquery.bundle.js?coreversion=#application.coreversion#" type="text/javascript"></script>
 
-	<!-- Mura.js components -->
-	<script src="#application.configBean.getContext()##application.configBean.getAdminDir()#/dist/mura.bundle.js?coreversion=#application.coreversion#" type="text/javascript"></script>
+	
 
 	<!-- Mura Admin modules components -->
 	<script src="#application.configBean.getContext()##application.configBean.getAdminDir()#/dist/modules.bundle.js?coreversion=#application.coreversion#" type="text/javascript"></script>

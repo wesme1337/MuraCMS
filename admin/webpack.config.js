@@ -5,8 +5,7 @@ module.exports = {
         jquery:'./src/jquery.js',
         modules:'./src/modules.js',
         theme:'./src/theme.js',
-        bootstrap:'./src/bootstrap.js',
-        mura:'./src/mura.js',
+        bootstrap:'./src/bootstrap.js'
     },
     target: "web",
     output: {
@@ -14,6 +13,7 @@ module.exports = {
         filename: '[name].bundle.js'
     },
     externals: {
-        jquery: 'jQuery'
+        jquery: 'jQuery',
+        'mura.js': 'Mura'
       }
   };

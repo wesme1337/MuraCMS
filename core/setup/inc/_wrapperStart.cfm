@@ -63,13 +63,13 @@ to your own modified versions of Mura CMS.
 <link rel="apple-touch-icon-precomposed" href="#context#/admin/assets/ico/apple-touch-icon-57-precomposed.png">
 <!-- Stylesheets -->
 <!-- Web fonts -->
-<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,600,700%7COpen+Sans:300,400,400italic,600,700">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,600,700%7COpen+Sans:300,400,400italic,600,700">
 <!-- Admin CSS -->
 <link href="#context#/admin/assets/css/admin.min.css" rel="stylesheet" type="text/css" />
 <!-- jQuery -->
-<script src="#context#/admin/assets/js/jquery/jquery.min.js"></script>
+<script src="#context#/core/vendor/jquery/jquery.min.js"></script>
 <!-- OneUI Core JS: Bootstrap, slimScroll, scrollLock, Appear, CountTo, Placeholder, Cookie and App.js -->
-<script src="#context#/admin/assets/js/oneui.min.js"></script>
+<script src="#context#/admin/dist/theme.bundle.js"></script>
 </head>
 <body id="csetup" class="header-navbar-fixed">
 	<!-- Page Container -->

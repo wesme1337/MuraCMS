@@ -70,6 +70,7 @@ getMarkdownEditor=function(config){
         title: 'Insert Image',
         className: 'te-popup-add-image tui-editor-popup',
         content: IMAGE_POPUP_CONTENT,
+        //$target: editorInstance.getUI().getToolbar().$el,
         modal:true
     });
 
@@ -120,15 +121,16 @@ getMarkdownEditor=function(config){
         <input type="text" class="te-link-text-input" />
         <div class="te-button-section">
             <button type="button" class="te-ok-button">${i18n.get('OK')}</button>
-            <button type="button" class="te-close-button">${i18n.get('Cancel')}</button>
+            <button type="button" style="margin:unset;hieght:unset;:width:unset;" class="te-close-button">${i18n.get('Cancel')}</button>
         </div>
     `;
 
     var LinkPopup=editorInstance.getUI().createPopup({
         header: true,
         title: 'Insert link',
-        className: 'te-popup-add-link tui-editor-popup',
+        className: 'te-popup-add-image tui-editor-popup',
         content: LINK_POPUP_CONTENT,
+        //$target: editorInstance.getUI().getToolbar().$el,
         modal:true
     });
  

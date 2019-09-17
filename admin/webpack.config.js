@@ -5,7 +5,8 @@ module.exports = {
         jquery:'./src/jquery.js',	
         modules:'./src/modules.js',	
         theme:'./src/theme.js',	
-        bootstrap:'./src/bootstrap.js'	
+        bootstrap:'./src/bootstrap.js',
+        toast:'./src/toast.js'	
     },	
     target: "web",	
     output: {	
@@ -26,7 +27,9 @@ module.exports = {
                 test: /\.(png|jpe?g|gif)$/i,	
                 loader: 'file-loader',	
                 options: {	
-                    context: 'admin',	
+                    outputPath: 'dist/images/',
+                    publicPath: 'dist/images/',
+                    name: '[contenthash].[ext]',	
                 },	
             },	
         ],	

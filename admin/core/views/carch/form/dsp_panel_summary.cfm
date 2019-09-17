@@ -120,41 +120,61 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 			      		</label>
 				      	<div id="editSummary" class="summaryContainer" style="display:none;">
 						<cfoutput>
-							<textarea name="summary" id="summary" cols="96" rows="10"><cfif application.configBean.getValue("htmlEditorType") neq "none" or len(rc.contentBean.getSummary())>#esapiEncode('html',rc.contentBean.getSummary())#<cfelse><p></p></cfif></textarea>
+							<cfif application.configBean.getValue("htmlEditorType") eq "none" >
+								<textarea name="summary" id="summary" cols="96" rows="10">#esapiEncode('html',rc.contentBean.getSummary())#</textarea>
+							<cfelseif application.configBean.getValue("htmlEditorType") eq "markdown">
+								<textarea class="mura-markdown" name="summary" id="summary">#esapiEncode('html',rc.contentBean.getSummary())#</textarea>
+								<script>
+									hideSummaryEditor=function(){
+										jQuery(".summaryContainer").hide();
+									}
+
+									showSummaryEditor=function(){
+										jQuery(".summaryContainer").show();
+									}
+									<cfif not isExtended>
+									showSummaryEditor();
+									</cfif>
+								</script>
+								<br/>
+							<cfelse>
+								<textarea name="summary" id="summary" cols="96" rows="10"><cfif len(rc.contentBean.getSummary())>#esapiEncode('html',rc.contentBean.getSummary())#<cfelse><p></p></cfif></textarea>
+								<script>
+									hideSummaryEditor=function(){
+										if(typeof CKEDITOR.instances.summary != 'undefined'){
+											CKEDITOR.instances.summary.updateElement();
+											CKEDITOR.instances.summary.destroy();
+										}
+										jQuery(".summaryContainer").hide();
+										summaryLoaded=true;
+									}
+
+									showSummaryEditor=function(){
+										if(typeof CKEDITOR.instances.summary == 'undefined'){
+											jQuery(".summaryContainer").show();
+											jQuery('##summary').ckeditor(
+											{ toolbar:'Summary',
+												height:'150',
+												customConfig : 'config.js.cfm'
+											},
+											function(editorInstance){
+												htmlEditorOnComplete(editorInstance);
+												if (!hasBody){
+													showPreview();
+												}
+											}
+										);
+										}
+									}
+									<cfif not isExtended>
+									showSummaryEditor();
+									</cfif>
+								</script>
+							</cfif>
 						</cfoutput>
 						</div>
 					</div>
-					<script>
-						hideSummaryEditor=function(){
-							if(typeof CKEDITOR.instances.summary != 'undefined'){
-								CKEDITOR.instances.summary.updateElement();
-								CKEDITOR.instances.summary.destroy();
-							}
-							jQuery(".summaryContainer").hide();
-							summaryLoaded=true;
-						}
-
-						showSummaryEditor=function(){
-							if(typeof CKEDITOR.instances.summary == 'undefined'){
-								jQuery(".summaryContainer").show();
-								jQuery('##summary').ckeditor(
-					     		{ toolbar:'Summary',
-					     			height:'150',
-					     		  	customConfig : 'config.js.cfm'
-								},
-								function(editorInstance){
-									htmlEditorOnComplete(editorInstance);
-									if (!hasBody){
-										showPreview();
-									}
-								}
-					     	);
-							}
-						}
-						<cfif not isExtended>
-						showSummaryEditor();
-						</cfif>
-					</script>
+					
 				</cfif>
 				<!--- /summary --->
 

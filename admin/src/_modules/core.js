@@ -313,12 +313,12 @@ setMarkdownEditors=function(selector) {
         var input=Mura(this);
         input.hide();
         var id='mura-markdown-' + input.attr('name');
-        if(!Mura('#' + id).length){
+        if(typeof markdownInstances[input.attr('name')] == 'undefined'){
             input.after('<div class="mura-markdown-editor" id="'+ id + '" data-target="' + input.attr('name') + '">' + input.val() + '</div>');
-            var height= editor.data('height') || '300px';
-            new markdownEditor({
+            var height= input.data('height') || '300px';
+            markdownInstances[input.attr('name')]=new markdownEditor({
                 el: document.getElementById(id),
-                initialEditType: 'markdown',
+                initialEditType: 'wysiwyg',
                 previewStyle: 'tabs',
                 height: height
             });

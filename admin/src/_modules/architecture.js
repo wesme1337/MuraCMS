@@ -79,12 +79,11 @@ siteManager = {
 				CKEDITOR.instances[i].updateElement();
 			}
 
-			Mura(".mura-markdown-editor").forEach(function(){
-				var editor=Mura(this);
-				if(editor.data('target')){
-					var input=Mura('textarea[name="' + editor.data('target') + ']"');
+			Mura("textarea.mura-markdown").forEach(function(){
+				var input=Mura(this);
+				if(markdownInstances && typeof markdownInstances[input.attr('name')]){
 					if(input.length){
-						input.val(editor.getValue())
+						input.val(markdownInstances[input.attr('name')].getValue())
 					}
 				}
 			})

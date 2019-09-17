@@ -326,13 +326,24 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 									</div>
 									<script>
 									hideBodyEditor=function(){	
-										jQuery("##body-markdown-wrapper").hide();
+										jQuery(".body-container").hide();
 										jQuery(".no-body-container").show();
 									}
 									showBodyEditor=function(){
-										jQuery("##body-markdown-wrapper").show();
+										jQuery(".body-container").show();
 										jQuery(".no-body-container").hide();
 									}
+
+									jQuery(document).ready(function(){
+										<cfif not isExtended>
+										showBodyEditor();
+										</cfif>
+										if (!hasSummary && !hasBody){
+											setTimeout(function(){
+												showPreview();
+											}, 2000);
+										}
+									});
 									</script>
 								<cfelse>	
 									<textarea name="body" id="body"><cfif len(rc.contentBean.getBody())>#esapiEncode('html',rc.contentBean.getBody())#<cfelse><p></p></cfif></textarea>

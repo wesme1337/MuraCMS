@@ -511,6 +511,9 @@ Mura(function() {
 	Vue.component('scaffold-form-template', {
 		template: '#scaffold-form-template',
 		props: ['entityname','data','entityid','errordata'],
+		mounted: function() {
+			markdownInstances={};
+		},
 		methods: {
 			openEndpoint:function(){
 				window.open(MuraScaffold.getEndpoint() + this.$props.entityname + "/" + this.$props.data.model.id, '_blank');
@@ -741,7 +744,15 @@ Mura(function() {
 		template: '#scaffold-field-htmleditor',
 		props: ['property','model','entity','list'],
 		mounted: function() {
-			setHTMLEditors()
+			setHTMLEditors();
+		}
+	});
+
+	Vue.component('scaffold-field-markdowneditor', {
+		template: '#scaffold-field-markdowneditor',
+		props: ['property','model','entity','list'],
+		mounted: function() {
+			setMarkdownEditors();
 		}
 	});
 
@@ -903,6 +914,15 @@ Mura(function() {
 					this.model[i]=CKEDITOR.instances[i].getData();
 				}
 
+				Mura("textarea.mura-markdown,textarea.markdownEditor").forEach(function(){
+					var input=Mura(this);
+					if(markdownInstances && typeof markdownInstances[input.attr('name')]){
+						if(input.length){
+							input.val(markdownInstances[input.attr('name')].getValue())
+						}
+					}
+				})
+
 				MuraScaffold.save( this.doneFormProcessing,entityname,this.model );
 			},
 			clickBack: function() {
@@ -981,6 +1001,7 @@ Mura(function() {
 
 								this.currentView = "";
 								this.currentView = 'scaffold-form-template';
+								markdownInstances={};
 
 						},
 						function(error) {

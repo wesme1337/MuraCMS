@@ -50,7 +50,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 		include "#backportdir#backport.cfm";
 	}
 </cfscript>
-<cfset typeList="TextBox,TextArea,HTMLEditor,SelectBox,MultiSelectBox,RadioGroup,File,Hidden"/>
+<cfset typeList="TextBox,TextArea,HTMLEditor,MarkdownEditor,SelectBox,MultiSelectBox,RadioGroup,File,Hidden"/>
 <cfoutput>
 
 

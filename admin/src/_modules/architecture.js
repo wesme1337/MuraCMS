@@ -79,7 +79,7 @@ siteManager = {
 				CKEDITOR.instances[i].updateElement();
 			}
 
-			Mura("textarea.mura-markdown").forEach(function(){
+			Mura("textarea.mura-markdown,textarea.markdownEditor").forEach(function(){
 				var input=Mura(this);
 				if(markdownInstances && typeof markdownInstances[input.attr('name')]){
 					if(input.length){

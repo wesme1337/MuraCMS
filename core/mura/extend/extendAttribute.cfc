@@ -524,8 +524,8 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 				<cfsavecontent variable="str"><cfoutput><cf_datetimeselector name="#key#" datetime="#renderValue#" id="#key#" label="#getlabel()#" required="#getRequired()#" validation="#getValidation()#" regex="#getRegex()#" message="#getMessage()#"></cfoutput></cfsavecontent>
 			</cfif>
 		</cfcase>
-		<cfcase value="TextArea,HTMLEditor">
-			<cfsavecontent variable="str"><cfoutput><textarea name="#key#" id="#key#" data-label="#XMLFormat(getlabel())#" data-required="#getRequired()#"<cfif len(getMessage())> data-message="#XMLFormat(getMessage())#"</cfif><cfif getType() eq "HTMLEditor"> class="htmlEditor"</cfif><cfif len(getvalidation())> data-validate="#getValidation()#"</cfif><cfif getvalidation() eq "Regex"> data-regex="#getRegex()#"</cfif>>#HTMLEditFormat(renderValue)#</textarea></cfoutput></cfsavecontent>
+		<cfcase value="TextArea,HTMLEditor,MarkdownEditor">
+			<cfsavecontent variable="str"><cfoutput><textarea name="#key#" id="#key#" data-label="#XMLFormat(getlabel())#" data-required="#getRequired()#"<cfif len(getMessage())> data-message="#XMLFormat(getMessage())#"</cfif><cfif getType() eq "HTMLEditor"> class="htmlEditor"<cfelseif getType() eq "MarkdownEditor"> class="markdownEditor"</cfif><cfif len(getvalidation())> data-validate="#getValidation()#"</cfif><cfif getvalidation() eq "Regex"> data-regex="#getRegex()#"</cfif>>#HTMLEditFormat(renderValue)#</textarea></cfoutput></cfsavecontent>
 		</cfcase>
 		<cfcase value="SelectBox,MultiSelectBox">
 			<cfset optionlist=variables.contentRenderer.setDynamicContent(getOptionList())/>

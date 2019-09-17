@@ -71,6 +71,15 @@ userManager = {
 				CKEDITOR.instances[i].updateElement();
 			}
 
+			Mura("textarea.mura-markdown,textarea.markdownEditor").forEach(function(){
+				var input=Mura(this);
+				if(markdownInstances && typeof markdownInstances[input.attr('name')]){
+					if(input.length){
+						input.val(markdownInstances[input.attr('name')].getValue())
+					}
+				}
+			})
+
 			for(i=0;i<dialogs.length;i++){
 				if(i == handled){
 					var dialog=dialogs[i];

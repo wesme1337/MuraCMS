@@ -496,6 +496,7 @@ $( document ).ready(function() {
 				{name:'textfield',label: 'Text Field'},
 				{name:'textarea',label: 'Text Area'},
 				{name:'htmleditor',label: 'HTML Editor'},
+				{name:'markdowneditor',label: 'Markdown Editor'},
 				{name:'dropdown',label: 'Dropdown'},
 				{name:'checkbox',label: 'Checkbox'},
 				{name:'radio',label: 'Radio'},

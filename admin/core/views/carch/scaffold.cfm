@@ -145,6 +145,7 @@
 								<td class="var-width" v-for="item in data.listview" @click="(entityname == 'entity') ? showList(object.entityname) : ( (item.fieldtype == 'many-to-one' || item.fieldtype == 'one-to-one' ) ? showForm(object[item.name].entityname,object[item.name].id)  : showForm(object.entityname,object.id) )">
 										<span v-if="item.fieldtype == 'many-to-one' || item.fieldtype == 'one-to-one'" v-html="object[item.name][item.renderfield]"></span>
 										<span v-else-if="item.rendertype == 'htmleditor'" v-html="object[item.name]"></span>
+										<span v-else-if="item.rendertype == 'markdowneditor'" v-html="object[item.name]"></span>
 										<span v-else-if="item.datatype=='datetime' || item.datetime=='date'" v-text="formatDate(object[item.name])"></span>
 										<span v-else v-text="object[item.name]"></span>
 								</td>
@@ -246,6 +247,7 @@
 				<div v-else>
 					<scaffold-field-textarea v-if="property.rendertype == 'textarea'" :property=property :model=data.model :entity=data.entity></scaffold-field-textarea>
 					<scaffold-field-htmleditor v-else-if="property.rendertype === 'htmleditor'" :property=property :model=data.model :entity=data.entity></scaffold-field-htmleditor>
+					<scaffold-field-markdowneditor v-else-if="property.rendertype === 'markdowneditor'" :property=property :model=data.model :entity=data.entity></scaffold-field-markdowneditor>
 					<scaffold-field-checkbox v-else-if="property.rendertype === 'checkbox'" :property=property :model=data.model :entity=data.entity></scaffold-field-checkbox>
 					<scaffold-field-dropdown v-else-if="property.rendertype === 'dropdown'" :property=property :model=data.model :entity=data.entity></scaffold-field-dropdown>
 					<scaffold-field-radio v-else-if="property.rendertype === 'radio'" :property=property :model=data.model :entity=data.entity></scaffold-field-radio>
@@ -377,6 +379,26 @@
 				<textarea
 					v-model="model[property.name]"
 					class="htmlEditor"
+					:id="property.name"
+					:name="property.name"
+					:data-validate="property.validate ? property.validate : null"
+					:data-validate-message="property.validatemessage ? property.validatemessage : null"
+					rows="10"
+					>{{model[property.name] ? model[property.name] : property.default}}</textarea>
+			</div>
+		</div>
+	</template>
+
+	<template id="scaffold-field-markdowneditor">
+		<div>
+			<div v-if="model.errors && model.errors[property.name]" class="help-block-inline">
+				{{model.errors[property.name]}}
+			</div>
+			<div class="mura-control-group">
+				<label :for="property.name">{{property.displayname ? property.displayname : property.label ? property.label : property.name}}<span v-if="property.required">*</span></label>
+				<textarea
+					v-model="model[property.name]"
+					class="markdownEditor"
 					:id="property.name"
 					:name="property.name"
 					:data-validate="property.validate ? property.validate : null"

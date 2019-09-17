@@ -316,10 +316,12 @@ setMarkdownEditors=function(selector) {
         if(typeof markdownInstances[input.attr('name')] == 'undefined'){
             input.after('<div class="mura-markdown-editor" id="'+ id + '" data-target="' + input.attr('name') + '">' + input.val() + '</div>');
             var height= input.data('height') || '300px';
+            var previewStyle= input.data('previewstyle') ||  'tabs';
+            var initialEditType= input.data('initialedittype') ||  'wysiwyg';
             markdownInstances[input.attr('name')]=new markdownEditor({
                 el: document.getElementById(id),
-                initialEditType: 'wysiwyg',
-                previewStyle: 'tabs',
+                initialEditType: initialEditType,
+                previewStyle: previewStyle,
                 height: height
             });
         }
@@ -334,12 +336,12 @@ setMarkdownEditors=function(selector) {
     var editors=Mura(selector);
 
     editors.forEach(function(e){
-        if(!e[i].getAttribute("mura-inprocess")){
-            e[i].setAttribute("mura-inprocess", "true");
-            var t = CKEDITOR.instances[e[i].id];
-            void 0 !== t && null != t && CKEDITOR.remove(t), "" == Mura(document.getElementById(e[i].id)).val() && Mura(document.getElementById(e[i].id)).val("<p></p>");
-            var a = e[i].getAttribute("data-toolbar") || "Default";
-            $(document.getElementById(e[i].id)).ckeditor({
+        if(!e.getAttribute("mura-inprocess")){
+            e.setAttribute("mura-inprocess", "true");
+            var t = CKEDITOR.instances[e.id];
+            void 0 !== t && null != t && CKEDITOR.remove(t), "" == Mura(document.getElementById(e.id)).val() && Mura(document.getElementById(e.id)).val("<p></p>");
+            var a = e.getAttribute("data-toolbar") || "Default";
+            $(document.getElementById(e.id)).ckeditor({
                 toolbar: a,
                 customConfig: "config.js.cfm"
             }, htmlEditorOnComplete);

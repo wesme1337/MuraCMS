@@ -330,7 +330,7 @@ setMarkdownEditors=function(selector) {
  HTMLEditorLoadCount = 0;
 
  setHTMLEditors=function(selector) {
-    selector=selector || "textarea.mura-html, tecta.htmlEditor";
+    selector=selector || "textarea.mura-html, textarea.htmlEditor";
     var editors=Mura(selector);
 
     editors.forEach(function(e){

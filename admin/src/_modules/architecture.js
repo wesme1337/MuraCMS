@@ -1284,8 +1284,8 @@ buttons: {
 		}
 
 		this.checkExtendSetTargeting();
-		setHTMLEditors(".mura-html, .htmlEditor");
-		setMarkdownEditors(".mura-markdown, .markdownEditor");
+		setHTMLEditors("textarea.mura-html, textarea.htmlEditor");
+		setMarkdownEditors("textarea.mura-markdown, textarea.markdownEditor");
 		setDatePickers(".tab-content .datepicker", dtLocale);
 		setColorPickers(".tab-content .mura-colorpicker");
 		setFinders(".tab-content .mura-ckfinder, .tab-content .mura-finder");
@@ -3323,7 +3323,7 @@ buttons: {
 
 					wireupExterndalUIWidgets();
 
-					$('.mura-html').each(function(){
+					$('.mura-html:not(textarea').each(function(){
 						var self=$(this);
 						self.click(function(){
 							siteManager.openDisplayObjectModal('object/html.cfm',self.data());

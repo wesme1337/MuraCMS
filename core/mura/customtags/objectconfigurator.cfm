@@ -74,6 +74,10 @@
 			param name="attributes.params.stylesupport.contentbackgroundpositiony" default="";
 			param name="attributes.params.stylesupport.metabackgroundpositionx" default="";
 			param name="attributes.params.stylesupport.metabackgroundpositiony" default="";
+			
+			$=request.$;
+
+			request.assocatedImageURL=$.content().getImageURL(complete=1);
 
 			attributes.globalparams = [
 				'backgroundcolor'
@@ -209,7 +213,7 @@
 			</div> <!--- /end  mura-panel-body --->
 		</div> <!--- /end panel --->
 		</cfif>
-		<!---
+	
 		<style>
 			.btn-group, .btn-group button, .btn-group ul {
 				background-color:##333;
@@ -253,7 +257,7 @@
 				color: ##f3f3f3 !important;
 			}
 		</style>
-		--->
+	
 		<!--- style --->
 		<div class="mura-panel panel">
 			<div class="mura-panel-heading" role="tab" id="heading-style">

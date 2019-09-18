@@ -13,25 +13,25 @@
             <div class="mura-panel-body">
             <!--- panel contents --->
             <!--- todo: rbkeys --->
-							<!--- label position --->
-							<div class="mura-control-group">
-								<label>Position</label>
-								<select name="labelposition" class="classtoggle">
-								<option value="mura-object-label-top"<cfif listFind(attributes.params.class,'mura-object-label-top',' ')> selected</cfif>>Top</option>
-								<option value="mura-object-label-left"<cfif listFind(attributes.params.class,'mura-object-label-left',' ')> selected</cfif>>Left</option>
-								<option value="mura-object-label-right"<cfif listFind(attributes.params.class,'mura-object-label-right',' ')> selected</cfif>>Right</option>
-								</select>
-							</div>
+			<!--- label position --->
+			<div class="mura-control-group">
+				<label>Position</label>
+				<select name="labelposition" class="classtoggle">
+				<option value="mura-object-label-top"<cfif listFind(attributes.params.class,'mura-object-label-top',' ')> selected</cfif>>Top</option>
+				<option value="mura-object-label-left"<cfif listFind(attributes.params.class,'mura-object-label-left',' ')> selected</cfif>>Left</option>
+				<option value="mura-object-label-right"<cfif listFind(attributes.params.class,'mura-object-label-right',' ')> selected</cfif>>Right</option>
+				</select>
+			</div>
 
-							<!--- label alignment --->
-							<div class="mura-control-group">
-								<label>Align</label>
-								<select name="float" class="metaStyle">
-									<option value="none"<cfif attributes.params.stylesupport.metastyles.float eq 'none'> selected</cfif>>#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.center')#</option>
-									<option value="left"<cfif attributes.params.stylesupport.metastyles.float eq 'left'> selected</cfif>>#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.left')#</option>
-									<option value="right"<cfif attributes.params.stylesupport.metastyles.float eq 'right'> selected</cfif>>#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.right')#</option>
-								</select>
-							</div>
+			<!--- label alignment --->
+			<div class="mura-control-group">
+				<label>Align</label>
+				<select name="float" class="metaStyle">
+					<option value="none"<cfif attributes.params.stylesupport.metastyles.float eq 'none'> selected</cfif>>#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.center')#</option>
+					<option value="left"<cfif attributes.params.stylesupport.metastyles.float eq 'left'> selected</cfif>>#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.left')#</option>
+					<option value="right"<cfif attributes.params.stylesupport.metastyles.float eq 'right'> selected</cfif>>#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.right')#</option>
+				</select>
+			</div>
             <!--- /end panel contents --->
             </div> <!--- /.mura-panel-body --->
         </div> <!--- /.panel-collapse --->
@@ -235,18 +235,28 @@
 								<label>Background Image</label>
 								<input type="hidden" id="metabackgroundimage" name="backgroundImage" class="metaStyle" value="#esapiEncode('html_attr',attributes.params.stylesupport.metastyles.backgroundimage)#">
 								<input type="text" id="metabackgroundimageurl" name="metabackgroundimageurl" placeholder="URL" class="styleSupport" value="#esapiEncode('html_attr',attributes.params.styleSupport.metabackgroundimageurl)#">
-								<button type="button" class="btn mura-finder" data-target="metabackgroundimageurl" data-completepath="false"><i class="mi-image"></i> Select Image</button>
-								<!---
-								<div class="btn-group btn-group-sm" role="group" aria-label="Select Image">
-									<button type="button" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-										<i class="mi-image"></i> Select Image <span class="caret"></span>
-									</button>
-									<ul class="dropdown-menu">
-										<li><a class="mura-finder" data-target="metabackgroundimageurl" data-completepath="false" href="javascript:void(0);"><i class="mi-globe"></i> File Manager</a></li>
-										<li><a class="mura-associmage" data-target="metabackgroundimageurl" data-completepath="false" href="javascript:void(0);"> <i class="mi-th"></i> Associated Image</a></li>
-									</ul>
-								</div>
-								--->
+								
+								<cfif len(request.assocatedImageURL)>
+									<div class="btn-group btn-group-sm" role="group" aria-label="Select Image">		
+										<button type="button" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											<i class="mi-image"></i> Select Image <span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu">
+											<li><a class="mura-finder" data-target="metabackgroundimageurl" data-completepath="false" href="javascript:void(0);"><i class="mi-globe"></i> File Manager</a></li>
+											<li><a id="metabackgroundassocurl" href="#request.assocatedImageURL#"> <i class="mi-th"></i> Associated Image</a></li>
+										</ul>
+										<script>
+											$(function(){
+												$('##metabackgroundassocurl').click(function(){
+													$('##metabackgroundimageurl').val($(this).attr('href')).trigger('change');
+													return false;
+												})
+											})
+										</script>
+									</div>
+								<cfelse>
+									<button type="button" class="btn mura-finder" data-target="metabackgroundimageurl" data-completepath="false"><i class="mi-image"></i> Select Image</button>
+								</cfif>
 							</div>
 
 							<div class="mura-control-group mura-ui-grid meta-css-bg-option bg-position" style="display:none;">

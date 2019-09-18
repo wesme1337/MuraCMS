@@ -260,18 +260,27 @@
 								<label>Background Image</label>
 								<input type="hidden" id="contentbackgroundimage" name="backgroundImage" class="contentStyle" value="#esapiEncode('html_attr',attributes.params.stylesupport.contentstyles.backgroundimage)#">
 								<input type="text" id="contentbackgroundimageurl" name="contentbackgroundimageurl" placeholder="URL" class="styleSupport" value="#esapiEncode('html_attr',attributes.params.styleSupport.contentbackgroundimageurl)#">
-								<button type="button" class="btn mura-finder" data-target="contentbackgroundimageurl" data-completepath="false"><i class="mi-image"></i> Select Image</button>
-								<!---
-								<div class="btn-group btn-group-sm" role="group" aria-label="Select Image">		
-									<button type="button" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-										<i class="mi-image"></i> Select Image <span class="caret"></span>
-									</button>
-									<ul class="dropdown-menu">
-										<li><a class="mura-finder" data-target="contentbackgroundimageurl" data-completepath="false" href="javascript:void(0);"><i class="mi-globe"></i> File Manager</a></li>
-										<li><a class="mura-associmage" data-target="contentbackgroundimageurl" data-completepath="false" href="javascript:void(0);"> <i class="mi-th"></i> Associated Image</a></li>
-									</ul>
-								</div>
-								--->
+								<cfif len(request.assocatedImageURL)>
+									<div class="btn-group btn-group-sm" role="group" aria-label="Select Image">		
+										<button type="button" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											<i class="mi-image"></i> Select Image <span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu">
+											<li><a class="mura-finder" data-target="contentbackgroundimageurl" data-completepath="false" href="javascript:void(0);"><i class="mi-globe"></i> File Manager</a></li>
+											<li><a id="contentbackgroundassocurl" href="#request.assocatedImageURL#"> <i class="mi-th"></i> Associated Image</a></li>
+										</ul>
+										<script>
+											$(function(){
+												$('##contentbackgroundassocurl').click(function(){
+													$('##contentbackgroundimageurl').val($(this).attr('href')).trigger('change');
+													return false;
+												})
+											})
+										</script>
+									</div>
+								<cfelse>
+									<button type="button" class="btn mura-finder" data-target="contentbackgroundimageurl" data-completepath="false"><i class="mi-image"></i> Select Image</button>
+								</cfif>
 							</div>
 
 					<div class="mura-control-group mura-ui-grid content-css-bg-option bg-position" style="display:none;">

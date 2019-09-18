@@ -51,6 +51,11 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 	<cfparam name="rc.objectid" default=""/>
 	<cfparam name="rc.configuratorMode" default="frontend">
 
+	<cfif len(rc.contenthistid)>
+		request.contentBean=
+
+	</cfif>
+
 	<cfset contentRendererUtility=rc.$.getBean('contentRendererUtility')>
 	<cfset rc.classid=listLast(replace(rc.classid, "\", "/", "ALL"),"/")>
 	<cfset rc.container=listLast(replace(rc.container, "\", "/", "ALL"),"/")>
@@ -91,6 +96,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 	<cfset Mura=rc.$>
 
 	<cfset $.event('contentBean',$.getBean('content').loadBy(contehistid=rc.contenthistid))>
+	<cfset request.$=$>
 
 	<cfif rc.classid eq "category_summary" and not application.configBean.getValue(property='allowopenfeeds',defaultValue=false)>
 		<cfset rc.classid='nav'>

@@ -192,6 +192,28 @@ body.mura-sidebar-state__pushed--right .mura__layout-manager__controls {
 .mura-object.mura-active.mura-object-selected > .frontEndToolsModal.mura {
 	opacity: 1;
 	}
+
+.mura-region.mura-region-active .mura-object.mura-active:not([data-object="container"]){
+	&> .mura-fetborder {
+		background-color: rgba(245, 194, 188, 1)!important;
+		
+		&.mura-fetborder-top{
+			height: 1px;	
+		}
+		&.mura-fetborder-bottom{
+			height: 1px;	
+		}
+		&.mura-fetborder-left{
+			width: 1px;	
+		}
+		&.mura-fetborder-right{
+			width: 1px;	
+		}
+	}
+}
+
+
+	
 .mura-object-content figure{
 	margin: 0;
 }

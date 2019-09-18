@@ -317,7 +317,6 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 							<cfif rsPluginEditor.recordcount>
 								#application.pluginManager.renderScripts("onHTMLEdit",rc.siteid,pluginEvent,rsPluginEditor)#
 							<cfelse>
-
 								<cfif application.configBean.getValue("htmlEditorType") eq "none">
 									<textarea name="body" id="body">#esapiEncode('html',rc.contentBean.getBody())#</textarea>
 								<cfelseif application.configBean.getValue("htmlEditorType") eq "markdown">

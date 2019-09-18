@@ -44,7 +44,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 <cfset navOutput=dspPeerNav()>
 <cfif len(navOutput)>
   <cfoutput>
-    <nav id="navPeer"<cfif this.navPeerWrapperClass neq ""> class="mura-nav-peer #this.navPeerWrapperClass#"</cfif>>
+    <nav id="navPeer" role="navigation" aria-label="Secondary"<cfif this.navPeerWrapperClass neq ""> class="mura-nav-peer #this.navPeerWrapperClass#"</cfif>>
       <cfif len(this.navPeerWrapperBodyClass)><div class="#this.navPeerWrapperBodyClass#"></cfif>
       #navOutput#
       <cfif len(this.navPeerWrapperBodyClass)></div></cfif>

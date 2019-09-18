@@ -46,7 +46,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 <cfset navOutput=dspStandardNav()>
 <cfif len(navOutput)>
   <cfoutput>
-    <nav id="navStandard"<cfif this.navStandardWrapperClass neq ""> class="mura-nav-standard #this.navStandardWrapperClass#"</cfif>>
+    <nav id="navStandard" role="navigation" aria-label="Secondary"<cfif this.navStandardWrapperClass neq ""> class="mura-nav-standard #this.navStandardWrapperClass#"</cfif>>
       <cfif len(this.navStandardWrapperBodyClass)><div class="#this.navStandardWrapperBodyClass#"></cfif>
       #navOutput#
       <cfif len(this.navStandardWrapperBodyClass)></div></cfif>

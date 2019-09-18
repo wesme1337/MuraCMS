@@ -54,7 +54,7 @@ tcontent.responseDisplayFields,tcontent.responseMessage,tcontent.responseSendTo,
 tcontent.searchExclude,tcontent.SiteID,tcontent.sortBy,tcontent.sortDirection,tcontent.Summary,tcontent.Target,
 tcontent.TargetParams,tcontent.Template,tcontent.Title,tcontent.Type,tcontent.subType,tcontent.Path,tcontent.tags,
 tcontent.doCache,tcontent.created,tcontent.urltitle,tcontent.htmltitle,tcontent.mobileExclude,tcontent.changesetID,
-tcontent.imageSize,tcontent.imageHeight,tcontent.imageWidth,tcontent.childTemplate,tcontent.majorVersion,tcontent.minorVersion,tcontent.expires,tcontent.displayInterval,tcontent.objectParams,tcontent.canonicalURL
+tcontent.imageSize,tcontent.imageHeight,tcontent.imageWidth,tcontent.childTemplate,tcontent.majorVersion,tcontent.minorVersion,tcontent.expires,tcontent.displayInterval,tcontent.objectParams,tcontent.canonicalURL,tcontent.isTemplate
 </cfoutput></cfsavecontent>
 
 <cffunction name="init" output="false">
@@ -565,7 +565,8 @@ tcontent.imageSize,tcontent.imageHeight,tcontent.imageWidth,tcontent.childTempla
 	  expires,
 	  displayInterval,
 	  objectParams,
-		canonicalURL)
+	  canonicalURL,
+	  isTemplate)
       VALUES (
 	  	 <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.contentBean.getContentHistID()#">,
          <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.contentBean.getContentID()#">,
@@ -699,8 +700,8 @@ tcontent.imageSize,tcontent.imageHeight,tcontent.imageWidth,tcontent.childTempla
 		</cfif>,
 		<cfqueryparam cfsqltype="cf_sql_varchar" null="#iif(arguments.contentBean.getDisplayInterval(serialize=true) neq '',de('no'),de('yes'))#" value="#arguments.contentBean.getDisplayInterval(serialize=true)#">,
 		<cfqueryparam cfsqltype="cf_sql_longvarchar" null="#iif(arguments.contentBean.getObjectParams(serialize=true) neq '',de('no'),de('yes'))#" value="#arguments.contentBean.getObjectParams(serialize=true)#">,
-		<cfqueryparam cfsqltype="cf_sql_varchar" null="#iif(arguments.contentBean.getCanonicalURL() neq '',de('no'),de('yes'))#" value="#arguments.contentBean.getCanonicalURL()#">
-
+		<cfqueryparam cfsqltype="cf_sql_varchar" null="#iif(arguments.contentBean.getCanonicalURL() neq '',de('no'),de('yes'))#" value="#arguments.contentBean.getCanonicalURL()#">,
+		<cfqueryparam cfsqltype="cf_sql_integer"  value="#arguments.contentBean.getIsTemplate()#">
 		)
  </CFQUERY>
 

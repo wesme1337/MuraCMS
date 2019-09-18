@@ -81,7 +81,7 @@ getMarkdownEditor=function(config){
       });
 
       editorInstance.addCommand(AddComponent)
-
+    /*
      toolbar.addButton({
         name: 'MuraComponemt',
         className: 'mi-align-justify',
@@ -89,6 +89,7 @@ getMarkdownEditor=function(config){
         tooltip: 'Image',
         $el: $('<div style="' + buttonStyles + '"><i class="mi-align-justify"></i></div>')
     }, 13);
+    */
  
     editorInstance.eventManager.addEventType('showMuraComponentPopover');
     

@@ -683,6 +683,9 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 					<cfif isdefined("rstContent.canonicalURL")>
 					,canonicalURL
 					</cfif>
+					<cfif isdefined("rstContent.isTemplate")>
+					,isTemplate
+					</cfif>
 					)
 					values
 					(
@@ -780,6 +783,10 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 					<cfif isdefined("rstContent.canonicalURL")>
 						,
 						<cfqueryparam cfsqltype="cf_sql_VARCHAR" null="#iif(rstContent.canonicalURL neq '',de('no'),de('yes'))#" value="#rstContent.canonicalURL#">
+					</cfif>
+					<cfif isdefined("rstContent.isTemplate")>
+						,
+						<cfqueryparam cfsqltype="cf_sql_integer" null="#iif(isNumeric(rstContent.isTemplate),de('no'),de('yes'))#" value="#rstContent.isTemplate#">
 					</cfif>
 					)
 				</cfquery>

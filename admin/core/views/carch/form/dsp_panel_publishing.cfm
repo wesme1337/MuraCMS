@@ -178,6 +178,11 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 					 <label for="searchExclude" class="checkbox"><input name="searchExclude" id="searchExclude" type="checkbox" value="1" <cfif rc.contentBean.getSearchExclude() eq "">checked <cfelseif rc.contentBean.getSearchExclude() eq 1>checked</cfif> class="checkbox"> #application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.searchexclude')#</label>
 				</div> <!--- /end mura-control-group --->
 
+					<!--- exclude from search --->
+				<div class="mura-control-group boolean">
+					 <label for="isTemplate" class="checkbox"><input name="isTemplate" id="isTemplate" type="checkbox" value="1" <cfif rc.contentBean.getisTemplate() eq 1>checked</cfif> class="checkbox"> #application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.isTemplate')#</label>
+				</div> <!--- /end mura-control-group --->
+
 			</cfif>	
 
 			<!--- lock node --->

@@ -135,6 +135,7 @@ component extends="mura.bean.beanExtendable" entityName="content" table="tconten
 	property name="approvalChainOverride" type="boolean" default="false" comparable="false" persistent="false";
 	property name="relatedContentSetData" type="any" persistent="false";
 	property name="canonicalURL" type="string" default="";
+	property name="isTemplate" type="numeric" default="0";
 
 	variables.primaryKey = 'contentid';
 	variables.entityName = 'content';
@@ -244,6 +245,7 @@ component extends="mura.bean.beanExtendable" entityName="content" table="tconten
 		variables.instance.objectParams={};
 		variables.instance.canonicalURL='';
 		variables.displayRegions = structNew();
+		variables.isTemplate=0;
 		return this;
 	}
 
@@ -1544,6 +1546,14 @@ component extends="mura.bean.beanExtendable" entityName="content" table="tconten
 			return variables.instance.metakeywords;
 		} else {
 			return '';
+		}
+	}
+
+	function setIsTemplate(isTemplate){
+		if(arguments.isTemplate==1){
+			variables.instance.istemplate=1;
+		} else {
+			variables.instance.istemplate=0;
 		}
 	}
 

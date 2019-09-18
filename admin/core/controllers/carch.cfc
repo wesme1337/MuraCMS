@@ -54,6 +54,7 @@ component extends="controller" output="false" {
 			param default=false name="arguments.rc.murakeepediting";
 			param default=false name="arguments.rc.locknode";
 			param default=false name="arguments.rc.frontend";
+			param default=0 name="arguments.rc.istemplate";
 			if ( !arguments.rc.ommitPublishingTab ) {
 			  param default=0 name="arguments.rc.isNav";
 			  param default="_self" name="arguments.rc.target";
@@ -306,6 +307,14 @@ component extends="controller" output="false" {
 			arguments.rc.crumbdata=variables.contentManager.getCrumbList(arguments.rc.contentID,arguments.rc.siteid,true);
 		}
 		arguments.rc.contentBean=variables.contentManager.getcontentVersion(arguments.rc.contenthistid,arguments.rc.siteid);
+		if(local.currentBean.getIsNew() && isDefined('rc.templateid') && (isValid('uuid',rc.templateid) || rc.templateid=='00000000000000000000000000000000000')){
+			arguments.rc.templateBean=getBean("content").loadBy(contentID=arguments.rc.templateid, siteID= arguments.rc.siteid);
+			var templateData=arguments.rc.templateBean.getAllValues(autocomplete=true);
+			structDelete(templateData,'contentid');
+			structDelete(templateData,'filename');
+			structDelete(templateData,'path');
+			arguments.rc.contentBean.set(templateData);
+		}
 		if ( arguments.rc.type != 'Variation' && arguments.rc.contentid != ''  && arguments.rc.contenthistid != '' && arguments.rc.contentBean.getIsNew() == 1 && !len(arguments.rc.instanceid) ) {
 			variables.fw.redirect(action="cArch.hist",append="contentid,siteid,startrow,moduleid,parentid,type",path="./");
 		}

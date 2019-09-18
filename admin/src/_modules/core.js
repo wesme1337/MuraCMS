@@ -318,7 +318,7 @@ setMarkdownEditors=function(selector) {
             var height= input.data('height') || '300px';
             var previewStyle= input.data('previewstyle') ||  'tabs';
             var initialEditType= input.data('initialedittype') ||  'wysiwyg';
-            markdownInstances[input.attr('name')]=new markdownEditor({
+            markdownInstances[input.attr('name')]=getMarkdownEditor({
                 el: document.getElementById(id),
                 initialEditType: initialEditType,
                 previewStyle: previewStyle,

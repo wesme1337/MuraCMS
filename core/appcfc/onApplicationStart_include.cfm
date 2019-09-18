@@ -903,6 +903,7 @@ if ( application.setupComplete ) {
 	}
 
 	//  Clean root admin directory
+	/*
 	variables.tracePoint=initTracePoint("Clean admin directory");
 	local.fileWriter=application.serviceFactory.getBean('fileWriter');
 	local.rs=local.fileWriter.getDirectoryList(expandPath('/muraWRM#application.configBean.getAdminDir()#/'));
@@ -924,6 +925,7 @@ if ( application.setupComplete ) {
 		}
 	}
 	commitTracePoint(variables.tracePoint);
+	*/
 
 	//These were added to remove previous resource bundles tha were two specific
 	if(fileExists(expandPath("/murawrm/core/mura/resourceBundle/resources/en_US.properties"))){

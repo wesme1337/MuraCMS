@@ -3,6 +3,8 @@ require('tui-editor/dist/tui-editor.css'); // editor ui
 require('tui-editor/dist/tui-editor-contents.css'); // editor content
 require('highlight.js/styles/github.css');
 
+ImageEditor=require('tui-image-editor');
+
 var editor=require('tui-editor');
 
 getMarkdownEditor=function(config){
@@ -20,7 +22,6 @@ getMarkdownEditor=function(config){
         'divider',
         'ul',
         'ol',
-        'task',
         'indent',
         'outdent',
         'divider',
@@ -31,7 +32,7 @@ getMarkdownEditor=function(config){
         'divider'
     ];
 
-    editorInstance=new editor(config);
+    var editorInstance=new editor(config);
     
     var toolbar = editorInstance.getUI().getToolbar();
 

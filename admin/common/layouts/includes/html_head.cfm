@@ -64,8 +64,6 @@
 	<!-- jQuery UI components -->
 	<script src="#application.configBean.getContext()##application.configBean.getAdminDir()#/dist/jquery.bundle.js?coreversion=#application.coreversion#" type="text/javascript"></script>
 
-	
-
 	<!-- Mura Admin modules components -->
 	<script src="#application.configBean.getContext()##application.configBean.getAdminDir()#/dist/modules.bundle.js?coreversion=#application.coreversion#" type="text/javascript"></script>
 

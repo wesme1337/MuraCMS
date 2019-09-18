@@ -271,7 +271,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 						tcontent.type, tcontent.subType, tcontent.filename, tcontent.displaystart, tcontent.displaystop,
 						tcontent.remotesource, tcontent.remoteURL,tcontent.remotesourceURL, tcontent.keypoints,
 						tcontent.contentID, tcontent.parentID, tcontent.approved, tcontent.isLocked, tcontent.contentHistID,tcontent.target, tcontent.targetParams,
-						tcontent.releaseDate, tcontent.lastupdate,tcontent.summary,
+						tcontent.releaseDate, tcontent.lastupdate,tcontent.summary,tcontent.istemplate,
 						tfiles.fileSize,tfiles.fileExt,tcontent.fileid,
 						tcontent.tags,tcontent.credits,tcontent.audience, tcontent.orderNo,
 						tcontentstats.rating,tcontentstats.totalVotes,tcontentstats.downVotes,tcontentstats.upVotes,

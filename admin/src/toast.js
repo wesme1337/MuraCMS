@@ -243,16 +243,16 @@ getMarkdownEditor=function(config){
     editorInstance.eventManager.addEventType('showMuraLinkPopover');
 
     var i18n=editorInstance.i18n;
-    var LINK_POPUP_CONTENT = `
+    var LINK_POPUP_CONTENT = `<div>
         <label for="url">${i18n.get('URL')}</label>
-        <input type="text" name="mdlinkurl" class="te-url-input" style="width:75%;float:left;"/>
+        <input type="text" id="mdlinkurl" name="mdlinkurl" class="te-url-input" style="width:75%;float:left;"/>
         <button type="button" class="btn mura-finder" data-target="mdlinkurl" data-completepath="false" style="width:25%;float:right;">Select File</button><br/>
         <label for="linkText">${i18n.get('Link text')}</label>
         <input type="text" class="te-link-text-input" />
         <div class="te-button-section">
             <button type="button" class="btn te-ok-button">${i18n.get('OK')}</button>
             <button type="button" class="btn te-close-button">${i18n.get('Cancel')}</button>
-        </div>
+        </div></div>
     `;
 
     var LinkPopup=editorInstance.getUI().createPopup({

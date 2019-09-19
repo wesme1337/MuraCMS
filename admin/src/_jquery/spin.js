@@ -178,6 +178,22 @@
     spin: function(target) {
       this.stop()
 
+        //Begin Custom
+        var $self = jQuery(this.el);
+
+        var maxZ = 0;
+        jQuery('*').each(function ()
+        {
+            var thisZ = jQuery(this).css('zIndex');
+            thisZ = (thisZ === 'auto' ? (Number(maxZ) + 1) : thisZ);
+            if (thisZ > maxZ) maxZ = thisZ;
+        });
+ 
+       jQuery('#action-modal').css('zIndex',maxZ+1);
+
+ 
+       // End Custom 
+
       var self = this
         , o = self.opts
         , el = self.el = css(createEl(0, {className: o.className}), {position: o.position, width: 0, zIndex: o.zIndex})

@@ -164,14 +164,14 @@ body.mura-sidebar-state__pushed--right .mura__layout-manager__controls {
  	width: 24px !important;
 	}	
 
-.mura-drop-target.mura-append {
-	border-bottom: 2px dotted @objectbordercolor;
-	/*margin-bottom: -2px;*/
-}
-
-.mura-drop-target.mura-prepend {
-	border-top: 2px dotted @objectbordercolor;
-	/*margin-top: -2px;*/
+.mura-region.mura-region-active .mura-object.mura-active:not([data-object="container"]).mura-prepend > .mura-fetborder-top,
+.mura-region.mura-region-active .mura-object.mura-active:not([data-object="container"]).mura-append > .mura-fetborder-bottom,
+.mura-drop-target.mura-prepend > .mura-fetborder-top,
+.mura-drop-target.mura-append > .mura-fetborder-bottom{
+	height: 4px !important;	
+	background-color: rgba(227, 74, 54, 1)!important;
+/*border-bottom: 2px dotted @objectbordercolor;*/
+/*margin-bottom: -2px;*/
 }
 
 .mura-object.mura-active.mura-container-active > .mura-fetborder,

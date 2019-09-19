@@ -3,8 +3,6 @@ require('tui-editor/dist/tui-editor.css'); // editor ui
 require('tui-editor/dist/tui-editor-contents.css'); // editor content
 require('highlight.js/styles/github.css');
 
-ImageEditor=require('tui-image-editor');
-
 var editor=require('tui-editor');
 
 getMarkdownEditor=function(config){
@@ -32,7 +30,7 @@ getMarkdownEditor=function(config){
         'divider'
     ];
 
-    var editorInstance=new editor(config);
+    editorInstance=new editor(config);
     
     var toolbar = editorInstance.getUI().getToolbar();
 
@@ -56,32 +54,38 @@ getMarkdownEditor=function(config){
                 ch: range.to.ch
             };
         
-            var text = data.text;
-            text = editorInstance.importManager.constructor.decodeURIGraceful(text);
-            text = editorInstance.importManager.constructor.escapeMarkdownCharacters(text);
+            var componentid = data.componentid;
+         
         
-            doc.replaceRange(text, from, to);
-        
-            cm.focus();
+            Mura.getEntity('content').loadBy('contentid',componentid,{type:"component",fields:"body"})
+                .then(function(component){
+                    var text=component.get('body');
+                    text = editorInstance.importManager.constructor.decodeURIGraceful(text);
+                    text = editorInstance.importManager.constructor.escapeMarkdownCharacters(text);
+                    doc.replaceRange(text, from, to);
+                    cm.focus();
+                });
         }
       });
 
       var AddComponent=editorInstance.commandManager.addCommand('wysiwyg',{
         name: 'AddComponent',
         exec: function exec(wwe, data) {
-            
-            var text = data.text;
-            text = editorInstance.importManager.constructor.decodeURIGraceful(text);
+            var sq = wwe.getEditor();
+            var componentid = data.componentid;
 
-            wwe.insertText(text);
-
-            wwe.focus();
+            Mura.getEntity('content').loadBy('contentid',componentid,{type:"component",fields:"body"})
+                .then(function(component){
+                    var text=editorInstance.importManager.constructor.decodeURIGraceful(component.get('body'));
+                    sq.insertHTML(editorInstance.convertor.toHTML(text));
+                    wwe.focus();
+                });
         }
 
       });
 
       editorInstance.addCommand(AddComponent)
-    /*
+    
      toolbar.addButton({
         name: 'MuraComponemt',
         className: 'mi-align-justify',
@@ -89,7 +93,6 @@ getMarkdownEditor=function(config){
         tooltip: 'Image',
         $el: $('<div style="' + buttonStyles + '"><i class="mi-align-justify"></i></div>')
     }, 13);
-    */
  
     editorInstance.eventManager.addEventType('showMuraComponentPopover');
     
@@ -102,7 +105,7 @@ getMarkdownEditor=function(config){
 
     var COMPONENT_POPUP_CONTENT = `
         <label for="">Select Component</label>
-        <select class="te-select-component"/>
+        <select class="te-select-component"><option value="">Select Component</option></select>
         <div class="te-button-section">
             <button type="button" class="btn ${CLASS_OK_BUTTON}">${i18n.get('OK')}</button>
             <button type="button" class="btn ${CLASS_CLOSE_BUTTON}">${i18n.get('Cancel')}</button>
@@ -120,13 +123,23 @@ getMarkdownEditor=function(config){
 
     var componentSelectInput =Mura(componentPopup.$el.get(0)).find('.te-select-component');
 
+    Mura.getFeed('content')
+        .where()
+        .andProp('moduleAssign').containsValue('00000000000000000000000000000000000')
+        .sort('title')
+        .getQuery({type:'component',fields:'title'}).then(function(collection){
+            collection.forEach(function(item){
+                componentSelectInput.append('<option value="'+ Mura.escapeHTML(item.get('contentid')) +  '">'+ Mura.escapeHTML(item.get('title')) +  '</option>')
+            })
+        });
+
     componentPopup.on('shown', function(){ componentSelectInput.focus()});
     componentPopup.on('hidden',function(){ componentSelectInput.val('');});
 
     componentPopup.on('click .te-close-button', function(){componentPopup.hide()});
     componentPopup.on('click .te-ok-button', function(){
         editorInstance.eventManager.emit('command', 'AddComponent', {
-            text:'HELLO2'
+            componentid:componentSelectInput.val()
         });
         componentPopup.hide();
     });

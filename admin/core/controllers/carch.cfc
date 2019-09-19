@@ -307,7 +307,7 @@ component extends="controller" output="false" {
 			arguments.rc.crumbdata=variables.contentManager.getCrumbList(arguments.rc.contentID,arguments.rc.siteid,true);
 		}
 		arguments.rc.contentBean=variables.contentManager.getcontentVersion(arguments.rc.contenthistid,arguments.rc.siteid);
-		if(local.currentBean.getIsNew() && isDefined('rc.templateid') && (isValid('uuid',rc.templateid) || rc.templateid=='00000000000000000000000000000000000')){
+		if(local.currentBean.getIsNew() && isDefined('rc.templateid') && (isValid('uuid',rc.templateid) || rc.templateid=='00000000000000000000000000000000001')){
 			arguments.rc.templateBean=getBean("content").loadBy(contentID=arguments.rc.templateid, siteID= arguments.rc.siteid);
 			var templateData=arguments.rc.templateBean.getAllValues(autocomplete=true);
 			structDelete(templateData,'contentid');

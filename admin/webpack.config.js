@@ -42,6 +42,5 @@ module.exports = {
             {from:'./src/_toast/image-editor',to:'./image-editor'} 
         ]), 
     */
-   
-    ]
+
   }; 

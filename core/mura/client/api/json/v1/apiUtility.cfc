@@ -2734,6 +2734,9 @@ component extends="mura.cfobject" hint="This provides JSON/REST API functionalit
 						if(propName == 'sort'){
 							advancedsort=listAppend(advancedsort,arguments.params[p]);
 						} else if(!(entity.getEntityName()=='user' && propName=='isPublic')){
+								if(entity.getEntityName()=='content' && propName=='type' && listFindNoCase('form,component',arguments.params[p])){
+									feed.setType(arguments.params[p]);
+								}
 								if(entity.getEntityName()=='user' && propName=='groupid'){
 									feed.setGroupID(arguments.params[p]);
 								} else if(propName=='or'){

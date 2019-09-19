@@ -156,7 +156,8 @@
     className: 'spinner', // CSS class to assign to the element
     top: 'auto',          // center vertically
     left: 'auto',         // center horizontally
-    position: 'relative'  // element position
+    position: 'relative',
+    forceTop:false  //custom
   }
 
   /** The constructor */
@@ -178,7 +179,8 @@
     spin: function(target) {
       this.stop()
 
-        //Begin Custom
+      //Begin Custom
+      if(this.opts.forceTop){
         var $self = jQuery(this.el);
 
         var maxZ = 0;
@@ -188,8 +190,9 @@
             thisZ = (thisZ === 'auto' ? (Number(maxZ) + 1) : thisZ);
             if (thisZ > maxZ) maxZ = thisZ;
         });
- 
-       jQuery('#action-modal').css('zIndex',maxZ+1);
+  
+        jQuery('#action-modal').css('zIndex',maxZ+1);
+      }
 
  
        // End Custom 

@@ -30,7 +30,7 @@ getMarkdownEditor=function(config){
         'divider'
     ];
 
-    editorInstance=new editor(config);
+    var editorInstance=new editor(config);
     
     var toolbar = editorInstance.getUI().getToolbar();
 
@@ -122,7 +122,7 @@ getMarkdownEditor=function(config){
     });
 
     var componentSelectInput =Mura(componentPopup.$el.get(0)).find('.te-select-component');
-
+   
     Mura.getFeed('content')
         .where()
         .andProp('moduleAssign').containsValue('00000000000000000000000000000000000')
@@ -131,6 +131,7 @@ getMarkdownEditor=function(config){
             collection.forEach(function(item){
                 componentSelectInput.append('<option value="'+ Mura.escapeHTML(item.get('contentid')) +  '">'+ Mura.escapeHTML(item.get('title')) +  '</option>')
             })
+            //$(componentSelectInput.node).niceSelect();
         });
 
     componentPopup.on('shown', function(){ componentSelectInput.focus()});
@@ -263,6 +264,37 @@ getMarkdownEditor=function(config){
         modal:true
     });
  
+    $( function() {
+        var cache = {};
+        $( 'input[name="mdlinkurl"]').autocomplete({
+          minLength: 4,
+          source: function( request, response ) {
+            var term = request.term;
+            if(term.substring(1, 4)=='http' || term.substring(1, 1) == "/"){
+                return;
+            }
+            if ( term in cache ) {
+              response( cache[ term ] );
+              return;
+            }
+            
+            Mura.getFeed('content')
+                .where()
+                .andProp('title').containsValue(term)
+                .sort('title')
+                .getQuery({fields:'title,url'}).then(function(collection){
+                    var data=[];
+                    collection.forEach(function(item){
+                        data.push(item.get('url'));
+                    })
+              
+                    console.log(data)
+                    cache[ term ] = data;
+                    response(data);
+                });
+          }
+        });
+      } );
 
     var linkEl = LinkPopup.$el.get(0);
     var linkInputText = linkEl.querySelector('.te-link-text-input');

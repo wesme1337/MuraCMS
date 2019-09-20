@@ -102,7 +102,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 </cfif>
 </cfsilent>
 <cfoutput>
-<script src="#application.configBean.getContext()##application.configBean.getAdminDir()#/assets/js/jquery/jquery.js?coreversion=#application.coreversion#" type="text/javascript"></script>
+<script src="#application.configBean.getContext()#/core/vendor/jquery/jquery.min.js?coreversion=#application.coreversion#" type="text/javascript"></script>
 <script src="#application.configBean.getContext()##application.configBean.getAdminDir()#/assets/js/porthole/porthole.min.js?coreversion=#application.coreversion#" type="text/javascript"></script>
 <script>
 	<cfparam name="session.mura.objectInstanceId" default="">

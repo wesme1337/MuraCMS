@@ -31,7 +31,11 @@ component extends="mura.bean.beanORMVersioned" table="tcontentalturl" entityname
 				// else set the custom error to display
 				var errors=getErrors();
 				
-				errors["alturl_#get('alturlid')#"]="#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.alturlwarningstart')# '" & get('alturl') & "' #application.rbFactory.getKeyValue(session.rb,'sitemanager.content.fields.alturlwarningend')#";
+				if(redirectCheck.exists() && redirectCheck.get('alturlid') != get('alturlid')){
+					contentCheck=redirectCheck.getActiveContent();
+				}
+
+				errors["alturl_#get('alturlid')#"]='The alternative url #get("alturl")# is already in use by: <a href="#contentCheck.getEditURL()#"><strong>#esapiEncode("html",contentCheck.getMenutitle())#</strong></a>';
 			}
 
 			return this;

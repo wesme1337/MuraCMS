@@ -696,6 +696,7 @@ preloadimages=function(e) {
     t[i].src = e[i];
 }
 
+//modal
 spinnerArgs = {
     lines: 17,
     length: 7,
@@ -711,9 +712,11 @@ spinnerArgs = {
     className: "spinner",
     zIndex: 2e9,
     top: "auto",
-    left: "auto"
+    left: "auto",
+    forceTop:true
 };
 
+//inline
 spinnerArgs2 = {
     lines: 17,
     length: 7,
@@ -730,7 +733,8 @@ spinnerArgs2 = {
     zIndex: 2e9,
     top: "auto",
     left: "auto",
-    position: "relative"
+    position: "relative",
+    forceTop:false
 };
 spinnerArgs3 = {
     lines: 17,
@@ -748,7 +752,8 @@ spinnerArgs3 = {
     zIndex: 2e9,
     top: "auto",
     left: "auto",
-    position: "relative"
+    position: "relative",
+    forceTop:false
 };
 
 removePunctuation=function(e) {

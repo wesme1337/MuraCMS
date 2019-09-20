@@ -5,7 +5,6 @@ var sortable,
     },
     dragE;
 
-var dragScroll = false;
 
 function disabledEventPropagation(event) {
     if (event.stopPropagation) {
@@ -23,7 +22,6 @@ function initDraggableObject_dragstart(e) {
     elDropHandled = false;
     newMuraObject = false;
     muraLooseDropTarget = null;
-    dragScroll=true;
     MuraInlineEditor.sidebarAction('showobjects');
     Mura('.mura-object-selected').removeClass('mura-object-selected');
     Mura('.mura-region, .mura-region .mura-editable').addClass('mura-region-active');
@@ -35,7 +33,6 @@ function initDraggableObject_dragend() {
     dragEl = null;
     elDropHandled = false;
     newMuraObject = false;
-    dragScroll = false;
     Mura('.mura-object-selected').removeClass('mura-object-selected');
     Mura('.mura-region, .mura-region .mura-editable').removeClass('mura-region-active');
     Mura('.mura-region div[data-object="container"], .mura-region .mura-editable div[data-object="container"]').removeClass('mura-container-active');
@@ -95,18 +92,13 @@ function getDropDirection(e, target) {
 
 
 function initDraggableObject_drag(e){
-    dragScroll = true;
-
     if(typeof e.clientY != 'undefined'){
        
-        if (e.clientY < 150) {
-            scroll(-5)
-            dragScroll = false;
-           
+        if (e.clientY < 150 && e.clientY > 5) {
+            scroll(-5)  
         }
 
         if (e.clientY > (Mura(window).height() - 150)) {
-            dragScroll = false;
             scroll(5)
         }
     }
@@ -461,7 +453,6 @@ function initClassObjects() {
                     elDropHandled = false;
                     newMuraObject = true;
                     muraLooseDropTarget = null;
-                    dragScroll=true;
                     Mura('#dragtype').html(item.data('object'));
                     Mura('.mura-sidebar').addClass('mura-sidebar--dragging');
                     Mura('.mura-region, .mura-region .mura-editable').addClass('mura-region-active');
@@ -479,7 +470,6 @@ function initClassObjects() {
                     dragEl = null;
                     elDropHandled = false;
                     newMuraObject = false;
-                    dragScroll=false;
                     Mura('.mura-sidebar').removeClass('mura-sidebar--dragging');
                     Mura('.mura-region, .mura-region .mura-editable').removeClass('mura-region-active');
                     Mura('.mura-region div[data-object="container"], .mura-region .mura-editable div[data-object="container"]').removeClass('mura-container-active');
@@ -791,11 +781,7 @@ function deInitLayoutManager(){
 
 function scroll(step) {
     var scrollY = Mura(window).scrollTop();
-    window.scrollTo({ top: scrollY + step});
-    if (!dragScroll) {
-        //setTimeout(function () { scroll(step) }, 20);
-    }
-  
+    window.scrollTo({ top: scrollY + step});  
 }
 
 

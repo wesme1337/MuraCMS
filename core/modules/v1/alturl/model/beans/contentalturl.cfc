@@ -32,7 +32,7 @@ component extends="mura.bean.beanORMVersioned" table="tcontentalturl" entityname
 				var errors=getErrors();
 				
 				if(redirectCheck.exists() && redirectCheck.get('alturlid') != get('alturlid')){
-					contentCheck=redirectCheck.getActiveContent();
+					contentCheck=redirectCheck.getContent();
 				}
 
 				errors["alturl_#get('alturlid')#"]='The alternative url #get("alturl")# is already in use by: <a href="#contentCheck.getEditURL()#"><strong>#esapiEncode("html",contentCheck.getMenutitle())#</strong></a>';

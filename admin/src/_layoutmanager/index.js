@@ -41,7 +41,7 @@ function initDraggableObject_dragend() {
 function initDraggableObject_dragover(e) {
     e.preventDefault();
     e.dataTransfer.dropEffect = 'copy';
-    if (!Mura(e.srcElement).is('.mura-fetborder') && (dragEl || newMuraObject)) {
+    if (dragEl || newMuraObject) {
         var prev = Mura('.mura-drop-target');
         muraLooseDropTarget = this;
 
@@ -274,7 +274,7 @@ function initLooseDropTarget_dragenter(e) {
     //disabledEventPropagation(e)
     e.dataTransfer.dropEffect = 'copy';
 
-    if (!Mura(e.srcElement).is('.mura-fetborder') && !Mura('.mura-drop-target').length && (dragEl || newMuraObject)) {
+    if (!Mura('.mura-drop-target').length && (dragEl || newMuraObject)) {
 
         var item = Mura(this).closest(".mura-object");
 

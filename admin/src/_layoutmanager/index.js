@@ -80,11 +80,17 @@ function getDropDirection(e, target) {
     var elemTop = targetRect.top;
     var elemBottom = targetRect.bottom;
     var divide = ((elemBottom - elemTop) / 2) + elemTop;
-
-    if (e.clientY > divide) {
-        return 'append';
-    } else {
+    var targetClass = target.className;
+    var startDir = 'append';
+    if (targetClass.indexOf('mura-prepend')){
+        startDir = 'prepend';
+    }
+    if (elemBottom == elemTop){
+        return startDir;
+    } else if (e.clientY <= divide) {
         return 'prepend';
+    } else {
+        return 'append';
     }
 
 }

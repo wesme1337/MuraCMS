@@ -7,7 +7,8 @@ module.exports = {
         modules:'./src/modules.js',	
         theme:'./src/theme.js',	
         bootstrap:'./src/bootstrap.js',
-        toast:'./src/toast.js'	
+        toast:'./src/toast.js',
+        layoutmanager:'./src/layoutmanager.js'	
     },	
     target: "web",	
     output: {	

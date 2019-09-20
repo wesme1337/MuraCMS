@@ -169,7 +169,7 @@ Mura(function(){
 		&& Mura.editing){
 			Mura.deInitLayoutManager();
 	}
-	Mura.loader().load('#variables.$.siteConfig().getAdminPath(complete=completeurls)#/assets/js/layoutmanager.js',
+	Mura.loader().load('#variables.$.siteConfig().getAdminPath(complete=completeurls)#/dist/layoutmanager.bundle.js',
 		function(){
 			<cfif $.content('type') eq 'Variation'>
 			if(!Mura('.mxp-editable').length){

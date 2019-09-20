@@ -32,9 +32,11 @@ component extends="mura.bean.beanORMVersioned" table="tcontentalturl" entityname
 				var errors=getErrors();
 				
 				if(redirectCheck.exists() && redirectCheck.get('alturlid') != get('alturlid')){
-					contentCheck=redirectCheck.getContent();
-					if(!contentCheck.exists()){
+					var redirectContentCheck=redirectCheck.getContent();
+					if(!redirectContentCheck.exists()){
 						redirectCheck.delete();
+					} else {
+						contentCheck=redirectContentCheck;
 					}
 				}
 

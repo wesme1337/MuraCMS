@@ -18,18 +18,19 @@
 					item = altURLit.next();
 						
 					var content = m.getBean('content').loadBy(filename=item.get('alturl'));
-					if(len(item.get('statuscode')) && listFind('301,302',item.get('statuscode'))) {
-						if(content.get('type') == 'Link'){
-							m.redirect(location=content.get('body'),addToken=false,statusCode=item.getstatuscode());
+					if(content.exists()){
+						if(len(item.get('statuscode')) && listFind('301,302',item.get('statuscode'))) {
+							if(content.get('type') == 'Link'){
+								m.redirect(location=content.get('body'),addToken=false,statusCode=item.getstatuscode());
+							} else {
+								m.redirect(location=content.getURL(complete=true),addToken=false,statusCode=item.getstatuscode());
+							}
 						} else {
-							m.redirect(location=content.getURL(complete=true),addToken=false,statusCode=item.getstatuscode());
+							content.set('canonicalURL',content.getURL(complete=true));
+							m.event('muraForceFilename',false);
+							m.event('contentBean',content);
 						}
-					} else {
-						content.set('canonicalURL',content.getURL(complete=true));
-						m.event('muraForceFilename',false);
-						m.event('contentBean',content);
 					}
-					
 				}
 			}
 		}
@@ -48,7 +49,7 @@
 			if (altURLit.hasNext()) {
 				var altURL=altURLit.next();
 				var content=m.getBean('content').loadBy(contenthistid=altURL.get('contenthistid'));
-				if(content.getIsOnDisplay()){
+				if(content.exists() && content.getIsOnDisplay()){
 					if(len(altURL.get('statuscode')) && listFind('301,302',altURL.get('statuscode'))) {
 						m.redirect(location=content.getURL(complete=true),addToken=false,statusCode=altURL.getstatuscode());
 					} else {

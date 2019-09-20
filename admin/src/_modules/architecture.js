@@ -1114,12 +1114,19 @@ buttons: {
 			var type = element.type;
 			if(type == "checkbox" || type == "radio") {
 				if(element.checked != element.defaultChecked) {
+					//alert(element.outerHTML)
 					//alert(type + ":" + element.name)
 					return true;
 				}
 			} else if(type == "hidden" || type == "password" || type == "text" || type == "textarea") {
 				if(element.value != element.defaultValue) {
-					if(element.name != 'sdContent') {
+					if(element.name != 'sdContent' 
+						&& !(
+							element.classList.contains('datepicker')
+							|| element.classList.contains('mura-repeat-option')
+						)
+					) {
+						//alert(element.outerHTML)
 						//alert(type + ":" + element.name)
 						return true;
 					}
@@ -1147,6 +1154,7 @@ buttons: {
 		} else if(typeof(CKEDITOR) != 'undefined' && typeof(CKEDITOR.instances["body"]) != 'undefined') {
 			var instance = CKEDITOR.instances["body"];
 			if(instance.checkDirty()) {
+				//alert('body')
 				return true;
 			}
 

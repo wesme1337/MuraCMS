@@ -19,7 +19,7 @@ jQuery.widget("ui.dialog", jQuery.ui.dialog,
         {
             var thisZ = jQuery(this).css('zIndex');
             thisZ = (thisZ === 'auto' ? (Number(maxZ) + 1) : thisZ);
-            if (thisZ > maxZ) maxZ = thisZ;
+            if (thisZ<200000 && thisZ > maxZ) maxZ = thisZ;
         });
 
         jQuery(".ui-widget-overlay").css("zIndex", (maxZ + 1));

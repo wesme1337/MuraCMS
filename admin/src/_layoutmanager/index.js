@@ -41,7 +41,7 @@ function initDraggableObject_dragend() {
 function initDraggableObject_dragover(e) {
     e.preventDefault();
     e.dataTransfer.dropEffect = 'copy';
-    return;
+
     if (dragEl || newMuraObject) {
         var prev = Mura('.mura-drop-target');
         muraLooseDropTarget = this;

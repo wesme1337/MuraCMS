@@ -94,12 +94,12 @@ function getDropDirection(e, target) {
 function initDraggableObject_drag(e){
     if(typeof e.clientY != 'undefined'){
        
-        if (e.clientY < 150 && e.clientY > 5) {
-            scroll(-5)  
+        if (e.clientY < 150 && e.clientY > 2) {
+            scroll(-2)  
         }
 
         if (e.clientY > (Mura(window).height() - 150)) {
-            scroll(5)
+            scroll(2)
         }
     }
   

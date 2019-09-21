@@ -26,6 +26,24 @@
 		"sI": 0,
 		"sU": 0
 		},
+	"/less/assets.css": {
+		"aP": 1,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "/less/assets-min.css",
+		"oF": 0,
+		"oS": 3
+		},
+	"/less/assets.css.map": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/less/assets.css.map",
+		"oF": 0
+		},
 	"/less/assets.less": {
 		"aP": 0,
 		"bl": 0,
@@ -462,16 +480,6 @@
 		"oF": 0,
 		"oS": 3
 		},
-	"/mura.7.0.skin-min.css": {
-		"aP": 1,
-		"bl": 0,
-		"ft": 16,
-		"ma": 0,
-		"oA": 0,
-		"oAP": "/mura.7.0.skin-min-min.css",
-		"oF": 0,
-		"oS": 3
-		},
 	"/mura.7.0.skin.css": {
 		"aP": 1,
 		"bl": 0,
@@ -509,16 +517,6 @@
 		"ma": 0,
 		"oA": 0,
 		"oAP": "/mura.7.1.skin-min.css",
-		"oF": 0,
-		"oS": 3
-		},
-	"/mura.7.2.min.css": {
-		"aP": 1,
-		"bl": 0,
-		"ft": 16,
-		"ma": 0,
-		"oA": 0,
-		"oAP": "/mura.7.2.min-min.css",
 		"oF": 0,
 		"oS": 3
 		},

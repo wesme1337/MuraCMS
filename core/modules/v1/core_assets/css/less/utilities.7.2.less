@@ -295,6 +295,156 @@ li .cke_skin_mura {
         }
     }
 }
+
+/* Width and breakpoints with sidebar visible */
+
+.mura-sidebar-state__pushed--right {
+    .mura-region-inherited, .mura-region-local {
+
+        @media (min-width: 700px) {
+            .mura-container {
+                width: 85%;
+                padding: 0;
+            }
+        }
+        /* Extra small doesn't get anything */
+        /* For devices larger than 550px */
+        /* small  < 768 If less than force 100%*/
+        @media (max-width: 1067px) {
+            .mura-object {
+                width: 100% !important;
+                display: flex !important;
+            }
+            .mura-object[data-object="container"] {
+                min-height: 0px !important;
+            }
+            .mura-object>.mura-object-content {
+                width: 100% !important;
+                margin-left: 0px !important;
+                margin-right: 0px !important;
+            }
+            .mura-object>.mura-object-meta {
+                margin-left: 0px !important;
+                margin-right: 0px !important;
+            }
+        }
+        /* default: small 1068 - 1291 */
+        @media (min-width: 1068px) {
+            .mura-container {
+                width: 80%;
+            }
+            .mura-column:last-child, .mura-object:last-child {
+                margin-right: 0;
+            }
+            .mura-one.mura-object {
+                width: 8.33%;
+            }
+            .mura-two.mura-object {
+                width: 16.66%;
+            }
+            .mura-three.mura-object {
+                width: 25%;
+            }
+            .mura-four.mura-object {
+                width: 33.33%;
+            }
+            .mura-five.mura-object {
+                width: 41.66%;
+            }
+            .mura-six.mura-object {
+                width: 50%;
+            }
+            .mura-seven.mura-object {
+                width: 58.33%;
+            }
+            .mura-eight.mura-object {
+                width: 66.66%;
+            }
+            .mura-nine.mura-object {
+                width: 75%;
+            }
+            .mura-ten.mura-object {
+                width: 83.33%;
+            }
+            .mura-eleven.mura-object {
+                width: 91.66%;
+            }
+            .mura-twelve.mura-object {
+                width: 100%;
+            }
+            .mura-one-third.mura-object {
+                width: 33.33%;
+            }
+            .mura-two-thirds.mura-object {
+                width: 66.66%;
+            }
+            .mura-one-half.mura-object {
+                width: 50%;
+            }
+        }
+        /* medium 1292 - 1499  If less than force 100% */
+        @media (max-width: 1291px) {
+            .mura-object.mura-md {
+                display: flex !important;
+                width: 100% !important;
+            }
+            .mura-object.mura-md>.mura-object-content {
+                width: 100%;
+                margin-left: 0px !important;
+                margin-right: 0px !important;
+            }
+            .mura-object.mura-md>.mura-object-meta {
+                margin-left: 0px !important;
+                margin-right: 0px !important;
+            }
+        }
+        /* large  1500+ If less than force 100%*/
+        @media (max-width: 1499px) {
+            .mura-object.mura-lg {
+                display: flex !important;
+                width: 100% !important;
+            }
+            .mura-object.mura-lg>.mura-object-content {
+                width: 100% !important;
+                margin-left: 0px !important;
+                margin-right: 0px !important;
+            }
+            .mura-object.mura-lg>.mura-object-meta {
+                margin-left: 0px !important;
+                margin-right: 0px !important;
+            }
+        }
+
+        @media (min-width: 1068px) {
+            .mura-object.mura-object-label-right>.mura-object-meta-wrapper, .mura-object.mura-object-label-right>.mura-object-content, .mura-object.mura-object-label-left>.mura-object-meta-wrapper, .mura-object.mura-object-label-left>.mura-object-content {
+                position: relative;
+                width: 50%;
+                box-sizing: border-box;
+            }
+            .mura-object.mura-object-label-left {
+                flex-direction: row;
+            }
+            .mura-object.mura-object-label-right {
+                flex-direction: row-reverse;
+            }
+            .mura-expanded.mura-object.mura-object-label-right>.mura-object-meta-wrapper, .mura-expanded.mura-object.mura-object-label-right>.mura-object-content, .mura-expanded.mura-object.mura-object-label-left>.mura-object-meta-wrapper, .mura-expanded.mura-object.mura-object-label-left>.mura-object-content {
+                flex-grow: 1;
+                width: 50%;
+            }
+        } 
+
+        .mura-object.mura-expanded {
+            width: ~"calc(100vw - 300px)" !important;
+            left: ~"calc(-1 *(100vw - 100% - 300px) / 2)" !important;
+        }
+        .mura-object.mura-expanded>.mura-object-content, .mura-object.mura-expanded>.mura-object-meta {
+            opacity: 1;
+        }
+
+
+    }
+}
+
 /* Turn off parallax scrolling for all tablets and phones. Increase/decrease the pixels if needed */
 
 @media only screen and (max-device-width: 1366px) {
@@ -302,7 +452,6 @@ li .cke_skin_mura {
         background-attachment: scroll !important;
     }
 }
-/* For devices larger than 550px */
 
 @media (min-width: 768px) {
     .mura-object.mura-object-label-right>.mura-object-meta-wrapper, .mura-object.mura-object-label-right>.mura-object-content, .mura-object.mura-object-label-left>.mura-object-meta-wrapper, .mura-object.mura-object-label-left>.mura-object-content {
@@ -339,17 +488,7 @@ li .cke_skin_mura {
 .mura-object-meta {
     display: inline-block;
 }
-/* set full width for expanded containers */
 
-.mura-sidebar-state__pushed--right {
-    .mura-object.mura-expanded {
-        width: ~"calc(100vw - 300px)" !important;
-        left: ~"calc(-1 *(100vw - 100% - 300px) / 2)" !important;
-    }
-    .mura-object.mura-expanded>.mura-object-content, .mura-object.mura-expanded>.mura-object-meta {
-        opacity: 1;
-    }
-}
 /* Misc
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 

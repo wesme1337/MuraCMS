@@ -22,7 +22,6 @@
     "file-loader": "^4.2.0",
     "jquery": "^3.4.1",
     "mobile-drag-drop": "^2.3.0-rc.2",
-    "mura.js": "^1.0.163",
     "style-loader": "^1.0.0",
     "tui-editor": "^1.4.6"
   }

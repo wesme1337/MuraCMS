@@ -629,6 +629,9 @@ function initLayoutManager(el) {
             .addClass('mura-editing');
     }
 
+    Mura.editing=true;
+    Mura(window).trigger("resize");
+    
     var iframe = Mura('#frontEndToolsSidebariframe');
 
     //iframe.attr('src',iframe.data('preloadsrc'));

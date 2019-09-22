@@ -75,6 +75,18 @@ function initDraggableObject_dragleave(e) {
     }
 }
 
+function getDistanceFromActionBorder(e, target, pendingAction) {
+    var targetRect = target.getBoundingClientRect();
+
+    if(pendingAction=='prepend'){
+        return e.clientY-targetRect.top;
+    } else {
+        var elemBottom = targetRect.bottom;
+        return targetRect.bottom-e.clientY;
+    }
+  
+}
+
 function getDropDirection(e, target) {
     var targetRect = target.getBoundingClientRect();
     var elemTop = targetRect.top;
@@ -113,14 +125,13 @@ function initDraggableObject_drag(e){
 function initDraggableObject_drop(e) {
 
     var target = Mura('.mura-drop-target').node;
-
+   
     if (target) {
         if (dragEl || newMuraObject) {
             if (dragEl && dragEl != this) {
-
                 var dropDirection = getDropDirection(e, target);
-
-                if (target.getAttribute('data-object') == 'container') {
+                var distance=getDistanceFromActionBorder(e, target,dropDirection);
+                if (target.getAttribute('data-object') == 'container' && distance > 10) {
                     var container = Mura(target).children('.mura-object-content');
                     if (container.length) {
                         if (!container.node.childNodes.length) {
@@ -132,6 +143,12 @@ function initDraggableObject_drop(e) {
                         return;
                     }
                 } else {
+                    if(distance < 10){
+                        var parentCheck=Mura(target).parent().parent().closest('.mura-object[data-object="container"]');
+                        if(parentCheck.length){
+                            target=parentCheck.node;
+                        }
+                    }
                     if (dropDirection == 'append') {
                         target.parentNode.insertBefore(dragEl, target.nextSibling);
                     } else {
@@ -144,12 +161,25 @@ function initDraggableObject_drop(e) {
                 elDropHandled = true;
                 disabledEventPropagation(e);
             } else if (dragEl == target) {
+                var dropDirection = getDropDirection(e, target);
+                var distance=getDistanceFromActionBorder(e, target,dropDirection);
+                if(distance < 10){
+                    var parentCheck=Mura(target).parent().parent().closest('.mura-object[data-object="container"]');
+                    if(parentCheck.length){
+                        target=parentCheck.node;
+                        if (dropDirection == 'append') {
+                            target.parentNode.insertBefore(dragEl, target.node.nextSibling);
+                        } else {
+                            target.parentNode.insertBefore(dragEl, target.node);
+                        }
+                    }
+                }
+
                 elDropHandled = true;
                 disabledEventPropagation(e);
+            } else {
+                checkForNew.call(target, e);
             }
-
-            checkForNew.call(target, e);
-
         }
     }
 
@@ -541,7 +571,9 @@ function checkForNew(e) {
         var dropDirection = getDropDirection(e, this);
 
         if (target.hasClass('mura-object')) {
-            if (this.getAttribute('data-object') == 'container') {
+            var distance=getDistanceFromActionBorder(e, target.node,dropDirection);
+            
+            if (target.data('object') == 'container' && distance > 10) {
                 var container = target.children('.mura-object-content');
                 if (!container.node.childNodes.length) {
                     container.append(displayObject);
@@ -549,10 +581,16 @@ function checkForNew(e) {
                     container[dropDirection](displayObject);
                 }
             } else {
+                if(distance < 10){
+                    var parentCheck=target.parent().parent().closest('.mura-object[data-object="container"]');
+                    if(parentCheck.length){
+                        target=parentCheck;
+                    }
+                }
                 if (dropDirection == 'append') {
-                    this.parentNode.insertBefore(displayObject, this.nextSibling);
+                    target.node.parentNode.insertBefore(displayObject,  target.node.nextSibling);
                 } else {
-                    this.parentNode.insertBefore(displayObject, this);
+                    target.node.parentNode.insertBefore(displayObject,  target.node);
                 }
             }
         } else if (target.hasClass('mura-region-local')) {
@@ -631,7 +669,7 @@ function initLayoutManager(el) {
 
     Mura.editing=true;
     Mura(window).trigger("resize");
-    
+
     var iframe = Mura('#frontEndToolsSidebariframe');
 
     //iframe.attr('src',iframe.data('preloadsrc'));

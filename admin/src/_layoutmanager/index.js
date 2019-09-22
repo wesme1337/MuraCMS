@@ -111,12 +111,12 @@ function getDropDirection(e, target) {
 function initDraggableObject_drag(e){
     if(typeof e.clientY != 'undefined'){
        
-        if (e.clientY < 150 && e.clientY > 2) {
-            scroll(-2)  
+        if (e.clientY < 150 && e.clientY > 1) {
+            scroll(-1)  
         }
 
         if (e.clientY > (Mura(window).height() - 150)) {
-            scroll(2)
+            scroll(1)
         }
     }
   
@@ -131,7 +131,7 @@ function initDraggableObject_drop(e) {
             if (dragEl && dragEl != this) {
                 var dropDirection = getDropDirection(e, target);
                 var distance=getDistanceFromActionBorder(e, target,dropDirection);
-                if (target.getAttribute('data-object') == 'container' && distance > 10) {
+                if (target.getAttribute('data-object') == 'container' && distance > 5) {
                     var container = Mura(target).children('.mura-object-content');
                     if (container.length) {
                         if (!container.node.childNodes.length) {
@@ -143,7 +143,7 @@ function initDraggableObject_drop(e) {
                         return;
                     }
                 } else {
-                    if(distance < 10){
+                    if(distance < 5){
                         var parentCheck=Mura(target).parent().parent().closest('.mura-object[data-object="container"]');
                         if(parentCheck.length){
                             target=parentCheck.node;
@@ -163,7 +163,7 @@ function initDraggableObject_drop(e) {
             } else if (dragEl == target) {
                 var dropDirection = getDropDirection(e, target);
                 var distance=getDistanceFromActionBorder(e, target,dropDirection);
-                if(distance < 10){
+                if(distance < 5){
                     var parentCheck=Mura(target).parent().parent().closest('.mura-object[data-object="container"]');
                     if(parentCheck.length){
                         target=parentCheck.node;
@@ -573,7 +573,7 @@ function checkForNew(e) {
         if (target.hasClass('mura-object')) {
             var distance=getDistanceFromActionBorder(e, target.node,dropDirection);
             
-            if (target.data('object') == 'container' && distance > 10) {
+            if (target.data('object') == 'container' && distance > 5) {
                 var container = target.children('.mura-object-content');
                 if (!container.node.childNodes.length) {
                     container.append(displayObject);
@@ -581,7 +581,7 @@ function checkForNew(e) {
                     container[dropDirection](displayObject);
                 }
             } else {
-                if(distance < 10){
+                if(distance < 5){
                     var parentCheck=target.parent().parent().closest('.mura-object[data-object="container"]');
                     if(parentCheck.length){
                         target=parentCheck;

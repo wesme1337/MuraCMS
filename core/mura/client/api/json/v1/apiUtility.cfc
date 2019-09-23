@@ -886,6 +886,8 @@ component extends="mura.cfobject" hint="This provides JSON/REST API functionalit
 
 				if(isDefined('#params.method#')){
 
+					getBean('$').init(variables.siteid).announceEvent('onApiRequest');
+	
 					result=evaluate('#params.method#(argumentCollection=params)');
 
 					if(!isJson(result)){
@@ -916,6 +918,8 @@ component extends="mura.cfobject" hint="This provides JSON/REST API functionalit
 			} else if (isdefined('form.siteid') && !siteManager.siteExists(form.siteid)) {
 				throw(type="invalidParameters");
 			}
+
+			getBean('$').init(variables.siteid).announceEvent('onApiRequest');
 
 			if(arrayLen(pathInfo) > 1){
 				if(isDefined(pathInfo[2]) && pathInfo[2] != 'file'){
@@ -1380,10 +1384,6 @@ component extends="mura.cfobject" hint="This provides JSON/REST API functionalit
 			}
 		} catch (Any e){}
 
-		if(application.configBean.getValue(property='suppressAPIParams',defaultValue=true) && isDefined('response.params')){
-			structDelete(response,'params');
-		}
-
 		if(isDefined('arguments.response.data.shunter') && arguments.response.data.shunter){
 			if(isDefined('arguments.response.data.layout')){
 				responseObject.setContentType('application/x-shunter+json; charset=utf-8');
@@ -1391,10 +1391,18 @@ component extends="mura.cfobject" hint="This provides JSON/REST API functionalit
 			}
 		}
 
+		var $=getBean('$').init(variables.siteid);
+		$.event('response',arguments.response);
+		$.announceEvent('onApiResponse');
+		
+		if(application.configBean.getValue(property='suppressAPIParams',defaultValue=true) && isDefined('response.params')){
+			structDelete(response,'params');
+		}
+
 		var result= getSerializer().serialize(arguments.response);
 
 		cfheader( name="ETag", value=hash(result));
-
+		
 		return getSerializer().serialize(arguments.response);
 	}
 

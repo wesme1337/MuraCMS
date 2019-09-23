@@ -143,21 +143,14 @@ function initDraggableObject_drop(e) {
                         return;
                     }
                 } else {
-                    if(distance < 5){
-                        if(target.previousSibling && dropDirection=='prepend'){
-                            if(Mura(target.previousSibling).is('.mura-object[data-object="container"]')){
-                                target=target.previousSibling;
-                            }
-                        } else if(target.nextSibling && dropDirection=='append'){
-                            if(Mura(target.nextSibling).is('.mura-object[data-object="container"]')){
-                                target=target.nextSibling;
-                            }
-                        } else {
-                            var parentCheck=Mura(target).parent().parent().closest('.mura-object[data-object="container"]');
-                            if(parentCheck.length){
-                                target=parentCheck.node;
-                            }
-                        }   
+                    if(distance < 5 && !(
+                        dropDirection=='prepend' && target.previousSibling
+                        || dropDirection=='append' && target.nextSibling
+                    )){
+                        var parentCheck=Mura(target).parent().parent().closest('.mura-object[data-object="container"]');
+                        if(parentCheck.length){
+                            target=parentCheck.node;
+                        } 
                     }
                     if (dropDirection == 'append') {
                         target.parentNode.insertBefore(dragEl, target.nextSibling);
@@ -173,26 +166,19 @@ function initDraggableObject_drop(e) {
             } else if (dragEl == target) {
                 var dropDirection = getDropDirection(e, target);
                 var distance=getDistanceFromActionBorder(e, target,dropDirection);
-                if(distance < 5){
-                    if(target.previousSibling && dropDirection=='prepend'){
-                        if(Mura(target.previousSibling).is('.mura-object[data-object="container"]')){
-                            target=target.previousSibling;
+                if(distance < 5 && !(
+                    dropDirection=='prepend' && target.previousSibling
+                    || dropDirection=='append' && target.nextSibling
+                )){
+                    var parentCheck=Mura(target).parent().parent().closest('.mura-object[data-object="container"]');
+                    if(parentCheck.length){
+                        target=parentCheck.node;
+                        if (dropDirection == 'append') {
+                            target.parentNode.insertBefore(dragEl, target.node.nextSibling);
+                        } else {
+                            target.parentNode.insertBefore(dragEl, target.node);
                         }
-                    } else if(target.nextSibling && dropDirection=='append'){
-                        if(Mura(target.nextSibling).is('.mura-object[data-object="container"]')){
-                            target=target.nextSibling;
-                        }
-                    } else {
-                        var parentCheck=Mura(target).parent().parent().closest('.mura-object[data-object="container"]');
-                        if(parentCheck.length){
-                            target=parentCheck.node;
-                        }
-                    }   
-                }
-                if (dropDirection == 'append') {
-                    target.parentNode.insertBefore(dragEl, target.nextSibling);
-                } else {
-                    target.parentNode.insertBefore(dragEl, target);
+                    }
                 }
 
                 elDropHandled = true;
@@ -601,22 +587,16 @@ function checkForNew(e) {
                     container[dropDirection](displayObject);
                 }
             } else {
-                if(distance < 5){
-                    if(target.node.previousSibling && dropDirection=='prepend'){
-                        if(Mura(target.node.previousSibling).is('.mura-object[data-object="container"]')){
-                            target=Mura(target.node);
-                        }
-                    } else if(target.node.nextSibling && dropDirection=='append'){
-                        if(Mura(target.node.nextSibling).is('.mura-object[data-object="container"]')){
-                            target=Mura(target.node);
-                        }
-                    } else {
-                        var parentCheck=target.parent().parent().closest('.mura-object[data-object="container"]');
-                        if(parentCheck.length){
-                            target=parentCheck;
-                        }
+                if(distance < 5 && !(
+                    dropDirection=='prepend' && target.previousSibling
+                    || dropDirection=='append' && target.nextSibling
+                )){
+                    var parentCheck=target.parent().parent().closest('.mura-object[data-object="container"]');
+                    if(parentCheck.length){
+                        target=parentCheck;
                     }
                 }
+
                 if (dropDirection == 'append') {
                     target.node.parentNode.insertBefore(displayObject,  target.node.nextSibling);
                 } else {

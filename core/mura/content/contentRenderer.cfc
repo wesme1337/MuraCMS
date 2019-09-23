@@ -67,7 +67,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 <cfset this.asyncRender=false>
 <cfset this.queueObjects=true>
 <cfset this.layoutmanager=false>
-<cfset this.legacyobjects=true>
+<cfset this.legacyobjects=false>
 <cfset this.deferMuraJS=false>
 <cfset this.hideRestrictedNav=false>
 <cfset this.templateArray=[]>

@@ -131,7 +131,7 @@ function initDraggableObject_drop(e) {
             if (dragEl && dragEl != this) {
                 var dropDirection = getDropDirection(e, target);
                 var distance=getDistanceFromActionBorder(e, target,dropDirection);
-                if (target.getAttribute('data-object') == 'container' && distance > 5) {
+                if (target.getAttribute('data-object') == 'container' && distance > 10) {
                     var container = Mura(target).children('.mura-object-content');
                     if (container.length) {
                         if (!container.node.childNodes.length) {
@@ -143,7 +143,7 @@ function initDraggableObject_drop(e) {
                         return;
                     }
                 } else {
-                    if(distance < 5 && !(
+                    if(distance < 10 && !(
                         dropDirection=='prepend' && target.previousSibling
                         || dropDirection=='append' && target.nextSibling
                     )){
@@ -166,7 +166,7 @@ function initDraggableObject_drop(e) {
             } else if (dragEl == target) {
                 var dropDirection = getDropDirection(e, target);
                 var distance=getDistanceFromActionBorder(e, target,dropDirection);
-                if(distance < 5 && !(
+                if(distance < 10 && !(
                     dropDirection=='prepend' && target.previousSibling
                     || dropDirection=='append' && target.nextSibling
                 )){
@@ -579,7 +579,7 @@ function checkForNew(e) {
         if (target.hasClass('mura-object')) {
             var distance=getDistanceFromActionBorder(e, target.node,dropDirection);
             
-            if (target.data('object') == 'container' && distance > 5) {
+            if (target.data('object') == 'container' && distance > 10) {
                 var container = target.children('.mura-object-content');
                 if (!container.node.childNodes.length) {
                     container.append(displayObject);
@@ -587,7 +587,7 @@ function checkForNew(e) {
                     container[dropDirection](displayObject);
                 }
             } else {
-                if(distance < 5 && !(
+                if(distance < 10 && !(
                     dropDirection=='prepend' && target.previousSibling
                     || dropDirection=='append' && target.nextSibling
                 )){

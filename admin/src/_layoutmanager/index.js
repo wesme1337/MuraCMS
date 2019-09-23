@@ -606,7 +606,7 @@ function checkForNew(e) {
                         if(Mura(target.node.previousSibling).is('.mura-object[data-object="container"]')){
                             target=Mura(target.node);
                         }
-                    if(target.node.nextSibling && dropDirection=='prepend'){
+                    } else if(target.node.nextSibling && dropDirection=='append'){
                         if(Mura(target.node.nextSibling).is('.mura-object[data-object="container"]')){
                             target=Mura(target.node);
                         }

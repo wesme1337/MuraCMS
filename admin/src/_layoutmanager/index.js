@@ -144,10 +144,17 @@ function initDraggableObject_drop(e) {
                     }
                 } else {
                     if(distance < 5){
-                        var parentCheck=Mura(target).parent().parent().closest('.mura-object[data-object="container"]');
-                        if(parentCheck.length){
-                            target=parentCheck.node;
+                        if(target.previousSibling){
+                            if(Mura(target.previousSibling).is('.mura-object[data-object="container"]')){
+                                target=target.previousSibling;
+                            }
+                        } else {
+                            var parentCheck=Mura(target).parent().parent().closest('.mura-object[data-object="container"]');
+                            if(parentCheck.length){
+                                target=parentCheck.node;
+                            }
                         }
+                        
                     }
                     if (dropDirection == 'append') {
                         target.parentNode.insertBefore(dragEl, target.nextSibling);
@@ -164,15 +171,27 @@ function initDraggableObject_drop(e) {
                 var dropDirection = getDropDirection(e, target);
                 var distance=getDistanceFromActionBorder(e, target,dropDirection);
                 if(distance < 5){
-                    var parentCheck=Mura(target).parent().parent().closest('.mura-object[data-object="container"]');
-                    if(parentCheck.length){
-                        target=parentCheck.node;
-                        if (dropDirection == 'append') {
-                            target.parentNode.insertBefore(dragEl, target.node.nextSibling);
-                        } else {
-                            target.parentNode.insertBefore(dragEl, target.node);
+                    if(target.previousSibling){
+                        if(Mura(target.previousSibling).is('.mura-object[data-object="container"]')){
+                            target=target.previousSibling;
+                            if (dropDirection == 'append') {
+                                target.parentNode.insertBefore(dragEl, target.node.nextSibling);
+                            } else {
+                                target.parentNode.insertBefore(dragEl, target.node);
+                            }
+                        }
+                    } else {
+                        var parentCheck=Mura(target).parent().parent().closest('.mura-object[data-object="container"]');
+                        if(parentCheck.length){
+                            target=parentCheck.node;
+                            if (dropDirection == 'append') {
+                                target.parentNode.insertBefore(dragEl, target.node.nextSibling);
+                            } else {
+                                target.parentNode.insertBefore(dragEl, target.node);
+                            }
                         }
                     }
+                    
                 }
 
                 elDropHandled = true;
@@ -582,9 +601,15 @@ function checkForNew(e) {
                 }
             } else {
                 if(distance < 5){
-                    var parentCheck=target.parent().parent().closest('.mura-object[data-object="container"]');
-                    if(parentCheck.length){
-                        target=parentCheck;
+                    if(arget.node.previousSibling){
+                        if(Mura(target.node.previousSibling).is('.mura-object[data-object="container"]')){
+                            target=Mura(target.node);
+                        }
+                    } else {
+                        var parentCheck=target.parent().parent().closest('.mura-object[data-object="container"]');
+                        if(parentCheck.length){
+                            target=parentCheck;
+                        }
                     }
                 }
                 if (dropDirection == 'append') {

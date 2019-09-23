@@ -1911,6 +1911,7 @@ Display Objects
 	<cfargument name="params" default="#structNew()#">
 	<cfargument name="renderKids" default="true">
 	<cfset var status=getBodyDisplayStatus()>
+	<cfset arguments.params.targetattr="objectparams">
 	<cfsavecontent variable="eventOutput">
 	<cfoutput>
 	<cfif status eq 'deny' >
@@ -1947,11 +1948,10 @@ Display Objects
 		<cfif isDefined('bodyLookup.eventOutput')>
 			#bodyLookup.eventOutput#
 		<cfelseif isDefined('bodyLookup.filepath')>
-			<cfset var objectParams=arguments.params>
-			<cfset objectParams.targetattr="objectparams">
 			<cfinclude template="#bodyLookup.filepath#">
 		<cfelse>
 			<cfif arguments.renderKids>
+				<cfset objectParams.targetattr="objectparams">
 				<cfif $.siteConfig().hasDisplayObject($.content('type'))>
 					<cfoutput>#dspObject(objectid=$.content('contentid'),object=$.content('type'),params=arguments.params,bodyRender=true)#</cfoutput>
 				<cfelse>

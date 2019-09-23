@@ -64,9 +64,9 @@
 						<a href="##" class="btn mura-primary" id="closeConfigurator" onclick="frontEndProxy.post({cmd:'showobjects'});"><i class="mi-check"></i> Done</a>
 					</cfif>
 				<cfelse>
-				<!---
+				
 					<a href="##" class="btn mura-primary" id="closeConfigurator" onclick="frontEndProxy.post({cmd:'showobjects'});"><i class="mi-check"></i> Done</a>
-				--->
+			
 				</cfif>
 
 			</div>

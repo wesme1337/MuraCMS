@@ -237,6 +237,11 @@ div.mura-region-focus  > .frontEndToolsModal.mura{
 .mura-editable.mura-region-focus,
 .mura-editable.mura-region-active.mura-region-focus{
 	outline: 0 !important;
+	&> .mura-editable-label{
+		background-color: #646464 !important;
+		color: #FFF !important;
+		opacity: 1 !important;
+	}
 }
 
 .mura-editable.mura-region-focus .mura-editable-attribute.mura-active, 
@@ -244,14 +249,8 @@ div.mura-region-focus  > .frontEndToolsModal.mura{
 .mura-editable.mura-region-focus .mura-editable-attribute:hover,
 .mura-editable.mura-region-focus .mura-editable-attribute{
 	outline: 2px solid #646464 !important;
-	&> .mura-editable-label{
-		background-color: #646464 !important;
-		color: #FFF !important;
-		opacity: 1 !important;
-	}
 }
 /* /.mura-region-focus */
-
 
 .mura-object-content figure{
 	margin: 0;

@@ -175,8 +175,6 @@ body.mura-sidebar-state__pushed--right .mura__layout-manager__controls {
 .mura-drop-target.mura-append > .mura-fetborder-bottom{
 	height: 4px !important;	
 	background-color: rgba(227, 74, 54, 1)!important;
-/*border-bottom: 2px dotted @objectbordercolor;*/
-/*margin-bottom: -2px;*/
 }
 
 .mura-region *.mura-prepend:not(.mura-object){
@@ -225,8 +223,36 @@ body.mura-sidebar-state__pushed--right .mura__layout-manager__controls {
 	}
 }
 
+/* mura-region-focus */
+div.mura-region-focus > span.mura-fetborder,
+div.mura-object[data-object=container].mura-active.mura-container-active.mura-region-focus > span.mura-fetborder{
+	background-color: #646464 !important;
+}
 
-	
+div.mura-object[data-object=container].mura-active.mura-container-active.mura-region-focus > .frontEndToolsModal.mura,
+div.mura-region-focus  > .frontEndToolsModal.mura{
+	opacity: 1 !important
+}
+
+.mura-editable.mura-region-focus,
+.mura-editable.mura-region-active.mura-region-focus{
+	outline: 0 !important;
+}
+
+.mura-editable.mura-region-focus .mura-editable-attribute.mura-active, 
+.mura-editable.mura-region-focus .mura-editable-attribute:focus, 
+.mura-editable.mura-region-focus .mura-editable-attribute:hover,
+.mura-editable.mura-region-focus .mura-editable-attribute{
+	outline: 2px solid #646464 !important;
+	&> .mura-editable-label{
+		background-color: #646464 !important;
+		color: #FFF !important;
+		opacity: 1 !important;
+	}
+}
+/* /.mura-region-focus */
+
+
 .mura-object-content figure{
 	margin: 0;
 }

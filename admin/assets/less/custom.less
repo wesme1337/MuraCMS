@@ -286,6 +286,7 @@
 .mura-input-set .btn,
 .mura-input-set input,
 .mura-input-set .btn-group{
+  clear: none;
   line-height: 18px;
   margin-top: 0;
   margin-bottom: 0;
@@ -418,11 +419,12 @@ header .btn i{
     background-color: #DEDEDE;
     border: 0;
     border-color: #BCBCBC;
+    clear: none;
+    float: none !important;
     font-size: 15px;
-    margin-right: 15px;
+    margin: 0 4px 8px;
     min-width: 60px;
     padding: 4px 10px;
-    float: none !important;
 
     &.mura-primary{
       background-color: @mura-red !important;
@@ -667,7 +669,7 @@ form .mura-control-group > * + .help-block{
 
 #main-container #tabArchitectural #arch-mod,
 #flatViewContainer .navSort{
-    margin: 0;
+    margin: 0 0 20px 0;
 
    a{
     background-color: #FFF;

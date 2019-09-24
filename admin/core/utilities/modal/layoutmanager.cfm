@@ -123,8 +123,12 @@
 			<div id="mura-sidebar-editor" style="display:none">
 				<div class="mura-sidebar__objects-list__object-group">
 					<div class="mura-sidebar__objects-list__object-group-heading">
-						<h3>#application.rbFactory.getKeyValue(session.rb,'sitemanager.editingcontent')#</h3>
-						<button class="mura-objects-back-btn btn mura-primary" id="mura-deactivate-editors"><i class="mi-check"></i> #application.rbFactory.getKeyValue(session.rb,'sitemanager.doneediting')#</button>
+						<div class="clearfix">
+							<h3>#application.rbFactory.getKeyValue(session.rb,'sitemanager.editingcontent')#</h3>
+						</div>
+						<div class="form-actions">
+							<button class="mura-objects-back-btn btn mura-primary" id="mura-deactivate-editors"><i class="mi-check"></i> #application.rbFactory.getKeyValue(session.rb,'sitemanager.done')#</button>
+						</div>
 					</div>
 				</div>
 

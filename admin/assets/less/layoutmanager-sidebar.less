@@ -285,6 +285,72 @@ body.configurator-wrapper #mura-content {
 	margin-top: 1em;
 }
 
+.mura__layout-manager__controls div.form-actions,
+.mura-sidebar-editor .form-actions,
+body.configurator-wrapper #configuratorContainer .form-actions{
+	clear: both;
+	display: flex;
+	justify-content: space-between;
+	margin-top: 20px;
+	padding: 0;
+	width: 107%;
+
+	.btn {
+		background-image: none !important;
+		clear: none !important;
+		float: none !important;
+		font-size: 12px;
+		margin-left: auto;
+		margin-right: auto;
+		min-width: 72px;
+		padding: 6px 12px;
+
+		&.mura-primary {
+			background-color: @mura-red !important;
+		}
+
+		&.mura-delete,
+		&.mura-clone {
+			background-color: #6f6f6f;
+			color: #fff !important;
+			min-width: 80px;
+		}
+
+	}
+} /* /.form-actions */
+
+.btn {
+	background-image: none;
+	box-shadow: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	font-size: 13px;
+	padding: 3px 12px;
+	text-shadow: none;
+
+	i{
+		margin-right: 4px;
+	}
+}
+
+// unclassed buttons default
+.btn:not([class*="btn-"]) {
+	border-radius: 2px;
+	background-image: none;
+	text-shadow: none;
+	color: #f3f3f3;
+	background-color: #333;
+	border-color: transparent;
+	float: left;
+	margin: 8px 0 4px 0;
+}
+
+.btn:not([class*="btn-"]) + * {
+	float: left;
+	clear: left;
+	margin-top: 8px;
+}
+
 // compact view / configurators 
 body.configurator-wrapper {
 	background-color: #454545;
@@ -377,39 +443,6 @@ body.configurator-wrapper {
 				right: 20px;
 			}
 
-		}
-
-		// button styles
-		.btn {
-			background-image: none;
-			box-shadow: none;
-			-webkit-box-shadow: none;
-			-moz-box-shadow: none;
-			font-size: 13px;
-			padding: 3px 12px;
-			text-shadow: none;
-
-			i{
-				margin-right: 4px;
-			}
-		}
-
-		// unclassed buttons default
-		.btn:not([class*="btn-"]) {
-			border-radius: 2px;
-			background-image: none;
-			text-shadow: none;
-			color: #f3f3f3;
-			background-color: #333;
-			border-color: transparent;
-			float: left;
-			margin: 8px 0 4px 0;
-		}
-
-		.btn:not([class*="btn-"]) + * {
-			float: left;
-			clear: left;
-			margin-top: 8px;
 		}
 
 		label + .btn:not([class*="btn-"]),
@@ -1001,34 +1034,6 @@ body.configurator-wrapper {
 			margin-top: -2px !important;
 		}
 
-		.form-actions {
-			clear: both;
-			display: flex;
-			justify-content: space-between;
-			margin-top: 20px;
-			padding: 0;
-			width: 107%;
-
-			.btn {
-				background-image: none !important;
-				clear: none !important;
-				font-size: 12px;
-				min-width: 72px;
-				padding: 6px 12px;
-
-				&.mura-primary {
-					background-color: @mura-red !important;
-				}
-
-				&.mura-delete,
-				&.mura-clone {
-					background-color: #6f6f6f;
-					min-width: 80px;
-				}
-
-			}
-		} /* /.form-actions */
-
 		#sortableFields #displayListSort {
 			padding: 0 !important;
 			border: none !important;
@@ -1066,12 +1071,8 @@ body.configurator-wrapper {
 
 			}
 
-		}
-
-		//.configurator-options 
-	}
-
-	//#configuratorContainer 
+		}		//.configurator-options 
+	}	//#configuratorContainer 
 
 	// colorpicker is appended to body, outside form container 
 	div.colorpicker.dropdown-menu {

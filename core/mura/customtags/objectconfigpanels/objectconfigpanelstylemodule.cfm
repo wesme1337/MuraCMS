@@ -79,7 +79,7 @@
 									<div class="mura-control-group constraincontentcontainer" style='display:none;'>
 												<!--- todo: rb keys --->
 												<label class="css-input switch switch-sm switch-primary">
-    				              <input type="checkbox" id="expandedwidthtoggle" name="expandedwidthtoggle" value="true"<cfif listFind(attributes.params.class,'mura-expanded',' ')> selected</cfif>><span></span> Expand Width
+    				              <input type="checkbox" id="expandedwidthtoggle" name="expandedwidthtoggle" value="true"<cfif listFind(attributes.params.class,'mura-expanded',' ')> checked</cfif>><span></span> Expand Width
       				          </label>
 												<label class="css-input switch switch-sm switch-primary">
     				              <input name="constraincontenttoggle" type="checkbox" id="constraincontenttoggle" class="classtoggle" value="true"<cfif listFind(attributes.params.contentcssclass,contentcontainerclass,' ')> checked</cfif>><span></span> Constrain Content

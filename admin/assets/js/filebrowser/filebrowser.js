@@ -36,10 +36,13 @@ config: {
   this.target = target;
   this.main(); // Delegating to main()
   Mura.loader()
-    .loadcss(Mura.corepath + '/vendor/codemirror/codemirror.css')
+    .loadcss(
+//      Mura.corepath + '/vendor/codemirror/codemirror.css',
+      Mura.corepath + '/vendor/cropper/cropper.min.css',
+    )
     .loadjs(
       Mura.adminpath + '/assets/js/vue.min.js',
-      Mura.corepath + '/vendor/codemirror/codemirror.js',
+      Mura.corepath + '/vendor/cropper/cropper.min.js',
       // Mura.corepath + '/vendor/codemirror/addon/formatting/formatting.js',
       // Mura.corepath + '/vendor/codemirror/mode/htmlmixed/htmlmixed.js',
     function() {
@@ -426,6 +429,31 @@ config: {
   );
 }
 
+, doSaveImage: function( currentFile,formData,success,error ) {
+  var self = this;
+
+  if(!this.validate()) {
+    return error("No Access");
+  }
+
+  formData.append('file',JSON.stringify(currentFile));
+  formData.append('resourcepath',this.config.resourcepath);
+
+  Mura.getEntity('filebrowser').invokeWithCSRF(
+    'saveImage',
+    formData,
+    'post'
+  ).then(
+    function doSuccess( response ) {
+      success( response );
+    },
+    function doonError( response ) {
+      this.onError(response);
+    }
+  );
+}
+
+
 , performCrop: function( currentFile,success,error ) {
   var self = this;
   //var baseurl = this.endpoint + "processCrop" + "?resourcepath=" + this.config.resourcepath;
@@ -484,8 +512,8 @@ config: {
       this.onError(response);
     }
   );
-
 }
+
 , crop: function( canvas,clear ) {
 
   if(clear == true) {
@@ -595,6 +623,7 @@ config: {
           <li v-if="checkIsFile() && checkImageType()"><a href="#" @click.prevent="viewFile()"><i class="mi-image"></i>View</a></li>
           <li v-if="checkIsFile() || checkImageType()"><a href="#" @click.prevent="moveFile()"><i class="mi-move"></i>Move</a></li>
           <li v-if="checkIsFile() || checkImageType()"><a href="#" @click.prevent="duplicateFile()"><i class="mi-copy"></i>Duplicate</a></li>
+          <li v-if="checkIsFile() || checkImageType()"><a href="#" @click.prevent="copyUrl()"><i class="mi-copy"></i>CopyUrl</a></li>
           <li><a href="#" @click.prevent="renameFile()"><i class="mi-edit"> Rename</i></a></li>
           <li v-if="checkIsFile()"><a href="#" @click="downloadFile()"><i class="mi-download"> Download</i></a></li>
           <li class="delete"><a href="#" @click="deleteFile()"><i class="mi-trash"> Delete</i></a></li>
@@ -629,6 +658,22 @@ config: {
         else {
           return MuraFileBrowser.config.selectCallback( fileViewer.currentFile );
         }
+      }
+      ,copyUrl: function() {
+        var url = fileViewer.currentFile.url;
+        var obj = document.createElement('textarea');
+        obj.id = "::urlcopy";
+//        obj.style.cssText = 'display: none';
+        document.getElementById("MuraFileBrowserContainer").appendChild(obj);
+        var temp = document.getElementById("::urlcopy");
+        temp.value = url;
+        temp.select();
+        document.execCommand("copy");
+        temp.remove();
+        fileViewer.isDisplayContext = "";
+//        console.log("Copied the text: " + temp.value);
+
+
       }
       , moveFile: function() {
         fileViewer.isDisplayWindow = "MOVE";
@@ -674,16 +719,18 @@ config: {
   Vue.component('actionwindow', {
     props: ["isDisplayWindow","foldertree","currentFile","currentIndex","error"],
     template: `
-      <div id="actionwindow-wrapper" class="editwindow" v-if="isDisplayWindow=='EDIT'">
-        <editwindow v-if="isDisplayWindow=='EDIT'" :currentFile="currentFile"></editwindow>
-      </div>
-      <div v-else id="actionwindow-wrapper">
-        <renamewindow v-if="isDisplayWindow=='RENAME'" :currentFile="currentFile"></renamewindow>
-        <movewindow v-if="isDisplayWindow=='MOVE'" :foldertree="foldertree" :currentFile="currentFile"></movewindow>
-        <addfolderwindow v-if="isDisplayWindow=='ADDFOLDER'" :currentFile="currentFile"></addfolderwindow>
-        <downloadwindow v-if="isDisplayWindow=='DOWNLOAD'" :currentFile="currentFile"></downloadwindow>
-        <deletewindow v-if="isDisplayWindow=='DELETE'" :foldertree="foldertree" :currentFile="currentFile"></deletewindow>
-        <errorwindow v-if="isDisplayWindow=='ERROR'" :currentFile="currentFile" :error="error"></errorwindow>
+      <div>
+        <div id="actionwindow-wrapper" class="editwindow" v-if="isDisplayWindow=='EDIT'">
+          <editwindow v-if="isDisplayWindow=='EDIT'" :currentFile="currentFile"></editwindow>
+        </div>
+        <div v-else id="actionwindow-wrapper">
+          <renamewindow v-if="isDisplayWindow=='RENAME'" :currentFile="currentFile"></renamewindow>
+          <movewindow v-if="isDisplayWindow=='MOVE'" :foldertree="foldertree" :currentFile="currentFile"></movewindow>
+          <addfolderwindow v-if="isDisplayWindow=='ADDFOLDER'" :currentFile="currentFile"></addfolderwindow>
+          <downloadwindow v-if="isDisplayWindow=='DOWNLOAD'" :currentFile="currentFile"></downloadwindow>
+          <deletewindow v-if="isDisplayWindow=='DELETE'" :foldertree="foldertree" :currentFile="currentFile"></deletewindow>
+          <errorwindow v-if="isDisplayWindow=='ERROR'" :currentFile="currentFile" :error="error"></errorwindow>
+        </div>
       </div>
     `,
     data() {
@@ -717,7 +764,7 @@ config: {
                 </select>
               </span>
             </label>
-          </div>  
+          </div>
 <!--
           <div class="mura-control-group">
             <label>
@@ -1044,7 +1091,8 @@ config: {
     </div>
     `,
     data() {
-      return {};
+      return {
+      };
     }
     , mounted: function() {
     }
@@ -1056,42 +1104,78 @@ config: {
   });
 
   Vue.component('imageeditmenu', {
-    props: ["currentFile","currentIndex"],
+    props: ["currentFile","currentIndex","imageEditTarget"],
     template: `
        <div class="fileviewer-modal">
-        <div class="fileviewer-image" id="imagediv" :style="{ 'background-image': 'url(' + encodeURI(currentFile.url) + '?' + Math.ceil(Math.random()*100000) + ')' }"></div>
-          <div class="fileviewer-gallery-menu mura-actions">
-            <label class="fileinfo">{{currentFile.fullname}} ({{currentFile.size}}kb {{currentFile.info.width}}x{{currentFile.info.height}})</label>
-            <!-- MAIN -->
-            <div class="form-actions" v-if="editmode==''">
-              <a class="btn mura-primary" @click="crop()"><i class="mi-crop"></i>Crop</a>
-              <a class="btn mura-primary" @click="resize()"><i class="mi-expand"></i>Resize</a>
-              <a class="btn mura-primary" @click="rotateRight()"><i class="mi-rotate-right"></i>Rotate Right</a>
-              <a class="btn mura-primary" @click="rotateLeft()"><i class="mi-rotate-left"></i>Rotate Left</a>
-              <a class="btn" @click="cancel()"><i class="mi-close"></i>Cancel</a>
-            </div>
-            <!-- CROP -->
-            <div class="form-actions" v-if="editmode=='CROP'">
-              <a class="btn mura-primary" @click="confirmCrop()"><i class="mi-check"></i>Confirm</a>
-              <a class="btn" @click="cancel()"><i class="mi-ban"></i>Cancel</a>
-            </div>
-            <!-- RESIZE -->
-            <div class="form-actions" v-if="editmode=='RESIZE'">
-              <label>Width: <input :disabled="resizedimensions.aspect == 'height'" name="resize-width" v-model="resizedimensions.width"></label>
-              <label>Height: <input :disabled="resizedimensions.aspect == 'width'" name="resize-height" v-model="resizedimensions.height"></label>
-              <label>Aspect:
-                <select name="resize-aspect" v-model="resizedimensions.aspect">
-                  <option value="none">None</option>
-                  <option value="height">Height</option>
-                  <option value="width">Width</option>
-                  <option value="within">Within</option>
-                </select>
+       <div v-if="this.editmode  == 'RESIZE'" class="fileviewer-image" id="imagediv" :style="{ 'background-image': 'url(' + encodeURI(currentFile.url) + '?' + Math.ceil(Math.random()*100000) + ')' }"></div>
+       <div v-if="this.editmode == ''" class="fileviewer-image-edit"><img style="min-height: 100%" id="fileviewer-image-editable" :src="currentFile.url"></div>
+        <div class="fileviewer-edit-menu mura-actions">
+          <label class="fileinfo">{{currentFile.fullname}} ({{currentFile.size}}kb {{currentFile.info.width}}x{{currentFile.info.height}})</label>
+          <!-- MAIN -->
+          <div class="form-actions" v-if="editmode==''">
+            <button class="btn mura-primary" @click="resize()"><i class="mi-expand"></i>Resize</button>
+
+            <a class="btn mura-primary btn-small" @click="zoomIn()"><i class="mi-search-plus"></i></a>
+            <a class="btn mura-primary btn-small" @click="zoomOut()"><i class="mi-search-minus"></i></a>
+
+            <a class="btn mura-primary btn-small" @click="rotateRight()"><i class="mi-rotate-right"></i></a>
+            <a class="btn mura-primary btn-small" @click="rotateLeft()"><i class="mi-rotate-left"></i></a>
+
+            <a class="btn mura-primary btn-small" @click="moveMode()"><i class="mi-move"></i></a>
+            <a class="btn mura-primary btn-small" @click="cropMode()"><i class="mi-crop"></i></a>
+
+            <div class="btn-group d-flex flex-nowrap">
+              <label class="btn btn-primary" :class="{ 'active': cropaspect == 1.3333 }">
+                <input type="radio" class="sr-only" id="cropaspect1" name="cropaspect" v-model="cropaspect" value="1.3333">
+                <span class="docs-tooltip" data-toggle="tooltip" title="" data-original-title="aspectRatio: 4 / 3">
+                  4:3
+                </span>
               </label>
-              <a class="btn mura-primary" @click="confirmResize()"><i class="mi-check"></i>Confirm</a>
-              <a class="btn" @click="cancel()"><i class="mi-ban"></i>Cancel</a>
+              <label class="btn btn-primary" :class="{ 'active': cropaspect == 1 }">
+                <input type="radio" class="sr-only" id="cropaspect3" name="cropaspect" v-model="cropaspect" value="1">
+                <span class="docs-tooltip" data-toggle="tooltip" title="" data-original-title="aspectRatio: 1 / 1">
+                  1:1
+                </span>
+              </label>
+              <label class="btn btn-primary" :class="{ 'active': cropaspect == 0.6666 }">
+                <input type="radio" class="sr-only" id="cropaspect4" name="cropaspect" v-model="cropaspect" value="0.6666">
+                <span class="docs-tooltip" data-toggle="tooltip" title="" data-original-title="aspectRatio: 2 / 3">
+                  2:3
+                </span>
+              </label>
+              <label class="btn btn-primary" :class="{ 'active': cropaspect == NaN }">
+                <input type="radio" class="sr-only" id="cropaspect5" name="cropaspect" v-model="cropaspect" value="NaN">
+                <span class="docs-tooltip" data-toggle="tooltip" title="" data-original-title="aspectRatio: NaN">
+                  Free
+                </span>
+              </label>
             </div>
+            <a class="btn mura-primary btn-small" @click="saveImage()"><i class="mi-save"></i></a>
+
+            <a class="btn" @click="cancel()"><i class="mi-ban"></i>Cancel</a>
+          </div>
+          <!-- RESIZE -->
+          <div class="form-actions" v-if="editmode=='RESIZE'">
+            <label>Width: <input :disabled="resizedimensions.aspect == 'height'" name="resize-width" @keyup="changedAspectWidth" v-model="resizedimensions.width"></label>
+            <label>Height: <input :disabled="resizedimensions.aspect == 'width'" name="resize-height" @keyup="changedAspectHeight" v-model="resizedimensions.height"></label>
+            <label>Aspect:
+              <select name="resize-aspect" v-model="resizedimensions.aspect" @change="changedAspect">
+                <option value="none">None</option>
+                <option value="height">Height</option>
+                <option value="width">Width</option>
+                <option value="within">Within</option>
+              </select>
+            </label>
+            <a class="btn mura-primary" @click="confirmResize()"><i class="mi-check"></i>Confirm</a>
+            <a class="btn" @click="cancelResize()"><i class="mi-ban"></i>Cancel</a>
           </div>
         </div>
+        <div class="preview-window" v-if="this.showpreview">
+          <div class="preview-mast"></div>
+          <div class="preview-image">
+          </div>
+        </div>
+      </div>
     `
     , data() {
         return {
@@ -1100,51 +1184,138 @@ config: {
             width: 0,
             height: 0,
             backup: 0,
-            aspect: 'none'
-          }
+            aspect: 'none',
+          },
+          showpreview: 0,
+          cropaspect: 4/3
         };
+    }
+    , watch: {
+      cropaspect: function( val ) {
+        this.setAspectRatio(val);
+      }
     }
     , mounted: function() {
       this.resizedimensions.width = this.currentFile.info.width;
       this.resizedimensions.height = this.currentFile.info.height;
       this.$root.isDisplayContext = 0;
       this.editmode = '';
+      this.initCropper();
+
     }
     , methods: {
-      rotateLeft: function() {
-        MuraFileBrowser.rotate(this.currentFile,'counterclock',this.rotateComplete);
+      updateData( data ) {
+        this.imageEditCropMode = data;
+      }
+      , changedAspect: function() {
+      }
+      , changedAspectWidth: function() {
+        if(this.resizedimensions.aspect == 'width' && this.resizedimensions.width > 0) {
+          this.resizedimensions.height = Math.ceil(this.resizedimensions.width/this.currentFile.info.width * this.currentFile.info.height);
+        }
+      }
+      , changedAspectHeight: function() {
+        if(this.resizedimensions.aspect == 'height' && this.resizedimensions.height > 0) {
+          this.resizedimensions.width = Math.ceil(this.resizedimensions.height/this.currentFile.info.height * this.currentFile.info.width);
+        }
+      }
+      , destroyCropper: function() {
+        imageEditTarget.destroy();
+      }
+      , initCropper: function() {
+        const image = document.getElementById('fileviewer-image-editable');
+        var initaspect = this.cropaspect;
+
+        imageEditTarget = new Cropper(image, {
+          aspectRatio: initaspect,
+          crop(event) {
+            /*
+            console.log(event.detail.x);
+            console.log(event.detail.y);
+            console.log(event.detail.width);
+            console.log(event.detail.height);
+            console.log(event.detail.rotate);
+            console.log(event.detail.scaleX);
+            console.log(event.detail.scaleY);
+            */
+  //          fileViewer.$refs.imageeditmenuref.updateData(event.detail.width);
+          },
+        });
+      }
+      , saveImage: function() {
+        var self = this;
+        var dir = "";
+
+        for(var i=0;i<fileViewer.foldertree.length;i++) {
+          dir = dir + "/" + fileViewer.foldertree[i];
+        }
+
+        imageEditTarget.getCroppedCanvas().toBlob(function(blob) {
+          var newImg = document.createElement('img'),url = URL.createObjectURL(blob);
+
+          newImg.onload = function() {
+            // no longer need to read the blob so it's revoked
+            URL.revokeObjectURL(url);
+          };
+
+          var formData = new FormData();
+          formData.append('croppedImage', blob, self.currentFile.fullname);
+          formData.append('dir', dir);
+
+          newImg.src = url;
+          MuraFileBrowser.doSaveImage( self.currentFile,formData,self.fileSaved );
+        });
+      }
+      , fileSaved: function() {
+        this.$root.isDisplayWindow = "VIEW";
+        this.editmode = '';
+        fileViewer.refresh();
+      }
+      , zoomIn: function() {
+        imageEditTarget.zoom(0.1);
+      }
+      , zoomOut: function() {
+        imageEditTarget.zoom(-0.1);
+      }
+      , setAspectRatio: function( val ) {
+        imageEditTarget.setAspectRatio(val);
+      }
+      , rotateLeft: function() {
+        imageEditTarget.rotate(-15);
       }
       , rotateRight: function() {
-        MuraFileBrowser.rotate(this.currentFile,'clock',this.rotateComplete);
-      }
-      , rotateComplete() {
-        this.$root.refresh(null,null,displaywindow = "EDITIMAGE");
+        imageEditTarget.rotate(15);
       }
       , resize() {
         this.editmode = "RESIZE";
+        this.destroyCropper();
       }
-      , confirmResize() {
-        MuraFileBrowser.performResize(this.currentFile,this.resizedimensions,this.resizeComplete);
+      , cropMode: function() {
+          imageEditTarget.setDragMode('crop');
       }
-      , resizeComplete() {
-        this.$root.refresh(null,null,displaywindow = "EDITIMAGE");
-      }
-      , crop: function() {
-        this.editmode = "CROP";
-        MuraFileBrowser.crop(document.getElementById('imagediv'));
-      }
-      , confirmCrop: function() {
-        MuraFileBrowser.performCrop( this.currentFile,this.cropComplete );
-      }
-      , cropComplete: function() {
-        this.$root.refresh();
+      , moveMode: function() {
+        imageEditTarget.setDragMode('move');
       }
       , closewindow: function( event ) {
         this.$root.isDisplayWindow = "";
       }
       , cancel: function( event ) {
+        this.destroyCropper();
         this.$root.isDisplayWindow = "VIEW";
         this.editmode = '';
+      }
+      , confirmResize() {
+        MuraFileBrowser.performResize(this.currentFile,this.resizedimensions,this.resizeComplete);
+      }
+      , resizeComplete() {
+        this.$root.refresh();
+        this.$root.isDisplayWindow = "";
+      }
+      , cancelResize: function( event ) {
+        this.editmode = '';
+        this.$nextTick(function () {
+          this.initCropper();
+        });
       }
     }
   });
@@ -1596,7 +1767,7 @@ config: {
           <div class="fileviewer-item" v-if="parseInt(file.isfile)">
             <div class="fileviewer-item-image">
               <!-- image -->
-              <div v-if="parseInt(file.isimage)" class="fileviewer-item-icon" :style="{ 'background-image': 'url(' + encodeURI(file.url) + ')' }" @click.prevent="viewFile(file,index)"></div>
+              <div v-if="parseInt(file.isimage)" class="fileviewer-item-icon" :style="{ 'background-image': 'url(' + encodeURI(file.url) + '?' + Math.ceil(Math.random()*100000) + ')' }" @click.prevent="viewFile(file,index)"></div>
               <!-- file with icon -->
               <div v-else class="fileviewer-item-icon" :class="['fileviewer-item-icon-' + file.type]" @click="openMenu($event,file,index)">
                 <i class="mi-file"></i>
@@ -1770,7 +1941,7 @@ config: {
         {{message}}
         <gallerywindow v-if="isDisplayWindow=='VIEW'" :settings="settings" :currentFile="currentFile" :currentIndex="currentIndex"></gallerywindow>
         <imageeditwindow v-if="isDisplayWindow=='EDITIMAGE'" :settings="settings" :currentFile="currentFile" :currentIndex="currentIndex"></imageeditwindow>
-        <actionwindow v-if="isDisplayWindow" :foldertree="foldertree" :settings="settings" :isDisplayWindow="isDisplayWindow" :currentIndex="currentIndex" :currentFile="currentFile" :error="error"></actionwindow>
+        <actionwindow v-if="isDisplayWindow != ''" :foldertree="foldertree" :settings="settings" :isDisplayWindow="isDisplayWindow" :currentIndex="currentIndex" :currentFile="currentFile" :error="error"></actionwindow>
         <div class="mura-header">
         <h1 class="mura-modal-only">File Manager</h1>
           <ul class="breadcrumb">
@@ -1856,8 +2027,7 @@ config: {
         for(var i=0;i<this.foldertree.length;i++) {
           dir = dir + "/" + this.foldertree[i];
         }
-
-          self.doRenameFile( dir,this.currentFile,this.refresh );
+        self.doRenameFile( dir,this.currentFile,this.refresh );
       }
       , newFolder: function(foldername) {
         var dir = "";

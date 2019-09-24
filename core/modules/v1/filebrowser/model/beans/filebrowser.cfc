@@ -29,10 +29,10 @@ component
 					directoryCreate(conditionalExpandPath(pathRoot & "/Image"));
 				}
 				*/
-				
+
 				pathRoot = currentSite.getAssetDir() & '/assets';
 			}
-		
+
 			return pathRoot;
 		}
 
@@ -109,7 +109,7 @@ component
 			var delim = rereplace(baseFilePath,".*\/","");
 			var filePath = baseFilePath & rereplace(arguments.file.url,".*?#delim#","");
 
-			if(!isPathLegal(arguments.siteid,arguments.resourcepath, conditionalconditionalExpandPath(filePath))){
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath, conditionalExpandPath(filePath))){
 				throw(message="Illegal file path",errorcode ="invalidParameters");
 			}
 
@@ -161,8 +161,57 @@ component
 			response.info = imageInfo(sourceImage);
 			response.info.url=arguments.file.url;
 			m.event('fileInfo',response.info).announceEvent('onAfterImageManipulation');
-			
+
 			structDelete(response.info,'source');
+
+			response.success = 1;
+			return response;
+		}
+
+		remote any function saveImage() {
+			var m=getBean('$').init(arguments.siteid);
+
+			if(!m.validateCSRFTokens(context='saveImage')){
+				throw(type="invalidTokens");
+			}
+
+			var permission = checkPerms(arguments.siteid,'save',resourcePath);
+			var response = { success: 0 };
+
+			if(!permission.success) {
+				response.permission = permission;
+				response.message = permission.message;
+				return response;
+			}
+
+			if(isJSON(arguments.file)) {
+				arguments.file = deserializeJSON(arguments.file);
+			}
+
+			var baseFilePath = getBaseFileDir( arguments.siteid,arguments.resourcePath );
+			var tempDir = m.globalConfig().getTempDir();
+			var tfile = replace(createUUID(),"-","","all");
+			var delim = rereplace(baseFilePath,".*\/","");
+			var allowedExtensions = m.getBean('configBean').getFMAllowedExtensions();
+			var filePath = baseFilePath & arguments.dir;
+
+			if(!isPathLegal(arguments.siteid,arguments.resourcepath, expandpath(filePath))){
+				throw(message="Illegal file path",errorcode ="invalidParameters");
+			}
+
+			var item = fileUpload(destination=tempDir,fileField='croppedImage',nameConflict="Overwrite");
+
+			if(listFindNoCase(allowedExtensions,item.serverfileext)) {
+					if(fileExists(expandPath(filePath) & m.globalConfig().getFileDelim() & item.serverfile)) {
+						fileDelete(expandPath(filePath) & m.globalConfig().getFileDelim() & item.serverfile );
+					}
+					fileMove(item.serverdirectory & m.globalConfig().getFileDelim() & item.serverfile,expandPath(filePath) & m.globalConfig().getFileDelim() & item.serverfile );
+			}
+			else {
+				fileDelete(item.serverdirectory & m.globalConfig().getFileDelim() & item.serverfile);
+				response.success = 0;
+				return response;
+			}
 
 			response.success = 1;
 			return response;
@@ -518,7 +567,7 @@ component
 			response.uploaded = fileUploadAll(tempDir,'',"MakeUnique");
 			response.allowedExtensions = allowedExtensions;
 			response.success = 1;
-			
+
 			for(var i = 1; i lte ArrayLen(response.uploaded);i++ ) {
 				var item = response.uploaded[i];
 				var valid = false;
@@ -806,9 +855,9 @@ component
 
 			var baseFilePath = getBaseFileDir( arguments.siteid,arguments.resourcePath );
 			var filePath = baseFilePath  & m.globalConfig().getFileDelim() & rereplace(arguments.directory,"\.{1,}","\.","all");
-			
+
 			var expandedFilePath = conditionalExpandPath(filePath);
-		
+
 			if(!isPathLegal(arguments.siteid,arguments.resourcepath,conditionalExpandPath(filepath))){
 				throw(message="Illegal file path",errorcode ="invalidParameters");
 			}

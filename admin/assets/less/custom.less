@@ -411,6 +411,8 @@ header .btn i{
   background-color: @formActionsBackground;
   border-top: none;
   .clearfix(); // Adding clearfix to allow for .pull-right button containers
+  display: flex;
+  justify-content: center;
 
   > .btn{
     background-color: #DEDEDE;
@@ -420,6 +422,7 @@ header .btn i{
     margin-right: 15px;
     min-width: 60px;
     padding: 4px 10px;
+    float: none !important;
 
     &.mura-primary{
       background-color: @mura-red !important;

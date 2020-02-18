@@ -887,7 +887,7 @@ component extends="mura.cfobject" hint="This provides JSON/REST API functionalit
 				if(isDefined('#params.method#')){
 
 					getBean('$').init(variables.siteid).announceEvent('onApiRequest');
-	
+
 					result=evaluate('#params.method#(argumentCollection=params)');
 
 					if(!isJson(result)){
@@ -1298,7 +1298,7 @@ component extends="mura.cfobject" hint="This provides JSON/REST API functionalit
 			if(!isDefined('#params.method#')){
 				params.method='invalid';
 			}
-			return serializeResponse(statusCode=401,response={'apiversion'=getApiVersion(),'method'=params.method,'params'=getParamsWithOutMethod(params),'error'={code='invalid_request','message'='Insufficient Account Permissions'}});
+			return serializeResponse(statusCode=401,response={'apiversion'=getApiVersion(),'method'=params.method,'params'=getParamsWithOutMethod(params),'error'={'code'='invalid_request','message'='Insufficient Account Permissions'}});
 		}
 
 		catch (invalidAccessToken e){
@@ -1306,7 +1306,7 @@ component extends="mura.cfobject" hint="This provides JSON/REST API functionalit
 			if(!isDefined('#params.method#')){
 				params.method='invalid';
 			}
-			return serializeResponse(statusCode=401,response={'apiversion'=getApiVersion(),'method'=params.method,'params'=getParamsWithOutMethod(params),'error'={code='invalid_token','message'='Invalid Access Token'}});
+			return serializeResponse(statusCode=401,response={'apiversion'=getApiVersion(),'method'=params.method,'params'=getParamsWithOutMethod(params),'error'={'code'='invalid_token','message'='Invalid Access Token'}});
 		}
 
 		catch (accessTokenExpired e){
@@ -1314,7 +1314,7 @@ component extends="mura.cfobject" hint="This provides JSON/REST API functionalit
 			if(!isDefined('#params.method#')){
 				params.method='invalid';
 			}
-			return serializeResponse(statusCode=401,response={'apiversion'=getApiVersion(),'method'=params.method,'params'=getParamsWithOutMethod(params),'error'={code='invalid_token','message'='Access Token Expired'}});
+			return serializeResponse(statusCode=401,response={'apiversion'=getApiVersion(),'method'=params.method,'params'=getParamsWithOutMethod(params),'error'={'code'='invalid_token','message'='Access Token Expired'}});
 		}
 
 		catch (disabled e){
@@ -1322,7 +1322,7 @@ component extends="mura.cfobject" hint="This provides JSON/REST API functionalit
 			if(!isDefined('#params.method#')){
 				params.method='invalid';
 			}
-			return serializeResponse(statusCode=400,response={'apiversion'=getApiVersion(),'method'=params.method,'params'=getParamsWithOutMethod(params),'error'={code='invalid_request','message'='The JSON API disabled'}});
+			return serializeResponse(statusCode=400,response={'apiversion'=getApiVersion(),'method'=params.method,'params'=getParamsWithOutMethod(params),'error'={'code'='invalid_request','message'='The JSON API disabled'}});
 		}
 
 		catch (invalidParameters e){
@@ -1330,7 +1330,7 @@ component extends="mura.cfobject" hint="This provides JSON/REST API functionalit
 			if(!isDefined('#params.method#')){
 				params.method='invalid';
 			}
-			return serializeResponse(statusCode=400,response={'apiversion'=getApiVersion(),'method'=params.method,'params'=getParamsWithOutMethod(params),'error'={code='invalid_request','message'='Invalid parameters'}});
+			return serializeResponse(statusCode=400,response={'apiversion'=getApiVersion(),'method'=params.method,'params'=getParamsWithOutMethod(params),'error'={'code'='invalid_request','message'='Invalid parameters'}});
 		}
 
 		catch (invalidMethodCall e){
@@ -1338,7 +1338,7 @@ component extends="mura.cfobject" hint="This provides JSON/REST API functionalit
 			if(!isDefined('#params.method#')){
 				params.method='invalid';
 			}
-			return serializeResponse(statusCode=400,response={'apiversion'=getApiVersion(),'method'=params.method,'params'=getParamsWithOutMethod(params),'error'={code='invalid_request','message'="Invalid method call"}});
+			return serializeResponse(statusCode=400,response={'apiversion'=getApiVersion(),'method'=params.method,'params'=getParamsWithOutMethod(params),'error'={'code'='invalid_request','message'="Invalid method call"}});
 		}
 
 		catch (badRequest e){
@@ -1346,7 +1346,7 @@ component extends="mura.cfobject" hint="This provides JSON/REST API functionalit
 			if(!isDefined('#params.method#')){
 				params.method='invalid';
 			}
-			return serializeResponse(statusCode=400,response={'apiversion'=getApiVersion(),'method'=params.method,'params'=getParamsWithOutMethod(params),'error'={code='invalid_request','message'="Bad Request"}});
+			return serializeResponse(statusCode=400,response={'apiversion'=getApiVersion(),'method'=params.method,'params'=getParamsWithOutMethod(params),'error'={'code'='invalid_request','message'="Bad Request"}});
 		}
 
 		catch (invalidTokens e){
@@ -1354,7 +1354,7 @@ component extends="mura.cfobject" hint="This provides JSON/REST API functionalit
 			if(!isDefined('#params.method#')){
 				params.method='invalid';
 			}
-			return serializeResponse(statusCode=400,response={'apiversion'=getApiVersion(),'method'=params.method,'params'=getParamsWithOutMethod(params),'error'={code='invalid_request','message'="Invalid CSRF tokens"}});
+			return serializeResponse(statusCode=400,response={'apiversion'=getApiVersion(),'method'=params.method,'params'=getParamsWithOutMethod(params),'error'={'code'='invalid_request','message'="Invalid CSRF tokens"}});
 		}
 
 		catch (Any e){
@@ -1364,9 +1364,9 @@ component extends="mura.cfobject" hint="This provides JSON/REST API functionalit
 				params.method='invalid';
 			}
 			if(getBean('configBean').getDebuggingEnabled()){
-				return serializeResponse(statusCode=500,response={'apiversion'=getApiVersion(),'method'=params.method,'params'=getParamsWithOutMethod(params),'error'={code='server_error','message'="Unhandled Exception",'stacktrace'=e}});
+				return serializeResponse(statusCode=500,response={'apiversion'=getApiVersion(),'method'=params.method,'params'=getParamsWithOutMethod(params),'error'={'code'='server_error','message'="Unhandled Exception",'stacktrace'=e}});
 			} else {
-				return serializeResponse(statusCode=500,response={'apiversion'=getApiVersion(),'method'=params.method,'params'=getParamsWithOutMethod(params),'error'={code='server_error','message'="Unhandled Exception"}});
+				return serializeResponse(statusCode=500,response={'apiversion'=getApiVersion(),'method'=params.method,'params'=getParamsWithOutMethod(params),'error'={'code'='server_error','message'="Unhandled Exception"}});
 			}
 
 		}
@@ -1394,7 +1394,7 @@ component extends="mura.cfobject" hint="This provides JSON/REST API functionalit
 		var $=getBean('$').init(variables.siteid);
 		$.event('response',arguments.response);
 		$.announceEvent('onApiResponse');
-		
+
 		if(application.configBean.getValue(property='suppressAPIParams',defaultValue=true) && isDefined('response.params')){
 			structDelete(response,'params');
 		}
@@ -1402,7 +1402,7 @@ component extends="mura.cfobject" hint="This provides JSON/REST API functionalit
 		var result= getSerializer().serialize(arguments.response);
 
 		cfheader( name="ETag", value=hash(result));
-		
+
 		return getSerializer().serialize(arguments.response);
 	}
 
@@ -3361,7 +3361,7 @@ component extends="mura.cfobject" hint="This provides JSON/REST API functionalit
 
 	function findRelatedContent(id='',siteid,params,arguments,expand='',expanded=0,entity='',relatedContentSetID='',expandedProp=''){
 		param name="arguments.params" default=url;
-	
+
 		if(len(arguments.relatedContentSetID)){
 			arguments.params.relatedContentSetID=arguments.relatedContentSetID;
 		}
@@ -3445,7 +3445,7 @@ component extends="mura.cfobject" hint="This provides JSON/REST API functionalit
 			return result;
 
 		} else {
-			
+
 			iterator=entity.getRelatedContentIterator(argumentCollection=args);
 			setIteratorProps(iterator,arguments.params);
 			returnArray=iteratorToArray(iterator=iterator,siteid=arguments.siteid,expand=arguments.expand,$=$,expanded=arguments.expanded,expandedProp='relatedcontent');
@@ -3475,7 +3475,7 @@ component extends="mura.cfobject" hint="This provides JSON/REST API functionalit
 		}
 
 		request.muraCustomImageIterator.reset();
-		
+
 		return request.muraCustomImageIterator;
 	}
 
